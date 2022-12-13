@@ -3,69 +3,79 @@
 
 #include "ChessGameModeBase.h"
 #include "EColor.h"
-#include "EPawnType.h"
+#include "EFigureType.h"
 #include "ChessPieces/UChessPawn.h"
 
 
+void AChessGameModeBase::InitializeChessPieces()
+{
+	FigureTypeMap = TMap<EFigureType,UChessPiece*>();
+	UChessPawn Pawn = UChessPawn();
+	UChessPawn Rook = UChessPawn();
+	UChessPawn Knight = UChessPawn();
+	UChessPawn Bishop = UChessPawn();
+	UChessPawn King = UChessPawn();
+	UChessPawn Queen = UChessPawn();
+	FigureTypeMap.Add(EFigureType::Pawn,&Pawn);
+	FigureTypeMap.Add(EFigureType::Rook,&Rook);
+	FigureTypeMap.Add(EFigureType::Knight,&Knight);
+	FigureTypeMap.Add(EFigureType::Bishop,&Bishop);
+	FigureTypeMap.Add(EFigureType::King,&King);
+	FigureTypeMap.Add(EFigureType::Queen,&Queen);
+}
+
 void AChessGameModeBase::InitGameState()
 {
-	Board = new TArray();
+	InitializeChessPieces();
 	for (int i = 0; i < BoardSize; i++)
 	{
-		TArray<UChessPiece*> Row = new TArray();
+		TArray<UChessPiece*> Row = TArray<UChessPiece*>();
 		for (int j = 0; j < BoardSize; j++)
 		{
-			Row.Append(nullptr);
+			Row.Add(nullptr);
 		}
-		Board.Append(Row);
+		Board.Add(F2DBoardArray());
+		Board[i] = Row;
 	}
 	CreateChessPiece();
 }
 
-UChessPiece* AChessGameModeBase::GenerateChessPiece(const EPawnType Figure)
+UChessPiece* AChessGameModeBase::GenerateChessPiece(const EFigureType Figure)
 {
-	TMap<EPawnType, UChessPiece> CharToTypeMap = {
-		{EPawnType::Pawn, UChessPawn()},
-		{EPawnType::Rook, UChessPawn()},
-		{EPawnType::Knight, UChessPawn()},
-		{EPawnType::Bishop, UChessPawn()},
-		{EPawnType::King, UChessPawn()},
-		{EPawnType::Queen, UChessPawn()},
-	};
-
 	UChessPiece Clone = UChessPiece();
-	DuplicateObject(&CharToTypeMap[Figure], &Clone);
-	return &Clone;
+	DuplicateObject(FigureTypeMap[Figure], &Clone);
+	return nullptr;
 }
 
 void AChessGameModeBase::CreateChessPiece()
 {
-	CreateFigures(Pawns, Men, EColor::White);
-	CreateFigures(Pawns, Men, EColor::Black);
+	CreateFigures(EColor::White);
+	CreateFigures(EColor::Black);
 }
 
-void AChessGameModeBase::GenerateChessRow(TArray<EPawnType> Figures, const EColor Color, const int TargetRow)
+void AChessGameModeBase::GenerateChessRow(TArray<EFigureType> Figures, const EColor Color, const int TargetRow)
 {
 	for (int i = 0; i < BoardSize; i++)
 	{
 		UChessPiece* Clone = GenerateChessPiece(Figures[i]);
 		Clone->SetColor(Color);
 		Clone->SetPosition(TargetRow, i);
-		Board[TargetRow][i] = Clone;
+		Board[TargetRow].Set(i,Clone);
 	}
 }
 
-void AChessGameModeBase::CreateFigures(const TArray<EPawnType> Pawns, TArray<EPawnType> Men, const EColor Color)
+void AChessGameModeBase::CreateFigures(const EColor FigureColor)
 {
-	const bool bIsWhite = Color == EColor::White;
+	const bool bIsWhite = FigureColor == EColor::White;
 	const int ManRow = bIsWhite ? 0 : 7;
 	const int PawnRow = bIsWhite ? 1 : 6;
+	TArray<EFigureType> MenTargetArray = Men;
 
 	if (!bIsWhite)
 	{
-		Algo::Reverse(Men);
+		Algo::Reverse(MenTargetArray);
 	}
 
-	GenerateChessRow(Men, Color, ManRow);
-	GenerateChessRow(Pawns, Color, PawnRow);
+	GenerateChessRow(MenTargetArray, FigureColor, ManRow);
+	GenerateChessRow(Pawns, FigureColor, PawnRow);
 };

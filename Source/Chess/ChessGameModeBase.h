@@ -4,7 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "EColor.h"
-#include "EPawnType.h"
+#include "EFigureType.h"
+#include "F2DBoardArray.h"
 #include "ChessPieces/UChessPiece.h"
 #include "GameFramework/GameModeBase.h"
 #include "ChessGameModeBase.generated.h"
@@ -16,23 +17,29 @@ UCLASS()
 class CHESS_API AChessGameModeBase final : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
 public:
+	void InitializeChessPieces();
 	virtual void InitGameState() override;
-	static UChessPiece* GenerateChessPiece(const EPawnType Figure);
-	void CreateFigures(const TArray<EPawnType> Pawns, TArray<EPawnType> Men, const EColor Color);
+	UChessPiece* GenerateChessPiece(const EFigureType Figure);
+	void CreateFigures(const EColor FigureColor);
 	void CreateChessPiece();
 
 private:
-	TArray<TArray<UChessPiece*>> Board;
 	int BoardSize = 8;
-	void GenerateChessRow(TArray<EPawnType> Figures, const EColor Color, const int TargetRow);
-	const TArray<EPawnType> Pawns = {
-		EPawnType::Pawn, EPawnType::Pawn, EPawnType::Pawn, EPawnType::Pawn, EPawnType::Pawn, EPawnType::Pawn,
-		EPawnType::Pawn, EPawnType::Pawn
+	void GenerateChessRow(TArray<EFigureType> Figures, const EColor Color, const int TargetRow);
+	const TArray<EFigureType> Pawns = {
+		EFigureType::Pawn, EFigureType::Pawn, EFigureType::Pawn, EFigureType::Pawn, EFigureType::Pawn, EFigureType::Pawn,
+		EFigureType::Pawn, EFigureType::Pawn
 	};
-	const TArray<EPawnType> Men = {
-		EPawnType::Rook, EPawnType::Knight, EPawnType::Bishop, EPawnType::King, EPawnType::Queen, EPawnType::Bishop,
-		EPawnType::Knight, EPawnType::Rook
+	const TArray<EFigureType> Men = {
+		EFigureType::Rook, EFigureType::Knight, EFigureType::Bishop, EFigureType::King, EFigureType::Queen, EFigureType::Bishop,
+		EFigureType::Knight, EFigureType::Rook
 	};
+	
+	UPROPERTY()
+	TArray<F2DBoardArray> Board;
+
+	UPROPERTY()
+	TMap<EFigureType, UChessPiece*> FigureTypeMap;
 };

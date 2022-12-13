@@ -9,16 +9,20 @@ class UChessPiece : public UObject
 	GENERATED_BODY()
 public:
 	UChessPiece Clone(const UChessPiece* SourceChessPiece);
-	void SetColor(EColor Color);
+	void SetColor(EColor PieceColor);
 	void CreateActor();
 	void SetPosition(int Row,int Column);
 	void MoveToPosition();
 	void GetAvailableMoves();
 
 private :
-	UE::Geometry::FVector2i BoardPosition;
+	UPROPERTY()
+	FVector2D BoardPosition;
+	UPROPERTY()
 	FVector3f WorldPosition;
-	AActor ChessPieceActor;
+	UPROPERTY()
+	AActor* ChessPieceActor;
+	UPROPERTY()
 	EColor Color = EColor::White;
 	void SetActorPosition();
 	void MoveActorToPosition();

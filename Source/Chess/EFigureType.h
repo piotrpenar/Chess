@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 UENUM()
-enum class EPawnType : uint8
+enum class EFigureType : uint8
 {
 	Pawn = 0 UMETA(DisplayName = "Pawn"),
 	Rook = 1 UMETA(DisplayName = "Rook"),

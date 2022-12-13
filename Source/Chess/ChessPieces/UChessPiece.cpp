@@ -1,14 +1,12 @@
 ﻿#include "UChessPiece.h"
 
 
-void UChessPiece::SetColor(const EColor Color)
+void UChessPiece::SetColor(const EColor PieceColor)
 {
-	this->Color = Color;
+	Color = PieceColor;
 }
 
 void UChessPiece::SetPosition(const int Row, const int Column)
 {
-	this->BoardPosition = UE::Geometry::FVector2i(Row,Column);
+	this->BoardPosition = FVector2D(Row,Column);
 }
-
-void 

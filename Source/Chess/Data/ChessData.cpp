@@ -3,7 +3,12 @@
 
 #include "ChessData.h"
 
-UStaticMesh* UChessData::GetMeshForType(EFigureType Figure) const
+UStaticMesh* UChessData::GetMeshForType(const EFigureType Figure) const
 {
 	return FigureToMesh[Figure];
+}
+
+TSubclassOf<AChessFigure> UChessData::GetChessFigureActor() const
+{
+	return ChessFigureActor;
 }

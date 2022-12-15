@@ -14,7 +14,7 @@
  * 
 */
 UCLASS(Blueprintable)
-class CHESS_API AChessController : public AActor
+class CHESS_API AChessController : public AActor 
 {
 	GENERATED_BODY()
 

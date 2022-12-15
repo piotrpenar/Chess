@@ -13,12 +13,12 @@
 void AChessController::InitializeChessPieces()
 {
 	FigureTypeMap = TMap<EFigureType,UChessPiece*>();
-	UChessPawn* Pawn = NewObject<UChessPawn>();
-	UChessPawn* Rook =  NewObject<UChessPawn>();
-	UChessPawn* Knight =  NewObject<UChessPawn>();
-	UChessPawn* Bishop =  NewObject<UChessPawn>();
-	UChessPawn* King =  NewObject<UChessPawn>();
-	UChessPawn* Queen =  NewObject<UChessPawn>();
+	UChessPawn* Pawn = NewObject<UChessPawn>(this);
+	UChessPawn* Rook =  NewObject<UChessPawn>(this);
+	UChessPawn* Knight =  NewObject<UChessPawn>(this);
+	UChessPawn* Bishop =  NewObject<UChessPawn>(this);
+	UChessPawn* King =  NewObject<UChessPawn>(this);
+	UChessPawn* Queen =  NewObject<UChessPawn>(this);
 	FigureTypeMap.Add(EFigureType::Pawn,Pawn);
 	FigureTypeMap.Add(EFigureType::Rook,Rook);
 	FigureTypeMap.Add(EFigureType::Knight,Knight);
@@ -48,7 +48,7 @@ UChessPiece* AChessController::GenerateChessPiece(const EFigureType Figure)
 {
 	UChessPiece* Clone = NewObject<UChessPiece>();
 	DuplicateObject(FigureTypeMap[Figure], Clone);
-	return nullptr;
+	return Clone;
 }
 
 void AChessController::CreateChessPiece()
@@ -64,7 +64,7 @@ void AChessController::GenerateChessRow(TArray<EFigureType> Figures, const EColo
 		UChessPiece* Clone = GenerateChessPiece(Figures[i]);
 		Clone->SetColor(Color);
 		Clone->SetPosition(TargetRow, i);
-		Clone->CreateActor(ChessData);
+		Clone->CreateActor(ChessData,GetWorld());
 		Board[TargetRow].Set(i,Clone);
 	}
 }

@@ -12,7 +12,7 @@ class UChessPiece : public UObject
 public:
 	UChessPiece Clone(const UChessPiece* SourceChessPiece);
 	void SetColor(EColor PieceColor);
-	void CreateActor(UChessData* ChessData) const;
+	void CreateActor(UChessData* ChessData, UWorld* World) const;
 	void SetPosition(int Row,int Column);
 	void MoveToPosition();
 	void GetAvailableMoves();
@@ -21,6 +21,9 @@ protected:
 	EFigureType FigureType = EFigureType::Pawn;
 	
 private :
+	
+	UPROPERTY(EditDefaultsOnly,Category="ActorSpawning")
+	TSubclassOf<AChessFigure> UsefulActorBP;
 	UPROPERTY()
 	FVector2D BoardPosition;
 	UPROPERTY()

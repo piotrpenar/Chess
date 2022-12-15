@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "EFigureType.h"
+#include "Chess/Utils/EFigureType.h"
 #include "ChessData.generated.h"
 
 /**

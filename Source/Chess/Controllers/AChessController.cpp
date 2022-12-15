@@ -1,0 +1,86 @@
+// Copyright Epic Games, Inc. All Rights Reserved.
+
+
+#include "AChessController.h"
+
+#include "Chess/ChessPieces/UChessPawn.h"
+#include "Chess/ChessPieces/UChessPiece.h"
+#include "Chess/Utils/EColor.h"
+#include "Chess/Utils/EFigureType.h"
+#include "Chess/Utils/F2DBoardArray.h"
+
+
+void AChessController::InitializeChessPieces()
+{
+	FigureTypeMap = TMap<EFigureType,UChessPiece*>();
+	UChessPawn* Pawn = NewObject<UChessPawn>();
+	UChessPawn* Rook =  NewObject<UChessPawn>();
+	UChessPawn* Knight =  NewObject<UChessPawn>();
+	UChessPawn* Bishop =  NewObject<UChessPawn>();
+	UChessPawn* King =  NewObject<UChessPawn>();
+	UChessPawn* Queen =  NewObject<UChessPawn>();
+	FigureTypeMap.Add(EFigureType::Pawn,Pawn);
+	FigureTypeMap.Add(EFigureType::Rook,Rook);
+	FigureTypeMap.Add(EFigureType::Knight,Knight);
+	FigureTypeMap.Add(EFigureType::Bishop,Bishop);
+	FigureTypeMap.Add(EFigureType::King,King);
+	FigureTypeMap.Add(EFigureType::Queen,Queen);
+}
+
+void AChessController::BeginPlay()
+{
+	Super::BeginPlay();
+	InitializeChessPieces();
+	for (int i = 0; i < BoardSize; i++)
+	{
+		TArray<UChessPiece*> Row = TArray<UChessPiece*>();
+		for (int j = 0; j < BoardSize; j++)
+		{
+			Row.Add(nullptr);
+		}
+		Board.Add(F2DBoardArray());
+		Board[i] = Row;
+	}
+	CreateChessPiece();
+}
+
+UChessPiece* AChessController::GenerateChessPiece(const EFigureType Figure)
+{
+	UChessPiece* Clone = NewObject<UChessPiece>();
+	DuplicateObject(FigureTypeMap[Figure], Clone);
+	return nullptr;
+}
+
+void AChessController::CreateChessPiece()
+{
+	CreateFigures(EColor::White);
+	CreateFigures(EColor::Black);
+}
+
+void AChessController::GenerateChessRow(TArray<EFigureType> Figures, const EColor Color, const int TargetRow)
+{
+	for (int i = 0; i < BoardSize; i++)
+	{
+		UChessPiece* Clone = GenerateChessPiece(Figures[i]);
+		Clone->SetColor(Color);
+		Clone->SetPosition(TargetRow, i);
+		Clone->CreateActor(ChessData);
+		Board[TargetRow].Set(i,Clone);
+	}
+}
+
+void AChessController::CreateFigures(const EColor FigureColor)
+{
+	const bool bIsWhite = FigureColor == EColor::White;
+	const int ManRow = bIsWhite ? 0 : 7;
+	const int PawnRow = bIsWhite ? 1 : 6;
+	TArray<EFigureType> MenTargetArray = Men;
+
+	if (!bIsWhite)
+	{
+		Algo::Reverse(MenTargetArray);
+	}
+
+	GenerateChessRow(MenTargetArray, FigureColor, ManRow);
+	GenerateChessRow(Pawns, FigureColor, PawnRow);
+};

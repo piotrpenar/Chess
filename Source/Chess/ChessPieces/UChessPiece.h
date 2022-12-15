@@ -1,8 +1,8 @@
 ﻿#pragma once
 #include "IntVectorTypes.h"
-#include "Chess/ChessData.h"
-#include "Chess/EColor.h"
-#include "Chess/EFigureType.h"
+#include "Chess/Data/ChessData.h"
+#include "Chess/Utils/EColor.h"
+#include "Chess/Utils/EFigureType.h"
 #include "UChessPiece.generated.h"
 
 UCLASS()

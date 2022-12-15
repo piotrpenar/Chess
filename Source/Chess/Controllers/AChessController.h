@@ -3,19 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ChessData.h"
-#include "EColor.h"
-#include "EFigureType.h"
-#include "F2DBoardArray.h"
-#include "ChessPieces/UChessPiece.h"
-#include "GameFramework/GameModeBase.h"
-#include "ChessGameModeBase.generated.h"
+#include "Chess/ChessPieces/UChessPiece.h"
+#include "Chess/Data/ChessData.h"
+#include "Chess/Utils/EColor.h"
+#include "Chess/Utils/EFigureType.h"
+#include "Chess/Utils/F2DBoardArray.h"
+#include "AChessController.generated.h"
 
 /**
  * 
- */
+*/
 UCLASS(Blueprintable)
-class CHESS_API AChessGameModeBase final : public AGameModeBase
+class CHESS_API AChessController : public AActor
 {
 	GENERATED_BODY()
 

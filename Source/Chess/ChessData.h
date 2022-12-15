@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "EFigureType.h"
 #include "ChessData.generated.h"
 
 /**
@@ -13,6 +14,8 @@ class CHESS_API UChessData final : public UDataAsset
 {
 	GENERATED_BODY()
 
-	// UPROPERTY(EditAnywhere)
-	// TMap<EPawnType,AChessFigure*> TypeToActor;
+	UPROPERTY(EditAnywhere)
+	TMap<EFigureType, UStaticMesh*> FigureToMesh;
+public:
+	UStaticMesh* GetMeshForType(EFigureType Figure) const;
 };

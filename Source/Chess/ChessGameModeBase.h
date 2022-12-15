@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ChessData.h"
 #include "EColor.h"
 #include "EFigureType.h"
 #include "F2DBoardArray.h"
@@ -13,17 +14,20 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable)
 class CHESS_API AChessGameModeBase final : public AGameModeBase
 {
 	GENERATED_BODY()
 
 public:
 	void InitializeChessPieces();
-	virtual void InitGameState() override;
+	virtual void BeginPlay() override;
 	UChessPiece* GenerateChessPiece(const EFigureType Figure);
 	void CreateFigures(const EColor FigureColor);
 	void CreateChessPiece();
+
+	UPROPERTY(EditAnywhere)
+	UChessData* ChessData;
 
 private:
 	int BoardSize = 8;

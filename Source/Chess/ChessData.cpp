@@ -2,3 +2,8 @@
 
 
 #include "ChessData.h"
+
+UStaticMesh* UChessData::GetMeshForType(EFigureType Figure) const
+{
+	return FigureToMesh[Figure];
+}

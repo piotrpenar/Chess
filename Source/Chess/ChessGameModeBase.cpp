@@ -23,9 +23,9 @@ void AChessGameModeBase::InitializeChessPieces()
 	FigureTypeMap.Add(EFigureType::King,&King);
 	FigureTypeMap.Add(EFigureType::Queen,&Queen);
 }
-
-void AChessGameModeBase::InitGameState()
+void AChessGameModeBase::BeginPlay()
 {
+	Super::InitGameState();
 	InitializeChessPieces();
 	for (int i = 0; i < BoardSize; i++)
 	{
@@ -60,6 +60,7 @@ void AChessGameModeBase::GenerateChessRow(TArray<EFigureType> Figures, const ECo
 		UChessPiece* Clone = GenerateChessPiece(Figures[i]);
 		Clone->SetColor(Color);
 		Clone->SetPosition(TargetRow, i);
+		Clone->CreateActor(ChessData);
 		Board[TargetRow].Set(i,Clone);
 	}
 }

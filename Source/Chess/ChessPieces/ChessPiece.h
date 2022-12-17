@@ -3,7 +3,7 @@
 #include "Chess/Data/ChessData.h"
 #include "Chess/Utils/EColor.h"
 #include "Chess/Utils/EFigureType.h"
-#include "UChessPiece.generated.h"
+#include "ChessPiece.generated.h"
 
 UCLASS()
 class UChessPiece : public UObject
@@ -11,14 +11,12 @@ class UChessPiece : public UObject
 	GENERATED_BODY()
 public:
 	void SetColor(EColor PieceColor);
-	void CreateActor(UChessData* ChessData, UWorld* World);
+	void CreateActor(UChessData* ChessData, UWorld* World,EFigureType Figure);
 	void SetPosition(int Row,int Column);
 	void MoveToPosition();
 	void GetAvailableMoves();
 	void SetActorTransform(FTransform Transform) const;
-
-protected:
-	EFigureType FigureType = EFigureType::Pawn;
+	virtual EFigureType GetFigureType() { return EFigureType::Pawn;};
 	
 private :
 	

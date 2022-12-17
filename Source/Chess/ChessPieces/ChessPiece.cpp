@@ -1,6 +1,5 @@
-﻿#include "UChessPiece.h"
-
-#include "AChessFigure.h"
+﻿#include "ChessPiece.h"
+#include "Figures/AChessFigure.h"
 
 
 void UChessPiece::SetColor(const EColor PieceColor)
@@ -8,7 +7,7 @@ void UChessPiece::SetColor(const EColor PieceColor)
 	Color = PieceColor;
 }
 
-void UChessPiece::CreateActor(UChessData* ChessData, UWorld* World)
+void UChessPiece::CreateActor(UChessData* ChessData, UWorld* World,EFigureType FigureType)
 {
 	if(!IsValid(World))
 	{

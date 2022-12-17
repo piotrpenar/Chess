@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Chess/ChessPieces/UChessPiece.h"
+#include "Chess/ChessPieces/ChessPiece.h"
 #include "Chess/Data/ChessData.h"
 #include "Chess/Utils/EColor.h"
 #include "Chess/Utils/EFigureType.h"

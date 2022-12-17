@@ -3,8 +3,12 @@
 
 #include "AChessController.h"
 
-#include "Chess/ChessPieces/UChessPawn.h"
-#include "Chess/ChessPieces/UChessPiece.h"
+#include "Chess/ChessPieces/Logic/ChessBishop.h"
+#include "Chess/ChessPieces/Logic/ChessKing.h"
+#include "Chess/ChessPieces/Logic/ChessKnight.h"
+#include "Chess/ChessPieces/Logic/ChessPawn.h"
+#include "Chess/ChessPieces/Logic/ChessQueen.h"
+#include "Chess/ChessPieces/Logic/ChessRook.h"
 #include "Chess/Utils/EColor.h"
 #include "Chess/Utils/EFigureType.h"
 #include "Chess/Utils/F2DBoardArray.h"
@@ -14,17 +18,17 @@ void AChessController::InitializeChessPieces()
 {
 	FigureTypeMap = TMap<EFigureType,UChessPiece*>();
 	UChessPawn* Pawn = NewObject<UChessPawn>(this);
-	UChessPawn* Rook =  NewObject<UChessPawn>(this);
-	UChessPawn* Knight =  NewObject<UChessPawn>(this);
-	UChessPawn* Bishop =  NewObject<UChessPawn>(this);
-	UChessPawn* King =  NewObject<UChessPawn>(this);
-	UChessPawn* Queen =  NewObject<UChessPawn>(this);
+	UChessRook* Rook =  NewObject<UChessRook>(this);
+	UChessKnight* Knight =  NewObject<UChessKnight>(this);
+	UChessBishop* Bishop =  NewObject<UChessBishop>(this);
+	UChessQueen* Queen =  NewObject<UChessQueen>(this);
+	UChessKing* King =  NewObject<UChessKing>(this);
 	FigureTypeMap.Add(EFigureType::Pawn,Pawn);
 	FigureTypeMap.Add(EFigureType::Rook,Rook);
 	FigureTypeMap.Add(EFigureType::Knight,Knight);
 	FigureTypeMap.Add(EFigureType::Bishop,Bishop);
-	FigureTypeMap.Add(EFigureType::King,King);
 	FigureTypeMap.Add(EFigureType::Queen,Queen);
+	FigureTypeMap.Add(EFigureType::King,King);
 }
 
 void AChessController::BeginPlay()
@@ -78,7 +82,7 @@ void AChessController::GenerateChessRow(TArray<EFigureType> Figures, const EColo
 		UChessPiece* Clone = GenerateChessPiece(Figures[i]);
 		Clone->SetColor(Color);
 		Clone->SetPosition(TargetRow, i);
-		Clone->CreateActor(ChessData,GetWorld());
+		Clone->CreateActor(ChessData,GetWorld(),Clone->GetFigureType());
 		Clone->SetActorTransform(GenerateChessPieceTransform(TargetRow,i,Color));
 		Board[TargetRow].Set(i,Clone);
 	}

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Chess/ChessPieces/UChessPiece.h"
+#include "Chess/ChessPieces/ChessPiece.h"
 #include "F2DBoardArray.generated.h"
 
 USTRUCT(BlueprintType)

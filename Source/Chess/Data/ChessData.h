@@ -14,10 +14,6 @@ UCLASS()
 class CHESS_API UChessData final : public UDataAsset
 {
 	GENERATED_BODY()
-	
-	UPROPERTY(EditAnywhere)
-	AActor* ChessBoardOrigin;
-
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AChessFigure> ChessFigureActor;
 	UPROPERTY(EditAnywhere)
@@ -25,5 +21,4 @@ class CHESS_API UChessData final : public UDataAsset
 public:
 	UStaticMesh* GetMeshForType(EFigureType Figure) const;
 	TSubclassOf<AChessFigure> GetChessFigureActor() const;
-	FTransform GetChessBoardTransform() const; 
 };

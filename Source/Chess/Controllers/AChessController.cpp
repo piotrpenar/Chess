@@ -59,7 +59,7 @@ void AChessController::CreateChessPiece()
 
 FTransform AChessController::GenerateChessPieceTransform(const int TargetRow,const  int TargetColumn,const  EColor Color) const
 {
-	FTransform Transform = ChessData->GetChessBoardTransform();
+	FTransform Transform = GetChessBoardTransform();
 	Transform.SetLocation(Transform.GetLocation() + FVector(TargetRow,0,TargetColumn));
 	if(Color == EColor::Black)
 	{
@@ -98,3 +98,8 @@ void AChessController::CreateFigures(const EColor FigureColor)
 	GenerateChessRow(MenTargetArray, FigureColor, ManRow);
 	GenerateChessRow(Pawns, FigureColor, PawnRow);
 };
+
+FTransform AChessController::GetChessBoardTransform() const
+{
+	return ChessBoardOrigin->GetActorTransform();
+}

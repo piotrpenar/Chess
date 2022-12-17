@@ -8,14 +8,14 @@ void UChessPiece::SetColor(const EColor PieceColor)
 	Color = PieceColor;
 }
 
-void UChessPiece::CreateActor(UChessData* ChessData, UWorld* World) const
+void UChessPiece::CreateActor(UChessData* ChessData, UWorld* World)
 {
 	if(!IsValid(World))
 	{
 		UE_LOG(LogTemp,Log,TEXT("World is invalid"))
 		return;
 	}
-	const AChessFigure* Actor = World->SpawnActor<AChessFigure>(ChessData->GetChessFigureActor());
+	AChessFigure* Actor = World->SpawnActor<AChessFigure>(ChessData->GetChessFigureActor());
 	if(!IsValid(Actor))
 	{
 		UE_LOG(LogTemp,Log,TEXT("Actor is invalid"))
@@ -45,6 +45,8 @@ void UChessPiece::CreateActor(UChessData* ChessData, UWorld* World) const
 		return;
 	}
 	StaticMeshComponent->SetStaticMesh(Mesh);
+
+	ChessPieceActor = Actor;
 }
 
 void UChessPiece::SetPosition(const int Row, const int Column)

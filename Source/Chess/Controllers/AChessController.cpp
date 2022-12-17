@@ -31,10 +31,10 @@ void AChessController::BeginPlay()
 {
 	Super::BeginPlay();
 	InitializeChessPieces();
-	for (int i = 0; i < BoardSize; i++)
+	for (int i = 0; i < ChessData->BoardSize; i++)
 	{
 		TArray<UChessPiece*> Row = TArray<UChessPiece*>();
-		for (int j = 0; j < BoardSize; j++)
+		for (int j = 0; j < ChessData->BoardSize; j++)
 		{
 			Row.Add(nullptr);
 		}
@@ -59,8 +59,9 @@ void AChessController::CreateChessPiece()
 
 FTransform AChessController::GenerateChessPieceTransform(const int TargetRow,const  int TargetColumn,const  EColor Color) const
 {
+	const float BoardDistance = ChessData->BoardCheckerSize;
 	FTransform Transform = GetChessBoardTransform();
-	Transform.SetLocation(Transform.GetLocation() + FVector(TargetRow,0,TargetColumn));
+	Transform.SetLocation(Transform.GetLocation() + FVector(BoardDistance/2 + TargetRow*BoardDistance,BoardDistance/2 + TargetColumn*BoardDistance,0));
 	if(Color == EColor::Black)
 	{
 		FRotator Rotator = Transform.GetRotation().Rotator();
@@ -72,7 +73,7 @@ FTransform AChessController::GenerateChessPieceTransform(const int TargetRow,con
 
 void AChessController::GenerateChessRow(TArray<EFigureType> Figures, const EColor Color, const int TargetRow)
 {
-	for (int i = 0; i < BoardSize; i++)
+	for (int i = 0; i < ChessData->BoardSize; i++)
 	{
 		UChessPiece* Clone = GenerateChessPiece(Figures[i]);
 		Clone->SetColor(Color);

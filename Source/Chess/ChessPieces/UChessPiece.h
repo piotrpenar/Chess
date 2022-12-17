@@ -11,7 +11,7 @@ class UChessPiece : public UObject
 	GENERATED_BODY()
 public:
 	void SetColor(EColor PieceColor);
-	void CreateActor(UChessData* ChessData, UWorld* World) const;
+	void CreateActor(UChessData* ChessData, UWorld* World);
 	void SetPosition(int Row,int Column);
 	void MoveToPosition();
 	void GetAvailableMoves();

@@ -20,10 +20,10 @@ class CHESS_API AChessController : public AActor
 
 public:
 	void InitializeChessPieces();
+	void CreateChessPiece();
+	void CreateFigures(const EColor FigureColor);
 	virtual void BeginPlay() override;
 	UChessPiece* GenerateChessPiece(const EFigureType Figure);
-	void CreateFigures(const EColor FigureColor);
-	void CreateChessPiece();
 
 	UPROPERTY(EditAnywhere)
 	UChessData* ChessData;
@@ -32,10 +32,15 @@ public:
 	AActor* ChessBoardOrigin;
 
 private:
+	UPROPERTY()
+	TArray<F2DBoardArray> Board;
+
+	UPROPERTY()
+	TMap<EFigureType, UChessPiece*> FigureTypeMap;
 	FTransform GetChessBoardTransform() const; 
-	int BoardSize = 8;
 	FTransform GenerateChessPieceTransform(int TargetRow, int TargetColumn, EColor Color) const;
 	void GenerateChessRow(TArray<EFigureType> Figures, const EColor Color, const int TargetRow);
+	
 	const TArray<EFigureType> Pawns = {
 		EFigureType::Pawn, EFigureType::Pawn, EFigureType::Pawn, EFigureType::Pawn, EFigureType::Pawn, EFigureType::Pawn,
 		EFigureType::Pawn, EFigureType::Pawn
@@ -45,9 +50,4 @@ private:
 		EFigureType::Knight, EFigureType::Rook
 	};
 	
-	UPROPERTY()
-	TArray<F2DBoardArray> Board;
-
-	UPROPERTY()
-	TMap<EFigureType, UChessPiece*> FigureTypeMap;
 };

@@ -12,3 +12,8 @@ TSubclassOf<AChessFigure> UChessData::GetChessFigureActor() const
 {
 	return ChessFigureActor;
 }
+
+FTransform UChessData::GetChessBoardTransform() const
+{
+	return ChessBoardOrigin->GetActorTransform();
+}

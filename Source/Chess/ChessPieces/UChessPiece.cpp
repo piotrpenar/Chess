@@ -15,8 +15,6 @@ void UChessPiece::CreateActor(UChessData* ChessData, UWorld* World) const
 		UE_LOG(LogTemp,Log,TEXT("World is invalid"))
 		return;
 	}
-	const FVector spawn_point = FVector(0, 4, 7);
-	const FRotator spawn_rotation = FRotator();
 	const AChessFigure* Actor = World->SpawnActor<AChessFigure>(ChessData->GetChessFigureActor());
 	if(!IsValid(Actor))
 	{
@@ -52,4 +50,35 @@ void UChessPiece::CreateActor(UChessData* ChessData, UWorld* World) const
 void UChessPiece::SetPosition(const int Row, const int Column)
 {
 	this->BoardPosition = FVector2D(Row, Column);
+}
+
+void UChessPiece::MoveToPosition()
+{
+	
+}
+
+void UChessPiece::GetAvailableMoves()
+{
+	
+}
+
+void  UChessPiece::SetActorRotation(const FRotator Rotation ) const
+{
+	ChessPieceActor->SetActorRotation(Rotation);
+}
+
+void UChessPiece::SetActorPosition(const FVector Position) const
+{
+	ChessPieceActor->SetActorLocation(Position);
+}
+
+void UChessPiece::SetActorTransform(const FTransform Transform) const
+{
+	ChessPieceActor->SetActorTransform(Transform);
+}
+
+//TODO: Change this to animation
+void UChessPiece::MoveActorToPosition(const FVector Position)
+{
+	SetActorPosition(Position);
 }

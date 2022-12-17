@@ -30,6 +30,7 @@ public:
 
 private:
 	int BoardSize = 8;
+	FTransform GenerateChessPieceTransform(int TargetRow, int TargetColumn, EColor Color) const;
 	void GenerateChessRow(TArray<EFigureType> Figures, const EColor Color, const int TargetRow);
 	const TArray<EFigureType> Pawns = {
 		EFigureType::Pawn, EFigureType::Pawn, EFigureType::Pawn, EFigureType::Pawn, EFigureType::Pawn, EFigureType::Pawn,

@@ -57,6 +57,19 @@ void AChessController::CreateChessPiece()
 	CreateFigures(EColor::Black);
 }
 
+FTransform AChessController::GenerateChessPieceTransform(const int TargetRow,const  int TargetColumn,const  EColor Color) const
+{
+	FTransform Transform = ChessData->GetChessBoardTransform();
+	Transform.SetLocation(Transform.GetLocation() + FVector(TargetRow,0,TargetColumn));
+	if(Color == EColor::Black)
+	{
+		FRotator Rotator = Transform.GetRotation().Rotator();
+		Rotator.Yaw+=90;
+		Transform.SetRotation(Rotator.Quaternion());
+	}
+	return Transform;
+}
+
 void AChessController::GenerateChessRow(TArray<EFigureType> Figures, const EColor Color, const int TargetRow)
 {
 	for (int i = 0; i < BoardSize; i++)
@@ -65,6 +78,7 @@ void AChessController::GenerateChessRow(TArray<EFigureType> Figures, const EColo
 		Clone->SetColor(Color);
 		Clone->SetPosition(TargetRow, i);
 		Clone->CreateActor(ChessData,GetWorld());
+		Clone->SetActorTransform(GenerateChessPieceTransform(TargetRow,i,Color));
 		Board[TargetRow].Set(i,Clone);
 	}
 }

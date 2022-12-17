@@ -10,12 +10,12 @@ class UChessPiece : public UObject
 {
 	GENERATED_BODY()
 public:
-	UChessPiece Clone(const UChessPiece* SourceChessPiece);
 	void SetColor(EColor PieceColor);
 	void CreateActor(UChessData* ChessData, UWorld* World) const;
 	void SetPosition(int Row,int Column);
 	void MoveToPosition();
 	void GetAvailableMoves();
+	void SetActorTransform(FTransform Transform) const;
 
 protected:
 	EFigureType FigureType = EFigureType::Pawn;
@@ -32,6 +32,7 @@ private :
 	AActor* ChessPieceActor;
 	UPROPERTY()
 	EColor Color = EColor::White;
-	void SetActorPosition();
-	void MoveActorToPosition();
+	void SetActorPosition(FVector Position) const;
+	void SetActorRotation(FRotator Rotation) const;
+	void MoveActorToPosition(FVector Position);
 };

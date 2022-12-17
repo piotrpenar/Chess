@@ -82,7 +82,7 @@ void AChessController::GenerateChessRow(TArray<EFigureType> Figures, const EColo
 		UChessPiece* Clone = GenerateChessPiece(Figures[i]);
 		Clone->SetColor(Color);
 		Clone->SetPosition(TargetRow, i);
-		Clone->CreateActor(ChessData,GetWorld(),Clone->GetFigureType());
+		Clone->CreateActor(ChessData,GetWorld(),Figures[i]);
 		Clone->SetActorTransform(GenerateChessPieceTransform(TargetRow,i,Color));
 		Board[TargetRow].Set(i,Clone);
 	}

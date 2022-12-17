@@ -8,4 +8,5 @@ class UChessKnight final : public UChessPiece
 	GENERATED_BODY()
 public:
 	virtual EFigureType GetFigureType() override { return EFigureType::Knight;};
+	virtual TArray<FMove> GetAvailableMoves() const override;
 };

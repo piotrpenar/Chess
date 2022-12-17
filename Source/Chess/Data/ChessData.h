@@ -21,6 +21,7 @@ class CHESS_API UChessData final : public UDataAsset
 public:
 	UStaticMesh* GetMeshForType(EFigureType Figure) const;
 	TSubclassOf<AChessFigure> GetChessFigureActor() const;
+	bool IsValidPosition(const FVector2D& Vector2) const;
 	UPROPERTY(EditAnywhere)
 	float BoardCheckerSize = 100;
 	UPROPERTY(EditAnywhere)

@@ -3,8 +3,11 @@
 #include "Chess/Data/ChessData.h"
 #include "Chess/Utils/EColor.h"
 #include "Chess/Utils/EFigureType.h"
+#include "Chess/Utils/FMove.h"
+#include "Logic/ChessPawn.h"
 #include "ChessPiece.generated.h"
 
+struct F2DBoardArray;
 UCLASS()
 class UChessPiece : public UObject
 {
@@ -13,23 +16,29 @@ public:
 	void SetColor(EColor PieceColor);
 	void CreateActor(UChessData* ChessData, UWorld* World,EFigureType Figure);
 	void SetPosition(int Row,int Column);
-	void MoveToPosition();
-	void GetAvailableMoves();
+	virtual void MoveToPosition();
 	void SetActorTransform(FTransform Transform) const;
-	virtual EFigureType GetFigureType() { return EFigureType::Pawn;};
+	virtual EFigureType GetFigureType() { return EFigureType::Pawn;}
+	EColor GetColor() const;
+	virtual TArray<FMove> GetAvailableMoves() const;
+	UPROPERTY()
+	UChessData* ChessData;
+	UPROPERTY()
+	TArray<F2DBoardArray>* Board;
+
+protected:
 	
-private :
-	
-	UPROPERTY(EditDefaultsOnly,Category="ActorSpawning")
-	TSubclassOf<AChessFigure> UsefulActorBP;
+	UPROPERTY()
+	EColor Color = EColor::White;
 	UPROPERTY()
 	FVector2D BoardPosition;
 	UPROPERTY()
 	FVector3f WorldPosition;
+	UChessPiece* GetOtherPieceAtPosition(FVector2D BoardPosition) const;
+	
+private :
 	UPROPERTY()
 	AActor* ChessPieceActor;
-	UPROPERTY()
-	EColor Color = EColor::White;
 	void SetActorPosition(FVector Position) const;
 	void SetActorRotation(FRotator Rotation) const;
 	void MoveActorToPosition(FVector Position);

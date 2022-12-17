@@ -24,6 +24,7 @@ public:
 	void CreateFigures(const EColor FigureColor);
 	virtual void BeginPlay() override;
 	UChessPiece* GenerateChessPiece(const EFigureType Figure);
+	UChessPiece* GetChessPiece(FVector2D Position);
 
 	UPROPERTY(EditAnywhere)
 	UChessData* ChessData;

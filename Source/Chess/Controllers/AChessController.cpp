@@ -55,6 +55,11 @@ UChessPiece* AChessController::GenerateChessPiece(const EFigureType Figure)
 	return Clone;
 }
 
+UChessPiece* AChessController::GetChessPiece(const FVector2D Position)
+{
+	return Board[static_cast<int>(Position.X)][static_cast<int>(Position.Y)];
+}
+
 void AChessController::CreateChessPiece()
 {
 	CreateFigures(EColor::White);
@@ -82,6 +87,8 @@ void AChessController::GenerateChessRow(TArray<EFigureType> Figures, const EColo
 		UChessPiece* Clone = GenerateChessPiece(Figures[i]);
 		Clone->SetColor(Color);
 		Clone->SetPosition(TargetRow, i);
+		Clone->ChessData = ChessData;
+		Clone->Board = &Board;
 		Clone->CreateActor(ChessData,GetWorld(),Figures[i]);
 		Clone->SetActorTransform(GenerateChessPieceTransform(TargetRow,i,Color));
 		Board[TargetRow].Set(i,Clone);

@@ -1,5 +1,6 @@
 ﻿#include "ChessPiece.h"
 #include "Figures/AChessFigure.h"
+#include "Chess/Utils/F2DBoardArray.h"
 
 
 void UChessPiece::SetColor(const EColor PieceColor)
@@ -78,8 +79,18 @@ void UChessPiece::SetActorTransform(const FTransform Transform) const
 	ChessPieceActor->SetActorTransform(Transform);
 }
 
+EColor UChessPiece::GetColor() const
+{
+	return Color;
+}
+
 //TODO: Change this to animation
 void UChessPiece::MoveActorToPosition(const FVector Position)
 {
 	SetActorPosition(Position);
+}
+
+UChessPiece* UChessPiece::GetOtherPieceAtPosition(const FVector2D BoardPosition) const
+{
+	return (*Board)[BoardPosition.X][BoardPosition.Y];
 }

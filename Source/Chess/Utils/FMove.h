@@ -1,5 +1,4 @@
 ﻿#pragma once
-#include "Chess/ChessPieces/ChessPiece.h"
 #include "FMove.generated.h"
 
 USTRUCT(BlueprintType)
@@ -11,9 +10,13 @@ public:
 	UPROPERTY()
 	FVector2D TargetPosition;
 	UPROPERTY()
-	UChessPiece* TargetObject;
+	UObject* TargetObject;
 
-	FMove(FVector2D Position,UChessPiece* Object)
+	FMove()
+	{
+	}
+	
+	FMove(FVector2D Position,UObject* Object)
 	{
 		TargetPosition = Position;
 		TargetObject = Object;

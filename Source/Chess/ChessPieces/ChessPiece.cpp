@@ -1,14 +1,12 @@
 ﻿#include "ChessPiece.h"
 #include "Figures/AChessFigure.h"
-#include "Chess/Utils/F2DBoardArray.h"
-
 
 void UChessPiece::SetColor(const EColor PieceColor)
 {
 	Color = PieceColor;
 }
 
-void UChessPiece::CreateActor(UChessData* ChessData, UWorld* World,EFigureType FigureType)
+void UChessPiece::CreateActor(UWorld* World,EFigureType FigureType)
 {
 	if(!IsValid(World))
 	{
@@ -32,6 +30,8 @@ void UChessPiece::CreateActor(UChessData* ChessData, UWorld* World,EFigureType F
 		UE_LOG(LogTemp,Log,TEXT("ChessData is invalid"))
 		return;
 	}
+	int value =static_cast<int>(this->GetFigureType());
+	UE_LOG(LogTemp, Warning, TEXT("Figure type is %d"), value);
 	UStaticMesh* Mesh = ChessData->GetMeshForType(FigureType);
 	if(!IsValid(Mesh))
 	{
@@ -47,6 +47,7 @@ void UChessPiece::CreateActor(UChessData* ChessData, UWorld* World,EFigureType F
 	StaticMeshComponent->SetStaticMesh(Mesh);
 
 	ChessPieceActor = Actor;
+	Actor->SourcePiece = this;
 }
 
 void UChessPiece::SetPosition(const int Row, const int Column)
@@ -55,11 +56,6 @@ void UChessPiece::SetPosition(const int Row, const int Column)
 }
 
 void UChessPiece::MoveToPosition()
-{
-	
-}
-
-void UChessPiece::GetAvailableMoves()
 {
 	
 }
@@ -74,23 +70,24 @@ void UChessPiece::SetActorPosition(const FVector Position) const
 	ChessPieceActor->SetActorLocation(Position);
 }
 
-void UChessPiece::SetActorTransform(const FTransform Transform) const
-{
-	ChessPieceActor->SetActorTransform(Transform);
-}
+// void UChessPiece::SetActorTransform(const FTransform Transform) const
+// {
+// 	ChessPieceActor->SetActorTransform(Transform);
+// }
 
 EColor UChessPiece::GetColor() const
 {
 	return Color;
 }
 
+TArray<FMove> UChessPiece::GetAvailableMoves() const
+{
+	TArray<FMove> AvaliableMoves = {};
+	return AvaliableMoves;
+}
+
 //TODO: Change this to animation
 void UChessPiece::MoveActorToPosition(const FVector Position)
 {
 	SetActorPosition(Position);
-}
-
-UChessPiece* UChessPiece::GetOtherPieceAtPosition(const FVector2D BoardPosition) const
-{
-	return (*Board)[BoardPosition.X][BoardPosition.Y];
 }

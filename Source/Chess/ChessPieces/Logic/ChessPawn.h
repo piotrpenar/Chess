@@ -3,7 +3,7 @@
 #include "ChessPawn.generated.h"
 
 UCLASS()
-class UChessPawn : public UChessPiece
+class UChessPawn final : public UChessPiece
 {
 	GENERATED_BODY()
 public:

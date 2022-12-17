@@ -37,13 +37,12 @@ void AChessController::BeginPlay()
 	InitializeChessPieces();
 	for (int i = 0; i < ChessData->BoardSize; i++)
 	{
-		TArray<UChessPiece*> Row = TArray<UChessPiece*>();
+		F2DBoardArray Row = F2DBoardArray();
 		for (int j = 0; j < ChessData->BoardSize; j++)
 		{
 			Row.Add(nullptr);
 		}
-		Board.Add(F2DBoardArray());
-		Board[i] = Row;
+		Board.Add(Row);
 	}
 	CreateChessPiece();
 }
@@ -57,7 +56,7 @@ UChessPiece* AChessController::GenerateChessPiece(const EFigureType Figure)
 
 UChessPiece* AChessController::GetChessPiece(const FVector2D Position)
 {
-	return Board[static_cast<int>(Position.X)][static_cast<int>(Position.Y)];
+	return static_cast<UChessPiece*>(Board[static_cast<int>(Position.X)][static_cast<int>(Position.Y)]);
 }
 
 void AChessController::CreateChessPiece()
@@ -88,8 +87,8 @@ void AChessController::GenerateChessRow(TArray<EFigureType> Figures, const EColo
 		Clone->SetColor(Color);
 		Clone->SetPosition(TargetRow, i);
 		Clone->ChessData = ChessData;
-		Clone->Board = &Board;
-		Clone->CreateActor(ChessData,GetWorld(),Figures[i]);
+		Clone->Board = Board;
+		Clone->CreateActor(GetWorld(),Figures[i]);
 		Clone->SetActorTransform(GenerateChessPieceTransform(TargetRow,i,Color));
 		Board[TargetRow].Set(i,Clone);
 	}

@@ -1,5 +1,6 @@
 ﻿#include "ChessPawn.h"
 
+#include "Chess/Helpers/ChessMovesHelper.h"
 #include "Chess/Utils/F2DBoardArray.h"
 
 
@@ -26,7 +27,7 @@ TArray<FMove> UChessPawn::GetAvailableMoves() const
 		{
 			continue;
 		}
-		UChessPiece* TargetObject = GetOtherPieceAtPosition(PossibleMove);
+		UChessPiece* TargetObject = UChessMovesHelper::GetOtherPieceAtPosition(FChessMovesData(PossibleMoves,Board,Color,BoardPosition),BoardPosition);
 		if (TargetObject && TargetObject->GetColor() == Color)
 		{
 			continue;

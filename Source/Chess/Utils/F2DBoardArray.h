@@ -1,5 +1,4 @@
 ﻿#pragma once
-#include "Chess/ChessPieces/ChessPiece.h"
 #include "F2DBoardArray.generated.h"
 
 USTRUCT(BlueprintType)
@@ -8,24 +7,24 @@ struct F2DBoardArray
 	GENERATED_BODY()
 	
 	UPROPERTY()
-	TArray<UChessPiece*> Array;
+	TArray<UObject*> Array;
 
-	UChessPiece* operator[](int32 i)
+	UObject* operator[](int32 i)
 	{
 		return Array[i];
 	}
 
-	void operator=(TArray<UChessPiece*> newArray)
+	void operator=(TArray<UObject*> newArray)
 	{
 		Array = newArray;
 	}
 	
-	void Set(int i,UChessPiece* piece)
+	void Set(int i,UObject* piece)
 	{
 		Array[i] = piece;
 	}
 
-	void Add(UChessPiece* piece)
+	void Add(UObject* piece)
 	{
 		Array.Add(piece);
 	}

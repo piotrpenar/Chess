@@ -10,7 +10,7 @@
  * 
  */
 UCLASS()
-class CHESS_API UChessRook : public UChessPiece
+class CHESS_API UChessRook final : public UChessPiece
 {
 	GENERATED_BODY()
 public:

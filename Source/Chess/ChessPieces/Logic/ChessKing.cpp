@@ -1,32 +1,18 @@
 ﻿#include "ChessKing.h"
+#include "Chess/Helpers/ChessMovesHelper.h"
 
 
 TArray<FMove> UChessKing::GetAvailableMoves() const
 {
-	FVector2D CurrentTargetPosition = BoardPosition;
-	TArray<FMove> ValidMoves;
 	TArray<FVector2D> PossibleMoves = {
-		CurrentTargetPosition + FVector2D(-1, -2),
-		CurrentTargetPosition + FVector2D(-2, -1),
-		CurrentTargetPosition + FVector2D(1, -2),
-		CurrentTargetPosition + FVector2D(2, -1),
-		CurrentTargetPosition + FVector2D(1, 2),
-		CurrentTargetPosition + FVector2D(2, 1),
-		CurrentTargetPosition + FVector2D(-1, 2),
-		CurrentTargetPosition + FVector2D(-2, 1),
+		BoardPosition + FVector2D(-1, -1),
+		BoardPosition + FVector2D(-1, 0),
+		BoardPosition + FVector2D(-1, 1),
+		BoardPosition + FVector2D(0, 1),
+		BoardPosition + FVector2D(1, 1),
+		BoardPosition + FVector2D(1, 0),
+		BoardPosition + FVector2D(1, -1),
+		BoardPosition + FVector2D(0, -1),
 	};
-
-	for (const FVector2D PossibleMove  : PossibleMoves)
-	{
-		if (!(ChessData->IsValidPosition(PossibleMove)))
-		{
-			continue;
-		}
-		UChessPiece* TargetObject = GetOtherPieceAtPosition(PossibleMove);
-		if (!TargetObject || TargetObject->GetColor() != Color)
-		{
-			ValidMoves.Add(FMove(PossibleMove, TargetObject));
-		}
-	}
-	return ValidMoves;
+	return UChessMovesHelper::GetValidMovesFromPositions(FChessMovesData(PossibleMoves,Board,Color,BoardPosition),ChessData);
 }

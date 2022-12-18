@@ -3,12 +3,6 @@
 
 #include "AChessController.h"
 
-#include "Chess/ChessPieces/Logic/ChessBishop.h"
-#include "Chess/ChessPieces/Logic/ChessKing.h"
-#include "Chess/ChessPieces/Logic/ChessKnight.h"
-#include "Chess/ChessPieces/Logic/ChessPawn.h"
-#include "Chess/ChessPieces/Logic/ChessQueen.h"
-#include "Chess/ChessPieces/Logic/ChessRook.h"
 #include "Chess/Helpers/ChessPiecesFactory.h"
 #include "Chess/Utils/EColor.h"
 #include "Chess/Utils/EFigureType.h"
@@ -34,22 +28,17 @@ UChessPiece* AChessController::GenerateChessPiece(const EFigureType Figure)
 	return UChessPiecesFactory::GenerateChessPiece(Figure,this);
 }
 
-UChessPiece* AChessController::GetChessPiece(const FVector2D Position)
-{
-	return static_cast<UChessPiece*>(Board[static_cast<int>(Position.X)][static_cast<int>(Position.Y)]);
-}
-
 void AChessController::CreateChessPiece()
 {
 	CreateFigures(EColor::White);
 	CreateFigures(EColor::Black);
 }
 
-FTransform AChessController::GenerateChessPieceTransform(const int TargetRow,const  int TargetColumn,const  EColor Color) const
+FTransform AChessController::GenerateChessPieceTransform(const int X,const  int Y,const  EColor Color) const
 {
 	const float BoardDistance = ChessData->BoardCheckerSize;
 	FTransform Transform = GetChessBoardTransform();
-	Transform.SetLocation(Transform.GetLocation() + FVector(BoardDistance/2 + TargetRow*BoardDistance,BoardDistance/2 + TargetColumn*BoardDistance,0));
+	Transform.SetLocation(Transform.GetLocation() + FVector(BoardDistance/2 + X*BoardDistance,BoardDistance/2 + Y*BoardDistance,0));
 	if(Color == EColor::Black)
 	{
 		FRotator Rotator = Transform.GetRotation().Rotator();
@@ -61,17 +50,22 @@ FTransform AChessController::GenerateChessPieceTransform(const int TargetRow,con
 
 void AChessController::GenerateChessRow(TArray<EFigureType> Figures, const EColor Color, const int TargetRow)
 {
-	for (int i = 0; i < ChessData->BoardSize; i++)
+	for (int Column = 0; Column < ChessData->BoardSize; Column++)
 	{
-		UChessPiece* Clone = GenerateChessPiece(Figures[i]);
+		UChessPiece* Clone = GenerateChessPiece(Figures[Column]);
 		Clone->SetColor(Color);
-		Clone->SetPosition(TargetRow, i);
+		Clone->SetPosition(Column, TargetRow);
 		Clone->ChessData = ChessData;
-		Clone->Board = Board;
-		Clone->CreateActor(GetWorld());
-		Clone->SetActorTransform(GenerateChessPieceTransform(TargetRow,i,Color));
-		Board[TargetRow].Set(i,Clone);
+		Clone->BoardProvider = this;
+		Clone->CreateActor(GetWorld(),Clone);
+		Clone->SetActorTransform(GenerateChessPieceTransform(Column,TargetRow,Color));
+		Board[Column].Set(TargetRow,Clone);
 	}
+}
+
+UObject* AChessController::GetPieceAtPosition(FVector2D BoardPosition)
+{
+	return Board[BoardPosition.X][BoardPosition.Y];
 }
 
 void AChessController::CreateFigures(const EColor FigureColor)

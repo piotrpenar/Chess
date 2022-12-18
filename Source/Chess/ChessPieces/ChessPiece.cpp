@@ -6,7 +6,7 @@ void UChessPiece::SetColor(const EColor PieceColor)
 	Color = PieceColor;
 }
 
-void UChessPiece::CreateActor(UWorld* World)
+void UChessPiece::CreateActor(UWorld* World,UChessPiece* Clone)
 {
 	if(!IsValid(World))
 	{
@@ -31,9 +31,6 @@ void UChessPiece::CreateActor(UWorld* World)
 		return;
 	}
 	
-	int value =static_cast<int>(this->GetFigureType());
-	UE_LOG(LogTemp, Warning, TEXT("Figure type is %d"), value);
-	
 	UStaticMesh* Mesh = ChessData->GetMeshForType(GetFigureType());
 	if(!IsValid(Mesh))
 	{
@@ -49,17 +46,25 @@ void UChessPiece::CreateActor(UWorld* World)
 	StaticMeshComponent->SetStaticMesh(Mesh);
 
 	ChessPieceActor = Actor;
+	UE_LOG(LogTemp, Log, TEXT("Type is %d"),GetFigureType())
+	this->GetAvailableMoves();
 	Actor->SourcePiece = this;
 }
 
-void UChessPiece::SetPosition(const int Row, const int Column)
+void UChessPiece::SetPosition(const int X,const int Y)
 {
-	this->BoardPosition = FVector2D(Row, Column);
+	this->BoardPosition = FVector2D(X, Y);
 }
 
 void UChessPiece::MoveToPosition()
 {
 	
+}
+
+
+EFigureType UChessPiece::GetFigureType()
+{
+	return EFigureType::Invalid;
 }
 
 void  UChessPiece::SetActorRotation(const FRotator Rotation ) const
@@ -72,10 +77,10 @@ void UChessPiece::SetActorPosition(const FVector Position) const
 	ChessPieceActor->SetActorLocation(Position);
 }
 
-// void UChessPiece::SetActorTransform(const FTransform Transform) const
-// {
-// 	ChessPieceActor->SetActorTransform(Transform);
-// }
+void UChessPiece::SetActorTransform(const FTransform Transform) const
+{
+	ChessPieceActor->SetActorTransform(Transform);
+}
 
 EColor UChessPiece::GetColor() const
 {

@@ -6,15 +6,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13e30f9d-f09a-40e8-91e8-793056d40f25" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Interfaces/MovesProvider.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Interfaces/MovesProvider.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/Chess/Helpers/ChessMovesHelper.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/Chess/Helpers/ChessMovesHelper.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/Chess/Utils/ChessMovesData.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/Chess/Utils/ChessMovesData.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/Chess/Interfaces/ChessBoardProvider.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Chess/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Chess/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ChessActor.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ChessActor.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Audio/Collapse01.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Audio/Collapse01.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Binaries/Win64/UnrealEditor-RD.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Binaries/Win64/UnrealEditor-RD.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Binaries/Win64/UnrealEditor-RiderBlueprint.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Binaries/Win64/UnrealEditor-RiderBlueprint.pdb" afterDir="false" />
@@ -22,35 +15,88 @@
       <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Binaries/Win64/UnrealEditor-RiderLink.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Binaries/Win64/UnrealEditor-RiderLink.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Binaries/Win64/UnrealEditor-RiderLogging.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Binaries/Win64/UnrealEditor-RiderLogging.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Binaries/Win64/UnrealEditor-RiderShaderInfoDump.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Binaries/Win64/UnrealEditor-RiderShaderInfoDump.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Binaries/Win64/UnrealEditor.modules" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/ActiveSocket.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/Buffer.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/ByteBufferAsyncProcessor.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/DateTime.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/DefaultAbstractDeclaration.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/ExtWire.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/IProtocol.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/IRdWireable.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/IScheduler.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/ISerializable.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/ISerializersOwner.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/IUnknownInstance.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/Identities.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/InternRoot.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/InternScheduler.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/Lifetime.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/LifetimeDefinition.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/LifetimeImpl.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/MessageBroker.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/PassiveSocket.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/PkgInputStream.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/Polymorphic.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/Protocol.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/PumpScheduler.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/RD.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/RName.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/RdAny.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/RdBindableBase.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/RdExtBase.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/RdId.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/RdReactiveBase.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/RdTextBuffer.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/SequentialLifetimes.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/SerializationCtx.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/Serializers.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/SignalCookie.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/SimpleScheduler.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/SimpleSocket.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/SingleThreadScheduler.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/SingleThreadSchedulerBase.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/SocketWire.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/SynchronousScheduler.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/WireBase.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/WireUtil.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/async.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/cfg.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/color_sinks.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/countdownlatch.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/file_sinks.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/fmt.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/hashing.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/spdlog.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/stdout_sinks.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/thirdparty.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RD/thread_util.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RiderBlueprint/Module.RiderBlueprint.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RiderGameControl/RiderGameControl.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RiderLink/Module.RiderLink.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RiderLogging/Module.RiderLogging.cpp.obj.response.lc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/Developer/RiderLink/Intermediate/Build/Win64/UnrealEditor/Development/RiderShaderInfoDump/RiderShaderInfoDump.cpp.obj.response.lc" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Figures/AChessFigure.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Figures/AChessFigure.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Figures/AChessFigure.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Figures/AChessFigure.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Interfaces/MovesProvider.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Interfaces/MovesProvider.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Interfaces/MovesProvider.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessBishop.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessBishop.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessBishop.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessBishop.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessKing.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessKing.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessKnight.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessKnight.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessMovesHelper.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessMovesHelper.h" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessPawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessPawn.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessPawn.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessPawn.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessQueen.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessQueen.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessQueen.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessQueen.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessRook.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessRook.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessRook.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessRook.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Chess/Controllers/AChessController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Controllers/AChessController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Utils/F2DBoardArray.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Utils/F2DBoardArray.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Utils/FMove.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Utils/FMove.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/Controllers/AChessController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Controllers/AChessController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/Data/ChessData.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Data/ChessData.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/Helpers/ChessMovesHelper.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Helpers/ChessMovesHelper.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/Helpers/ChessPiecesFactory.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Helpers/ChessPiecesFactory.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/Utils/ChessMovesData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Utils/ChessMovesData.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/Chess/UHT/ChessMovesData.gen.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/Chess/UHT/FMove.gen.cpp" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -201,7 +247,8 @@
       <workItem from="1671102799945" duration="6747000" />
       <workItem from="1671270849225" duration="5127000" />
       <workItem from="1671291541941" duration="4833000" />
-      <workItem from="1671308726248" duration="6208000" />
+      <workItem from="1671308726248" duration="6854000" />
+      <workItem from="1671355372172" duration="7882000" />
     </task>
     <servers />
   </component>

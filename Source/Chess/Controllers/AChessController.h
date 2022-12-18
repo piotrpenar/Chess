@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 #include "Chess/Data/ChessData.h"
-#include "Chess/Helpers/ChessPiecesFactory.h"
+#include "Chess/Interfaces/ChessBoardProvider.h"
 #include "Chess/Utils/EColor.h"
 #include "Chess/Utils/EFigureType.h"
 #include "Chess/Utils/F2DBoardArray.h"
@@ -15,7 +15,7 @@
  * 
 */
 UCLASS(Blueprintable)
-class CHESS_API AChessController : public AActor 
+class CHESS_API AChessController : public AActor , public IChessBoardProvider
 {
 	GENERATED_BODY()
 
@@ -24,13 +24,13 @@ public:
 	void CreateFigures(const EColor FigureColor);
 	virtual void BeginPlay() override;
 	UChessPiece* GenerateChessPiece(const EFigureType Figure);
-	UChessPiece* GetChessPiece(FVector2D Position);
 
 	UPROPERTY(EditAnywhere)
 	UChessData* ChessData;
 	
 	UPROPERTY(EditAnywhere)
 	AActor* ChessBoardOrigin;
+	virtual UObject* GetPieceAtPosition(FVector2D BoardPosition) override;
 
 private:
 	UPROPERTY()

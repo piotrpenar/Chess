@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Chess/ChessPieces/Interfaces/MovesProvider.h"
+#include "Chess/Interfaces/MovesProvider.h"
 #include "AChessFigure.generated.h"
 
 UCLASS()

@@ -4,11 +4,12 @@
 
 TArray<FMove> UChessBishop::GetAvailableMoves() 
 {
-	TArray<FVector2D> PossibleMoves = {
-		BoardPosition + FVector2D(-1, -1),
-		BoardPosition + FVector2D(1, -1),
-		BoardPosition + FVector2D(1, 1),
-		BoardPosition + FVector2D(-1, 1),
+	const TArray<FVector2D> Directions = {
+		FVector2D(-1, -1),
+		FVector2D(1, -1),
+		FVector2D(1, 1),
+		FVector2D(-1, 1),
 	};
-	return UChessMovesHelper::GetValidMovesFromPositions(FChessMovesData(PossibleMoves,Board,Color,BoardPosition),ChessData);
+	UE_LOG(LogTemp, Log, TEXT("Bishop"))
+	return UChessMovesHelper::GetValidMovesFromPositions(FChessMovesData(Directions,BoardProvider,Color,BoardPosition),ChessData);
 }

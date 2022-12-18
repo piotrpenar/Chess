@@ -9,4 +9,5 @@ enum class EFigureType : uint8
 	Bishop = 3 UMETA(DisplayName = "Bishop"),
 	Queen = 4 UMETA(DisplayName = "Queen"),
 	King = 5 UMETA(DisplayName = "King"),
+	Invalid = 255 UMETA(DisplayName = "Invalid"),
 };

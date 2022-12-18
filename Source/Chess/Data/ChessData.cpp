@@ -15,6 +15,6 @@ TSubclassOf<AChessFigure> UChessData::GetChessFigureActor() const
 
 bool UChessData::IsValidPosition(const FVector2D& Vector2) const
 {
-	return Vector2.X > 0 && Vector2.X < BoardSize && Vector2.Y > 0 && Vector2.Y < BoardSize;
+	return Vector2.X >= 0 && Vector2.X < BoardSize && Vector2.Y >= 0 && Vector2.Y < BoardSize;
 }
 

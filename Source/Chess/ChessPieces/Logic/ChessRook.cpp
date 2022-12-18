@@ -13,6 +13,7 @@ TArray<FMove> UChessRook::GetAvailableMoves()
 		FVector2D(0, -1),
 		FVector2D(0, 1),
 	};
-	return UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData(Directions, Board, Color, BoardPosition),
+	UE_LOG(LogTemp, Log, TEXT("Rook"))
+	return UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData(Directions, BoardProvider, Color, BoardPosition),
 	                                                      ChessData);
 }

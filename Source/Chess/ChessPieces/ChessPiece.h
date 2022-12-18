@@ -1,11 +1,11 @@
 ﻿#pragma once
 #include "IntVectorTypes.h"
 #include "Chess/Data/ChessData.h"
+#include "Chess/Interfaces/ChessBoardProvider.h"
+#include "Chess/Interfaces/MovesProvider.h"
 #include "Chess/Utils/EColor.h"
 #include "Chess/Utils/EFigureType.h"
-#include "Chess/Utils/F2DBoardArray.h"
 #include "Chess/Utils/FMove.h"
-#include "Interfaces/MovesProvider.h"
 #include "ChessPiece.generated.h"
 
 UCLASS()
@@ -14,8 +14,8 @@ class CHESS_API UChessPiece : public UObject, public IMovesProvider
 	GENERATED_BODY()
 public:
 	void SetColor(EColor PieceColor);
-	void CreateActor(UWorld* World);
-	void SetPosition(int Row,int Column);
+	void CreateActor(UWorld* World,UChessPiece* Clone);
+	void SetPosition(int X,int Y);
 	virtual void MoveToPosition();
 	void SetActorTransform(FTransform Transform) const;
 	
@@ -25,7 +25,7 @@ public:
 	UPROPERTY()
 	UChessData* ChessData;
 	UPROPERTY()
-	TArray<F2DBoardArray> Board;
+	TScriptInterface<IChessBoardProvider> BoardProvider;
 
 protected:
 	

@@ -5,6 +5,7 @@
 
 TArray<FMove> UChessPawn::GetAvailableMoves() 
 {
+ 	UE_LOG(LogTemp, Log, TEXT("Pawn"))
 	const bool bIsWhite = Color == EColor::White;
 	const int Direction = bIsWhite ? 1 : -1;
 	FVector2D CurrentTargetPosition = BoardPosition;
@@ -26,7 +27,7 @@ TArray<FMove> UChessPawn::GetAvailableMoves()
 		{
 			continue;
 		}
-		UChessPiece* TargetObject = UChessMovesHelper::GetOtherPieceAtPosition(FChessMovesData(PossibleMoves,Board,Color,BoardPosition),BoardPosition);
+		UChessPiece* TargetObject = UChessMovesHelper::GetOtherPieceAtPosition(FChessMovesData(PossibleMoves,BoardProvider,Color,BoardPosition),BoardPosition);
 		if (TargetObject && TargetObject->GetColor() == Color)
 		{
 			continue;

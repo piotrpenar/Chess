@@ -13,6 +13,7 @@
 
 UChessPiece* UChessPiecesFactory::GenerateChessPiece(const EFigureType FigureType, UObject* Initializer) 
 {
+	
 	switch (FigureType)
 	{
 	case EFigureType::Pawn: 
@@ -28,6 +29,7 @@ UChessPiece* UChessPiecesFactory::GenerateChessPiece(const EFigureType FigureTyp
 	case EFigureType::King:
 		return NewObject<UChessKing>(Initializer);
 	default:
+		UE_LOG(LogTemp, Error, TEXT("Initializing piece with default type!"))
 		return NewObject<UChessPiece>(Initializer);
 	}
 }

@@ -7,7 +7,6 @@
 #include "UObject/Interface.h"
 #include "MovesProvider.generated.h"
 
-// This class does not need to be modified.
 UINTERFACE()
 class UMovesProvider : public UInterface
 {
@@ -18,8 +17,6 @@ class CHESS_API IMovesProvider
 {
 	GENERATED_BODY()
 
-	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	
 	virtual TArray<FMove> GetAvailableMoves();
 };

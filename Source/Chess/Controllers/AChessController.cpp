@@ -34,11 +34,17 @@ void AChessController::CreateChessPiece()
 	CreateFigures(EColor::Black);
 }
 
+FTransform AChessController::BoardToWorldTransform(const int X, const int Y) const
+{
+	FTransform Transform= GetChessBoardTransform();
+	const float BoardDistance = ChessData->BoardCheckerSize;
+	Transform.SetLocation(Transform.GetLocation() + FVector(BoardDistance/2 + X*BoardDistance,BoardDistance/2 + Y*BoardDistance,0));
+	return Transform;
+}
+
 FTransform AChessController::GenerateChessPieceTransform(const int X,const  int Y,const  EColor Color) const
 {
-	const float BoardDistance = ChessData->BoardCheckerSize;
-	FTransform Transform = GetChessBoardTransform();
-	Transform.SetLocation(Transform.GetLocation() + FVector(BoardDistance/2 + X*BoardDistance,BoardDistance/2 + Y*BoardDistance,0));
+	FTransform Transform = BoardToWorldTransform(X, Y);
 	if(Color == EColor::Black)
 	{
 		FRotator Rotator = Transform.GetRotation().Rotator();
@@ -57,7 +63,7 @@ void AChessController::GenerateChessRow(TArray<EFigureType> Figures, const EColo
 		Clone->SetPosition(Column, TargetRow);
 		Clone->ChessData = ChessData;
 		Clone->BoardProvider = this;
-		Clone->CreateActor(GetWorld(),Clone);
+		Clone->CreateActor(GetWorld(),this);
 		Clone->SetActorTransform(GenerateChessPieceTransform(Column,TargetRow,Color));
 		Board[Column].Set(TargetRow,Clone);
 	}
@@ -87,10 +93,11 @@ void AChessController::CreateFigures(const EColor FigureColor)
 
 void AChessController::CreateHighlight(TArray<FMove> Moves)
 {
-	for (auto Move : Moves)
+	for (const auto Move : Moves)
 	{
-		ACheckerHighlight* Actor = GetWorld()->SpawnActor<ACheckerHighlight>(ChessData->GetCheckerHighlightActor()());
-		CurrentHighlights.Add()
+		ACheckerHighlight* Actor = GetWorld()->SpawnActor<ACheckerHighlight>(ChessData->GetCheckerHighlightActor());
+		Actor->SetActorTransform(BoardToWorldTransform(Move.TargetPosition.X,Move.TargetPosition.Y));
+		CurrentHighlights.Add(Actor);
 	}
 }
 

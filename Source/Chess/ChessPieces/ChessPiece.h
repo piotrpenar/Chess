@@ -14,7 +14,7 @@ class CHESS_API UChessPiece : public UObject, public IMovesProvider
 	GENERATED_BODY()
 public:
 	void SetColor(EColor PieceColor);
-	void CreateActor(UWorld* World,UChessPiece* Clone);
+	void CreateActor(UWorld* World,IBoardHighlighter* Highlighter);
 	void SetPosition(int X,int Y);
 	virtual void MoveToPosition();
 	void SetActorTransform(FTransform Transform) const;

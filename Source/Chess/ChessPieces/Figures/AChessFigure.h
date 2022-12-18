@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "Chess/Interfaces/BoardHighlighter.h"
 #include "Chess/Interfaces/MovesProvider.h"
 #include "AChessFigure.generated.h"
 
@@ -12,5 +13,6 @@ public:
 	void GetAvailableMoves();
 	
 	IMovesProvider* SourcePiece;
+	IBoardHighlighter* Highlighter;
 	
 };

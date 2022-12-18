@@ -13,6 +13,11 @@ TSubclassOf<AChessFigure> UChessData::GetChessFigureActor() const
 	return ChessFigureActor;
 }
 
+TSubclassOf<ACheckerHighlight> UChessData::GetCheckerHighlightActor() const
+{
+	return ChessHighlightActor;
+}
+
 bool UChessData::IsValidPosition(const FVector2D& Vector2) const
 {
 	return Vector2.X >= 0 && Vector2.X < BoardSize && Vector2.Y >= 0 && Vector2.Y < BoardSize;

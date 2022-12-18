@@ -6,7 +6,7 @@ void UChessPiece::SetColor(const EColor PieceColor)
 	Color = PieceColor;
 }
 
-void UChessPiece::CreateActor(UWorld* World,UChessPiece* Clone)
+void UChessPiece::CreateActor(UWorld* World,IBoardHighlighter* Highlighter)
 {
 	if(!IsValid(World))
 	{
@@ -46,7 +46,7 @@ void UChessPiece::CreateActor(UWorld* World,UChessPiece* Clone)
 	StaticMeshComponent->SetStaticMesh(Mesh);
 
 	ChessPieceActor = Actor;
-	this->GetAvailableMoves();
+	Actor->Highlighter = Highlighter;
 	Actor->SourcePiece = this;
 }
 

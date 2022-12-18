@@ -65,6 +65,7 @@ void AChessController::GenerateChessRow(TArray<EFigureType> Figures, const EColo
 
 UObject* AChessController::GetPieceAtPosition(FVector2D BoardPosition)
 {
+	UE_LOG(LogTemp, Log, TEXT("Getting object from %s"),*FString(BoardPosition.ToString()))
 	return Board[BoardPosition.X][BoardPosition.Y];
 }
 

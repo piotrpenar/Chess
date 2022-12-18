@@ -3,9 +3,8 @@
 #include "Chess/Helpers/ChessMovesHelper.h"
 
 
-TArray<FMove> UChessPawn::GetAvailableMoves() 
+TArray<FMove> UChessPawn::GetAvailableMoves()
 {
- 	UE_LOG(LogTemp, Log, TEXT("Pawn"))
 	const bool bIsWhite = Color == EColor::White;
 	const int Direction = bIsWhite ? 1 : -1;
 	FVector2D CurrentTargetPosition = BoardPosition;
@@ -18,21 +17,28 @@ TArray<FMove> UChessPawn::GetAvailableMoves()
 
 	if (!bHasMoved)
 	{
-		PossibleMoves.Add(BoardPosition + FVector2D(1, Direction * 2));
+		PossibleMoves.Add(BoardPosition + FVector2D(0, Direction * 2));
 	}
 
 	for (const FVector2D PossibleMove : PossibleMoves)
 	{
 		if (!(ChessData->IsValidPosition(PossibleMove)))
 		{
+			UE_LOG(LogTemp, Log, TEXT("Invalid Position - from %s to %s"), *FString(CurrentTargetPosition.ToString()),
+			       *FString(PossibleMove.ToString()))
 			continue;
 		}
-		UChessPiece* TargetObject = UChessMovesHelper::GetOtherPieceAtPosition(FChessMovesData(PossibleMoves,BoardProvider,Color,BoardPosition),BoardPosition);
-		if (TargetObject && TargetObject->GetColor() == Color)
+		UChessPiece* TargetObject = UChessMovesHelper::GetOtherPieceAtPosition(
+			FChessMovesData(PossibleMoves, BoardProvider, Color, BoardPosition), PossibleMove);
+		const bool bIsSameX = PossibleMove.X == BoardPosition.X;
+		if (TargetObject)
 		{
-			continue;
+			if (!bIsSameX && TargetObject->GetColor() != Color)
+			{
+				ValidMoves.Add(FMove(PossibleMove, TargetObject));
+			}
 		}
-		if (!TargetObject || TargetObject->GetColor() != Color && PossibleMove.X != BoardPosition.X)
+		else if (bIsSameX)
 		{
 			ValidMoves.Add(FMove(PossibleMove, TargetObject));
 		}

@@ -46,7 +46,6 @@ void UChessPiece::CreateActor(UWorld* World,UChessPiece* Clone)
 	StaticMeshComponent->SetStaticMesh(Mesh);
 
 	ChessPieceActor = Actor;
-	UE_LOG(LogTemp, Log, TEXT("Type is %d"),GetFigureType())
 	this->GetAvailableMoves();
 	Actor->SourcePiece = this;
 }

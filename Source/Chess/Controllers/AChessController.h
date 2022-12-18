@@ -38,6 +38,7 @@ private:
 
 	UPROPERTY()
 	TMap<EFigureType, UChessPiece*> FigureTypeMap;
+	TArray<AActor*> CurrentHighlights;
 	FTransform GetChessBoardTransform() const; 
 	FTransform GenerateChessPieceTransform(int TargetRow, int TargetColumn, EColor Color) const;
 	void GenerateChessRow(TArray<EFigureType> Figures, const EColor Color, const int TargetRow);

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Chess/ChessPieces/Figures/AChessFigure.h"
+#include "Chess/Highlight/CheckerHighlight.h"
 #include "Chess/Utils/EFigureType.h"
 #include "ChessData.generated.h"
 
@@ -16,6 +17,8 @@ class CHESS_API UChessData final : public UDataAsset
 	GENERATED_BODY()
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AChessFigure> ChessFigureActor;
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ACheckerHighlight> ChessHighlightActor;
 	UPROPERTY(EditAnywhere)
 	TMap<EFigureType, UStaticMesh*> FigureToMesh;
 public:

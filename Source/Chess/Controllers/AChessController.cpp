@@ -85,6 +85,15 @@ void AChessController::CreateFigures(const EColor FigureColor)
 	GenerateChessRow(Pawns, FigureColor, PawnRow);
 };
 
+void AChessController::CreateHighlight(TArray<FMove> Moves)
+{
+	for (auto Move : Moves)
+	{
+		ACheckerHighlight* Actor = GetWorld()->SpawnActor<ACheckerHighlight>(ChessData->GetCheckerHighlightActor()());
+		CurrentHighlights.Add()
+	}
+}
+
 FTransform AChessController::GetChessBoardTransform() const
 {
 	return ChessBoardOrigin->GetActorTransform();

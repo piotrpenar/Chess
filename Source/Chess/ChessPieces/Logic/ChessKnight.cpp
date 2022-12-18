@@ -2,7 +2,7 @@
 
 #include "Chess/Helpers/ChessMovesHelper.h"
 
-TArray<FMove> UChessKnight::GetAvailableMoves() const
+TArray<FMove> UChessKnight::GetAvailableMoves() 
 {
 	TArray<FVector2D> PossibleMoves = {
 		BoardPosition + FVector2D(-1, -2),

@@ -5,7 +5,4 @@
 
 
 // Add default functionality here for any IMovesProvider functions that are not pure virtual.
-TArray<FMove> IMovesProvider::GetAvailableMoves()
-{
-	return {};
-}
+

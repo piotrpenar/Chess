@@ -3,7 +3,7 @@
 #include "Chess/Helpers/ChessMovesHelper.h"
 
 
-TArray<FMove> UChessQueen::GetAvailableMoves() const
+TArray<FMove> UChessQueen::GetAvailableMoves() 
 {
 	TArray<FVector2D> PossibleMoves = {
 		FVector2D(-1, -1),

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 #include "Chess/Data/ChessData.h"
+#include "Chess/Helpers/ChessPiecesFactory.h"
 #include "Chess/Utils/EColor.h"
 #include "Chess/Utils/EFigureType.h"
 #include "Chess/Utils/F2DBoardArray.h"
@@ -19,7 +20,6 @@ class CHESS_API AChessController : public AActor
 	GENERATED_BODY()
 
 public:
-	void InitializeChessPieces();
 	void CreateChessPiece();
 	void CreateFigures(const EColor FigureColor);
 	virtual void BeginPlay() override;

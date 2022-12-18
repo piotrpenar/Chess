@@ -6,7 +6,7 @@ void UChessPiece::SetColor(const EColor PieceColor)
 	Color = PieceColor;
 }
 
-void UChessPiece::CreateActor(UWorld* World,EFigureType FigureType)
+void UChessPiece::CreateActor(UWorld* World)
 {
 	if(!IsValid(World))
 	{
@@ -30,9 +30,11 @@ void UChessPiece::CreateActor(UWorld* World,EFigureType FigureType)
 		UE_LOG(LogTemp,Log,TEXT("ChessData is invalid"))
 		return;
 	}
+	
 	int value =static_cast<int>(this->GetFigureType());
 	UE_LOG(LogTemp, Warning, TEXT("Figure type is %d"), value);
-	UStaticMesh* Mesh = ChessData->GetMeshForType(FigureType);
+	
+	UStaticMesh* Mesh = ChessData->GetMeshForType(GetFigureType());
 	if(!IsValid(Mesh))
 	{
 		UE_LOG(LogTemp,Log,TEXT("Mesh is invalid"))
@@ -80,10 +82,9 @@ EColor UChessPiece::GetColor() const
 	return Color;
 }
 
-TArray<FMove> UChessPiece::GetAvailableMoves() const
+TArray<FMove> UChessPiece::GetAvailableMoves() 
 {
-	TArray<FMove> AvaliableMoves = {};
-	return AvaliableMoves;
+	return {};
 }
 
 //TODO: Change this to animation

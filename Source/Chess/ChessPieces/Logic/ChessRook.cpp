@@ -4,9 +4,8 @@
 #include "ChessRook.h"
 
 #include "Chess/Helpers/ChessMovesHelper.h"
-#include "Chess/Utils/F2dBoardArray.h"
 
-TArray<FMove> UChessRook::GetAvailableMoves() const
+TArray<FMove> UChessRook::GetAvailableMoves()
 {
 	TArray<FVector2D> Directions = {
 		FVector2D(1, 0),
@@ -14,5 +13,6 @@ TArray<FMove> UChessRook::GetAvailableMoves() const
 		FVector2D(0, -1),
 		FVector2D(0, 1),
 	};
-	return UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData(Directions,Board,Color,BoardPosition),ChessData);
+	return UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData(Directions, Board, Color, BoardPosition),
+	                                                      ChessData);
 }

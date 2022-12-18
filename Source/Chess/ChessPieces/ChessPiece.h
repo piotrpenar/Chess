@@ -9,19 +9,19 @@
 #include "ChessPiece.generated.h"
 
 UCLASS()
-class UChessPiece : public UObject, public IMovesProvider
+class CHESS_API UChessPiece : public UObject, public IMovesProvider
 {
 	GENERATED_BODY()
 public:
 	void SetColor(EColor PieceColor);
-	void CreateActor(UWorld* World,EFigureType Figure);
+	void CreateActor(UWorld* World);
 	void SetPosition(int Row,int Column);
 	virtual void MoveToPosition();
 	void SetActorTransform(FTransform Transform) const;
 	
-	virtual EFigureType GetFigureType()  { return EFigureType::Pawn;}
+	virtual EFigureType GetFigureType();
 	EColor GetColor() const;
-	virtual TArray<FMove> GetAvailableMoves() const;
+	virtual TArray<FMove> GetAvailableMoves() override;
 	UPROPERTY()
 	UChessData* ChessData;
 	UPROPERTY()

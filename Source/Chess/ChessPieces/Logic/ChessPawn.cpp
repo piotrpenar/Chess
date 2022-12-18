@@ -1,10 +1,9 @@
 ﻿#include "ChessPawn.h"
 
 #include "Chess/Helpers/ChessMovesHelper.h"
-#include "Chess/Utils/F2DBoardArray.h"
 
 
-TArray<FMove> UChessPawn::GetAvailableMoves() const
+TArray<FMove> UChessPawn::GetAvailableMoves() 
 {
 	const bool bIsWhite = Color == EColor::White;
 	const int Direction = bIsWhite ? 1 : -1;

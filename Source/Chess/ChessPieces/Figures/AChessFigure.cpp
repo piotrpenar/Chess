@@ -3,10 +3,8 @@
 
 void AChessFigure::GetAvailableMoves()
 {
-	FMove test;
-	TArray<FMove> Moves = TArray<FMove>(SourcePiece->GetAvailableMoves());
-	UE_LOG(LogTemp, Log, TEXT("HALO STRYTA SIE PALI"))
-	UE_LOG(LogTemp, Log, TEXT("LICZBA RUCHÓW: %d"), Moves.Num())
+	const TArray<FMove> Moves = TArray<FMove>(SourcePiece->GetAvailableMoves());
+	UE_LOG(LogTemp, Log, TEXT("Avaliable Moves: %d"), Moves.Num())
 	if(GEngine)
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Some debug message!"));	
 }

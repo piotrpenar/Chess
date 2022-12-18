@@ -9,32 +9,14 @@
 #include "Chess/ChessPieces/Logic/ChessPawn.h"
 #include "Chess/ChessPieces/Logic/ChessQueen.h"
 #include "Chess/ChessPieces/Logic/ChessRook.h"
+#include "Chess/Helpers/ChessPiecesFactory.h"
 #include "Chess/Utils/EColor.h"
 #include "Chess/Utils/EFigureType.h"
 #include "Chess/Utils/F2DBoardArray.h"
 
-
-void AChessController::InitializeChessPieces()
-{
-	FigureTypeMap = TMap<EFigureType,UChessPiece*>();
-	UChessPawn* Pawn = NewObject<UChessPawn>(this);
-	UChessRook* Rook =  NewObject<UChessRook>(this);
-	UChessKnight* Knight =  NewObject<UChessKnight>(this);
-	UChessBishop* Bishop =  NewObject<UChessBishop>(this);
-	UChessQueen* Queen =  NewObject<UChessQueen>(this);
-	UChessKing* King =  NewObject<UChessKing>(this);
-	FigureTypeMap.Add(EFigureType::Pawn,Pawn);
-	FigureTypeMap.Add(EFigureType::Rook,Rook);
-	FigureTypeMap.Add(EFigureType::Knight,Knight);
-	FigureTypeMap.Add(EFigureType::Bishop,Bishop);
-	FigureTypeMap.Add(EFigureType::Queen,Queen);
-	FigureTypeMap.Add(EFigureType::King,King);
-}
-
 void AChessController::BeginPlay()
 {
 	Super::BeginPlay();
-	InitializeChessPieces();
 	for (int i = 0; i < ChessData->BoardSize; i++)
 	{
 		F2DBoardArray Row = F2DBoardArray();
@@ -49,9 +31,7 @@ void AChessController::BeginPlay()
 
 UChessPiece* AChessController::GenerateChessPiece(const EFigureType Figure)
 {
-	UChessPiece* Clone = NewObject<UChessPiece>();
-	DuplicateObject(FigureTypeMap[Figure], Clone);
-	return Clone;
+	return UChessPiecesFactory::GenerateChessPiece(Figure,this);
 }
 
 UChessPiece* AChessController::GetChessPiece(const FVector2D Position)
@@ -88,7 +68,7 @@ void AChessController::GenerateChessRow(TArray<EFigureType> Figures, const EColo
 		Clone->SetPosition(TargetRow, i);
 		Clone->ChessData = ChessData;
 		Clone->Board = Board;
-		Clone->CreateActor(GetWorld(),Figures[i]);
+		Clone->CreateActor(GetWorld());
 		Clone->SetActorTransform(GenerateChessPieceTransform(TargetRow,i,Color));
 		Board[TargetRow].Set(i,Clone);
 	}

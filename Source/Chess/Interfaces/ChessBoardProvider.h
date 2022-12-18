@@ -17,4 +17,8 @@ class CHESS_API IChessBoardProvider
 	GENERATED_BODY()
 public:
 	virtual UObject* GetPieceAtPosition(FVector2D BoardPosition);
+	virtual FTransform BoardToWorldTransform(const int X, const int Y);
+	virtual FTransform BoardToWorldTransform(FVector2D Position);
+	virtual void SetPieceAtPosition(const FVector2D Vector2, UObject* ChessPiece);
+	
 };

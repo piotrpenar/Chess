@@ -39,12 +39,10 @@ TArray<FMove> UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData Mov
 				{
 					UE_LOG(LogTemp, Log, TEXT("Avaliable Move - from %s to %s"),*FString(MovesData.Position.ToString()),*FString(CurrentTargetPosition.ToString()))
 					AvailableMoves.Add(FMove(CurrentTargetPosition, TargetObject));
-				}
-				else
-				{
-					
 					break;
 				}
+				UE_LOG(LogTemp, Log, TEXT("There is friendly unit here "))
+				break;
 			}
 			else
 			{

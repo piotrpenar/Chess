@@ -16,12 +16,13 @@ public:
 	void SetColor(EColor PieceColor);
 	void CreateActor(UWorld* World,IBoardHighlighter* Highlighter);
 	void SetPosition(int X,int Y);
-	virtual void MoveToPosition();
+	virtual void MoveToPosition(FVector2D Position) override;
 	void SetActorTransform(FTransform Transform) const;
 	
 	virtual EFigureType GetFigureType();
 	EColor GetColor() const;
 	virtual TArray<FMove> GetAvailableMoves() override;
+	void DestroyChessPiece() const;
 	UPROPERTY()
 	UChessData* ChessData;
 	UPROPERTY()
@@ -41,5 +42,5 @@ private :
 	AActor* ChessPieceActor;
 	void SetActorPosition(FVector Position) const;
 	void SetActorRotation(FRotator Rotation) const;
-	void MoveActorToPosition(FVector Position);
+	void MoveActorToPosition(FVector2D Position) const;
 };

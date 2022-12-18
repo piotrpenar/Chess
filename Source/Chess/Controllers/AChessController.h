@@ -22,28 +22,37 @@ class CHESS_API AChessController : public AActor , public IChessBoardProvider, p
 
 public:
 	void CreateChessPiece();
-	FTransform BoardToWorldTransform(const int X, const int Y) const;
 	void CreateFigures(const EColor FigureColor);
-	virtual void BeginPlay() override;
 	UChessPiece* GenerateChessPiece(const EFigureType Figure);
+	
+	virtual FTransform BoardToWorldTransform(const int X, const int Y) override;
+	virtual FTransform BoardToWorldTransform(FVector2D Position) override;
+	virtual UObject* GetPieceAtPosition(FVector2D BoardPosition) override;
+	virtual void SetPieceAtPosition(const FVector2D Vector2, UObject* ChessPiece) override;
+	virtual void CreateHighlights(TArray<FMove> Moves) override;
+	virtual void SetSelectedFigure(AActor* Figure) override;
+	virtual void HighlightSelected(AActor* Source) override;
+	void ClearHighlights();
+	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere)
 	UChessData* ChessData;
 	
 	UPROPERTY(EditAnywhere)
 	AActor* ChessBoardOrigin;
-	virtual UObject* GetPieceAtPosition(FVector2D BoardPosition) override;
-	virtual void CreateHighlight(TArray<FMove> Moves) override;
-
+	
 private:
 	UPROPERTY()
 	TArray<F2DBoardArray> Board;
 
 	UPROPERTY()
 	TMap<EFigureType, UChessPiece*> FigureTypeMap;
+	UPROPERTY()
 	TArray<AActor*> CurrentHighlights;
+	UPROPERTY()
+	AChessFigure* CurrentSelectedFigure;
 	FTransform GetChessBoardTransform() const; 
-	FTransform GenerateChessPieceTransform(int TargetRow, int TargetColumn, EColor Color) const;
+	FTransform GenerateChessPieceTransform(int TargetRow, int TargetColumn, EColor Color);
 	void GenerateChessRow(TArray<EFigureType> Figures, const EColor Color, const int TargetRow);
 	
 	const TArray<EFigureType> Pawns = {

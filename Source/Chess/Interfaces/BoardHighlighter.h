@@ -23,5 +23,7 @@ class CHESS_API IBoardHighlighter
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	virtual void CreateHighlight(TArray<FMove> Moves);
+	virtual void CreateHighlights(TArray<FMove> Moves);
+	virtual void SetSelectedFigure(AActor* SourceFigure);
+	virtual void HighlightSelected(AActor* Source);
 };

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Chess/ChessPieces/Figures/AChessFigure.h"
 #include "GameFramework/Actor.h"
 #include "CheckerHighlight.generated.h"
 
@@ -12,14 +13,11 @@ class CHESS_API ACheckerHighlight : public AActor
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this actor's properties
 	ACheckerHighlight();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	UPROPERTY()
+	AChessFigure* SourceFigure;
+	IBoardHighlighter* Highlighter;
+	FVector2D Position;
+	UFUNCTION(BlueprintCallable)
+	void NotifyHighlighterOnClick();
 };

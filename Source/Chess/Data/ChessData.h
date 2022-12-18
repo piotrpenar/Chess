@@ -30,5 +30,7 @@ public:
 	float BoardCheckerSize = 100;
 	UPROPERTY(EditAnywhere)
 	int BoardSize = 8;
+	UPROPERTY(EditAnywhere)
+	float BoardOffset = 1;
 	
 };

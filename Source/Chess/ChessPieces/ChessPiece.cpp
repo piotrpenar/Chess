@@ -55,9 +55,13 @@ void UChessPiece::SetPosition(const int X,const int Y)
 	this->BoardPosition = FVector2D(X, Y);
 }
 
-void UChessPiece::MoveToPosition()
+void UChessPiece::MoveToPosition(FVector2D Position)
 {
-	
+	MoveActorToPosition(Position);
+	const FVector2D PreviousPosition = FVector2D(BoardPosition);
+	this->BoardPosition = Position;
+	this->BoardProvider->SetPieceAtPosition(Position,this);
+	this->BoardProvider->SetPieceAtPosition(PreviousPosition,nullptr);
 }
 
 
@@ -69,6 +73,12 @@ EFigureType UChessPiece::GetFigureType()
 void  UChessPiece::SetActorRotation(const FRotator Rotation ) const
 {
 	ChessPieceActor->SetActorRotation(Rotation);
+}
+
+//TODO: Change this to animation
+void UChessPiece::MoveActorToPosition(FVector2D Position) const
+{
+	SetActorPosition(BoardProvider->BoardToWorldTransform(Position.X,Position.Y).GetLocation());
 }
 
 void UChessPiece::SetActorPosition(const FVector Position) const
@@ -91,8 +101,7 @@ TArray<FMove> UChessPiece::GetAvailableMoves()
 	return {};
 }
 
-//TODO: Change this to animation
-void UChessPiece::MoveActorToPosition(const FVector Position)
+void UChessPiece::DestroyChessPiece() const
 {
-	SetActorPosition(Position);
+	ChessPieceActor->Destroy();
 }

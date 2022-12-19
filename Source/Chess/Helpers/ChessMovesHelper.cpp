@@ -11,7 +11,7 @@
  	{
  		if (!(ChessData->IsValidPosition(PossibleMove)))
  		{
-			UE_LOG(LogTemp, Log, TEXT("Invalid Position - from %s to %s"),*FString(MovesData.Position.ToString()),*FString(PossibleMove.ToString()))
+			//UE_LOG(LogTemp, Log, TEXT("Invalid Position - from %s to %s"),*FString(MovesData.Position.ToString()),*FString(PossibleMove.ToString()))
  			continue;
  		}
  		UChessPiece* TargetObject = GetOtherPieceAtPosition(MovesData,PossibleMove);
@@ -37,23 +37,23 @@ TArray<FMove> UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData Mov
 			{
 				if (TargetObject->GetColor() != MovesData.Color)
 				{
-					UE_LOG(LogTemp, Log, TEXT("Avaliable Move - from %s to %s"),*FString(MovesData.Position.ToString()),*FString(CurrentTargetPosition.ToString()))
+					//UE_LOG(LogTemp, Log, TEXT("Avaliable Move - from %s to %s"),*FString(MovesData.Position.ToString()),*FString(CurrentTargetPosition.ToString()))
 					AvailableMoves.Add(FMove(CurrentTargetPosition, TargetObject));
 					break;
 				}
-				UE_LOG(LogTemp, Log, TEXT("There is friendly unit here "))
+				//UE_LOG(LogTemp, Log, TEXT("There is friendly unit here "))
 				break;
 			}
 			else
 			{
-				UE_LOG(LogTemp, Log, TEXT("Avaliable Move - empty from %s to %s"),*FString(MovesData.Position.ToString()),*FString(CurrentTargetPosition.ToString()))
+				//UE_LOG(LogTemp, Log, TEXT("Avaliable Move - empty from %s to %s"),*FString(MovesData.Position.ToString()),*FString(CurrentTargetPosition.ToString()))
 				AvailableMoves.Add(FMove(CurrentTargetPosition, TargetObject));
 			}
 			CurrentTargetPosition += Direction;
 		}
-		UE_LOG(LogTemp, Log, TEXT("Invalid Direction - from %s to %s"),*FString(MovesData.Position.ToString()),*FString(CurrentTargetPosition.ToString()))
+		//UE_LOG(LogTemp, Log, TEXT("Invalid Direction - from %s to %s"),*FString(MovesData.Position.ToString()),*FString(CurrentTargetPosition.ToString()))
 	}
- 	UE_LOG(LogTemp, Log, TEXT("Finished Directions"))
+ 	//UE_LOG(LogTemp, Log, TEXT("Finished Directions"))
 	return AvailableMoves;
 }
 

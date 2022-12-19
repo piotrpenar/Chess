@@ -24,8 +24,7 @@ TArray<FMove> UChessPawn::GetAvailableMoves()
 	{
 		if (!(ChessData->IsValidPosition(PossibleMove)))
 		{
-			UE_LOG(LogTemp, Log, TEXT("Invalid Position - from %s to %s"), *FString(CurrentTargetPosition.ToString()),
-			       *FString(PossibleMove.ToString()))
+			//UE_LOG(LogTemp, Log, TEXT("Invalid Position - from %s to %s"), *FString(CurrentTargetPosition.ToString()),*FString(PossibleMove.ToString()))
 			continue;
 		}
 		UChessPiece* TargetObject = UChessMovesHelper::GetOtherPieceAtPosition(

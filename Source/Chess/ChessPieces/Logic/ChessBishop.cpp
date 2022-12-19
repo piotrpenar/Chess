@@ -10,6 +10,5 @@ TArray<FMove> UChessBishop::GetAvailableMoves()
 		FVector2D(1, 1),
 		FVector2D(-1, 1),
 	};
-	UE_LOG(LogTemp, Log, TEXT("Bishop"))
 	return UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData(Directions,BoardProvider,Color,BoardPosition),ChessData);
 }

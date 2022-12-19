@@ -15,6 +15,5 @@ TArray<FMove> UChessKing::GetAvailableMoves()
 		BoardPosition + FVector2D(0, -1),
 	};
 	
-	UE_LOG(LogTemp, Log, TEXT("King"))
 	return UChessMovesHelper::GetValidMovesFromPositions(FChessMovesData(PossibleMoves,BoardProvider,Color,BoardPosition),ChessData);
 }

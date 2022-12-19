@@ -11,6 +11,7 @@
 void AChessController::BeginPlay()
 {
 	Super::BeginPlay();
+	RulesController = NewObject<UChessRulesController>();
 	for (int i = 0; i < ChessData->BoardSize; i++)
 	{
 		F2DBoardArray Row = F2DBoardArray();
@@ -63,6 +64,7 @@ void AChessController::GenerateChessRow(TArray<EFigureType> Figures, const EColo
 		Clone->BoardProvider = this;
 		Clone->CreateActor(GetWorld(),this);
 		Clone->SetActorTransform(GenerateChessPieceTransform(Column,TargetRow,Color));
+		Clone->ChessGameState = this;
 		Board[Column].Set(TargetRow,Clone);
 	}
 }
@@ -77,7 +79,7 @@ FTransform AChessController::BoardToWorldTransform(FVector2D Position)
 
 UObject* AChessController::GetPieceAtPosition(FVector2D BoardPosition)
 {
-	UE_LOG(LogTemp, Log, TEXT("Getting object from %s"),*FString(BoardPosition.ToString()))
+	//UE_LOG(LogTemp, Log, TEXT("Getting object from %s"),*FString(BoardPosition.ToString()))
 	return Board[BoardPosition.X][BoardPosition.Y];
 }
 
@@ -91,8 +93,20 @@ void AChessController::SetPieceAtPosition(const FVector2D Vector2, UObject* Ches
 			static_cast<UChessPiece*>(CurrentObject)->DestroyChessPiece();
 		}
 	}
-	UE_LOG(LogTemp, Log, TEXT("Setting object at %s"),*FString(Vector2.ToString()))
+	//UE_LOG(LogTemp, Log, TEXT("Setting object at %s"),*FString(Vector2.ToString()))
 	Board[Vector2.X].Set(Vector2.Y,ChessPiece);
+}
+
+void AChessController::EndTurn(){
+	if(CurrentPlayer == EColor::White)
+	{
+		CurrentPlayer = EColor::Black;
+	}
+	else
+	{
+		CurrentPlayer = EColor::White;
+	}
+	RulesController->CheckBoardStatus(&Board);
 }
 
 void AChessController::CreateFigures(const EColor FigureColor)
@@ -150,4 +164,9 @@ void AChessController::CreateHighlights(TArray<FMove> Moves)
 FTransform AChessController::GetChessBoardTransform() const
 {
 	return ChessBoardOrigin->GetActorTransform();
+}
+
+EColor AChessController::GetCurrentPlayer()
+{
+	return CurrentPlayer;
 }

@@ -12,3 +12,8 @@
 void IMovesProvider::MoveToPosition(FVector2D Position)
 {
 }
+
+bool IMovesProvider::CanMoveThisTurn()
+{
+ 	return false;
+}

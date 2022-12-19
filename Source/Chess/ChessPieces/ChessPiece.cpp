@@ -62,6 +62,7 @@ void UChessPiece::MoveToPosition(FVector2D Position)
 	this->BoardPosition = Position;
 	this->BoardProvider->SetPieceAtPosition(Position,this);
 	this->BoardProvider->SetPieceAtPosition(PreviousPosition,nullptr);
+	this->ChessGameState->EndTurn();
 }
 
 
@@ -104,4 +105,14 @@ TArray<FMove> UChessPiece::GetAvailableMoves()
 void UChessPiece::DestroyChessPiece() const
 {
 	ChessPieceActor->Destroy();
+}
+
+FVector2D UChessPiece::GetBoardPosition()
+{
+	return BoardPosition;
+}
+
+bool UChessPiece::CanMoveThisTurn()
+{
+	return ChessGameState->GetCurrentPlayer() == Color;
 }

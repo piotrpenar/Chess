@@ -3,10 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ChessRulesController.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 #include "Chess/Data/ChessData.h"
 #include "Chess/Interfaces/BoardHighlighter.h"
 #include "Chess/Interfaces/ChessBoardProvider.h"
+#include "Chess/Interfaces/ChessGameState.h"
 #include "Chess/Utils/EColor.h"
 #include "Chess/Utils/EFigureType.h"
 #include "Chess/Utils/F2DBoardArray.h"
@@ -16,7 +18,7 @@
  * 
 */
 UCLASS(Blueprintable)
-class CHESS_API AChessController : public AActor , public IChessBoardProvider, public IBoardHighlighter
+class CHESS_API AChessController : public AActor , public IChessBoardProvider, public IBoardHighlighter, public IChessGameState
 {
 	GENERATED_BODY()
 
@@ -29,9 +31,11 @@ public:
 	virtual FTransform BoardToWorldTransform(FVector2D Position) override;
 	virtual UObject* GetPieceAtPosition(FVector2D BoardPosition) override;
 	virtual void SetPieceAtPosition(const FVector2D Vector2, UObject* ChessPiece) override;
+	virtual void EndTurn() override;
 	virtual void CreateHighlights(TArray<FMove> Moves) override;
 	virtual void SetSelectedFigure(AActor* Figure) override;
 	virtual void HighlightSelected(AActor* Source) override;
+	virtual EColor GetCurrentPlayer() override;
 	void ClearHighlights();
 	virtual void BeginPlay() override;
 
@@ -46,12 +50,17 @@ private:
 	TArray<F2DBoardArray> Board;
 
 	UPROPERTY()
+	UChessRulesController* RulesController;
+
+	UPROPERTY()
 	TMap<EFigureType, UChessPiece*> FigureTypeMap;
 	UPROPERTY()
 	TArray<AActor*> CurrentHighlights;
 	UPROPERTY()
 	AChessFigure* CurrentSelectedFigure;
-	FTransform GetChessBoardTransform() const; 
+	
+	EColor CurrentPlayer = EColor::White;
+	FTransform GetChessBoardTransform() const;
 	FTransform GenerateChessPieceTransform(int TargetRow, int TargetColumn, EColor Color);
 	void GenerateChessRow(TArray<EFigureType> Figures, const EColor Color, const int TargetRow);
 	

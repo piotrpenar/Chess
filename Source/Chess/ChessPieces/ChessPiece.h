@@ -2,6 +2,7 @@
 #include "IntVectorTypes.h"
 #include "Chess/Data/ChessData.h"
 #include "Chess/Interfaces/ChessBoardProvider.h"
+#include "Chess/Interfaces/ChessGameState.h"
 #include "Chess/Interfaces/MovesProvider.h"
 #include "Chess/Utils/EColor.h"
 #include "Chess/Utils/EFigureType.h"
@@ -23,10 +24,14 @@ public:
 	EColor GetColor() const;
 	virtual TArray<FMove> GetAvailableMoves() override;
 	void DestroyChessPiece() const;
+	FVector2D GetBoardPosition();
 	UPROPERTY()
 	UChessData* ChessData;
 	UPROPERTY()
 	TScriptInterface<IChessBoardProvider> BoardProvider;
+	UPROPERTY()
+	TScriptInterface<IChessGameState> ChessGameState;
+	virtual bool CanMoveThisTurn() override;
 
 protected:
 	

@@ -9,6 +9,7 @@
  	
  	for ( FVector2D PossibleMove  : MovesData.Directions)
  	{
+		//TODO: Check both position, and for Mate if this move is made
  		if (!(ChessData->IsValidPosition(PossibleMove)))
  		{
 			//UE_LOG(LogTemp, Log, TEXT("Invalid Position - from %s to %s"),*FString(MovesData.Position.ToString()),*FString(PossibleMove.ToString()))
@@ -31,6 +32,7 @@ TArray<FMove> UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData Mov
 	{
 		FVector2D CurrentTargetPosition = FVector2D(MovesData.Position);
 		CurrentTargetPosition += Direction;
+		//TODO: Check both position, and for Mate if this move is made
 		while (ChessData->IsValidPosition(CurrentTargetPosition))
 		{
 			if (UChessPiece* TargetObject = GetOtherPieceAtPosition(MovesData,CurrentTargetPosition))

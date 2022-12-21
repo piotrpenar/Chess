@@ -15,31 +15,15 @@ UCLASS()
 class CHESS_API UChessPiece : public UObject, public IMovesProvider
 {
 	GENERATED_BODY()
-public:
-	virtual void MoveToPosition(FVector2D Position) override;
-	virtual EFigureType GetFigureType();
-	virtual TArray<FMove> GetAvailableMoves() override;
-	TArray<FMove> UChessPiece::SimulateAvailableMoves(TArray<F2DBoardArray>* SimulatedBoard);
-	virtual bool CanMoveThisTurn() override;
-	
-	void SetColor(EColor PieceColor);
-	void CreateActor(UWorld* World,IBoardHighlighter* Highlighter);
-	void SetPosition(int X,int Y);
-	void SetActorTransform(FTransform Transform) const;
-	
-	EColor GetColor() const;
-	void DestroyChessPiece() const;
-	
-	FVector2D GetBoardPosition();
+
 	UPROPERTY()
-	UChessData* ChessData;
-	UPROPERTY()
-	TScriptInterface<IChessBoardProvider> BoardProvider;
-	UPROPERTY()
-	TScriptInterface<IChessGameState> ChessGameState;
+	AActor* ChessPieceActor;
+	
+	void SetActorPosition(FVector Position) const;
+	void SetActorRotation(FRotator Rotation) const;
+	void MoveActorToPosition(FVector2D Position) const;
 
 protected:
-	
 	UPROPERTY()
 	EColor Color = EColor::White;
 	UPROPERTY()
@@ -47,10 +31,24 @@ protected:
 	UPROPERTY()
 	FVector3f WorldPosition;
 	
-private :
+public:
 	UPROPERTY()
-	AActor* ChessPieceActor;
-	void SetActorPosition(FVector Position) const;
-	void SetActorRotation(FRotator Rotation) const;
-	void MoveActorToPosition(FVector2D Position) const;
+	UChessData* ChessData;
+	UPROPERTY()
+	TScriptInterface<IChessBoardProvider> BoardProvider;
+	UPROPERTY()
+	TScriptInterface<IChessGameState> ChessGameState;
+	
+	virtual void MoveToPosition(FVector2D Position) override;
+	virtual EFigureType GetFigureType();
+	virtual TArray<FMove> GetAvailableMoves() override;
+	virtual bool CanMoveThisTurn() override;
+
+	void SetColor(EColor PieceColor);
+	void SetPosition(int X, int Y);
+	void SetActorTransform(FTransform Transform) const;
+	void CreateActor(UWorld* World, IBoardHighlighter* Highlighter);
+	void DestroyChessPiece() const;
+	EColor GetColor() const;
+	FVector2D GetBoardPosition() const;
 };

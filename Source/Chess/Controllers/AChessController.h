@@ -36,6 +36,8 @@ public:
 	virtual void CreateHighlights(TArray<FMove> Moves) override;
 	virtual void SetSelectedFigure(AActor* Figure) override;
 	virtual void HighlightSelected(AActor* Source) override;
+	virtual TArray<UChessPiece*> GetAllPiecesOfColor(const EColor Color) override;
+	virtual UChessPiece* GetChessPiece(EFigureType Figure, EColor Color) override;
 	virtual EColor GetCurrentPlayer() override;
 	void SetPieceAtSimulatedPosition(const FVector2D Vector2, UObject* ChessPiece,TArray<F2DBoardArray>& BoardOverrideReference);
 	void ClearHighlights();

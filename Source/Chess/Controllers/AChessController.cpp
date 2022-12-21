@@ -111,8 +111,8 @@ bool AChessController::IsValidMove(const FVector2D Position, UObject* ChessPiece
 	SimulatedBoard[Position.X].Set(Position.Y,SimulatedPiece);
 	SimulatedPiece->SetPosition(Position.X,Position.Y);
 	SimulatedBoard[PreviousPosition.X].Set(PreviousPosition.Y,nullptr);
-	ECheckMateStatus Status = RulesController->GetBoardStatus(&SimulatedBoard,this,SimulatedPiece);
-	return Status == ECheckMateStatus::None;
+	ECheckmateStatus Status = RulesController->GetBoardStatus(&SimulatedBoard,this,SimulatedPiece);
+	return Status == ECheckmateStatus::None;
 }
 
 void AChessController::EndTurn(){
@@ -126,6 +126,48 @@ void AChessController::EndTurn(){
 	}
 	//ECheckMateStatus Status = RulesController->GetBoardStatus(&Board,this);
 	//UE_LOG(LogTemp, Log, TEXT("Check mate status is %D"),Status);
+}
+
+TArray<UChessPiece*> AChessController::GetAllPiecesOfColor(const EColor Color)
+{
+	TArray<UChessPiece*> Pieces;
+	for (F2DBoardArray Row : SourceBoard)
+	{
+		for (UObject* ChessPieceObject : Row.Array)
+		{
+			if (!ChessPieceObject)
+			{
+				continue;
+			}
+			UChessPiece* ChessPiece = static_cast<UChessPiece*>(ChessPieceObject);
+			if (ChessPiece->GetColor() == Color)
+			{
+				Pieces.Add(ChessPiece);
+			}
+		}
+	}
+	return Pieces;
+}
+
+
+UChessPiece* AChessController::GetChessPiece(const EFigureType Figure,const EColor Color)
+{
+	for (F2DBoardArray Row : Board)
+	{
+		for (const UObject* ChessPieceObject : Row.Array)
+		{
+			if (!ChessPieceObject)
+			{
+				continue;
+			}
+			UChessPiece* ChessPiece = static_cast<UChessPiece*>(ChessPieceObject);
+			if (ChessPiece->GetFigureType() == Figure && ChessPiece->GetColor() == Color)
+			{
+				return ChessPiece;
+			}
+		}
+	}
+	return nullptr;
 }
 
 void AChessController::CreateFigures(const EColor FigureColor)

@@ -13,7 +13,7 @@ EFigureType UChessPiece::GetFigureType()
 	return EFigureType::Invalid;
 }
 
-FVector2D UChessPiece::GetBoardPosition()
+FVector2D UChessPiece::GetBoardPosition() const
 {
 	return BoardPosition;
 }
@@ -33,16 +33,40 @@ TArray<FMove> UChessPiece::GetAvailableMoves()
 	return {};
 }
 
-TArray<FMove> UChessPiece::SimulateAvailableMoves(TArray<F2DBoardArray>* SimulatedBoard) 
-{
-	return {};
-}
-
 void UChessPiece::DestroyChessPiece() const
 {
 	ChessPieceActor->Destroy();
 }
 
+void UChessPiece::SetPosition(const int X,const int Y)
+{
+	this->BoardPosition = FVector2D(X, Y);
+}
+
+void  UChessPiece::SetActorRotation(const FRotator Rotation ) const
+{
+	ChessPieceActor->SetActorRotation(Rotation);
+}
+
+void UChessPiece::SetActorPosition(const FVector Position) const
+{
+	ChessPieceActor->SetActorLocation(Position);
+}
+
+void UChessPiece::SetActorTransform(const FTransform Transform) const
+{
+	ChessPieceActor->SetActorTransform(Transform);
+}
+
+void UChessPiece::MoveToPosition(FVector2D Position)
+{
+	const FVector2D PreviousPosition = FVector2D(BoardPosition);
+	BoardPosition = Position;
+	BoardProvider->SetPieceAtPosition(Position,this);
+	MoveActorToPosition(Position);
+	BoardProvider->SetPieceAtPosition(PreviousPosition,nullptr);
+	ChessGameState->EndTurn();
+}
 
 void UChessPiece::CreateActor(UWorld* World,IBoardHighlighter* Highlighter)
 {
@@ -82,44 +106,13 @@ void UChessPiece::CreateActor(UWorld* World,IBoardHighlighter* Highlighter)
 		return;
 	}
 	StaticMeshComponent->SetStaticMesh(Mesh);
-
 	ChessPieceActor = Actor;
 	Actor->Highlighter = Highlighter;
 	Actor->SourcePiece = this;
-}
-
-void UChessPiece::SetPosition(const int X,const int Y)
-{
-	this->BoardPosition = FVector2D(X, Y);
-}
-
-void UChessPiece::MoveToPosition(FVector2D Position)
-{
-	const FVector2D PreviousPosition = FVector2D(BoardPosition);
-	this->BoardPosition = Position;
-	this->BoardProvider->SetPieceAtPosition(Position,this);
-	MoveActorToPosition(Position);
-	this->BoardProvider->SetPieceAtPosition(PreviousPosition,nullptr);
-	this->ChessGameState->EndTurn();
-}
-
-void  UChessPiece::SetActorRotation(const FRotator Rotation ) const
-{
-	ChessPieceActor->SetActorRotation(Rotation);
 }
 
 //TODO: Change this to animation
 void UChessPiece::MoveActorToPosition(FVector2D Position) const
 {
 	SetActorPosition(BoardProvider->BoardToWorldTransform(Position.X,Position.Y).GetLocation());
-}
-
-void UChessPiece::SetActorPosition(const FVector Position) const
-{
-	ChessPieceActor->SetActorLocation(Position);
-}
-
-void UChessPiece::SetActorTransform(const FTransform Transform) const
-{
-	ChessPieceActor->SetActorTransform(Transform);
 }

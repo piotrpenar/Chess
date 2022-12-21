@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Chess/ChessPieces/ChessPiece.h"
 #include "UObject/Interface.h"
 #include "ChessBoardProvider.generated.h"
 
@@ -21,5 +22,6 @@ public:
 	virtual FTransform BoardToWorldTransform(FVector2D Position);
 	virtual void SetPieceAtPosition(const FVector2D Position, UObject* ChessPiece);
 	virtual bool IsValidMove(const FVector2D Position, UObject* ChessPiece);
-	
+	virtual TArray<UChessPiece*> GetAllPiecesOfColor(const EColor Color);
+	virtual UChessPiece* GetChessPiece(const EFigureType Figure,const EColor Color);
 };

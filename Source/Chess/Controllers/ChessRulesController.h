@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Chess/ChessPieces/ChessPiece.h"
-#include "Chess/Utils/ECheckMateStatus.h"
+#include "Chess/Utils/ECheckmateStatus.h"
 #include "Chess/Utils/F2DBoardArray.h"
 #include "UObject/Object.h"
 #include "ChessRulesController.generated.h"
@@ -17,11 +17,22 @@ class CHESS_API UChessRulesController : public UObject
 {
 	GENERATED_BODY()
 
+
+	struct FEnemyMove
+	{
+		FMove Move;
+		UChessPiece* Enemy;
+	};
+
+	static TArray<FEnemyMove> GetEnemiesAvailableMoves(TArray<UChessPiece*> EnemyPieces);
+	static TArray<UChessPiece*> GetThreateningEnemies(TArray<FEnemyMove> EnemyMoves, UChessPiece* King);
+	static ECheckmateStatus CalculateCheckmateStatus(TArray<UChessPiece*> EnemyPieces, TArray<UChessPiece*> AllyPieces, IChessBoardProvider* ChessBoardProvider);
+	static UChessPiece* GetFigureFromArray(const TArray<UChessPiece*>& Array, const EFigureType Figure);
+	static bool IsKingAbleToEscape(TArray<FEnemyMove> EnemyAvailableMoves, UChessPiece* AlliedKing);
+	static bool CanAllyCoverAnyEnemyMove(TArray<FEnemyMove> EnemyAvailableMoves, FMove AllyMove);
+	static bool CanAllyDestroyEnemy(const UChessPiece* ThreateningEnemy, UChessPiece* Ally, FMove AllyMove, IChessBoardProvider* ChessBoardProvider);
+	static bool CanAllyEliminateCheck(TArray<FEnemyMove> EnemyAvailableMoves, UChessPiece* AllyPiece, IChessBoardProvider* ChessBoardProvider);
+	
 public:
-	TArray<UChessPiece*> GetAllPiecesOfColor(TArray<F2DBoardArray>* Array, EColor Color);
-	UChessPiece* GetFigureFromArray(TArray<UChessPiece*> Array, EFigureType Figure);
-	ECheckMateStatus GetBoardStatus(TArray<F2DBoardArray>* Board, IChessBoardProvider* ChessBoardProvider, UChessPiece* ChessPiece);
-	UChessPiece* FindChessPiece(TArray<F2DBoardArray>* Board,EFigureType Figure,EColor Color);
-	bool AreMovePositionsEqual(FMove First, FMove Second);
-	ECheckMateStatus CheckForCheckMate(TArray<UChessPiece*> EnemyPieces,TArray<UChessPiece*> AllyPieces, UChessPiece* King,IChessBoardProvider* ChessBoardProvider);
+	ECheckmateStatus GetBoardStatusForColor(IChessBoardProvider* ChessBoardProvider, EColor Color);
 };

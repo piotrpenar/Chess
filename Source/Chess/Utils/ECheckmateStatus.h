@@ -1,9 +1,9 @@
 ﻿#pragma once
 
 UENUM()
-enum class ECheckMateStatus : uint8
+enum class ECheckmateStatus : uint8
 {
 	None = 0 UMETA(DisplayName = "None"),
-	Mate = 1 UMETA(DisplayName = "Mate"),
+	Check = 1 UMETA(DisplayName = "Check"),
 	Checkmate = 2 UMETA(DisplayName = "Checkmate"),
 };

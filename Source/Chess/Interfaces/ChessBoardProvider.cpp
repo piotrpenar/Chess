@@ -27,3 +27,13 @@ bool IChessBoardProvider::IsValidMove(const FVector2D Position, UObject* ChessPi
 {
 	return false;
 }
+
+TArray<UChessPiece*> IChessBoardProvider::GetAllPiecesOfColor(EColor Color)
+{
+	return {};
+}
+
+UChessPiece* IChessBoardProvider::GetChessPiece(const EFigureType Figure, const EColor Color)
+{
+	return nullptr;
+}

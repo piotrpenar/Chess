@@ -9,16 +9,6 @@ struct F2DBoardArray
 	UPROPERTY()
 	TArray<UObject*> Array;
 
-	F2DBoardArray(){}
-	
-	F2DBoardArray(F2DBoardArray other)
-	{
-		for(UObject* TargetObject : other.Array)
-		{
-			Array.Add(NewObject<IClo>())
-		}
-	}
-
 	UObject* operator[](int32 i)
 	{
 		return Array[i];

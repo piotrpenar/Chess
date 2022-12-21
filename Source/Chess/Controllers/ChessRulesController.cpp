@@ -57,13 +57,13 @@ ECheckMateStatus UChessRulesController::GetBoardStatus(TArray<F2DBoardArray>* Bo
 	
 	
 }
-
+struct Temp{FMove Move; UChessPiece* Figure;};
 //TODO: Refactor This Function
 ECheckMateStatus UChessRulesController::CheckForCheckMate(TArray<UChessPiece*> EnemyPieces,TArray<UChessPiece*> AllyPieces, UChessPiece* King,IChessBoardProvider* ChessBoardProvider)
 {
 	ECheckMateStatus CheckResult = ECheckMateStatus::None;
 	TArray<UChessPiece*> EndangeringFigures;
-	TArray<struct {FMove Move; UChessPiece* Figure;}> AllEnemyAvailableMoves;  
+	TArray<Temp> AllEnemyAvailableMoves;  
 	for (auto EnemyPiece : EnemyPieces)
 	{
 		TArray<FMove> EnemyAvailableMoves = EnemyPiece->GetAvailableMoves();

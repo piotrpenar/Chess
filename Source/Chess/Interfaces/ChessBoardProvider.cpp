@@ -19,6 +19,11 @@ FTransform IChessBoardProvider::BoardToWorldTransform(FVector2D Position)
 	return FTransform();
 }
 
-void IChessBoardProvider::SetPieceAtPosition(const FVector2D Vector2, UObject* ChessPiece)
+void IChessBoardProvider::SetPieceAtPosition(const FVector2D Position, UObject* ChessPiece)
 {
+}
+
+bool IChessBoardProvider::IsValidMove(const FVector2D Position, UObject* ChessPiece)
+{
+	return false;
 }

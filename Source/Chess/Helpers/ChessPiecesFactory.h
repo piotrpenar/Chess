@@ -18,4 +18,5 @@ class CHESS_API UChessPiecesFactory : public UObject
 
 public:
 	static UChessPiece* GenerateChessPiece (const EFigureType FigureType,UObject* Initializer);
+	static UChessPiece* CloneChessPiece(UChessPiece* Original, UObject* Initializer);
 };

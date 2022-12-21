@@ -97,6 +97,24 @@ void AChessController::SetPieceAtPosition(const FVector2D Vector2, UObject* Ches
 	Board[Vector2.X].Set(Vector2.Y,ChessPiece);
 }
 
+
+bool AChessController::IsValidMove(const FVector2D Position, UObject* ChessPiece)
+{
+	if(!ChessData->IsValidPosition(Position))
+	{
+		return false;
+	}
+	UChessPiece* TargetPiece = static_cast<UChessPiece*>(ChessPiece);
+	UChessPiece* SimulatedPiece = UChessPiecesFactory::CloneChessPiece(TargetPiece,this);
+	TArray<F2DBoardArray> SimulatedBoard = TArray<F2DBoardArray>(Board);
+	const FVector2D PreviousPosition = FVector2D(TargetPiece->GetBoardPosition());
+	SimulatedBoard[Position.X].Set(Position.Y,SimulatedPiece);
+	SimulatedPiece->SetPosition(Position.X,Position.Y);
+	SimulatedBoard[PreviousPosition.X].Set(PreviousPosition.Y,nullptr);
+	ECheckMateStatus Status = RulesController->GetBoardStatus(&SimulatedBoard,this);
+	return Status == ECheckMateStatus::None;
+}
+
 void AChessController::EndTurn(){
 	if(CurrentPlayer == EColor::White)
 	{
@@ -106,7 +124,8 @@ void AChessController::EndTurn(){
 	{
 		CurrentPlayer = EColor::White;
 	}
-	RulesController->CheckBoardStatus(&Board);
+	ECheckMateStatus Status = RulesController->GetBoardStatus(&Board,this);
+	UE_LOG(LogTemp, Log, TEXT("Check mate status is %D"),Status);
 }
 
 void AChessController::CreateFigures(const EColor FigureColor)

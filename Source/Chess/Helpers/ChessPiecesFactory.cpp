@@ -33,3 +33,31 @@ UChessPiece* UChessPiecesFactory::GenerateChessPiece(const EFigureType FigureTyp
 		return NewObject<UChessPiece>(Initializer);
 	}
 }
+
+UChessPiece* UChessPiecesFactory::CloneChessPiece(UChessPiece* Original, UObject* Initializer)
+{
+	switch (Original->GetFigureType())
+	{
+	case EFigureType::Pawn:
+		const UChessPawn* OriginalPawn = static_cast<UChessPawn*>(Original);
+		return DuplicateObject(OriginalPawn,Initializer);
+	case EFigureType::Rook:
+		const UChessRook* OriginalRook = static_cast<UChessRook*>(Original);
+		return DuplicateObject(OriginalRook,Initializer);
+	case EFigureType::Knight:
+		const UChessKnight* OriginalKnight = static_cast<UChessKnight*>(Original);
+		return DuplicateObject(OriginalKnight,Initializer);
+	case EFigureType::Bishop:
+		const UChessBishop* OriginalBishop = static_cast<UChessBishop*>(Original);
+		return DuplicateObject(OriginalBishop,Initializer);
+	case EFigureType::Queen:
+		const UChessQueen* OriginalQueen = static_cast<UChessQueen*>(Original);
+		return DuplicateObject(OriginalQueen,Initializer);
+	case EFigureType::King:
+		const UChessKing* OriginalKing = static_cast<UChessKing*>(Original);
+		return DuplicateObject(OriginalKing,Initializer);
+	default:
+		UE_LOG(LogTemp, Error, TEXT("Initializing piece with default type!"))
+		return NewObject<UChessPiece>(Initializer);
+	}
+}

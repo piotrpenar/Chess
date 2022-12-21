@@ -19,6 +19,7 @@ public:
 	virtual UObject* GetPieceAtPosition(FVector2D BoardPosition);
 	virtual FTransform BoardToWorldTransform(const int X, const int Y);
 	virtual FTransform BoardToWorldTransform(FVector2D Position);
-	virtual void SetPieceAtPosition(const FVector2D Vector2, UObject* ChessPiece);
+	virtual void SetPieceAtPosition(const FVector2D Position, UObject* ChessPiece);
+	virtual bool IsValidMove(const FVector2D Position, UObject* ChessPiece);
 	
 };

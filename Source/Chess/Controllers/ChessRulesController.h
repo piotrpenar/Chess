@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Chess/ChessPieces/ChessPiece.h"
+#include "Chess/Utils/ECheckMateStatus.h"
 #include "Chess/Utils/F2DBoardArray.h"
 #include "UObject/Object.h"
 #include "ChessRulesController.generated.h"
@@ -19,8 +20,7 @@ class CHESS_API UChessRulesController : public UObject
 public:
 	TArray<UChessPiece*> GetAllPiecesOfColor(TArray<F2DBoardArray>* Array, EColor Color);
 	UChessPiece* GetFigureFromArray(TArray<UChessPiece*> Array, EFigureType Figure);
-	void CheckBoardStatus(TArray<F2DBoardArray>* Board);
-	void CheckForMate(TArray<UChessPiece*> WhitePieces, UChessPiece* BlackKing);
-	void CheckForCheckMate();
-	UChessPiece* UChessRulesController::FindChessPiece(TArray<F2DBoardArray>* Board,EFigureType Figure,EColor Color);
+	ECheckMateStatus GetBoardStatus(TArray<F2DBoardArray>* Board,IChessBoardProvider* ChessBoardProvider);
+	UChessPiece* FindChessPiece(TArray<F2DBoardArray>* Board,EFigureType Figure,EColor Color);
+	ECheckMateStatus CheckForCheckMate(TArray<UChessPiece*> EnemyPieces,TArray<UChessPiece*> AllyPieces, UChessPiece* King,IChessBoardProvider* ChessBoardProvider);
 };

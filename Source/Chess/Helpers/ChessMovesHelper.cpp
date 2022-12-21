@@ -3,14 +3,14 @@
 #include "Chess/Utils/ChessMovesData.h"
 #include "Chess/Interfaces/ChessBoardProvider.h"
 
- TArray<FMove> UChessMovesHelper::GetValidMovesFromPositions(FChessMovesData MovesData, IChessBoardProvider* ChessBoardProvider)
+ TArray<FMove> UChessMovesHelper::GetValidMovesFromPositions(FChessMovesData& MovesData)
  {
  	TArray<FMove> ValidMoves;
  	
  	for ( FVector2D PossibleMove  : MovesData.Directions)
  	{
 		//TODO: Check both position, and for Mate if this move is made
- 		if (!(ChessBoardProvider->IsValidMove(PossibleMove,MovesData.ChessPiece)))
+ 		if (!(MovesData.BoardProvider->IsValidMove(PossibleMove,MovesData.ChessPiece)))
  		{
 			//UE_LOG(LogTemp, Log, TEXT("Invalid Position - from %s to %s"),*FString(MovesData.Position.ToString()),*FString(PossibleMove.ToString()))
  			continue;
@@ -24,7 +24,7 @@
  	return ValidMoves;
 }
 
-TArray<FMove> UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData MovesData, IChessBoardProvider* ChessBoardProvider)
+TArray<FMove> UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData& MovesData)
 {
  	TArray<FMove> AvailableMoves  = TArray<FMove>();
  	
@@ -33,7 +33,7 @@ TArray<FMove> UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData Mov
 		FVector2D CurrentTargetPosition = FVector2D(MovesData.Position);
 		CurrentTargetPosition += Direction;
 		//TODO: Check both position, and for Mate if this move is made
-		while (!(ChessBoardProvider->IsValidMove(CurrentTargetPosition,MovesData.ChessPiece)))
+		while (!(MovesData.BoardProvider->IsValidMove(CurrentTargetPosition,MovesData.ChessPiece)))
 		{
 			if (UChessPiece* TargetObject = GetOtherPieceAtPosition(MovesData,CurrentTargetPosition))
 			{

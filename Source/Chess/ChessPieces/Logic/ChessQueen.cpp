@@ -8,9 +8,10 @@ EFigureType UChessQueen::GetFigureType()
 	return EFigureType::Queen;
 }
 
-TArray<FMove> UChessQueen::GetAvailableMoves()
+
+TArray<FVector2D> UChessQueen::GetPossibleDirections() const
 {
-	TArray<FVector2D> PossibleMoves = {
+	return  {
 		FVector2D(-1, -1),
 		FVector2D(1, -1),
 		FVector2D(1, 1),
@@ -20,6 +21,15 @@ TArray<FMove> UChessQueen::GetAvailableMoves()
 		FVector2D(0, -1),
 		FVector2D(0, 1),
 	};
-	return UChessMovesHelper::GetValidMovesFromDirections(
-		FChessMovesData(PossibleMoves, BoardProvider, Color, BoardPosition,this), BoardProvider.GetInterface());
+}
+
+FChessMovesData UChessQueen::GenerateMovesData()
+{
+	return FChessMovesData(GetPossibleDirections(), BoardProvider, Color, BoardPosition,this);
+}
+
+TArray<FMove> UChessQueen::GetAvailableMoves()
+{
+	const FChessMovesData PossibleMovesData = GenerateMovesData();
+	return UChessMovesHelper::GetValidMovesFromDirections(PossibleMovesData);
 }

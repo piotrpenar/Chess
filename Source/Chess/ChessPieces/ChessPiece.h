@@ -4,8 +4,10 @@
 #include "Chess/Interfaces/ChessBoardProvider.h"
 #include "Chess/Interfaces/ChessGameState.h"
 #include "Chess/Interfaces/MovesProvider.h"
+#include "Chess/Utils/ChessMovesData.h"
 #include "Chess/Utils/EColor.h"
 #include "Chess/Utils/EFigureType.h"
+#include "Chess/Utils/F2DBoardArray.h"
 #include "Chess/Utils/FMove.h"
 #include "ChessPiece.generated.h"
 
@@ -17,6 +19,7 @@ public:
 	virtual void MoveToPosition(FVector2D Position) override;
 	virtual EFigureType GetFigureType();
 	virtual TArray<FMove> GetAvailableMoves() override;
+	TArray<FMove> UChessPiece::SimulateAvailableMoves(TArray<F2DBoardArray>* SimulatedBoard);
 	virtual bool CanMoveThisTurn() override;
 	
 	void SetColor(EColor PieceColor);

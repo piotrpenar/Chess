@@ -6,6 +6,10 @@ UCLASS()
 class UChessKnight final : public UChessPiece
 {
 	GENERATED_BODY()
+	
+	FChessMovesData GenerateMovesData();
+	TArray<FVector2D> GetPossibleMoves();
+	
 public:
 	virtual EFigureType GetFigureType() override;;
 	virtual TArray<FMove> GetAvailableMoves()  override;

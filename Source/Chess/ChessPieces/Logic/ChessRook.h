@@ -13,6 +13,9 @@ UCLASS()
 class CHESS_API UChessRook final : public UChessPiece
 {
 	GENERATED_BODY()
+	
+	FChessMovesData GenerateMovesData();
+	TArray<FVector2D> GetPossibleDirections() const;
 public:
 	virtual EFigureType GetFigureType() override;;
 	virtual TArray<FMove> GetAvailableMoves() override;

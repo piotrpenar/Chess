@@ -7,14 +7,23 @@ EFigureType UChessBishop::GetFigureType()
 	return EFigureType::Bishop;
 }
 
-TArray<FMove> UChessBishop::GetAvailableMoves()
+TArray<FVector2D> UChessBishop::GetPossibleDirections() const
 {
-	const TArray<FVector2D> Directions = {
+	return  {
 		FVector2D(-1, -1),
 		FVector2D(1, -1),
 		FVector2D(1, 1),
 		FVector2D(-1, 1),
 	};
-	return UChessMovesHelper::GetValidMovesFromDirections(
-		FChessMovesData(Directions, BoardProvider, Color, BoardPosition,this), BoardProvider.GetInterface());
+}
+
+FChessMovesData UChessBishop::GenerateMovesData()
+{
+	return FChessMovesData(GetPossibleDirections(), BoardProvider, Color, BoardPosition,this);
+}
+
+TArray<FMove> UChessBishop::GetAvailableMoves()
+{
+	const FChessMovesData PossibleMovesData = GenerateMovesData();
+	return UChessMovesHelper::GetValidMovesFromDirections(PossibleMovesData);
 }

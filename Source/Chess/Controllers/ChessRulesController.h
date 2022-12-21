@@ -20,7 +20,7 @@ class CHESS_API UChessRulesController : public UObject
 public:
 	TArray<UChessPiece*> GetAllPiecesOfColor(TArray<F2DBoardArray>* Array, EColor Color);
 	UChessPiece* GetFigureFromArray(TArray<UChessPiece*> Array, EFigureType Figure);
-	ECheckMateStatus GetBoardStatus(TArray<F2DBoardArray>* Board,IChessBoardProvider* ChessBoardProvider);
+	ECheckMateStatus GetBoardStatus(TArray<F2DBoardArray>* Board, IChessBoardProvider* ChessBoardProvider, UChessPiece* ChessPiece);
 	UChessPiece* FindChessPiece(TArray<F2DBoardArray>* Board,EFigureType Figure,EColor Color);
 	bool AreMovePositionsEqual(FMove First, FMove Second);
 	ECheckMateStatus CheckForCheckMate(TArray<UChessPiece*> EnemyPieces,TArray<UChessPiece*> AllyPieces, UChessPiece* King,IChessBoardProvider* ChessBoardProvider);

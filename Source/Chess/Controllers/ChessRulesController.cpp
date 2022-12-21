@@ -38,24 +38,22 @@ UChessPiece* UChessRulesController::GetFigureFromArray(TArray<UChessPiece*> Arra
 	return nullptr;
 }
 
-ECheckMateStatus UChessRulesController::GetBoardStatus(TArray<F2DBoardArray>* Board,IChessBoardProvider* ChessBoardProvider)
+ECheckMateStatus UChessRulesController::GetBoardStatus(TArray<F2DBoardArray>* Board,IChessBoardProvider* ChessBoardProvider,UChessPiece* ChessPiece)
 {
-	TArray<UChessPiece*> WhitePieces = GetAllPiecesOfColor(Board,EColor::White); 
-	TArray<UChessPiece*> BlackPieces = GetAllPiecesOfColor(Board,EColor::Black); 
-	UChessPiece* WhiteKing = GetFigureFromArray(WhitePieces,EFigureType::King);
-	UChessPiece* BlackKing = GetFigureFromArray(WhitePieces,EFigureType::King);
-	ECheckMateStatus BlackMate = CheckForCheckMate(WhitePieces,BlackPieces,BlackKing,ChessBoardProvider);
-	ECheckMateStatus WhiteMate = CheckForCheckMate(BlackPieces,WhitePieces,WhiteKing,ChessBoardProvider);
-	if(BlackMate!= ECheckMateStatus::None)
+	EColor AllyColor = ChessPiece->GetColor();
+	EColor EnemyColor = AllyColor == EColor::White ? EColor::Black : EColor::White;
+	
+	TArray<UChessPiece*> AllyPieces = GetAllPiecesOfColor(Board,AllyColor); 
+	TArray<UChessPiece*> EnemyPieces = GetAllPiecesOfColor(Board,EnemyColor); 
+	UChessPiece* AlliedKing = GetFigureFromArray(AllyPieces,EFigureType::King);
+	ECheckMateStatus MateStatus = CheckForCheckMate(EnemyPieces,AllyPieces,AlliedKing,ChessBoardProvider);
+	if(MateStatus!= ECheckMateStatus::None)
 	{
-		UE_LOG(LogTemp,Log,TEXT("Black Mate!- %d!"),BlackMate)
+		UE_LOG(LogTemp,Log,TEXT("White Mate - %d!"),MateStatus)
 	}
-	if(WhiteMate!= ECheckMateStatus::None)
-	{
-		UE_LOG(LogTemp,Log,TEXT("White Mate - %d!"),WhiteMate)
-	}
-	return WhiteMate;
+	return MateStatus;
 }
+
 struct EnemyMove{FMove Move; UChessPiece* Enemy;};
 
 //TODO: Refactor This Function

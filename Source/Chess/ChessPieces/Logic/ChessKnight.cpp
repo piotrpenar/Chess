@@ -7,9 +7,9 @@ EFigureType UChessKnight::GetFigureType()
 	return EFigureType::Knight;
 }
 
-TArray<FMove> UChessKnight::GetAvailableMoves()
+TArray<FVector2D> UChessKnight::GetPossibleMoves()
 {
-	TArray<FVector2D> PossibleMoves = {
+	return {
 		BoardPosition + FVector2D(-1, -2),
 		BoardPosition + FVector2D(-2, -1),
 		BoardPosition + FVector2D(1, -2),
@@ -19,6 +19,16 @@ TArray<FMove> UChessKnight::GetAvailableMoves()
 		BoardPosition + FVector2D(-1, 2),
 		BoardPosition + FVector2D(-2, 1),
 	};
-	return UChessMovesHelper::GetValidMovesFromPositions(
-		FChessMovesData(PossibleMoves, BoardProvider, Color, BoardPosition,this), BoardProvider.GetInterface());
+}
+
+FChessMovesData UChessKnight::GenerateMovesData()
+{
+	return FChessMovesData(GetPossibleMoves(), BoardProvider, Color, BoardPosition,this);
+}
+
+
+TArray<FMove> UChessKnight::GetAvailableMoves()
+{
+	const FChessMovesData PossibleMovesData = GenerateMovesData();
+	return UChessMovesHelper::GetValidMovesFromPositions(PossibleMovesData);
 }

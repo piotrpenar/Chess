@@ -1,4 +1,6 @@
 ﻿#include "ChessPiece.h"
+
+#include "Chess/Utils/F2DBoardArray.h"
 #include "Figures/AChessFigure.h"
 
 void UChessPiece::SetColor(const EColor PieceColor)
@@ -27,6 +29,11 @@ EColor UChessPiece::GetColor() const
 }
 
 TArray<FMove> UChessPiece::GetAvailableMoves() 
+{
+	return {};
+}
+
+TArray<FMove> UChessPiece::SimulateAvailableMoves(TArray<F2DBoardArray>* SimulatedBoard) 
 {
 	return {};
 }

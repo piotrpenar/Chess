@@ -9,7 +9,6 @@
  	
  	for ( FVector2D PossibleMove  : MovesData.Directions)
  	{
-		//TODO: Check both position, and for Mate if this move is made
  		if (!(MovesData.BoardProvider->IsValidMove(PossibleMove,MovesData.ChessPiece)))
  		{
 			//UE_LOG(LogTemp, Log, TEXT("Invalid Position - from %s to %s"),*FString(MovesData.Position.ToString()),*FString(PossibleMove.ToString()))
@@ -30,17 +29,16 @@ TArray<FMove> UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData& Mo
  	
 	for (const FVector2D Direction : MovesData.Directions)
 	{
-		FVector2D CurrentTargetPosition = FVector2D(MovesData.Position);
-		CurrentTargetPosition += Direction;
-		//TODO: Check both position, and for Mate if this move is made
-		while (!(MovesData.BoardProvider->IsValidMove(CurrentTargetPosition,MovesData.ChessPiece)))
+		FVector2D NextPosition = FVector2D(MovesData.Position);
+		NextPosition += Direction;
+		while (!(MovesData.BoardProvider->IsValidMove(NextPosition,MovesData.ChessPiece)))
 		{
-			if (UChessPiece* TargetObject = GetOtherPieceAtPosition(MovesData,CurrentTargetPosition))
+			if (UChessPiece* TargetObject = GetOtherPieceAtPosition(MovesData,NextPosition))
 			{
 				if (TargetObject->GetColor() != MovesData.Color)
 				{
 					//UE_LOG(LogTemp, Log, TEXT("Avaliable Move - from %s to %s"),*FString(MovesData.Position.ToString()),*FString(CurrentTargetPosition.ToString()))
-					AvailableMoves.Add(FMove(CurrentTargetPosition, TargetObject));
+					AvailableMoves.Add(FMove(NextPosition, TargetObject));
 					break;
 				}
 				//UE_LOG(LogTemp, Log, TEXT("There is friendly unit here "))
@@ -49,9 +47,9 @@ TArray<FMove> UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData& Mo
 			else
 			{
 				//UE_LOG(LogTemp, Log, TEXT("Avaliable Move - empty from %s to %s"),*FString(MovesData.Position.ToString()),*FString(CurrentTargetPosition.ToString()))
-				AvailableMoves.Add(FMove(CurrentTargetPosition, TargetObject));
+				AvailableMoves.Add(FMove(NextPosition, TargetObject));
 			}
-			CurrentTargetPosition += Direction;
+			NextPosition += Direction;
 		}
 		//UE_LOG(LogTemp, Log, TEXT("Invalid Direction - from %s to %s"),*FString(MovesData.Position.ToString()),*FString(CurrentTargetPosition.ToString()))
 	}
@@ -59,7 +57,7 @@ TArray<FMove> UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData& Mo
 	return AvailableMoves;
 }
 
-UChessPiece* UChessMovesHelper::GetOtherPieceAtPosition(FChessMovesData MovesData, FVector2D BoardPosition) 
+UChessPiece* UChessMovesHelper::GetOtherPieceAtPosition(const FChessMovesData& MovesData, const FVector2D BoardPosition) 
 {
 	return static_cast<UChessPiece*>(MovesData.BoardProvider->GetPieceAtPosition(BoardPosition));
 }

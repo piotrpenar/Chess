@@ -23,5 +23,5 @@ public:
 	virtual void SetPieceAtPosition(const FVector2D Position, UObject* ChessPiece);
 	virtual bool IsValidMove(const FVector2D Position, UObject* ChessPiece);
 	virtual TArray<UChessPiece*> GetAllPiecesOfColor(const EColor Color);
-	virtual UChessPiece* GetChessPiece(const EFigureType Figure,const EColor Color);
+	virtual UChessPiece* GetChessPiece(const EFigure Figure,const EColor Color);
 };

@@ -8,9 +8,9 @@ void UChessPiece::SetColor(const EColor PieceColor)
 	Color = PieceColor;
 }
 
-EFigureType UChessPiece::GetFigureType()
+EFigure UChessPiece::GetFigureType()
 {
-	return EFigureType::Invalid;
+	return EFigure::Invalid;
 }
 
 FVector2D UChessPiece::GetBoardPosition() const

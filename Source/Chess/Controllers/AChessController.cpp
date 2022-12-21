@@ -5,7 +5,7 @@
 
 #include "Chess/Helpers/ChessPiecesFactory.h"
 #include "Chess/Utils/EColor.h"
-#include "Chess/Utils/EFigureType.h"
+#include "Chess/Utils/EFigure.h"
 #include "Chess/Utils/F2DBoardArray.h"
 
 void AChessController::BeginPlay()
@@ -24,7 +24,7 @@ void AChessController::BeginPlay()
 	CreateChessPiece();
 }
 
-UChessPiece* AChessController::GenerateChessPiece(const EFigureType Figure)
+UChessPiece* AChessController::GenerateChessPiece(const EFigure Figure)
 {
 	return UChessPiecesFactory::GenerateChessPiece(Figure,this);
 }
@@ -53,7 +53,7 @@ FTransform AChessController::GenerateChessPieceTransform(const int X,const  int 
 	return Transform;
 }
 
-void AChessController::GenerateChessRow(TArray<EFigureType> Figures, const EColor Color, const int TargetRow)
+void AChessController::GenerateChessRow(TArray<EFigure> Figures, const EColor Color, const int TargetRow)
 {
 	for (int Column = 0; Column < ChessData->BoardSize; Column++)
 	{
@@ -100,7 +100,7 @@ void AChessController::SetPieceAtPosition(const FVector2D Vector2, UObject* Ches
 
 bool AChessController::IsValidMove(const FVector2D Position, UObject* ChessPiece)
 {
-	if(!ChessData->IsValidPosition(Position))
+	if(!ChessData->IsValidBoardPosition(Position))
 	{
 		return false;
 	}
@@ -150,7 +150,7 @@ TArray<UChessPiece*> AChessController::GetAllPiecesOfColor(const EColor Color)
 }
 
 
-UChessPiece* AChessController::GetChessPiece(const EFigureType Figure,const EColor Color)
+UChessPiece* AChessController::GetChessPiece(const EFigure Figure,const EColor Color)
 {
 	for (F2DBoardArray Row : Board)
 	{
@@ -175,7 +175,7 @@ void AChessController::CreateFigures(const EColor FigureColor)
 	const bool bIsWhite = FigureColor == EColor::White;
 	const int ManRow = bIsWhite ? 0 : 7;
 	const int PawnRow = bIsWhite ? 1 : 6;
-	TArray<EFigureType> MenTargetArray = Men;
+	TArray<EFigure> MenTargetArray = Men;
 
 	if (!bIsWhite)
 	{

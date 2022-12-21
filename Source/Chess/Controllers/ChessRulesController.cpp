@@ -22,7 +22,7 @@ ECheckmateStatus UChessRulesController::GetBoardStatusForColor(IChessBoardProvid
 
 ECheckmateStatus UChessRulesController::CalculateCheckmateStatus(TArray<UChessPiece*> EnemyPieces, TArray<UChessPiece*> AllyPieces, IChessBoardProvider* ChessBoardProvider)
 {
-	UChessPiece* AlliedKing = GetFigureFromArray(AllyPieces, EFigureType::King);
+	UChessPiece* AlliedKing = GetFigureFromArray(AllyPieces, EFigure::King);
 	ECheckmateStatus CheckmateStatus = ECheckmateStatus::None;
 	const TArray<FEnemyMove> EnemiesAvailableMoves = GetEnemiesAvailableMoves(EnemyPieces);
 	const TArray ThreateningEnemies = GetThreateningEnemies(EnemiesAvailableMoves,AlliedKing);
@@ -122,7 +122,7 @@ bool UChessRulesController::CanAllyEliminateCheck(TArray<FEnemyMove> EnemyAvaila
 		{
 			return true;
 		}
-		if (ThreateningEnemy->GetFigureType() != EFigureType::Knight)
+		if (ThreateningEnemy->GetFigureType() != EFigure::Knight)
 		{
 			if (!CanAllyCoverAnyEnemyMove(EnemyAvailableMoves, AllyMove))
 			{
@@ -137,7 +137,7 @@ bool UChessRulesController::CanAllyEliminateCheck(TArray<FEnemyMove> EnemyAvaila
 	return false;
 }
 
-UChessPiece* UChessRulesController::GetFigureFromArray(const TArray<UChessPiece*>& Array, const EFigureType Figure)
+UChessPiece* UChessRulesController::GetFigureFromArray(const TArray<UChessPiece*>& Array, const EFigure Figure)
 {
 	for (UChessPiece* ChessPiece : Array)
 	{

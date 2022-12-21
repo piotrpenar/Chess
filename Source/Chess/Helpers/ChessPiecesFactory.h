@@ -12,11 +12,11 @@
  * 
  */
 UCLASS()
-class CHESS_API UChessPiecesFactory : public UObject
+class CHESS_API UChessPiecesFactory final : public UObject
 {
 	GENERATED_BODY()
 
 public:
-	static UChessPiece* GenerateChessPiece (const EFigureType FigureType,UObject* Initializer);
+	static UChessPiece* GenerateChessPiece (const EFigure FigureType,UObject* Initializer);
 	static UChessPiece* CloneChessPiece(UChessPiece* Original, UObject* Initializer);
 };

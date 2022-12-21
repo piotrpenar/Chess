@@ -5,9 +5,9 @@
 
 #include "Chess/Helpers/ChessMovesHelper.h"
 
-EFigureType UChessRook::GetFigureType()
+EFigure UChessRook::GetFigureType()
 {
-	return EFigureType::Rook;
+	return EFigure::Rook;
 }
 
 TArray<FVector2D> UChessRook::GetPossibleDirections() const

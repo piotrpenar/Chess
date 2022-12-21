@@ -3,9 +3,9 @@
 #include "Chess/Helpers/ChessMovesHelper.h"
 
 
-EFigureType UChessQueen::GetFigureType()
+EFigure UChessQueen::GetFigureType()
 {
-	return EFigureType::Queen;
+	return EFigure::Queen;
 }
 
 

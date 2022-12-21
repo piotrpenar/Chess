@@ -3,9 +3,9 @@
 #include "Chess/Helpers/ChessMovesHelper.h"
 
 
-EFigureType UChessPawn::GetFigureType()
+EFigure UChessPawn::GetFigureType()
 {
-	return EFigureType::Pawn;
+	return EFigure::Pawn;
 }
 
 TArray<FVector2D> UChessPawn::GetPossibleMoves()

@@ -2,9 +2,9 @@
 
 #include "Chess/Helpers/ChessMovesHelper.h"
 
-EFigureType UChessKnight::GetFigureType()
+EFigure UChessKnight::GetFigureType()
 {
-	return EFigureType::Knight;
+	return EFigure::Knight;
 }
 
 TArray<FVector2D> UChessKnight::GetPossibleMoves()

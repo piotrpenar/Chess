@@ -10,6 +10,6 @@ class UChessQueen final : public UChessPiece
 	FChessMovesData GenerateMovesData();
 	TArray<FVector2D> GetPossibleDirections() const;
 public:
-	virtual EFigureType GetFigureType() override;
+	virtual EFigure GetFigureType() override;
 	virtual TArray<FMove> GetAvailableMoves() override;
 };

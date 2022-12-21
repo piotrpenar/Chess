@@ -13,10 +13,9 @@
  * 
  */
 UCLASS()
-class CHESS_API UChessRulesController : public UObject
+class CHESS_API UChessRulesController final : public UObject
 {
 	GENERATED_BODY()
-
 
 	struct FEnemyMove
 	{
@@ -27,7 +26,7 @@ class CHESS_API UChessRulesController : public UObject
 	static TArray<FEnemyMove> GetEnemiesAvailableMoves(TArray<UChessPiece*> EnemyPieces);
 	static TArray<UChessPiece*> GetThreateningEnemies(TArray<FEnemyMove> EnemyMoves, UChessPiece* King);
 	static ECheckmateStatus CalculateCheckmateStatus(TArray<UChessPiece*> EnemyPieces, TArray<UChessPiece*> AllyPieces, IChessBoardProvider* ChessBoardProvider);
-	static UChessPiece* GetFigureFromArray(const TArray<UChessPiece*>& Array, const EFigureType Figure);
+	static UChessPiece* GetFigureFromArray(const TArray<UChessPiece*>& Array, const EFigure Figure);
 	static bool IsKingAbleToEscape(TArray<FEnemyMove> EnemyAvailableMoves, UChessPiece* AlliedKing);
 	static bool CanAllyCoverAnyEnemyMove(TArray<FEnemyMove> EnemyAvailableMoves, FMove AllyMove);
 	static bool CanAllyDestroyEnemy(const UChessPiece* ThreateningEnemy, UChessPiece* Ally, FMove AllyMove, IChessBoardProvider* ChessBoardProvider);

@@ -33,7 +33,7 @@ TArray<UChessPiece*> IChessBoardProvider::GetAllPiecesOfColor(EColor Color)
 	return {};
 }
 
-UChessPiece* IChessBoardProvider::GetChessPiece(const EFigureType Figure, const EColor Color)
+UChessPiece* IChessBoardProvider::GetChessPiece(const EFigure Figure, const EColor Color)
 {
 	return nullptr;
 }

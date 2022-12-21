@@ -10,7 +10,7 @@
 #include "Chess/Interfaces/ChessBoardProvider.h"
 #include "Chess/Interfaces/ChessGameState.h"
 #include "Chess/Utils/EColor.h"
-#include "Chess/Utils/EFigureType.h"
+#include "Chess/Utils/EFigure.h"
 #include "Chess/Utils/F2DBoardArray.h"
 #include "AChessController.generated.h"
 
@@ -25,7 +25,7 @@ class CHESS_API AChessController : public AActor , public IChessBoardProvider, p
 public:
 	void CreateChessPiece();
 	void CreateFigures(const EColor FigureColor);
-	UChessPiece* GenerateChessPiece(const EFigureType Figure);
+	UChessPiece* GenerateChessPiece(const EFigure Figure);
 	
 	virtual FTransform BoardToWorldTransform(const int X, const int Y) override;
 	virtual FTransform BoardToWorldTransform(FVector2D Position) override;
@@ -37,7 +37,7 @@ public:
 	virtual void SetSelectedFigure(AActor* Figure) override;
 	virtual void HighlightSelected(AActor* Source) override;
 	virtual TArray<UChessPiece*> GetAllPiecesOfColor(const EColor Color) override;
-	virtual UChessPiece* GetChessPiece(EFigureType Figure, EColor Color) override;
+	virtual UChessPiece* GetChessPiece(EFigure Figure, EColor Color) override;
 	virtual EColor GetCurrentPlayer() override;
 	void SetPieceAtSimulatedPosition(const FVector2D Vector2, UObject* ChessPiece,TArray<F2DBoardArray>& BoardOverrideReference);
 	void ClearHighlights();
@@ -57,7 +57,7 @@ private:
 	UChessRulesController* RulesController;
 
 	UPROPERTY()
-	TMap<EFigureType, UChessPiece*> FigureTypeMap;
+	TMap<EFigure, UChessPiece*> FigureTypeMap;
 	UPROPERTY()
 	TArray<AActor*> CurrentHighlights;
 	UPROPERTY()
@@ -66,15 +66,15 @@ private:
 	EColor CurrentPlayer = EColor::White;
 	FTransform GetChessBoardTransform() const;
 	FTransform GenerateChessPieceTransform(int TargetRow, int TargetColumn, EColor Color);
-	void GenerateChessRow(TArray<EFigureType> Figures, const EColor Color, const int TargetRow);
+	void GenerateChessRow(TArray<EFigure> Figures, const EColor Color, const int TargetRow);
 	
-	const TArray<EFigureType> Pawns = {
-		EFigureType::Pawn, EFigureType::Pawn, EFigureType::Pawn, EFigureType::Pawn, EFigureType::Pawn, EFigureType::Pawn,
-		EFigureType::Pawn, EFigureType::Pawn
+	const TArray<EFigure> Pawns = {
+		EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn,
+		EFigure::Pawn, EFigure::Pawn
 	};
-	const TArray<EFigureType> Men = {
-		EFigureType::Rook, EFigureType::Knight, EFigureType::Bishop, EFigureType::King, EFigureType::Queen, EFigureType::Bishop,
-		EFigureType::Knight, EFigureType::Rook
+	const TArray<EFigure> Men = {
+		EFigure::Rook, EFigure::Knight, EFigure::Bishop, EFigure::King, EFigure::Queen, EFigure::Bishop,
+		EFigure::Knight, EFigure::Rook
 	};
 	
 };

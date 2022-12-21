@@ -6,7 +6,7 @@
 #include "Chess/Interfaces/MovesProvider.h"
 #include "Chess/Utils/ChessMovesData.h"
 #include "Chess/Utils/EColor.h"
-#include "Chess/Utils/EFigureType.h"
+#include "Chess/Utils/EFigure.h"
 #include "Chess/Utils/F2DBoardArray.h"
 #include "Chess/Utils/FMove.h"
 #include "ChessPiece.generated.h"
@@ -40,7 +40,7 @@ public:
 	TScriptInterface<IChessGameState> ChessGameState;
 	
 	virtual void MoveToPosition(FVector2D Position) override;
-	virtual EFigureType GetFigureType();
+	virtual EFigure GetFigureType();
 	virtual TArray<FMove> GetAvailableMoves() override;
 	virtual bool CanMoveThisTurn() override;
 

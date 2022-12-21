@@ -11,6 +11,6 @@ class UChessBishop final : public UChessPiece
 	TArray<FVector2D> GetPossibleDirections() const;
 	
 public:
-	virtual EFigureType GetFigureType() override;;
+	virtual EFigure GetFigureType() override;;
 	virtual TArray<FMove> GetAvailableMoves()  override;
 };

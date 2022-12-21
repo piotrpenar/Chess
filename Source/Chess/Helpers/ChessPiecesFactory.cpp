@@ -11,21 +11,21 @@
 #include "Chess/ChessPieces/Logic/ChessRook.h"
 
 
-UChessPiece* UChessPiecesFactory::GenerateChessPiece(const EFigureType FigureType, UObject* Initializer)
+UChessPiece* UChessPiecesFactory::GenerateChessPiece(const EFigure FigureType, UObject* Initializer)
 {
 	switch (FigureType)
 	{
-	case EFigureType::Pawn:
+	case EFigure::Pawn:
 		return NewObject<UChessPawn>(Initializer);
-	case EFigureType::Rook:
+	case EFigure::Rook:
 		return NewObject<UChessRook>(Initializer);
-	case EFigureType::Knight:
+	case EFigure::Knight:
 		return NewObject<UChessKnight>(Initializer);
-	case EFigureType::Bishop:
+	case EFigure::Bishop:
 		return NewObject<UChessBishop>(Initializer);
-	case EFigureType::Queen:
+	case EFigure::Queen:
 		return NewObject<UChessQueen>(Initializer);
-	case EFigureType::King:
+	case EFigure::King:
 		return NewObject<UChessKing>(Initializer);
 	default:
 		UE_LOG(LogTemp, Error, TEXT("Initializing piece with default type!"))
@@ -37,34 +37,34 @@ UChessPiece* UChessPiecesFactory::CloneChessPiece(UChessPiece* Original, UObject
 {
 	switch (Original->GetFigureType())
 	{
-	case EFigureType::Pawn:
+	case EFigure::Pawn:
 		{
-			UChessPawn* OriginalPawn = static_cast<UChessPawn*>(Original);
+			const UChessPawn* OriginalPawn = static_cast<UChessPawn*>(Original);
 			return DuplicateObject(OriginalPawn, Initializer);
 		}
-	case EFigureType::Rook:
+	case EFigure::Rook:
 		{
-			UChessRook* OriginalRook = static_cast<UChessRook*>(Original);
+			const UChessRook* OriginalRook = static_cast<UChessRook*>(Original);
 			return DuplicateObject(OriginalRook, Initializer);
 		}
-	case EFigureType::Knight:
+	case EFigure::Knight:
 		{
-			UChessKnight* OriginalKnight = static_cast<UChessKnight*>(Original);
+			const UChessKnight* OriginalKnight = static_cast<UChessKnight*>(Original);
 			return DuplicateObject(OriginalKnight, Initializer);
 		}
-	case EFigureType::Bishop:
+	case EFigure::Bishop:
 		{
-			UChessBishop* OriginalBishop = static_cast<UChessBishop*>(Original);
+			const UChessBishop* OriginalBishop = static_cast<UChessBishop*>(Original);
 			return DuplicateObject(OriginalBishop, Initializer);
 		}
-	case EFigureType::Queen:
+	case EFigure::Queen:
 		{
-			UChessQueen* OriginalQueen = static_cast<UChessQueen*>(Original);
+			const UChessQueen* OriginalQueen = static_cast<UChessQueen*>(Original);
 			return DuplicateObject(OriginalQueen, Initializer);
 		}
-	case EFigureType::King:
+	case EFigure::King:
 		{
-			UChessKing* OriginalKing = static_cast<UChessKing*>(Original);
+			const UChessKing* OriginalKing = static_cast<UChessKing*>(Original);
 			return DuplicateObject(OriginalKing, Initializer);
 		}
 	default:

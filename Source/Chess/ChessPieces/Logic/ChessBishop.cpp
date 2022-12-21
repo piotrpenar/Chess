@@ -2,9 +2,9 @@
 
 #include "Chess/Helpers/ChessMovesHelper.h"
 
-EFigureType UChessBishop::GetFigureType()
+EFigure UChessBishop::GetFigureType()
 {
-	return EFigureType::Bishop;
+	return EFigure::Bishop;
 }
 
 TArray<FVector2D> UChessBishop::GetPossibleDirections() const

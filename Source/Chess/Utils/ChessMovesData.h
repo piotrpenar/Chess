@@ -13,11 +13,14 @@ struct FChessMovesData
 	TScriptInterface<IChessBoardProvider> BoardProvider;
 	EColor Color;
 	FVector2D Position;
+
+	UPROPERTY()
 	UChessPiece* ChessPiece;
 
 	FChessMovesData()
 	{
 	}
+	
 	FChessMovesData(TArray<FVector2D> Directions,TScriptInterface<IChessBoardProvider> Board,EColor Color,FVector2D Position,UChessPiece* ChessPiece)
 	{
 		this->Directions = Directions;

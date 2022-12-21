@@ -3,6 +3,11 @@
 #include "Chess/Helpers/ChessMovesHelper.h"
 
 
+EFigureType UChessPawn::GetFigureType()
+{
+	return EFigureType::Pawn;
+}
+
 TArray<FMove> UChessPawn::GetAvailableMoves()
 {
 	const bool bIsWhite = Color == EColor::White;
@@ -22,13 +27,13 @@ TArray<FMove> UChessPawn::GetAvailableMoves()
 
 	for (const FVector2D PossibleMove : PossibleMoves)
 	{
-		if (!(ChessData->IsValidPosition(PossibleMove)))
+		if (!(BoardProvider->IsValidMove(PossibleMove,this)))
 		{
 			//UE_LOG(LogTemp, Log, TEXT("Invalid Position - from %s to %s"), *FString(CurrentTargetPosition.ToString()),*FString(PossibleMove.ToString()))
 			continue;
 		}
 		UChessPiece* TargetObject = UChessMovesHelper::GetOtherPieceAtPosition(
-			FChessMovesData(PossibleMoves, BoardProvider, Color, BoardPosition), PossibleMove);
+			FChessMovesData(PossibleMoves, BoardProvider, Color, BoardPosition,this), PossibleMove);
 		const bool bIsSameX = PossibleMove.X == BoardPosition.X;
 		if (TargetObject)
 		{

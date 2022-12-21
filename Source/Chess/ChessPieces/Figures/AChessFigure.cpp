@@ -1,7 +1,7 @@
 ﻿#include "AChessFigure.h"
 #include "Chess/Utils/FMove.h"
 
-void AChessFigure::GetAvailableMoves()
+void AChessFigure::HandleFigureClick()
 {
 	if(!SourcePiece->CanMoveThisTurn())
 	{

@@ -3,7 +3,12 @@
 #include "Chess/Helpers/ChessMovesHelper.h"
 
 
-TArray<FMove> UChessQueen::GetAvailableMoves() 
+EFigureType UChessQueen::GetFigureType()
+{
+	return EFigureType::Queen;
+}
+
+TArray<FMove> UChessQueen::GetAvailableMoves()
 {
 	TArray<FVector2D> PossibleMoves = {
 		FVector2D(-1, -1),
@@ -15,5 +20,6 @@ TArray<FMove> UChessQueen::GetAvailableMoves()
 		FVector2D(0, -1),
 		FVector2D(0, 1),
 	};
-	return UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData(PossibleMoves,BoardProvider,Color,BoardPosition),ChessData);
+	return UChessMovesHelper::GetValidMovesFromDirections(
+		FChessMovesData(PossibleMoves, BoardProvider, Color, BoardPosition,this), BoardProvider.GetInterface());
 }

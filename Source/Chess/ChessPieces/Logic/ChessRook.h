@@ -14,6 +14,6 @@ class CHESS_API UChessRook final : public UChessPiece
 {
 	GENERATED_BODY()
 public:
-	virtual EFigureType GetFigureType() override { return EFigureType::Rook;};
+	virtual EFigureType GetFigureType() override;;
 	virtual TArray<FMove> GetAvailableMoves() override;
 };

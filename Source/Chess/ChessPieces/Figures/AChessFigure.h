@@ -10,7 +10,7 @@ class AChessFigure final : public AActor
 public:
 
 	UFUNCTION(BlueprintCallable)
-	void GetAvailableMoves();
+	void HandleFigureClick();
 	
 	IMovesProvider* SourcePiece;
 	IBoardHighlighter* Highlighter;

@@ -2,7 +2,12 @@
 
 #include "Chess/Helpers/ChessMovesHelper.h"
 
-TArray<FMove> UChessBishop::GetAvailableMoves() 
+EFigureType UChessBishop::GetFigureType()
+{
+	return EFigureType::Bishop;
+}
+
+TArray<FMove> UChessBishop::GetAvailableMoves()
 {
 	const TArray<FVector2D> Directions = {
 		FVector2D(-1, -1),
@@ -10,5 +15,6 @@ TArray<FMove> UChessBishop::GetAvailableMoves()
 		FVector2D(1, 1),
 		FVector2D(-1, 1),
 	};
-	return UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData(Directions,BoardProvider,Color,BoardPosition),ChessData);
+	return UChessMovesHelper::GetValidMovesFromDirections(
+		FChessMovesData(Directions, BoardProvider, Color, BoardPosition,this), BoardProvider.GetInterface());
 }

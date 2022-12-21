@@ -6,6 +6,37 @@ void UChessPiece::SetColor(const EColor PieceColor)
 	Color = PieceColor;
 }
 
+EFigureType UChessPiece::GetFigureType()
+{
+	return EFigureType::Invalid;
+}
+
+FVector2D UChessPiece::GetBoardPosition()
+{
+	return BoardPosition;
+}
+
+bool UChessPiece::CanMoveThisTurn()
+{
+	return ChessGameState->GetCurrentPlayer() == Color;
+}
+
+EColor UChessPiece::GetColor() const
+{
+	return Color;
+}
+
+TArray<FMove> UChessPiece::GetAvailableMoves() 
+{
+	return {};
+}
+
+void UChessPiece::DestroyChessPiece() const
+{
+	ChessPieceActor->Destroy();
+}
+
+
 void UChessPiece::CreateActor(UWorld* World,IBoardHighlighter* Highlighter)
 {
 	if(!IsValid(World))
@@ -57,18 +88,12 @@ void UChessPiece::SetPosition(const int X,const int Y)
 
 void UChessPiece::MoveToPosition(FVector2D Position)
 {
-	MoveActorToPosition(Position);
 	const FVector2D PreviousPosition = FVector2D(BoardPosition);
 	this->BoardPosition = Position;
 	this->BoardProvider->SetPieceAtPosition(Position,this);
+	MoveActorToPosition(Position);
 	this->BoardProvider->SetPieceAtPosition(PreviousPosition,nullptr);
 	this->ChessGameState->EndTurn();
-}
-
-
-EFigureType UChessPiece::GetFigureType()
-{
-	return EFigureType::Invalid;
 }
 
 void  UChessPiece::SetActorRotation(const FRotator Rotation ) const
@@ -90,29 +115,4 @@ void UChessPiece::SetActorPosition(const FVector Position) const
 void UChessPiece::SetActorTransform(const FTransform Transform) const
 {
 	ChessPieceActor->SetActorTransform(Transform);
-}
-
-EColor UChessPiece::GetColor() const
-{
-	return Color;
-}
-
-TArray<FMove> UChessPiece::GetAvailableMoves() 
-{
-	return {};
-}
-
-void UChessPiece::DestroyChessPiece() const
-{
-	ChessPieceActor->Destroy();
-}
-
-FVector2D UChessPiece::GetBoardPosition()
-{
-	return BoardPosition;
-}
-
-bool UChessPiece::CanMoveThisTurn()
-{
-	return ChessGameState->GetCurrentPlayer() == Color;
 }

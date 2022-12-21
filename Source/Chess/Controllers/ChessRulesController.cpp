@@ -54,16 +54,16 @@ ECheckMateStatus UChessRulesController::GetBoardStatus(TArray<F2DBoardArray>* Bo
 	{
 		UE_LOG(LogTemp,Log,TEXT("White Mate - %d!"),WhiteMate)
 	}
-	
-	
+	return WhiteMate;
 }
-struct Temp{FMove Move; UChessPiece* Figure;};
+struct EnemyMove{FMove Move; UChessPiece* Enemy;};
+
 //TODO: Refactor This Function
 ECheckMateStatus UChessRulesController::CheckForCheckMate(TArray<UChessPiece*> EnemyPieces,TArray<UChessPiece*> AllyPieces, UChessPiece* King,IChessBoardProvider* ChessBoardProvider)
 {
 	ECheckMateStatus CheckResult = ECheckMateStatus::None;
 	TArray<UChessPiece*> EndangeringFigures;
-	TArray<Temp> AllEnemyAvailableMoves;  
+	TArray<EnemyMove> AllEnemyAvailableMoves;  
 	for (auto EnemyPiece : EnemyPieces)
 	{
 		TArray<FMove> EnemyAvailableMoves = EnemyPiece->GetAvailableMoves();
@@ -83,7 +83,7 @@ ECheckMateStatus UChessRulesController::CheckForCheckMate(TArray<UChessPiece*> E
 	TArray<FMove> KingMoves = King->GetAvailableMoves();
 	for(FMove KingMove : KingMoves)
 	{
-		if(AllEnemyAvailableMoves.FindByPredicate([&KingMove](FMove Move){return KingMove.TargetPosition == Move.TargetPosition;})==nullptr)
+		if(AllEnemyAvailableMoves.FindByPredicate([&KingMove](EnemyMove& Move){return KingMove.TargetPosition == Move.Move.TargetPosition;})==nullptr)
 		{
 			return CheckResult;
 		}
@@ -113,7 +113,7 @@ ECheckMateStatus UChessRulesController::CheckForCheckMate(TArray<UChessPiece*> E
 			}
 			if(EnemyFigureType != EFigureType::Knight)
 			{
-				if(EndangeringFigureMoves.FindByPredicate([&AllyMove](FMove Move){return AllyMove.TargetPosition == Move.TargetPosition;})==nullptr)
+				if(EndangeringFigureMoves.FindByPredicate([&AllyMove](FMove& Move){return AllyMove.TargetPosition == Move.TargetPosition;})==nullptr)
 				{
 					continue;
 				}

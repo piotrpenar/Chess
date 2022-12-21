@@ -6,9 +6,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13e30f9d-f09a-40e8-91e8-793056d40f25" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Chess/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Chess/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/Chess.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Chess.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Figures/AChessFigure.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Figures/AChessFigure.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Figures/AChessFigure.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Figures/AChessFigure.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessBishop.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessBishop.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessBishop.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessBishop.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessKing.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessKing.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessKing.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessKing.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessKnight.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessKnight.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessKnight.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessKnight.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessPawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessPawn.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessPawn.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessPawn.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessQueen.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessQueen.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessQueen.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessQueen.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessRook.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessRook.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessRook.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessRook.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Chess/Controllers/ChessRulesController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Controllers/ChessRulesController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Helpers/ChessPiecesFactory.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Helpers/ChessPiecesFactory.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Utils/F2DBoardArray.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Utils/F2DBoardArray.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/Controllers/ChessRulesController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Controllers/ChessRulesController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/Helpers/ChessMovesHelper.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Helpers/ChessMovesHelper.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/Helpers/ChessMovesHelper.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Helpers/ChessMovesHelper.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/Utils/ChessMovesData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Utils/ChessMovesData.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -172,7 +194,8 @@
       <workItem from="1671469167235" duration="130000" />
       <workItem from="1671552051461" duration="595000" />
       <workItem from="1671560851820" duration="2658000" />
-      <workItem from="1671615280004" duration="3893000" />
+      <workItem from="1671615280004" duration="3971000" />
+      <workItem from="1671629859293" duration="1906000" />
     </task>
     <servers />
   </component>

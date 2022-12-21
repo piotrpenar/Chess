@@ -22,5 +22,6 @@ public:
 	UChessPiece* GetFigureFromArray(TArray<UChessPiece*> Array, EFigureType Figure);
 	ECheckMateStatus GetBoardStatus(TArray<F2DBoardArray>* Board,IChessBoardProvider* ChessBoardProvider);
 	UChessPiece* FindChessPiece(TArray<F2DBoardArray>* Board,EFigureType Figure,EColor Color);
+	bool AreMovePositionsEqual(FMove First, FMove Second);
 	ECheckMateStatus CheckForCheckMate(TArray<UChessPiece*> EnemyPieces,TArray<UChessPiece*> AllyPieces, UChessPiece* King,IChessBoardProvider* ChessBoardProvider);
 };

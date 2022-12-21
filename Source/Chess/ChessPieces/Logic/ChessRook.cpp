@@ -5,6 +5,11 @@
 
 #include "Chess/Helpers/ChessMovesHelper.h"
 
+EFigureType UChessRook::GetFigureType()
+{
+	return EFigureType::Rook;
+}
+
 TArray<FMove> UChessRook::GetAvailableMoves()
 {
 	TArray<FVector2D> Directions = {
@@ -13,6 +18,5 @@ TArray<FMove> UChessRook::GetAvailableMoves()
 		FVector2D(0, -1),
 		FVector2D(0, 1),
 	};
-	return UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData(Directions, BoardProvider, Color, BoardPosition),
-	                                                      ChessData);
+	return UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData(Directions, BoardProvider, Color, BoardPosition,this), BoardProvider.GetInterface());
 }

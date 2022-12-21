@@ -14,16 +14,19 @@ class CHESS_API UChessPiece : public UObject, public IMovesProvider
 {
 	GENERATED_BODY()
 public:
+	virtual void MoveToPosition(FVector2D Position) override;
+	virtual EFigureType GetFigureType();
+	virtual TArray<FMove> GetAvailableMoves() override;
+	virtual bool CanMoveThisTurn() override;
+	
 	void SetColor(EColor PieceColor);
 	void CreateActor(UWorld* World,IBoardHighlighter* Highlighter);
 	void SetPosition(int X,int Y);
-	virtual void MoveToPosition(FVector2D Position) override;
 	void SetActorTransform(FTransform Transform) const;
 	
-	virtual EFigureType GetFigureType();
 	EColor GetColor() const;
-	virtual TArray<FMove> GetAvailableMoves() override;
 	void DestroyChessPiece() const;
+	
 	FVector2D GetBoardPosition();
 	UPROPERTY()
 	UChessData* ChessData;
@@ -31,7 +34,6 @@ public:
 	TScriptInterface<IChessBoardProvider> BoardProvider;
 	UPROPERTY()
 	TScriptInterface<IChessGameState> ChessGameState;
-	virtual bool CanMoveThisTurn() override;
 
 protected:
 	

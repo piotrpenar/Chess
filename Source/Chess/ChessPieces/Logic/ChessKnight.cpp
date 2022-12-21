@@ -2,7 +2,12 @@
 
 #include "Chess/Helpers/ChessMovesHelper.h"
 
-TArray<FMove> UChessKnight::GetAvailableMoves() 
+EFigureType UChessKnight::GetFigureType()
+{
+	return EFigureType::Knight;
+}
+
+TArray<FMove> UChessKnight::GetAvailableMoves()
 {
 	TArray<FVector2D> PossibleMoves = {
 		BoardPosition + FVector2D(-1, -2),
@@ -14,5 +19,6 @@ TArray<FMove> UChessKnight::GetAvailableMoves()
 		BoardPosition + FVector2D(-1, 2),
 		BoardPosition + FVector2D(-2, 1),
 	};
-	return UChessMovesHelper::GetValidMovesFromPositions(FChessMovesData(PossibleMoves,BoardProvider,Color,BoardPosition),ChessData);
+	return UChessMovesHelper::GetValidMovesFromPositions(
+		FChessMovesData(PossibleMoves, BoardProvider, Color, BoardPosition,this), BoardProvider.GetInterface());
 }

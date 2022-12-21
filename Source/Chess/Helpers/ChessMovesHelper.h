@@ -9,7 +9,7 @@ class UChessMovesHelper final : public UObject
 {
 	GENERATED_BODY()
 public:
-	static TArray<FMove> GetValidMovesFromPositions(FChessMovesData MovesData, const UChessData* ChessData);
-	static TArray<FMove> GetValidMovesFromDirections(FChessMovesData MovesData, UChessData* ChessData);
+	static TArray<FMove> GetValidMovesFromPositions(FChessMovesData MovesData, IChessBoardProvider* ChessBoardProvider);
+	static TArray<FMove> GetValidMovesFromDirections(FChessMovesData MovesData, IChessBoardProvider* ChessBoardProvider);
 	static UChessPiece* GetOtherPieceAtPosition(FChessMovesData MovesData, FVector2D BoardPosition);
 };

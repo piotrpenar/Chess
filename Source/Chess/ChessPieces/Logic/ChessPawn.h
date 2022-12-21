@@ -8,7 +8,7 @@ class UChessPawn final : public UChessPiece
 {
 	GENERATED_BODY()
 public:
-	virtual EFigureType GetFigureType() override { return EFigureType::Pawn;};
+	virtual EFigureType GetFigureType() override;;
 	virtual TArray<FMove> GetAvailableMoves() override;
 	
 private:

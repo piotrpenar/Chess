@@ -58,13 +58,17 @@ void UChessboard::SetPieceAtPosition(const FIntPoint Position, UChessPiece* Ches
 	UObject* CurrentObject = Board[Position.X][Position.Y];
 	if(CurrentObject)
 	{
-		if(ChessPiece && !bIsSimulation)
+		if(ChessPiece)
 		{
 			static_cast<UChessPiece*>(CurrentObject)->DestroyChessPiece();
 		}
 	}
 	//UE_LOG(LogTemp, Log, TEXT("Setting object at %s"),*FString(Vector2.ToString()))
 	Board[Position.X].Set(Position.Y,ChessPiece);
+	if(ChessPiece)
+	{
+		ChessPiece->SetPosition(Position);
+	}
 }
 
 TArray<UChessPiece*> UChessboard::GetAllPiecesOfColor(const EColor Color)

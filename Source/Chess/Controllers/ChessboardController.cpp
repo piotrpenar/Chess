@@ -36,13 +36,11 @@ bool UChessboardController::IsValidMove(const FIntPoint Position, UObject* Chess
 	{
 		return false;
 	}
-	SimulatedBoard->SetPieceAtPosition(FIntPoint(Position.X,Position.Y),SimulatedPiece);
-	SimulatedPiece->SetPosition(Position.X,Position.Y);
-	SimulatedBoard->SetPieceAtPosition(FIntPoint(PreviousPosition.X,PreviousPosition.Y),nullptr);
+	SimulatedBoard->SetPieceAtPosition(Position,SimulatedPiece);
+	SimulatedBoard->SetPieceAtPosition(PreviousPosition,nullptr);
 	bool bIsKingInCheck = UChessRulesController::IsKingInCheck(SimulatedBoard,SimulatedPiece->GetColor());
-	SimulatedBoard->SetPieceAtPosition(FIntPoint(PreviousPosition.X,PreviousPosition.Y),SimulatedPiece);
-	SimulatedPiece->SetPosition(PreviousPosition.X,PreviousPosition.Y);
-	SimulatedBoard->SetPieceAtPosition(FIntPoint(Position.X,Position.Y),nullptr);
+	SimulatedBoard->SetPieceAtPosition(PreviousPosition,SimulatedPiece);
+	SimulatedBoard->SetPieceAtPosition(Position,nullptr);
 	return !bIsKingInCheck;
 	ECheckmateStatus Status = UChessRulesController::GetBoardStatusForColor(SimulatedBoard,SimulatedPiece->GetColor(),this);
 	UE_LOG(LogTemp, Log, TEXT("Checkmate status for color %d is %d"),SimulatedPiece->GetColor(),Status)
@@ -63,7 +61,10 @@ void UChessboardController::MoveChessPieceToPosition(UChessPiece* ChessPiece,FIn
 	Chessboard->SetPieceAtPosition(Position,ChessPiece);
 	Chessboard->SetPieceAtPosition(PreviousPosition,nullptr);
 	UChessPiece* SimulatedChessPiece = SimulatedController->GetOtherPieceAtPosition(PreviousPosition);
-	SimulatedChessPiece->SetPosition(Position);
+	if(!SimulatedChessPiece)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Could not find proper Simulated ChessPiece!"))
+	}
 	SimulatedBoard->SetPieceAtPosition(Position,SimulatedChessPiece);
 	SimulatedBoard->SetPieceAtPosition(PreviousPosition,nullptr);
 	ChessGameState->EndTurn();

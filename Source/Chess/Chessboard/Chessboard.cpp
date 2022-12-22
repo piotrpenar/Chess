@@ -101,3 +101,20 @@ UChessPiece* UChessboard::GetChessPiece(const EFigure Figure,const EColor Color)
 	}
 	return nullptr;
 }
+
+void UChessboard::SetAsSimulated()
+{
+	bIsSimulation=true;
+	for (F2DBoardArray Row : Board)
+	{
+		for (UObject* ChessPieceObject : Row.Array)
+		{
+			if (!ChessPieceObject)
+			{
+				continue;
+			}
+			UChessPiece* ChessPiece = static_cast<UChessPiece*>(ChessPieceObject);
+			ChessPiece->SetAsSimulated();
+		}
+	}
+}

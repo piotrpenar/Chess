@@ -16,6 +16,8 @@ class CHESS_API UChessPiece : public UObject, public IMovesProvider
 
 	UPROPERTY()
 	AActor* ChessPieceActor;
+
+	bool bIsSimulated;
 	
 	void SetActorRotation(FRotator Rotation) const;
 
@@ -49,4 +51,6 @@ public:
 	void SetActorPosition(FVector Position) const;
 	EColor GetColor() const;
 	FVector2D GetBoardPosition() const;
+	void SetAsSimulated();
+	bool IsSimulated();
 };

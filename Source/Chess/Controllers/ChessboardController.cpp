@@ -3,8 +3,10 @@
 
 #include "ChessboardController.h"
 
+#include "ChessRulesController.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 #include "Chess/Helpers/ChessPiecesFactory.h"
+#include "Chess/Utils/ECheckmateStatus.h"
 #include "Chess/Utils/F2DBoardArray.h"
 
 bool UChessboardController::IsValidMove(const FVector2D Position, UObject* ChessPieceObject)
@@ -14,15 +16,21 @@ bool UChessboardController::IsValidMove(const FVector2D Position, UObject* Chess
 		return false;
 	}
 	UChessPiece* ChessPiece = static_cast<UChessPiece*>(ChessPieceObject);
+	if(ChessPiece->IsSimulated())
+	{
+		return true;
+	}
 	UChessPiece* SimulatedPiece = UChessPiecesFactory::CloneChessPiece(ChessPiece,this);
-	UChessboard* SimulatedBoard = NewObject<UChessboard>(Chessboard);
+	SimulatedPiece->SetAsSimulated();
+	UChessboard* SimulatedBoard = DuplicateObject(Chessboard,this);
+	SimulatedBoard->SetAsSimulated();
 	const FVector2D PreviousPosition = FVector2D(ChessPiece->GetBoardPosition());
 	SimulatedBoard->SetPieceAtPosition(FVector2D(Position.X,Position.Y),SimulatedPiece);
 	SimulatedPiece->SetPosition(Position.X,Position.Y);
 	SimulatedBoard->SetPieceAtPosition(FVector2D(PreviousPosition.X,PreviousPosition.Y),nullptr);
-	// ECheckmateStatus Status = RulesController->GetBoardStatus(&SimulatedBoard,this,SimulatedPiece);
-	// return Status == ECheckmateStatus::None;
-	return true;
+	ECheckmateStatus Status = UChessRulesController::GetBoardStatusForColor(SimulatedBoard,SimulatedPiece->GetColor(),this);
+	UE_LOG(LogTemp, Log, TEXT("Checkmate status for color %d is %d"),SimulatedPiece->GetColor(),Status)
+	return Status == ECheckmateStatus::None;
 }
 
 void UChessboardController::SetBoard(UChessboard* NewBoard)

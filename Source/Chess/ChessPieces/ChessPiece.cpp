@@ -18,6 +18,16 @@ FVector2D UChessPiece::GetBoardPosition() const
 	return BoardPosition;
 }
 
+void UChessPiece::SetAsSimulated()
+{
+	bIsSimulated = true;
+}
+
+bool UChessPiece::IsSimulated()
+{
+	return bIsSimulated;
+}
+
 bool UChessPiece::CanMoveThisTurn()
 {
 	return ChessGameState->GetCurrentPlayer() == Color;

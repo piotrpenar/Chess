@@ -35,5 +35,5 @@ class CHESS_API UChessRulesController final : public UObject
 	static bool CanAllyEliminateCheck(TArray<FEnemyMove> EnemyAvailableMoves, UChessPiece* AllyPiece, IMovementVerifier* MovementVerifier);
 	
 public:
-	ECheckmateStatus GetBoardStatusForColor(UChessboard* Chessboard, EColor Color, IMovementVerifier* MovementVerifier);
+	static ECheckmateStatus GetBoardStatusForColor(UChessboard* Chessboard, EColor Color, IMovementVerifier* MovementVerifier);
 };

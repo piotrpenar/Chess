@@ -21,6 +21,8 @@ class CHESS_API UChessboard final : public UObject
 	AActor* ChessBoardOrigin;
 	UPROPERTY()
 	TArray<F2DBoardArray> Board;
+
+	bool bIsSimulation;
 public:
 	UChessboard() = default;
 	UChessboard(UChessData* ChessData, AActor* ChessBoardOrigin) : ChessData(ChessData), ChessBoardOrigin(ChessBoardOrigin)
@@ -34,4 +36,5 @@ public:
 	FTransform GetChessBoardTransform() const;
 	TArray<UChessPiece*> GetAllPiecesOfColor(const EColor Color);
 	UChessPiece* GetChessPiece(const EFigure Figure, const EColor Color);
+	void SetAsSimulated();
 };

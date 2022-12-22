@@ -83,7 +83,7 @@ TArray<UChessPiece*> UChessRulesController::GetThreateningEnemies(TArray<FEnemyM
 	{
 		if (EnemyMove.Move.TargetObject == King)
 		{
-			UE_LOG(LogTemp, Log, TEXT("Check!"))
+		//	UE_LOG(LogTemp, Log, TEXT("Check!"))
 			EndangeringFigures.Add(EnemyMove.Enemy);
 		}
 	}

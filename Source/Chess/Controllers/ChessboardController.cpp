@@ -32,7 +32,13 @@ bool UChessboardController::IsValidMove(const FIntPoint Position, UObject* Chess
 	UChessPiece* ChessPiece = static_cast<UChessPiece*>(ChessPieceObject);
 	FIntPoint PreviousPosition = ChessPiece->GetBoardPosition();
 	UChessPiece* SimulatedPiece = SimulatedBoard->GetPieceAtPosition(PreviousPosition);
+	UChessPiece* SimulatedTargetPiece = SimulatedBoard->GetPieceAtPosition(Position);
 	if(!SimulatedPiece)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Cloud not find simulated piece in position %s"),*FString(PreviousPosition.ToString()))
+		return false;
+	}
+	if(SimulatedTargetPiece && SimulatedTargetPiece->GetColor() == SimulatedPiece->GetColor())
 	{
 		return false;
 	}
@@ -40,11 +46,8 @@ bool UChessboardController::IsValidMove(const FIntPoint Position, UObject* Chess
 	SimulatedBoard->SetPieceAtPosition(PreviousPosition,nullptr);
 	bool bIsKingInCheck = UChessRulesController::IsKingInCheck(SimulatedBoard,SimulatedPiece->GetColor());
 	SimulatedBoard->SetPieceAtPosition(PreviousPosition,SimulatedPiece);
-	SimulatedBoard->SetPieceAtPosition(Position,nullptr);
+	SimulatedBoard->SetPieceAtPosition(Position,SimulatedTargetPiece);
 	return !bIsKingInCheck;
-	ECheckmateStatus Status = UChessRulesController::GetBoardStatusForColor(SimulatedBoard,SimulatedPiece->GetColor(),this);
-	UE_LOG(LogTemp, Log, TEXT("Checkmate status for color %d is %d"),SimulatedPiece->GetColor(),Status)
-	return Status == ECheckmateStatus::None;
 }
 
 void UChessboardController::Initialize(UChessData* NewChessData,UChessboard* NewBoard, TScriptInterface<IChessGameState> NewChessGameState)
@@ -61,25 +64,24 @@ void UChessboardController::MoveChessPieceToPosition(UChessPiece* ChessPiece,FIn
 	Chessboard->SetPieceAtPosition(Position,ChessPiece);
 	Chessboard->SetPieceAtPosition(PreviousPosition,nullptr);
 	UChessPiece* SimulatedChessPiece = SimulatedController->GetOtherPieceAtPosition(PreviousPosition);
-	if(!SimulatedChessPiece)
-	{
-		UE_LOG(LogTemp, Log, TEXT("Could not find proper Simulated ChessPiece!"))
-	}
 	SimulatedBoard->SetPieceAtPosition(Position,SimulatedChessPiece);
 	SimulatedBoard->SetPieceAtPosition(PreviousPosition,nullptr);
 	ChessGameState->EndTurn();
 }
 
-TArray<FMove> UChessboardController::GetValidMovesFromPositions(TArray<FIntPoint> Directions, UObject* ChessPieceObject)
+TArray<FMove> UChessboardController::GetValidMovesFromPositions(TArray<FIntPoint> InputDirections, UObject* ChessPieceObject)
  {
  	TArray<FMove> ValidMoves = TArray<FMove>();
 	UChessPiece* ChessPiece = static_cast<UChessPiece*>(ChessPieceObject);
+	TArray<FIntPoint> PossibleMoves = TArray(InputDirections);
  	
- 	for (const FIntPoint PossibleMove  : Directions)
- 	{
+	for (int i = 0;i<PossibleMoves.Num();i++)
+	{
+		FIntPoint PossibleMove = PossibleMoves[i];
  		if (!IsValidMove(PossibleMove,ChessPiece))
  		{
-			//UE_LOG(LogTemp, Log, TEXT("Invalid Position - from %s to %s"),*FString(MovesData.Position.ToString()),*FString(PossibleMove.ToString()))
+ 			//FString text = FString(ChessPiece->GetBoardPosition().ToString());
+			//UE_LOG(LogTemp, Log, TEXT("Invalid Position - from %s to %s"),*FString(text),*FString(PossibleMove.ToString()))
  			continue;
  		}
  		UChessPiece* TargetObject = GetOtherPieceAtPosition(PossibleMove);
@@ -91,13 +93,15 @@ TArray<FMove> UChessboardController::GetValidMovesFromPositions(TArray<FIntPoint
  	return ValidMoves;
 }
 
-TArray<FMove> UChessboardController::GetValidMovesFromDirections(TArray<FIntPoint> Directions, UObject* ChessPieceObject)
+TArray<FMove> UChessboardController::GetValidMovesFromDirections(TArray<FIntPoint> InputDirections, UObject* ChessPieceObject)
 {
  	TArray<FMove> AvailableMoves  = TArray<FMove>();
 	UChessPiece* ChessPiece = static_cast<UChessPiece*>(ChessPieceObject);
+	TArray<FIntPoint> Directions = TArray(InputDirections);
  	
-	for (const FIntPoint Direction : Directions)
+	for (int i = 0;i<Directions.Num();i++)
 	{
+		FIntPoint Direction = Directions[i];
 		FIntPoint NextPosition = FIntPoint(ChessPiece->GetBoardPosition());
 		NextPosition += Direction;
 		while (IsValidMove(NextPosition,ChessPiece))
@@ -120,7 +124,8 @@ TArray<FMove> UChessboardController::GetValidMovesFromDirections(TArray<FIntPoin
 			}
 			NextPosition += Direction;
 		}
-		//UE_LOG(LogTemp, Log, TEXT("Invalid Direction - from %s to %s"),*FString(MovesData.Position.ToString()),*FString(CurrentTargetPosition.ToString()))
+ 		//FString text = FString(ChessPiece->GetBoardPosition().ToString());
+		//UE_LOG(LogTemp, Log, TEXT("Invalid Direction - from %s to %s"),*FString(text),*FString(NextPosition.ToString()))
 	}
  	//UE_LOG(LogTemp, Log, TEXT("Finished Directions"))
 	return AvailableMoves;

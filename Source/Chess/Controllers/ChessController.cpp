@@ -74,6 +74,7 @@ FTransform AChessController::GenerateChessPieceTransform(const int X,const  int 
 
 
 void AChessController::EndTurn(){
+	EColor EnemyPlayer = CurrentPlayer == EColor::Black ? EColor::White : EColor::Black;
 	if(CurrentPlayer == EColor::White)
 	{
 		CurrentPlayer = EColor::Black;
@@ -82,8 +83,9 @@ void AChessController::EndTurn(){
 	{
 		CurrentPlayer = EColor::White;
 	}
-	//ECheckmateStatus Status = RulesController->GetBoardStatusForColor(Chessboard,EColor::White,ChessboardController);
-	//UE_LOG(LogTemp, Log, TEXT("Check mate status is %D"),Status);
+	ECheckmateStatus Status = RulesController->GetBoardStatusForColor(Chessboard,EnemyPlayer,ChessboardController);
+	FString Value= UEnum::GetValueAsString(Status);
+	UE_LOG(LogTemp, Log, TEXT("Check mate status is %s"),*FString(Value));
 }
 
 void AChessController::SetSelectedFigure(AActor* Actor)

@@ -11,4 +11,8 @@ IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, Chess, "Chess" );
 /// 3. Verify folders and file naming
 /// 4. Change to references instead of pointers where possible and valid
 /// 5. Verify classes for UObject, UProperty macros -if they are not missing or not needed
-/// 6. Cleanup Header files and organise them 
+/// 6. Cleanup Header files and organise them
+/// 7. Add Castling
+/// 8. Add Pawn Promotion
+/// 9. Add En Passant
+/// 10. Add Stalemate Detection

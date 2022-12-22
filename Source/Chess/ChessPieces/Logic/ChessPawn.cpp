@@ -6,31 +6,31 @@ EFigure UChessPawn::GetFigureType()
 	return EFigure::Pawn;
 }
 
-TArray<FVector2D> UChessPawn::GetPossiblePositions()
+TArray<FIntPoint> UChessPawn::GetPossiblePositions()
 {
 	const bool bIsWhite = Color == EColor::White;
 	const int Direction = bIsWhite ? 1 : -1;
 	TArray PossibleMoves = {
-		BoardPosition + FVector2D(-1, Direction),
-		BoardPosition + FVector2D(0, Direction),
-		BoardPosition + FVector2D(1, Direction),
+		BoardPosition + FIntPoint(-1, Direction),
+		BoardPosition + FIntPoint(0, Direction),
+		BoardPosition + FIntPoint(1, Direction),
 	};
 	if (!bHasMoved)
 	{
-		PossibleMoves.Add(BoardPosition + FVector2D(0, Direction * 2));
+		PossibleMoves.Add(BoardPosition + FIntPoint(0, Direction * 2));
 	}
 	return PossibleMoves;
 }
 
-void UChessPawn::MoveToPosition(FVector2D Position, FTransform ActorTransform)
+void UChessPawn::MoveToPosition(FIntPoint Position, FVector ActorPosition)
 {
-	Super::MoveToPosition(Position,ActorTransform);
+	Super::MoveToPosition(Position,ActorPosition);
 	bHasMoved = true;
 }
 
 TArray<FMove> UChessPawn::GetAvailableMoves()
 {
-	TArray<FVector2D> PossibleMoves = GetPossiblePositions();
+	TArray<FIntPoint> PossibleMoves = GetPossiblePositions();
 	TArray<FMove> ValidPositions = MovementVerifier->GetValidMovesFromPositions(GetPossiblePositions(),this);
 	TArray<FMove> AvailableMoves;
 

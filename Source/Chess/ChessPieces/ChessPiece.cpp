@@ -1,6 +1,5 @@
 ﻿#include "ChessPiece.h"
 
-#include "Chess/Utils/F2DBoardArray.h"
 #include "Figures/AChessFigure.h"
 
 void UChessPiece::SetColor(const EColor PieceColor)
@@ -13,7 +12,7 @@ EFigure UChessPiece::GetFigureType()
 	return EFigure::Invalid;
 }
 
-FVector2D UChessPiece::GetBoardPosition()
+FIntPoint UChessPiece::GetBoardPosition()
 {
 	return BoardPosition;
 }
@@ -54,13 +53,13 @@ TArray<FMove> UChessPiece::GetAvailableMoves()
 
 void UChessPiece::DestroyChessPiece() const
 {
-	if (ChessPieceActor)
+	if (ChessPieceActor && !bIsSimulated)
 	{
 		ChessPieceActor->Destroy();
 	}
 }
 
-void UChessPiece::SetPosition(FVector2D Position)
+void UChessPiece::SetPosition(FIntPoint Position)
 {
 	this->BoardPosition = Position;
 	if (!bIsSimulated)
@@ -71,7 +70,7 @@ void UChessPiece::SetPosition(FVector2D Position)
 
 void UChessPiece::SetPosition(const int X, const int Y)
 {
-	SetPosition(FVector2D(X, Y));
+	SetPosition(FIntPoint(X, Y));
 }
 
 void UChessPiece::SetActorRotation(const FRotator Rotation) const
@@ -98,13 +97,13 @@ void UChessPiece::SetActorTransform(const FTransform Transform) const
 	}
 }
 
-void UChessPiece::MoveToPosition(FVector2D Position, FTransform ActorTransform)
+void UChessPiece::MoveToPosition(FIntPoint Position, FVector ActorPosition)
 {
 	BoardPosition = Position;
 	if (ChessPieceActor)
 	{
 		ChessPieceActor->SetBoardPosition(Position);
-		SetActorPosition(ActorTransform.GetLocation());
+		SetActorPosition(ActorPosition);
 	}
 }
 
@@ -149,4 +148,6 @@ void UChessPiece::CreateActor(UWorld* World, IBoardHighlighter* Highlighter)
 	ChessPieceActor = Actor;
 	Actor->Highlighter = Highlighter;
 	Actor->SourcePiece = this;
+	Actor->SetActorLabel(FString(UEnum::GetValueAsString(GetColor()) + " " + UEnum::GetValueAsString(GetFigureType())))
+	;
 }

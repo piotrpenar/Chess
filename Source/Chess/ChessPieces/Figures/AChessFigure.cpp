@@ -13,12 +13,12 @@ void AChessFigure::HandleFigureClick()
 	UE_LOG(LogTemp, Log, TEXT("Avaliable Moves: %d"), Moves.Num())
 }
 
-void AChessFigure::SetBoardPosition(FVector2D NewBoardPosition)
+void AChessFigure::SetBoardPosition(FIntPoint NewBoardPosition)
 {
 	this->BoardPosition = NewBoardPosition;
 }
 
-FVector2D AChessFigure::GetBoardPosition() const
+FIntPoint AChessFigure::GetBoardPosition() const
 {
 	return BoardPosition;
 }

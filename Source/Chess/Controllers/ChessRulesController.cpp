@@ -64,13 +64,12 @@ ECheckmateStatus UChessRulesController::CalculateCheckmateStatus(TArray<UChessPi
 
 TArray<UChessRulesController::FEnemyMove> UChessRulesController::GetEnemiesAvailableMoves(TArray<UChessPiece*> EnemyPieces)
 {
-	TArray<FEnemyMove> AllEnemyAvailableMoves;
+	TArray<FEnemyMove> AllEnemyAvailableMoves = TArray<FEnemyMove>();
 	for (UChessPiece* EnemyPiece : EnemyPieces)
 	{
 		TArray<FMove> EnemyAvailableMoves = EnemyPiece->GetAvailableMoves();
 		for (const FMove Move : EnemyAvailableMoves)
 		{
-			const UChessPiece* TargetPiece = static_cast<UChessPiece*>(Move.TargetObject);
 			AllEnemyAvailableMoves.Add({Move, EnemyPiece});
 		}
 	}
@@ -85,8 +84,8 @@ TArray<UChessPiece*> UChessRulesController::GetThreateningEnemies(TArray<FEnemyM
 		if (EnemyMove.Move.TargetObject == King)
 		{
 			UE_LOG(LogTemp, Log, TEXT("Check!"))
+			EndangeringFigures.Add(EnemyMove.Enemy);
 		}
-		EndangeringFigures.Add(EnemyMove.Enemy);
 	}
 	return EndangeringFigures;
 }

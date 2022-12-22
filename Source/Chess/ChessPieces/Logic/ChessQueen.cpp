@@ -9,17 +9,17 @@ EFigure UChessQueen::GetFigureType()
 }
 
 
-TArray<FVector2D> UChessQueen::GetPossibleDirections() const
+TArray<FIntPoint> UChessQueen::GetPossibleDirections() const
 {
 	return  {
-		FVector2D(-1, -1),
-		FVector2D(1, -1),
-		FVector2D(1, 1),
-		FVector2D(-1, 1),
-		FVector2D(1, 0),
-		FVector2D(-1, 0),
-		FVector2D(0, -1),
-		FVector2D(0, 1),
+		FIntPoint(-1, -1),
+		FIntPoint(1, -1),
+		FIntPoint(1, 1),
+		FIntPoint(-1, 1),
+		FIntPoint(1, 0),
+		FIntPoint(-1, 0),
+		FIntPoint(0, -1),
+		FIntPoint(0, 1),
 	};
 }
 

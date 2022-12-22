@@ -25,7 +25,7 @@ protected:
 	UPROPERTY()
 	EColor Color = EColor::White;
 	UPROPERTY()
-	FVector2D BoardPosition;
+	FIntPoint BoardPosition;
 	UPROPERTY()
 	FVector3f WorldPosition;
 	
@@ -37,7 +37,7 @@ public:
 	UPROPERTY()
 	TScriptInterface<IChessGameState> ChessGameState;
 	
-	virtual void MoveToPosition(FVector2D Position, FTransform ActorTransform) override;
+	virtual void MoveToPosition(FIntPoint Position, FVector ActorPosition) override;
 	virtual EFigure GetFigureType();
 	virtual TArray<FMove> GetAvailableMoves() override;
 	virtual bool CanMoveThisTurn() override;
@@ -47,10 +47,10 @@ public:
 	void SetActorTransform(FTransform Transform) const;
 	void CreateActor(UWorld* World, IBoardHighlighter* Highlighter);
 	void DestroyChessPiece() const;
-	void SetPosition(FVector2D Position);
+	void SetPosition(FIntPoint Position);
 	void SetActorPosition(FVector Position) const;
 	EColor GetColor() const;
-	FVector2D GetBoardPosition();
+	FIntPoint GetBoardPosition();
 	void SetAsSimulated(TScriptInterface<IMovementVerifier> SimulatedMovementVerifier);
 	bool IsSimulated();
 	void SetReferences(UChessData* NewChessData, TScriptInterface<IMovementVerifier> NewMovementVerifier, TScriptInterface<IChessGameState> NewGameState);

@@ -34,11 +34,11 @@ FTransform UChessboard::GetChessBoardTransform() const
 
 FTransform UChessboard::BoardToWorldTransform(const int X, const int Y) const
 {
-	const FVector2D Position = FVector2D(X,Y);
+	const FIntPoint Position = FIntPoint(X,Y);
 	return BoardToWorldTransform(Position);
 }
 
-FTransform UChessboard::BoardToWorldTransform(const FVector2D Position) const
+FTransform UChessboard::BoardToWorldTransform(const FIntPoint Position) const
 {
 	FTransform Transform= GetChessBoardTransform();
 	const float BoardDistance = ChessData->GetBoardCheckerSize();
@@ -46,14 +46,14 @@ FTransform UChessboard::BoardToWorldTransform(const FVector2D Position) const
 	return Transform;
 }
 
-UChessPiece* UChessboard::GetPieceAtPosition(FVector2D BoardPosition)
+UChessPiece* UChessboard::GetPieceAtPosition(FIntPoint BoardPosition)
 {
 	UObject* Object = Board[BoardPosition.X][BoardPosition.Y];
 	//UE_LOG(LogTemp, Log, TEXT("Getting object from %s"),*FString(BoardPosition.ToString()))
 	return static_cast<UChessPiece*>(Object);
 }
 
-void UChessboard::SetPieceAtPosition(const FVector2D Position, UChessPiece* ChessPiece)
+void UChessboard::SetPieceAtPosition(const FIntPoint Position, UChessPiece* ChessPiece)
 {
 	UObject* CurrentObject = Board[Position.X][Position.Y];
 	if(CurrentObject)
@@ -112,19 +112,20 @@ UChessPiece* UChessboard::GetChessPiece(const EFigure Figure,const EColor Color)
 void UChessboard::SetAsSimulated(UChessboard* OriginalBoard,TScriptInterface<IMovementVerifier> SimulatedMovementVerifier)
 {
 	bIsSimulation=true;
-	for (F2DBoardArray Row : OriginalBoard->Board)
+	for (int i=0;i<ChessData->GetBoardSize();i++)
 	{
-		F2DBoardArray NewRow = F2DBoardArray(Row);
-		for (int i=0;i<ChessData->GetBoardSize();i++)
+		F2DBoardArray NewRow = F2DBoardArray();
+		for (int j=0;j<ChessData->GetBoardSize();j++)
 		{
-			UChessPiece* ChessPiece = static_cast<UChessPiece*>(Row[i]);
+			UChessPiece* ChessPiece = OriginalBoard->GetPieceAtPosition(FIntPoint(i,j));
 			if (!ChessPiece)
 			{
+				NewRow.Add(nullptr);
 				continue;
 			}
 			UChessPiece* Clone = UChessPiecesFactory::CloneChessPiece(ChessPiece,this);
 			Clone->SetAsSimulated(SimulatedMovementVerifier);
-			NewRow.Set(i,Clone);
+			NewRow.Add(Clone);
 		}
 		Board.Add(NewRow);
 	}

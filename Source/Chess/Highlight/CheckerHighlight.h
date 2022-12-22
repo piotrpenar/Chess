@@ -19,7 +19,7 @@ public:
 	UPROPERTY()
 	AChessFigure* SourceFigure;
 	IBoardHighlighter* Highlighter;
-	FVector2D Position;
+	FIntPoint Position;
 	
 	UFUNCTION(BlueprintCallable)
 	void NotifyHighlighterOnClick();

@@ -9,7 +9,7 @@ class UChessKing final : public UChessPiece
 	GENERATED_BODY()
 	
 	
-	TArray<FVector2D> GetPossiblePositions() const;
+	TArray<FIntPoint> GetPossiblePositions() const;
 	
 public:
 	virtual EFigure GetFigureType() override;;

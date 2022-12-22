@@ -20,9 +20,9 @@ void AChessController::BeginPlay()
 	Chessboard->GenerateEmptyBoard();
 	ChessboardController = NewObject<UChessboardController>();
 	ChessboardController->Initialize(ChessData,Chessboard,this);
-	ChessboardController->CreateChessboardSimulation();
 	GenerateChessPieces(EColor::White);
 	GenerateChessPieces(EColor::Black);
+	ChessboardController->CreateChessboardSimulation();
 }
 
 void AChessController::GenerateChessPieces(const EColor FigureColor)
@@ -51,7 +51,7 @@ void AChessController::GenerateChessRow(TArray<EFigure> Figures, const EColor Co
 		Clone->CreateActor(GetWorld(),this);
 		Clone->SetPosition(Column, TargetRow);
 		Clone->SetActorTransform(GenerateChessPieceTransform(Column,TargetRow,Color));
-		Chessboard->SetPieceAtPosition(FVector2D(Column,TargetRow),Clone);
+		Chessboard->SetPieceAtPosition(FIntPoint(Column,TargetRow),Clone);
 	}
 }
 
@@ -96,9 +96,10 @@ void AChessController::HighlightSelected(AActor* Source)
 {
 	ClearHighlights();
 	const ACheckerHighlight* CheckerHighlight = static_cast<ACheckerHighlight*>(Source);
-	FVector2D BoardPosition = CheckerHighlight->SourceFigure->GetBoardPosition();
+	FIntPoint BoardPosition = CheckerHighlight->SourceFigure->GetBoardPosition();
+	FIntPoint TargetPosition = CheckerHighlight->Position;
 	UChessPiece* ChessPiece = ChessboardController->GetOtherPieceAtPosition(BoardPosition);
-	ChessboardController->MoveChessPieceToPosition(ChessPiece,BoardPosition);
+	ChessboardController->MoveChessPieceToPosition(ChessPiece,TargetPosition);
 }
 
 void AChessController::ClearHighlights()

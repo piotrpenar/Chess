@@ -22,8 +22,8 @@ class CHESS_API IMovementVerifier
 	GENERATED_BODY()
 	
 public:
-	virtual bool IsValidMove(const FVector2D Position, UObject* ChessPiece);
-	virtual TArray<FMove> GetValidMovesFromPositions(TArray<FVector2D> Directions, UObject* ChessPiece);
-	virtual TArray<FMove> GetValidMovesFromDirections(TArray<FVector2D> Directions, UObject* ChessPiece);
+	virtual bool IsValidMove(const FIntPoint Position, UObject* ChessPiece);
+	virtual TArray<FMove> GetValidMovesFromPositions(TArray<FIntPoint> Directions, UObject* ChessPiece);
+	virtual TArray<FMove> GetValidMovesFromDirections(TArray<FIntPoint> Directions, UObject* ChessPiece);
 };
 

@@ -9,7 +9,7 @@ class UChessBishop final : public UChessPiece
 	GENERATED_BODY()
 	
 	
-	TArray<FVector2D> GetPossibleDirections() const;
+	TArray<FIntPoint> GetPossibleDirections() const;
 	
 public:
 	virtual EFigure GetFigureType() override;;

@@ -19,7 +19,7 @@ void UChessboardController::CreateChessboardSimulation()
 	SimulatedBoard->SetAsSimulated(Chessboard,SimulatedController);
 }
 
-bool UChessboardController::IsValidMove(const FVector2D Position, UObject* ChessPieceObject)
+bool UChessboardController::IsValidMove(const FIntPoint Position, UObject* ChessPieceObject)
 {
 	if(!ChessData->IsValidBoardPosition(Position))
 	{
@@ -30,20 +30,20 @@ bool UChessboardController::IsValidMove(const FVector2D Position, UObject* Chess
 		return true;
 	}
 	UChessPiece* ChessPiece = static_cast<UChessPiece*>(ChessPieceObject);
-	FVector2D PreviousPosition = ChessPiece->GetBoardPosition();
+	FIntPoint PreviousPosition = ChessPiece->GetBoardPosition();
 	UChessPiece* SimulatedPiece = SimulatedBoard->GetPieceAtPosition(PreviousPosition);
 	if(!SimulatedPiece)
 	{
 		return false;
 	}
-	SimulatedBoard->SetPieceAtPosition(FVector2D(Position.X,Position.Y),SimulatedPiece);
+	SimulatedBoard->SetPieceAtPosition(FIntPoint(Position.X,Position.Y),SimulatedPiece);
 	SimulatedPiece->SetPosition(Position.X,Position.Y);
-	SimulatedBoard->SetPieceAtPosition(FVector2D(PreviousPosition.X,PreviousPosition.Y),nullptr);
-	bool bIsKingInCheck = !UChessRulesController::IsKingInCheck(SimulatedBoard,SimulatedPiece->GetColor());
-	SimulatedBoard->SetPieceAtPosition(FVector2D(PreviousPosition.X,PreviousPosition.Y),SimulatedPiece);
+	SimulatedBoard->SetPieceAtPosition(FIntPoint(PreviousPosition.X,PreviousPosition.Y),nullptr);
+	bool bIsKingInCheck = UChessRulesController::IsKingInCheck(SimulatedBoard,SimulatedPiece->GetColor());
+	SimulatedBoard->SetPieceAtPosition(FIntPoint(PreviousPosition.X,PreviousPosition.Y),SimulatedPiece);
 	SimulatedPiece->SetPosition(PreviousPosition.X,PreviousPosition.Y);
-	SimulatedBoard->SetPieceAtPosition(FVector2D(Position.X,Position.Y),nullptr);
-	return bIsKingInCheck;
+	SimulatedBoard->SetPieceAtPosition(FIntPoint(Position.X,Position.Y),nullptr);
+	return !bIsKingInCheck;
 	ECheckmateStatus Status = UChessRulesController::GetBoardStatusForColor(SimulatedBoard,SimulatedPiece->GetColor(),this);
 	UE_LOG(LogTemp, Log, TEXT("Checkmate status for color %d is %d"),SimulatedPiece->GetColor(),Status)
 	return Status == ECheckmateStatus::None;
@@ -56,25 +56,25 @@ void UChessboardController::Initialize(UChessData* NewChessData,UChessboard* New
 	this->ChessGameState = NewChessGameState;
 }
 
-void UChessboardController::MoveChessPieceToPosition(UChessPiece* ChessPiece,FVector2D Position)
+void UChessboardController::MoveChessPieceToPosition(UChessPiece* ChessPiece,FIntPoint Position)
 {
-	const FVector2D PreviousPosition = FVector2D(ChessPiece->GetBoardPosition());
-	ChessPiece->MoveToPosition(Position,Chessboard->BoardToWorldTransform(Position));
+	const FIntPoint PreviousPosition = FIntPoint(ChessPiece->GetBoardPosition());
+	ChessPiece->MoveToPosition(Position,Chessboard->BoardToWorldTransform(Position).GetTranslation());
 	Chessboard->SetPieceAtPosition(Position,ChessPiece);
 	Chessboard->SetPieceAtPosition(PreviousPosition,nullptr);
 	UChessPiece* SimulatedChessPiece = SimulatedController->GetOtherPieceAtPosition(PreviousPosition);
-	SimulatedChessPiece->MoveToPosition(Position,Chessboard->BoardToWorldTransform(Position));
+	SimulatedChessPiece->SetPosition(Position);
 	SimulatedBoard->SetPieceAtPosition(Position,SimulatedChessPiece);
 	SimulatedBoard->SetPieceAtPosition(PreviousPosition,nullptr);
 	ChessGameState->EndTurn();
 }
 
-TArray<FMove> UChessboardController::GetValidMovesFromPositions(TArray<FVector2D> Directions, UObject* ChessPieceObject)
+TArray<FMove> UChessboardController::GetValidMovesFromPositions(TArray<FIntPoint> Directions, UObject* ChessPieceObject)
  {
- 	TArray<FMove> ValidMoves;
+ 	TArray<FMove> ValidMoves = TArray<FMove>();
 	UChessPiece* ChessPiece = static_cast<UChessPiece*>(ChessPieceObject);
  	
- 	for (const FVector2D PossibleMove  : Directions)
+ 	for (const FIntPoint PossibleMove  : Directions)
  	{
  		if (!IsValidMove(PossibleMove,ChessPiece))
  		{
@@ -90,14 +90,14 @@ TArray<FMove> UChessboardController::GetValidMovesFromPositions(TArray<FVector2D
  	return ValidMoves;
 }
 
-TArray<FMove> UChessboardController::GetValidMovesFromDirections(TArray<FVector2D> Directions, UObject* ChessPieceObject)
+TArray<FMove> UChessboardController::GetValidMovesFromDirections(TArray<FIntPoint> Directions, UObject* ChessPieceObject)
 {
  	TArray<FMove> AvailableMoves  = TArray<FMove>();
 	UChessPiece* ChessPiece = static_cast<UChessPiece*>(ChessPieceObject);
  	
-	for (const FVector2D Direction : Directions)
+	for (const FIntPoint Direction : Directions)
 	{
-		FVector2D NextPosition = FVector2D(ChessPiece->GetBoardPosition());
+		FIntPoint NextPosition = FIntPoint(ChessPiece->GetBoardPosition());
 		NextPosition += Direction;
 		while (IsValidMove(NextPosition,ChessPiece))
 		{
@@ -125,7 +125,7 @@ TArray<FMove> UChessboardController::GetValidMovesFromDirections(TArray<FVector2
 	return AvailableMoves;
 }
 
-UChessPiece* UChessboardController::GetOtherPieceAtPosition(const FVector2D BoardPosition) const
+UChessPiece* UChessboardController::GetOtherPieceAtPosition(const FIntPoint BoardPosition) const
 {
 	return Chessboard->GetPieceAtPosition(BoardPosition);
 }

@@ -7,12 +7,12 @@ class UChessPawn final : public UChessPiece
 {
 	GENERATED_BODY()
 	
-	TArray<FVector2D> GetPossiblePositions();
+	TArray<FIntPoint> GetPossiblePositions();
 	bool bHasMoved;
 	
 public:
 	virtual EFigure GetFigureType() override;
 	virtual TArray<FMove> GetAvailableMoves() override;
-	virtual void MoveToPosition(FVector2D Position, FTransform ActorTransform) override;
+	virtual void MoveToPosition(FIntPoint Position, FVector ActorPosition) override;
 	
 };

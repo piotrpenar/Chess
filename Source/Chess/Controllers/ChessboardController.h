@@ -33,11 +33,11 @@ public:
 
 	void Initialize(UChessData* NewChessData,UChessboard* NewBoard,TScriptInterface<IChessGameState> NewChessGameState);
 	void CreateChessboardSimulation();
-	void MoveChessPieceToPosition(UChessPiece* ChessPiece, FVector2D Position);
-	virtual bool IsValidMove(const FVector2D Position, UObject* ChessPiece) override;
-	virtual TArray<FMove> GetValidMovesFromPositions(TArray<FVector2D> Directions, UObject* ChessPieceObject) override;
-	virtual TArray<FMove> GetValidMovesFromDirections(TArray<FVector2D> Directions, UObject* ChessPieceObject) override;
-	UChessPiece* GetOtherPieceAtPosition(FVector2D BoardPosition) const;
+	void MoveChessPieceToPosition(UChessPiece* ChessPiece, FIntPoint Position);
+	virtual bool IsValidMove(const FIntPoint Position, UObject* ChessPiece) override;
+	virtual TArray<FMove> GetValidMovesFromPositions(TArray<FIntPoint> Directions, UObject* ChessPieceObject) override;
+	virtual TArray<FMove> GetValidMovesFromDirections(TArray<FIntPoint> Directions, UObject* ChessPieceObject) override;
+	UChessPiece* GetOtherPieceAtPosition(FIntPoint BoardPosition) const;
 	void SetAsSimulation();
 };
 

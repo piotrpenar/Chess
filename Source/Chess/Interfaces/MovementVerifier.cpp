@@ -7,17 +7,17 @@
 
 // Add default functionality here for any IIMovementVeryfier functions that are not pure virtual.
 
-bool IMovementVerifier::IsValidMove(const FVector2D Position, UObject* ChessPiece)
+bool IMovementVerifier::IsValidMove(const FIntPoint Position, UObject* ChessPiece)
 {
 	return false;
 }
 
-TArray<FMove> IMovementVerifier::GetValidMovesFromPositions(TArray<FVector2D> Directions, UObject* ChessPiece)
+TArray<FMove> IMovementVerifier::GetValidMovesFromPositions(TArray<FIntPoint> Directions, UObject* ChessPiece)
 {
 	return {};
 }
 
-TArray<FMove> IMovementVerifier::GetValidMovesFromDirections(TArray<FVector2D> Directions, UObject* ChessPiece)
+TArray<FMove> IMovementVerifier::GetValidMovesFromDirections(TArray<FIntPoint> Directions, UObject* ChessPiece)
 {
 	return {};
 }

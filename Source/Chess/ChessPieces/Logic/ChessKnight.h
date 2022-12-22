@@ -8,7 +8,7 @@ class UChessKnight final : public UChessPiece
 {
 	GENERATED_BODY()
 
-	TArray<FVector2D> GetPossiblePositions();
+	TArray<FIntPoint> GetPossiblePositions();
 	
 public:
 	virtual EFigure GetFigureType() override;;

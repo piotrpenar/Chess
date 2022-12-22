@@ -9,13 +9,13 @@ EFigure UChessRook::GetFigureType()
 	return EFigure::Rook;
 }
 
-TArray<FVector2D> UChessRook::GetPossibleDirections() const
+TArray<FIntPoint> UChessRook::GetPossibleDirections() const
 {
 	return  {
-		FVector2D(1, 0),
-		FVector2D(-1, 0),
-		FVector2D(0, -1),
-		FVector2D(0, 1),
+		FIntPoint(1, 0),
+		FIntPoint(-1, 0),
+		FIntPoint(0, -1),
+		FIntPoint(0, 1),
 	};
 }
 

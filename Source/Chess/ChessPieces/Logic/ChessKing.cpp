@@ -6,17 +6,17 @@ EFigure UChessKing::GetFigureType()
 	return EFigure::King;
 }
 
-TArray<FVector2D> UChessKing::GetPossiblePositions() const
+TArray<FIntPoint> UChessKing::GetPossiblePositions() const
 {
 	return {
-		BoardPosition + FVector2D(-1, -1),
-		BoardPosition + FVector2D(-1, 0),
-		BoardPosition + FVector2D(-1, 1),
-		BoardPosition + FVector2D(0, 1),
-		BoardPosition + FVector2D(1, 1),
-		BoardPosition + FVector2D(1, 0),
-		BoardPosition + FVector2D(1, -1),
-		BoardPosition + FVector2D(0, -1),
+		BoardPosition + FIntPoint(-1, -1),
+		BoardPosition + FIntPoint(-1, 0),
+		BoardPosition + FIntPoint(-1, 1),
+		BoardPosition + FIntPoint(0, 1),
+		BoardPosition + FIntPoint(1, 1),
+		BoardPosition + FIntPoint(1, 0),
+		BoardPosition + FIntPoint(1, -1),
+		BoardPosition + FIntPoint(0, -1),
 	};
 }
 

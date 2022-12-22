@@ -5,13 +5,13 @@ EFigure UChessBishop::GetFigureType()
 	return EFigure::Bishop;
 }
 
-TArray<FVector2D> UChessBishop::GetPossibleDirections() const
+TArray<FIntPoint> UChessBishop::GetPossibleDirections() const
 {
 	return  {
-		FVector2D(-1, -1),
-		FVector2D(1, -1),
-		FVector2D(1, 1),
-		FVector2D(-1, 1),
+		FIntPoint(-1, -1),
+		FIntPoint(1, -1),
+		FIntPoint(1, 1),
+		FIntPoint(-1, 1),
 	};
 }
 

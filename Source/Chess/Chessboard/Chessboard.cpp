@@ -8,6 +8,12 @@
 #include "Chess/Utils/F2DBoardArray.h"
 
 
+void UChessboard::Initialize(UChessData* NewChessData, AActor* NewChessBoardOrigin) 
+{
+	this->ChessData = NewChessData;
+	this->ChessBoardOrigin = NewChessBoardOrigin;
+};
+
 void UChessboard::GenerateEmptyBoard()
 {
 	for (int i = 0; i < ChessData->GetBoardSize(); i++)

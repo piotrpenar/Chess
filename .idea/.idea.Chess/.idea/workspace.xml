@@ -6,13 +6,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13e30f9d-f09a-40e8-91e8-793056d40f25" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Chess/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Chess/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Chessboard/Chessboard.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Chessboard/Chessboard.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Chessboard/Chessboard.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Chessboard/Chessboard.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Controllers/ChessRulesController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Controllers/ChessRulesController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Controllers/ChessboardController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Controllers/ChessboardController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ChessData.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ChessData.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Materials/M_AssetPlatform.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Materials/M_AssetPlatform.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/Controllers/AChessController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Controllers/AChessController.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +183,7 @@
       <workItem from="1671629859293" duration="3040000" />
       <workItem from="1671633182471" duration="178000" />
       <workItem from="1671653839618" duration="12328000" />
-      <workItem from="1671701121908" duration="1638000" />
+      <workItem from="1671701121908" duration="1955000" />
     </task>
     <servers />
   </component>
@@ -209,6 +205,47 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Source/Chess/Controllers/ChessboardController.cpp</url>
+          <line>18</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Source/Chess/Controllers/ChessboardController.cpp</url>
+          <line>24</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Source/Chess/Controllers/ChessboardController.cpp</url>
+          <line>30</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Source/Chess/Controllers/ChessRulesController.cpp</url>
+          <line>30</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Source/Chess/Controllers/ChessRulesController.cpp</url>
+          <line>25</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Source/Chess/Controllers/ChessRulesController.cpp</url>
+          <line>37</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Source/Chess/Controllers/ChessRulesController.cpp</url>
+          <line>43</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

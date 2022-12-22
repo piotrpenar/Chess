@@ -16,9 +16,10 @@ void AChessController::BeginPlay()
 	Super::BeginPlay();
 	RulesController = NewObject<UChessRulesController>();
 	Chessboard = NewObject<UChessboard>();
+	Chessboard->Initialize(ChessData,ChessBoardOrigin);
 	Chessboard->GenerateEmptyBoard();
 	ChessboardController = NewObject<UChessboardController>();
-	ChessboardController->SetBoard(Chessboard);
+	ChessboardController->Initialize(Chessboard,this);
 	GenerateChessPieces(EColor::White);
 	GenerateChessPieces(EColor::Black);
 }

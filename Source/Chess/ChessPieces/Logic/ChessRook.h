@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Chess/ChessPieces/ChessPiece.h"
+
 #include "ChessRook.generated.h"
 
 /**
@@ -14,7 +15,7 @@ class CHESS_API UChessRook final : public UChessPiece
 {
 	GENERATED_BODY()
 	
-	FChessMovesData GenerateMovesData();
+	
 	TArray<FVector2D> GetPossibleDirections() const;
 public:
 	virtual EFigure GetFigureType() override;;

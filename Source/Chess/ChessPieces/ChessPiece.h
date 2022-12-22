@@ -1,13 +1,11 @@
 ﻿#pragma once
 #include "IntVectorTypes.h"
 #include "Chess/Data/ChessData.h"
-#include "Chess/Interfaces/ChessBoardProvider.h"
 #include "Chess/Interfaces/ChessGameState.h"
+#include "Chess/Interfaces/MovementVerifier.h"
 #include "Chess/Interfaces/MovesProvider.h"
-#include "Chess/Utils/ChessMovesData.h"
 #include "Chess/Utils/EColor.h"
 #include "Chess/Utils/EFigure.h"
-#include "Chess/Utils/F2DBoardArray.h"
 #include "Chess/Utils/FMove.h"
 #include "ChessPiece.generated.h"
 
@@ -19,9 +17,7 @@ class CHESS_API UChessPiece : public UObject, public IMovesProvider
 	UPROPERTY()
 	AActor* ChessPieceActor;
 	
-	void SetActorPosition(FVector Position) const;
 	void SetActorRotation(FRotator Rotation) const;
-	void MoveActorToPosition(FVector2D Position) const;
 
 protected:
 	UPROPERTY()
@@ -35,7 +31,7 @@ public:
 	UPROPERTY()
 	UChessData* ChessData;
 	UPROPERTY()
-	TScriptInterface<IChessBoardProvider> BoardProvider;
+	TScriptInterface<IMovementVerifier> MovementVerifier;
 	UPROPERTY()
 	TScriptInterface<IChessGameState> ChessGameState;
 	
@@ -49,6 +45,8 @@ public:
 	void SetActorTransform(FTransform Transform) const;
 	void CreateActor(UWorld* World, IBoardHighlighter* Highlighter);
 	void DestroyChessPiece() const;
+	void SetPosition(FVector2D Position);
+	void SetActorPosition(FVector Position) const;
 	EColor GetColor() const;
 	FVector2D GetBoardPosition() const;
 };

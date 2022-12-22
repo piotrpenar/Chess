@@ -6,6 +6,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13e30f9d-f09a-40e8-91e8-793056d40f25" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Source/Chess/Chessboard/Chessboard.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/Chess/Controllers/ChessboardController.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/Chess/Controllers/ChessboardController.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/Chess/Interfaces/MovementVerifier.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/Chess/Interfaces/MovementVerifier.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Chess/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Chess/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessBishop.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/Logic/ChessBishop.cpp" afterDir="false" />
@@ -26,18 +33,12 @@
       <change beforePath="$PROJECT_DIR$/Source/Chess/Controllers/ChessRulesController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Controllers/ChessRulesController.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Chess/Data/ChessData.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Data/ChessData.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Chess/Data/ChessData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Data/ChessData.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Helpers/ChessMovesHelper.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Helpers/ChessMovesHelper.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Helpers/ChessMovesHelper.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Helpers/ChessMovesHelper.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Helpers/ChessPiecesFactory.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Helpers/ChessPiecesFactory.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Helpers/ChessPiecesFactory.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Helpers/ChessPiecesFactory.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Highlight/CheckerHighlight.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Highlight/CheckerHighlight.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Interfaces/BoardHighlighter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Interfaces/BoardHighlighter.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Interfaces/ChessBoardProvider.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Interfaces/ChessBoardProvider.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Interfaces/ChessBoardProvider.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Interfaces/ChessBoardProvider.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Utils/ChessMovesData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Utils/ChessMovesData.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Utils/EFigureType.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Utils/EFigure.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Utils/F2DBoardArray.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Utils/F2DBoardArray.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Utils/FMove.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Utils/FMove.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/Helpers/ChessMovesHelper.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/Helpers/ChessMovesHelper.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/Interfaces/ChessBoardProvider.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/Interfaces/ChessBoardProvider.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Chessboard/Chessboard.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/Utils/ChessMovesData.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/Utils/ChessMovesData.h" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,7 +212,7 @@
       <workItem from="1671615280004" duration="3971000" />
       <workItem from="1671629859293" duration="3040000" />
       <workItem from="1671633182471" duration="178000" />
-      <workItem from="1671653839618" duration="5467000" />
+      <workItem from="1671653839618" duration="12107000" />
     </task>
     <servers />
   </component>
@@ -233,32 +234,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Source/Chess/Controllers/AChessController.cpp</url>
-          <line>106</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Source/Chess/Controllers/AChessController.cpp</url>
-          <line>109</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Source/Chess/Controllers/AChessController.cpp</url>
-          <line>112</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Source/Chess/Controllers/AChessController.cpp</url>
-          <line>113</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

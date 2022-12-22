@@ -1,13 +1,12 @@
 ﻿#include "ChessKnight.h"
 
-#include "Chess/Helpers/ChessMovesHelper.h"
 
 EFigure UChessKnight::GetFigureType()
 {
 	return EFigure::Knight;
 }
 
-TArray<FVector2D> UChessKnight::GetPossibleMoves()
+TArray<FVector2D> UChessKnight::GetPossiblePositions()
 {
 	return {
 		BoardPosition + FVector2D(-1, -2),
@@ -21,14 +20,8 @@ TArray<FVector2D> UChessKnight::GetPossibleMoves()
 	};
 }
 
-FChessMovesData UChessKnight::GenerateMovesData()
-{
-	return FChessMovesData(GetPossibleMoves(), BoardProvider, Color, BoardPosition,this);
-}
-
 
 TArray<FMove> UChessKnight::GetAvailableMoves()
 {
-	const FChessMovesData PossibleMovesData = GenerateMovesData();
-	return UChessMovesHelper::GetValidMovesFromPositions(PossibleMovesData);
+	return MovementVerifier->GetValidMovesFromPositions(GetPossiblePositions(),this);
 }

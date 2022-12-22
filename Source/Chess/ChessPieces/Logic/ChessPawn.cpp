@@ -1,14 +1,12 @@
 ﻿#include "ChessPawn.h"
 
-#include "Chess/Helpers/ChessMovesHelper.h"
-
 
 EFigure UChessPawn::GetFigureType()
 {
 	return EFigure::Pawn;
 }
 
-TArray<FVector2D> UChessPawn::GetPossibleMoves()
+TArray<FVector2D> UChessPawn::GetPossiblePositions()
 {
 	const bool bIsWhite = Color == EColor::White;
 	const int Direction = bIsWhite ? 1 : -1;
@@ -24,11 +22,6 @@ TArray<FVector2D> UChessPawn::GetPossibleMoves()
 	return PossibleMoves;
 }
 
-FChessMovesData UChessPawn::GenerateMovesData()
-{
-	return FChessMovesData(GetPossibleMoves(), BoardProvider, Color, BoardPosition,this);
-}
-
 void UChessPawn::MoveToPosition(FVector2D Position)
 {
 	Super::MoveToPosition(Position);
@@ -37,30 +30,25 @@ void UChessPawn::MoveToPosition(FVector2D Position)
 
 TArray<FMove> UChessPawn::GetAvailableMoves()
 {
-	TArray<FVector2D> PossibleMoves = GetPossibleMoves();
-	const FChessMovesData MovesData = GenerateMovesData();
-	TArray<FMove> ValidMoves;
+	TArray<FVector2D> PossibleMoves = GetPossiblePositions();
+	TArray<FMove> ValidPositions = MovementVerifier->GetValidMovesFromPositions(GetPossiblePositions(),this);
+	TArray<FMove> AvailableMoves;
 
-	for (const FVector2D PossibleMove : PossibleMoves)
+	for (const FMove ValidPosition : ValidPositions)
 	{
-		if (!(BoardProvider->IsValidMove(PossibleMove, this)))
+		const bool bPositionsHaveSameX = ValidPosition.TargetPosition.X == BoardPosition.X;
+		UChessPiece* TargetChessPiece = static_cast<UChessPiece*>(ValidPosition.TargetObject);
+		if (TargetChessPiece)
 		{
-			//UE_LOG(LogTemp, Log, TEXT("Invalid Position - from %s to %s"), *FString(CurrentTargetPosition.ToString()),*FString(PossibleMove.ToString()))
-			continue;
-		}
-		UChessPiece* TargetObject = UChessMovesHelper::GetOtherPieceAtPosition(MovesData, PossibleMove);
-		const bool bPositionsHaveSameX = PossibleMove.X == BoardPosition.X;
-		if (TargetObject)
-		{
-			if (!bPositionsHaveSameX && TargetObject->GetColor() != Color)
+			if (!bPositionsHaveSameX && TargetChessPiece->GetColor() != Color)
 			{
-				ValidMoves.Add(FMove(PossibleMove, TargetObject));
+				AvailableMoves.Add(ValidPosition);
 			}
 		}
 		else if (bPositionsHaveSameX)
 		{
-			ValidMoves.Add(FMove(PossibleMove, TargetObject));
+			AvailableMoves.Add(ValidPosition);
 		}
 	}
-	return ValidMoves;
+	return AvailableMoves;
 }

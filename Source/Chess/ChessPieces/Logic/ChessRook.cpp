@@ -3,7 +3,6 @@
 
 #include "ChessRook.h"
 
-#include "Chess/Helpers/ChessMovesHelper.h"
 
 EFigure UChessRook::GetFigureType()
 {
@@ -20,13 +19,7 @@ TArray<FVector2D> UChessRook::GetPossibleDirections() const
 	};
 }
 
-FChessMovesData UChessRook::GenerateMovesData()
-{
-	return FChessMovesData(GetPossibleDirections(), BoardProvider, Color, BoardPosition,this);
-}
-
 TArray<FMove> UChessRook::GetAvailableMoves()
 {
-	const FChessMovesData PossibleMovesData = GenerateMovesData();
-	return UChessMovesHelper::GetValidMovesFromDirections(PossibleMovesData);
+	return MovementVerifier->GetValidMovesFromDirections(GetPossibleDirections(),this);
 }

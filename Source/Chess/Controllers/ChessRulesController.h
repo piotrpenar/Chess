@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ChessboardController.h"
+#include "Chess/Chessboard/Chessboard.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 #include "Chess/Utils/ECheckmateStatus.h"
 #include "Chess/Utils/F2DBoardArray.h"
@@ -25,13 +27,13 @@ class CHESS_API UChessRulesController final : public UObject
 
 	static TArray<FEnemyMove> GetEnemiesAvailableMoves(TArray<UChessPiece*> EnemyPieces);
 	static TArray<UChessPiece*> GetThreateningEnemies(TArray<FEnemyMove> EnemyMoves, UChessPiece* King);
-	static ECheckmateStatus CalculateCheckmateStatus(TArray<UChessPiece*> EnemyPieces, TArray<UChessPiece*> AllyPieces, IChessBoardProvider* ChessBoardProvider);
+	static ECheckmateStatus CalculateCheckmateStatus(TArray<UChessPiece*> EnemyPieces, TArray<UChessPiece*> AllyPieces, IMovementVerifier* MovementVerifier);
 	static UChessPiece* GetFigureFromArray(const TArray<UChessPiece*>& Array, const EFigure Figure);
 	static bool IsKingAbleToEscape(TArray<FEnemyMove> EnemyAvailableMoves, UChessPiece* AlliedKing);
 	static bool CanAllyCoverAnyEnemyMove(TArray<FEnemyMove> EnemyAvailableMoves, FMove AllyMove);
-	static bool CanAllyDestroyEnemy(const UChessPiece* ThreateningEnemy, UChessPiece* Ally, FMove AllyMove, IChessBoardProvider* ChessBoardProvider);
-	static bool CanAllyEliminateCheck(TArray<FEnemyMove> EnemyAvailableMoves, UChessPiece* AllyPiece, IChessBoardProvider* ChessBoardProvider);
+	static bool CanAllyDestroyEnemy(const UChessPiece* ThreateningEnemy, UChessPiece* Ally, const FMove AllyMove, IMovementVerifier* MovementVerifier);
+	static bool CanAllyEliminateCheck(TArray<FEnemyMove> EnemyAvailableMoves, UChessPiece* AllyPiece, IMovementVerifier* MovementVerifier);
 	
 public:
-	ECheckmateStatus GetBoardStatusForColor(IChessBoardProvider* ChessBoardProvider, EColor Color);
+	ECheckmateStatus GetBoardStatusForColor(UChessboard* Chessboard, EColor Color, IMovementVerifier* MovementVerifier);
 };

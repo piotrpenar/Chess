@@ -38,9 +38,14 @@ void UChessPiece::DestroyChessPiece() const
 	ChessPieceActor->Destroy();
 }
 
+void UChessPiece::SetPosition(FVector2D Position)
+{
+	this->BoardPosition = Position;
+}
+
 void UChessPiece::SetPosition(const int X,const int Y)
 {
-	this->BoardPosition = FVector2D(X, Y);
+	SetPosition(FVector2D(X, Y));
 }
 
 void  UChessPiece::SetActorRotation(const FRotator Rotation ) const
@@ -60,12 +65,7 @@ void UChessPiece::SetActorTransform(const FTransform Transform) const
 
 void UChessPiece::MoveToPosition(FVector2D Position)
 {
-	const FVector2D PreviousPosition = FVector2D(BoardPosition);
 	BoardPosition = Position;
-	BoardProvider->SetPieceAtPosition(Position,this);
-	MoveActorToPosition(Position);
-	BoardProvider->SetPieceAtPosition(PreviousPosition,nullptr);
-	ChessGameState->EndTurn();
 }
 
 void UChessPiece::CreateActor(UWorld* World,IBoardHighlighter* Highlighter)
@@ -109,10 +109,4 @@ void UChessPiece::CreateActor(UWorld* World,IBoardHighlighter* Highlighter)
 	ChessPieceActor = Actor;
 	Actor->Highlighter = Highlighter;
 	Actor->SourcePiece = this;
-}
-
-//TODO: Change this to animation
-void UChessPiece::MoveActorToPosition(FVector2D Position) const
-{
-	SetActorPosition(BoardProvider->BoardToWorldTransform(Position.X,Position.Y).GetLocation());
 }

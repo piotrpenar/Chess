@@ -6,12 +6,12 @@
 #include "Chess/ChessPieces/ChessPiece.h"
 
 
-ECheckmateStatus UChessRulesController::GetBoardStatusForColor(IChessBoardProvider* ChessBoardProvider, EColor Color)
+ECheckmateStatus UChessRulesController::GetBoardStatusForColor(UChessboard* Chessboard, EColor Color, IMovementVerifier* MovementVerifier)
 {
 	const EColor EnemyColor = Color == EColor::White ? EColor::Black : EColor::White;
-	const TArray<UChessPiece*> AllyPieces = ChessBoardProvider->GetAllPiecesOfColor(Color);
-	const TArray<UChessPiece*> EnemyPieces = ChessBoardProvider->GetAllPiecesOfColor(EnemyColor);
-	const ECheckmateStatus CheckmateStatus = CalculateCheckmateStatus(EnemyPieces, AllyPieces, ChessBoardProvider);
+	const TArray<UChessPiece*> AllyPieces = Chessboard->GetAllPiecesOfColor(Color);
+	const TArray<UChessPiece*> EnemyPieces = Chessboard->GetAllPiecesOfColor(EnemyColor);
+	const ECheckmateStatus CheckmateStatus = CalculateCheckmateStatus(EnemyPieces, AllyPieces, MovementVerifier);
 	if (CheckmateStatus != ECheckmateStatus::None)
 	{
 		UE_LOG(LogTemp, Log, TEXT("Mate for Color %d - %d!"), Color, CheckmateStatus)
@@ -20,7 +20,7 @@ ECheckmateStatus UChessRulesController::GetBoardStatusForColor(IChessBoardProvid
 }
 
 
-ECheckmateStatus UChessRulesController::CalculateCheckmateStatus(TArray<UChessPiece*> EnemyPieces, TArray<UChessPiece*> AllyPieces, IChessBoardProvider* ChessBoardProvider)
+ECheckmateStatus UChessRulesController::CalculateCheckmateStatus(TArray<UChessPiece*> EnemyPieces, TArray<UChessPiece*> AllyPieces, IMovementVerifier* MovementVerifier)
 {
 	UChessPiece* AlliedKing = GetFigureFromArray(AllyPieces, EFigure::King);
 	ECheckmateStatus CheckmateStatus = ECheckmateStatus::None;
@@ -43,7 +43,7 @@ ECheckmateStatus UChessRulesController::CalculateCheckmateStatus(TArray<UChessPi
 	
 	for (UChessPiece* AllyPiece : AllyPieces)
 	{
-		if (CanAllyEliminateCheck(EnemiesAvailableMoves, AllyPiece, ChessBoardProvider))
+		if (CanAllyEliminateCheck(EnemiesAvailableMoves, AllyPiece, MovementVerifier))
 		{
 			return CheckmateStatus;
 		}
@@ -96,15 +96,15 @@ bool UChessRulesController::IsKingAbleToEscape(TArray<FEnemyMove> EnemyAvailable
 
 bool UChessRulesController::CanAllyCoverAnyEnemyMove(TArray<FEnemyMove> EnemyAvailableMoves, FMove AllyMove)
 {
-	return EnemyAvailableMoves.FindByPredicate([&AllyMove](const FMove& Move){return AllyMove.TargetPosition == Move.TargetPosition;}) == nullptr;
+	return EnemyAvailableMoves.FindByPredicate([&AllyMove](const FEnemyMove& Move){return AllyMove.TargetPosition == Move.Move.TargetPosition;}) == nullptr;
 }
 
-bool UChessRulesController::CanAllyDestroyEnemy(const UChessPiece* ThreateningEnemy, UChessPiece* Ally, const FMove AllyMove, IChessBoardProvider* ChessBoardProvider)
+bool UChessRulesController::CanAllyDestroyEnemy(const UChessPiece* ThreateningEnemy, UChessPiece* Ally, const FMove AllyMove, IMovementVerifier* MovementVerifier)
 {
 	const UChessPiece* TargetPiece = static_cast<UChessPiece*>(AllyMove.TargetObject);
 	if (TargetPiece == ThreateningEnemy)
 	{
-		if (ChessBoardProvider->IsValidMove(AllyMove.TargetPosition, Ally))
+		if (MovementVerifier->IsValidMove(AllyMove.TargetPosition, Ally))
 		{
 			return true;
 		}
@@ -112,13 +112,13 @@ bool UChessRulesController::CanAllyDestroyEnemy(const UChessPiece* ThreateningEn
 	return false;
 }
 
-bool UChessRulesController::CanAllyEliminateCheck(TArray<FEnemyMove> EnemyAvailableMoves, UChessPiece* AllyPiece, IChessBoardProvider* ChessBoardProvider)
+bool UChessRulesController::CanAllyEliminateCheck(TArray<FEnemyMove> EnemyAvailableMoves, UChessPiece* AllyPiece, IMovementVerifier* MovementVerifier)
 {
 	UChessPiece* ThreateningEnemy = EnemyAvailableMoves[0].Enemy;
 	TArray<FMove> AllyAvailableMoves = AllyPiece->GetAvailableMoves();
 	for (const FMove AllyMove : AllyAvailableMoves)
 	{
-		if (CanAllyDestroyEnemy(ThreateningEnemy,AllyPiece, AllyMove, ChessBoardProvider))
+		if (CanAllyDestroyEnemy(ThreateningEnemy,AllyPiece, AllyMove, MovementVerifier))
 		{
 			return true;
 		}
@@ -128,7 +128,7 @@ bool UChessRulesController::CanAllyEliminateCheck(TArray<FEnemyMove> EnemyAvaila
 			{
 				continue;
 			}
-			if (ChessBoardProvider->IsValidMove(AllyMove.TargetPosition, AllyPiece))
+			if (MovementVerifier->IsValidMove(AllyMove.TargetPosition, AllyPiece))
 			{
 				return true;
 			}

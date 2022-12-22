@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "Chess/ChessPieces/ChessPiece.h"
-#include "Chess/Helpers/ChessMovesHelper.h"
 #include "ChessPawn.generated.h"
 
 UCLASS()
@@ -8,8 +7,7 @@ class UChessPawn final : public UChessPiece
 {
 	GENERATED_BODY()
 	
-	FChessMovesData GenerateMovesData();
-	TArray<FVector2D> GetPossibleMoves();
+	TArray<FVector2D> GetPossiblePositions();
 	bool bHasMoved;
 	
 public:

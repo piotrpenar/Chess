@@ -1,5 +1,4 @@
 ﻿#include "ChessKing.h"
-#include "Chess/Helpers/ChessMovesHelper.h"
 
 
 EFigure UChessKing::GetFigureType()
@@ -7,7 +6,7 @@ EFigure UChessKing::GetFigureType()
 	return EFigure::King;
 }
 
-TArray<FVector2D> UChessKing::GetPossibleMoves() const
+TArray<FVector2D> UChessKing::GetPossiblePositions() const
 {
 	return {
 		BoardPosition + FVector2D(-1, -1),
@@ -21,14 +20,7 @@ TArray<FVector2D> UChessKing::GetPossibleMoves() const
 	};
 }
 
-FChessMovesData UChessKing::GenerateMovesData()
-{
-	return FChessMovesData(GetPossibleMoves(), BoardProvider, Color, BoardPosition,this);
-}
-
-
 TArray<FMove> UChessKing::GetAvailableMoves()
 {
-	const FChessMovesData PossibleMovesData = GenerateMovesData();
-	return UChessMovesHelper::GetValidMovesFromPositions(PossibleMovesData);
+	return MovementVerifier->GetValidMovesFromPositions(GetPossiblePositions(),this);
 }

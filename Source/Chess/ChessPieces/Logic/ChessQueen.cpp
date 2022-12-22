@@ -1,6 +1,6 @@
 ﻿#include "ChessQueen.h"
 
-#include "Chess/Helpers/ChessMovesHelper.h"
+
 
 
 EFigure UChessQueen::GetFigureType()
@@ -23,13 +23,7 @@ TArray<FVector2D> UChessQueen::GetPossibleDirections() const
 	};
 }
 
-FChessMovesData UChessQueen::GenerateMovesData()
-{
-	return FChessMovesData(GetPossibleDirections(), BoardProvider, Color, BoardPosition,this);
-}
-
 TArray<FMove> UChessQueen::GetAvailableMoves()
 {
-	const FChessMovesData PossibleMovesData = GenerateMovesData();
-	return UChessMovesHelper::GetValidMovesFromDirections(PossibleMovesData);
+	return MovementVerifier->GetValidMovesFromDirections(GetPossibleDirections(),this);
 }

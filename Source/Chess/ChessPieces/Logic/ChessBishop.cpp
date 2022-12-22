@@ -1,7 +1,5 @@
 ﻿#include "ChessBishop.h"
 
-#include "Chess/Helpers/ChessMovesHelper.h"
-
 EFigure UChessBishop::GetFigureType()
 {
 	return EFigure::Bishop;
@@ -17,13 +15,7 @@ TArray<FVector2D> UChessBishop::GetPossibleDirections() const
 	};
 }
 
-FChessMovesData UChessBishop::GenerateMovesData()
-{
-	return FChessMovesData(GetPossibleDirections(), BoardProvider, Color, BoardPosition,this);
-}
-
 TArray<FMove> UChessBishop::GetAvailableMoves()
 {
-	const FChessMovesData PossibleMovesData = GenerateMovesData();
-	return UChessMovesHelper::GetValidMovesFromDirections(PossibleMovesData);
+	return MovementVerifier->GetValidMovesFromDirections(GetPossibleDirections(),this);
 }

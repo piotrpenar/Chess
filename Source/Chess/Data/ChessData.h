@@ -34,5 +34,7 @@ public:
 	TSubclassOf<AChessFigure> GetChessFigureActor() const;
 	TSubclassOf<ACheckerHighlight> GetCheckerHighlightActor() const;
 	bool IsValidBoardPosition(const FVector2D& Vector2) const;
-	
+	float GetBoardCheckerSize();
+	float GetBoardSize();
+	float GetBoardOffset();
 };

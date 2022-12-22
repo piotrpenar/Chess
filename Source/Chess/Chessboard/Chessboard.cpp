@@ -58,7 +58,7 @@ void UChessboard::SetPieceAtPosition(const FIntPoint Position, UChessPiece* Ches
 	UObject* CurrentObject = Board[Position.X][Position.Y];
 	if(CurrentObject)
 	{
-		if(ChessPiece)
+		if(ChessPiece && !bIsSimulation)
 		{
 			static_cast<UChessPiece*>(CurrentObject)->DestroyChessPiece();
 		}

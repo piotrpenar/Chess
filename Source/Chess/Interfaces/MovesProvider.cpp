@@ -9,7 +9,7 @@
 	return {};
 }
 
-void IMovesProvider::MoveToPosition(FVector2D Position)
+void IMovesProvider::MoveToPosition(FVector2D Position, FTransform ActorTransform)
 {
 }
 

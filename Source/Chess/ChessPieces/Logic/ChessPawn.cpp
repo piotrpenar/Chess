@@ -22,9 +22,9 @@ TArray<FVector2D> UChessPawn::GetPossiblePositions()
 	return PossibleMoves;
 }
 
-void UChessPawn::MoveToPosition(FVector2D Position)
+void UChessPawn::MoveToPosition(FVector2D Position, FTransform ActorTransform)
 {
-	Super::MoveToPosition(Position);
+	Super::MoveToPosition(Position,ActorTransform);
 	bHasMoved = true;
 }
 

@@ -13,6 +13,6 @@ class UChessPawn final : public UChessPiece
 public:
 	virtual EFigure GetFigureType() override;
 	virtual TArray<FMove> GetAvailableMoves() override;
-	virtual void MoveToPosition(FVector2D Position) override;
+	virtual void MoveToPosition(FVector2D Position, FTransform ActorTransform) override;
 	
 };

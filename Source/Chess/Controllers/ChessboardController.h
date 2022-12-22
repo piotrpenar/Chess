@@ -23,13 +23,21 @@ class CHESS_API UChessboardController : public UObject, public IMovementVerifier
 	UChessboard* Chessboard;
 	UPROPERTY()
 	TScriptInterface<IChessGameState> ChessGameState;
+	UPROPERTY()
+	UChessboardController* SimulatedController;
+	UPROPERTY()
+	UChessboard* SimulatedBoard;
+
+	bool bIsSimulation = false;
 public:
 
 	void Initialize(UChessData* NewChessData,UChessboard* NewBoard,TScriptInterface<IChessGameState> NewChessGameState);
+	void CreateChessboardSimulation();
 	void MoveChessPieceToPosition(UChessPiece* ChessPiece, FVector2D Position);
 	virtual bool IsValidMove(const FVector2D Position, UObject* ChessPiece) override;
 	virtual TArray<FMove> GetValidMovesFromPositions(TArray<FVector2D> Directions, UObject* ChessPieceObject) override;
 	virtual TArray<FMove> GetValidMovesFromDirections(TArray<FVector2D> Directions, UObject* ChessPieceObject) override;
 	UChessPiece* GetOtherPieceAtPosition(FVector2D BoardPosition) const;
-	void MoveActorToPosition(FVector2D Position, UChessPiece* ChessPiece) const;
+	void SetAsSimulation();
 };
+

@@ -33,5 +33,5 @@ public:
 	FTransform GetChessBoardTransform() const;
 	TArray<UChessPiece*> GetAllPiecesOfColor(const EColor Color);
 	UChessPiece* GetChessPiece(const EFigure Figure, const EColor Color);
-	void SetAsSimulated();
+	void SetAsSimulated(UChessboard* OriginalBoard, TScriptInterface<IMovementVerifier> SimulatedMovementVerifier);
 };

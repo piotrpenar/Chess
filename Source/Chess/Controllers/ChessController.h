@@ -13,7 +13,7 @@
 #include "Chess/Interfaces/ChessGameState.h"
 #include "Chess/Utils/EColor.h"
 #include "Chess/Utils/EFigure.h"
-#include "AChessController.generated.h"
+#include "ChessController.generated.h"
 
 /**
  * 

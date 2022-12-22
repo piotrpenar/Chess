@@ -19,6 +19,16 @@ ECheckmateStatus UChessRulesController::GetBoardStatusForColor(UChessboard* Ches
 	return CheckmateStatus;
 }
 
+bool UChessRulesController::IsKingInCheck(UChessboard* Chessboard, EColor Color)
+{
+	const EColor EnemyColor = Color == EColor::White ? EColor::Black : EColor::White;
+	UChessPiece* AlliedKing = Chessboard->GetChessPiece( EFigure::King, Color);
+	const TArray<UChessPiece*> EnemyPieces = Chessboard->GetAllPiecesOfColor(EnemyColor);
+	const TArray<FEnemyMove> EnemiesAvailableMoves = GetEnemiesAvailableMoves(EnemyPieces);
+	const TArray ThreateningEnemies = GetThreateningEnemies(EnemiesAvailableMoves,AlliedKing);
+	return ThreateningEnemies.Num() >0;
+}
+
 
 ECheckmateStatus UChessRulesController::CalculateCheckmateStatus(TArray<UChessPiece*> EnemyPieces, TArray<UChessPiece*> AllyPieces, IMovementVerifier* MovementVerifier)
 {

@@ -7,6 +7,9 @@ UCLASS()
 class AChessFigure final : public AActor
 {
 	GENERATED_BODY()
+
+	UPROPERTY()
+	FVector2D BoardPosition;
 public:
 
 	UFUNCTION(BlueprintCallable)
@@ -14,5 +17,6 @@ public:
 	
 	IMovesProvider* SourcePiece;
 	IBoardHighlighter* Highlighter;
-	
+	void SetBoardPosition(FVector2D NewBoardPosition);
+	FVector2D GetBoardPosition() const;
 };

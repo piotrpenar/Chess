@@ -36,4 +36,5 @@ class CHESS_API UChessRulesController final : public UObject
 	
 public:
 	static ECheckmateStatus GetBoardStatusForColor(UChessboard* Chessboard, EColor Color, IMovementVerifier* MovementVerifier);
+	static bool IsKingInCheck(UChessboard* Chessboard, EColor Color);
 };

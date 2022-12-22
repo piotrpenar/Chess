@@ -1,7 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 
-#include "AChessController.h"
+#include "ChessController.h"
 
 #include "ChessboardController.h"
 #include "Chess/Chessboard/Chessboard.h"
@@ -20,6 +20,7 @@ void AChessController::BeginPlay()
 	Chessboard->GenerateEmptyBoard();
 	ChessboardController = NewObject<UChessboardController>();
 	ChessboardController->Initialize(ChessData,Chessboard,this);
+	ChessboardController->CreateChessboardSimulation();
 	GenerateChessPieces(EColor::White);
 	GenerateChessPieces(EColor::Black);
 }
@@ -47,8 +48,8 @@ void AChessController::GenerateChessRow(TArray<EFigure> Figures, const EColor Co
 		UChessPiece* Clone = GenerateChessPiece(Figures[Column]);
 		Clone->SetReferences(ChessData,ChessboardController,this);
 		Clone->SetColor(Color);
-		Clone->SetPosition(Column, TargetRow);
 		Clone->CreateActor(GetWorld(),this);
+		Clone->SetPosition(Column, TargetRow);
 		Clone->SetActorTransform(GenerateChessPieceTransform(Column,TargetRow,Color));
 		Chessboard->SetPieceAtPosition(FVector2D(Column,TargetRow),Clone);
 	}
@@ -58,7 +59,6 @@ UChessPiece* AChessController::GenerateChessPiece(const EFigure Figure)
 {
 	return UChessPiecesFactory::GenerateChessPiece(Figure,this);
 }
-
 
 FTransform AChessController::GenerateChessPieceTransform(const int X,const  int Y,const  EColor Color)
 {
@@ -96,8 +96,9 @@ void AChessController::HighlightSelected(AActor* Source)
 {
 	ClearHighlights();
 	const ACheckerHighlight* CheckerHighlight = static_cast<ACheckerHighlight*>(Source);
-	//TODO: Fix this to move UChess aswell
-	CurrentSelectedFigure->SourcePiece->MoveToPosition(CheckerHighlight->Position);
+	FVector2D BoardPosition = CheckerHighlight->SourceFigure->GetBoardPosition();
+	UChessPiece* ChessPiece = ChessboardController->GetOtherPieceAtPosition(BoardPosition);
+	ChessboardController->MoveChessPieceToPosition(ChessPiece,BoardPosition);
 }
 
 void AChessController::ClearHighlights()
@@ -119,6 +120,7 @@ void AChessController::CreateHighlights(TArray<FMove> Moves)
 		Actor->SetActorTransform(Chessboard->BoardToWorldTransform(Move.TargetPosition.X,Move.TargetPosition.Y));
 		Actor->Position = Move.TargetPosition;
 		Actor->Highlighter = this;
+		Actor->SourceFigure = CurrentSelectedFigure;
 		CurrentHighlights.Add(Actor);
 	}
 }

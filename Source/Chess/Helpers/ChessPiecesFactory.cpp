@@ -39,8 +39,11 @@ UChessPiece* UChessPiecesFactory::CloneChessPiece(UChessPiece* Original, UObject
 	{
 	case EFigure::Pawn:
 		{
-			const UChessPawn* OriginalPawn = static_cast<UChessPawn*>(Original);
-			return DuplicateObject(OriginalPawn, Initializer);
+			UChessPawn* OriginalPawn = static_cast<UChessPawn*>(Original);
+			UChessPawn* NewPawn = DuplicateObject(OriginalPawn, Initializer);
+			NewPawn->SetAsSimulated(nullptr);
+			UE_LOG(LogTemp, Error, TEXT("Both Pawns are simulated! %d %d"),NewPawn->IsSimulated(),OriginalPawn->IsSimulated())
+			return NewPawn;
 		}
 	case EFigure::Rook:
 		{

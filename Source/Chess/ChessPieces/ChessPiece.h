@@ -15,7 +15,7 @@ class CHESS_API UChessPiece : public UObject, public IMovesProvider
 	GENERATED_BODY()
 
 	UPROPERTY()
-	AActor* ChessPieceActor;
+	AChessFigure* ChessPieceActor;
 
 	bool bIsSimulated;
 	
@@ -37,7 +37,7 @@ public:
 	UPROPERTY()
 	TScriptInterface<IChessGameState> ChessGameState;
 	
-	virtual void MoveToPosition(FVector2D Position) override;
+	virtual void MoveToPosition(FVector2D Position, FTransform ActorTransform) override;
 	virtual EFigure GetFigureType();
 	virtual TArray<FMove> GetAvailableMoves() override;
 	virtual bool CanMoveThisTurn() override;
@@ -51,7 +51,7 @@ public:
 	void SetActorPosition(FVector Position) const;
 	EColor GetColor() const;
 	FVector2D GetBoardPosition() const;
-	void SetAsSimulated();
+	void SetAsSimulated(TScriptInterface<IMovementVerifier> SimulatedMovementVerifier);
 	bool IsSimulated();
 	void SetReferences(UChessData* NewChessData, TScriptInterface<IMovementVerifier> NewMovementVerifier, TScriptInterface<IChessGameState> NewGameState);
 };

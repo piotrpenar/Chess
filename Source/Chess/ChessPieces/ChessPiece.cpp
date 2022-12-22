@@ -18,9 +18,11 @@ FVector2D UChessPiece::GetBoardPosition() const
 	return BoardPosition;
 }
 
-void UChessPiece::SetAsSimulated()
+void UChessPiece::SetAsSimulated(TScriptInterface<IMovementVerifier> SimulatedMovementVerifier)
 {
 	bIsSimulated = true;
+	MovementVerifier = SimulatedMovementVerifier;
+	ChessPieceActor = nullptr;
 }
 
 bool UChessPiece::IsSimulated()
@@ -45,81 +47,102 @@ EColor UChessPiece::GetColor() const
 	return Color;
 }
 
-TArray<FMove> UChessPiece::GetAvailableMoves() 
+TArray<FMove> UChessPiece::GetAvailableMoves()
 {
 	return {};
 }
 
 void UChessPiece::DestroyChessPiece() const
 {
-	ChessPieceActor->Destroy();
+	if (ChessPieceActor)
+	{
+		ChessPieceActor->Destroy();
+	}
 }
 
 void UChessPiece::SetPosition(FVector2D Position)
 {
 	this->BoardPosition = Position;
+	if (!bIsSimulated)
+	{
+		ChessPieceActor->SetBoardPosition(Position);
+	}
 }
 
-void UChessPiece::SetPosition(const int X,const int Y)
+void UChessPiece::SetPosition(const int X, const int Y)
 {
 	SetPosition(FVector2D(X, Y));
 }
 
-void  UChessPiece::SetActorRotation(const FRotator Rotation ) const
+void UChessPiece::SetActorRotation(const FRotator Rotation) const
 {
-	ChessPieceActor->SetActorRotation(Rotation);
+	if (ChessPieceActor)
+	{
+		ChessPieceActor->SetActorRotation(Rotation);
+	}
 }
 
 void UChessPiece::SetActorPosition(const FVector Position) const
 {
-	ChessPieceActor->SetActorLocation(Position);
+	if (ChessPieceActor)
+	{
+		ChessPieceActor->SetActorLocation(Position);
+	}
 }
 
 void UChessPiece::SetActorTransform(const FTransform Transform) const
 {
-	ChessPieceActor->SetActorTransform(Transform);
+	if (ChessPieceActor)
+	{
+		ChessPieceActor->SetActorTransform(Transform);
+	}
 }
 
-void UChessPiece::MoveToPosition(FVector2D Position)
+void UChessPiece::MoveToPosition(FVector2D Position, FTransform ActorTransform)
 {
 	BoardPosition = Position;
+	if (ChessPieceActor)
+	{
+		ChessPieceActor->SetBoardPosition(Position);
+		SetActorPosition(ActorTransform.GetLocation());
+	}
 }
 
-void UChessPiece::CreateActor(UWorld* World,IBoardHighlighter* Highlighter)
+void UChessPiece::CreateActor(UWorld* World, IBoardHighlighter* Highlighter)
 {
-	if(!IsValid(World))
+	if (!IsValid(World))
 	{
-		UE_LOG(LogTemp,Log,TEXT("World is invalid"))
+		UE_LOG(LogTemp, Log, TEXT("World is invalid"))
 		return;
 	}
 	AChessFigure* Actor = World->SpawnActor<AChessFigure>(ChessData->GetChessFigureActor());
-	if(!IsValid(Actor))
+	if (!IsValid(Actor))
 	{
-		UE_LOG(LogTemp,Log,TEXT("Actor is invalid"))
+		UE_LOG(LogTemp, Log, TEXT("Actor is invalid"))
 		return;
 	}
 	UActorComponent* Component = Actor->GetComponentByClass(UStaticMeshComponent::StaticClass());
-	if(!IsValid(Component))
+	if (!IsValid(Component))
 	{
-		UE_LOG(LogTemp,Log,TEXT("Component is invalid"))
+		UE_LOG(LogTemp, Log, TEXT("Component is invalid"))
 		return;
 	}
-	if(!IsValid(ChessData))
+	if (!IsValid(ChessData))
 	{
-		UE_LOG(LogTemp,Log,TEXT("ChessData is invalid"))
+		UE_LOG(LogTemp, Log, TEXT("ChessData is invalid"))
 		return;
 	}
-	
+
 	UStaticMesh* Mesh = ChessData->GetMeshForType(GetFigureType());
-	if(!IsValid(Mesh))
+	if (!IsValid(Mesh))
 	{
-		UE_LOG(LogTemp,Log,TEXT("Mesh is invalid"))
+		UE_LOG(LogTemp, Log, TEXT("Mesh is invalid"))
 		return;
 	}
 	UStaticMeshComponent* StaticMeshComponent = static_cast<UStaticMeshComponent*>(Component);
-	if(!IsValid(StaticMeshComponent))
+	if (!IsValid(StaticMeshComponent))
 	{
-		UE_LOG(LogTemp,Log,TEXT("StaticMeshComponent is invalid"))
+		UE_LOG(LogTemp, Log, TEXT("StaticMeshComponent is invalid"))
 		return;
 	}
 	StaticMeshComponent->SetStaticMesh(Mesh);

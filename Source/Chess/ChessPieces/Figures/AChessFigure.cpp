@@ -12,3 +12,13 @@ void AChessFigure::HandleFigureClick()
 	Highlighter->CreateHighlights(Moves);
 	UE_LOG(LogTemp, Log, TEXT("Avaliable Moves: %d"), Moves.Num())
 }
+
+void AChessFigure::SetBoardPosition(FVector2D NewBoardPosition)
+{
+	this->BoardPosition = NewBoardPosition;
+}
+
+FVector2D AChessFigure::GetBoardPosition() const
+{
+	return BoardPosition;
+}

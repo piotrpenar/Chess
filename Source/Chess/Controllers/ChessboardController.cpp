@@ -33,15 +33,11 @@ bool UChessboardController::IsValidMove(const FVector2D Position, UObject* Chess
 	return Status == ECheckmateStatus::None;
 }
 
-void UChessboardController::Initialize(UChessboard* NewBoard, TScriptInterface<IChessGameState> NewChessGameState)
-{
-	this->Chessboard = NewBoard;
-	this->ChessGameState = NewChessGameState;
-}
-
-void UChessboardController::SetChessData(UChessData* NewChessData)
+void UChessboardController::Initialize(UChessData* NewChessData,UChessboard* NewBoard, TScriptInterface<IChessGameState> NewChessGameState)
 {
 	this->ChessData = NewChessData;
+	this->Chessboard = NewBoard;
+	this->ChessGameState = NewChessGameState;
 }
 
 void UChessboardController::MoveChessPieceToPosition(UChessPiece* ChessPiece,FVector2D Position)

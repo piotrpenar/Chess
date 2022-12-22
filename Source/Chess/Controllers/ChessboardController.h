@@ -25,8 +25,7 @@ class CHESS_API UChessboardController : public UObject, public IMovementVerifier
 	TScriptInterface<IChessGameState> ChessGameState;
 public:
 
-	void Initialize(UChessboard* NewBoard,TScriptInterface<IChessGameState> NewChessGameState);
-	void SetChessData(UChessData* NewChessData);
+	void Initialize(UChessData* NewChessData,UChessboard* NewBoard,TScriptInterface<IChessGameState> NewChessGameState);
 	void MoveChessPieceToPosition(UChessPiece* ChessPiece, FVector2D Position);
 	virtual bool IsValidMove(const FVector2D Position, UObject* ChessPiece) override;
 	virtual TArray<FMove> GetValidMovesFromPositions(TArray<FVector2D> Directions, UObject* ChessPieceObject) override;

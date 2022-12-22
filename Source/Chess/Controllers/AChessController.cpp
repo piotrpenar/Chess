@@ -19,7 +19,7 @@ void AChessController::BeginPlay()
 	Chessboard->Initialize(ChessData,ChessBoardOrigin);
 	Chessboard->GenerateEmptyBoard();
 	ChessboardController = NewObject<UChessboardController>();
-	ChessboardController->Initialize(Chessboard,this);
+	ChessboardController->Initialize(ChessData,Chessboard,this);
 	GenerateChessPieces(EColor::White);
 	GenerateChessPieces(EColor::Black);
 }

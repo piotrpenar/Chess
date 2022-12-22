@@ -7,10 +7,9 @@
   <component name="ChangeListManager">
     <list default="true" id="13e30f9d-f09a-40e8-91e8-793056d40f25" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Materials/M_AssetPlatform.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Materials/M_AssetPlatform.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Chess/Controllers/AChessController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Controllers/AChessController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/Controllers/ChessboardController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Controllers/ChessboardController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/Controllers/ChessboardController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Controllers/ChessboardController.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,7 +184,7 @@
       <workItem from="1671629859293" duration="3040000" />
       <workItem from="1671633182471" duration="178000" />
       <workItem from="1671653839618" duration="12328000" />
-      <workItem from="1671701121908" duration="2455000" />
+      <workItem from="1671701121908" duration="2572000" />
     </task>
     <servers />
   </component>

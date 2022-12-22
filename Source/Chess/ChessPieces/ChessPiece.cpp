@@ -28,6 +28,13 @@ bool UChessPiece::IsSimulated()
 	return bIsSimulated;
 }
 
+void UChessPiece::SetReferences(UChessData* NewChessData, TScriptInterface<IMovementVerifier> NewMovementVerifier, TScriptInterface<IChessGameState> NewGameState)
+{
+	this->ChessData = NewChessData;
+	this->MovementVerifier = NewMovementVerifier;
+	this->ChessGameState = NewGameState;
+}
+
 bool UChessPiece::CanMoveThisTurn()
 {
 	return ChessGameState->GetCurrentPlayer() == Color;

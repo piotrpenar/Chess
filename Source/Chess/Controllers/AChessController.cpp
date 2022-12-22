@@ -45,12 +45,11 @@ void AChessController::GenerateChessRow(TArray<EFigure> Figures, const EColor Co
 	for (int Column = 0; Column < ChessData->GetBoardSize(); Column++)
 	{
 		UChessPiece* Clone = GenerateChessPiece(Figures[Column]);
+		Clone->SetReferences(ChessData,ChessboardController,this);
 		Clone->SetColor(Color);
 		Clone->SetPosition(Column, TargetRow);
-		Clone->ChessData = ChessData;
 		Clone->CreateActor(GetWorld(),this);
 		Clone->SetActorTransform(GenerateChessPieceTransform(Column,TargetRow,Color));
-		Clone->ChessGameState = this;
 		Chessboard->SetPieceAtPosition(FVector2D(Column,TargetRow),Clone);
 	}
 }

@@ -53,4 +53,5 @@ public:
 	FVector2D GetBoardPosition() const;
 	void SetAsSimulated();
 	bool IsSimulated();
+	void SetReferences(UChessData* NewChessData, TScriptInterface<IMovementVerifier> NewMovementVerifier, TScriptInterface<IChessGameState> NewGameState);
 };

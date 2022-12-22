@@ -25,7 +25,7 @@ class CHESS_API UChessboard final : public UObject
 	bool bIsSimulation;
 public:
 	void Initialize(UChessData* NewChessData, AActor* NewChessBoardOrigin);
-	UObject* GetPieceAtPosition(FVector2D BoardPosition);
+	UChessPiece* GetPieceAtPosition(FVector2D BoardPosition);
 	FTransform BoardToWorldTransform(const int X, const int Y) const;
 	FTransform BoardToWorldTransform(FVector2D Position) const;
 	void SetPieceAtPosition(const FVector2D Position, UChessPiece* ChessPiece);

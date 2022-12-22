@@ -13,7 +13,7 @@ EFigure UChessPiece::GetFigureType()
 	return EFigure::Invalid;
 }
 
-FVector2D UChessPiece::GetBoardPosition() const
+FVector2D UChessPiece::GetBoardPosition()
 {
 	return BoardPosition;
 }

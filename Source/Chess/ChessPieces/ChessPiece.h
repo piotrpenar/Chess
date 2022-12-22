@@ -50,7 +50,7 @@ public:
 	void SetPosition(FVector2D Position);
 	void SetActorPosition(FVector Position) const;
 	EColor GetColor() const;
-	FVector2D GetBoardPosition() const;
+	FVector2D GetBoardPosition();
 	void SetAsSimulated(TScriptInterface<IMovementVerifier> SimulatedMovementVerifier);
 	bool IsSimulated();
 	void SetReferences(UChessData* NewChessData, TScriptInterface<IMovementVerifier> NewMovementVerifier, TScriptInterface<IChessGameState> NewGameState);

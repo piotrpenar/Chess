@@ -82,8 +82,8 @@ void AChessController::EndTurn(){
 	{
 		CurrentPlayer = EColor::White;
 	}
-	ECheckmateStatus Status = RulesController->GetBoardStatusForColor(Chessboard,EColor::White,ChessboardController);
-	UE_LOG(LogTemp, Log, TEXT("Check mate status is %D"),Status);
+	//ECheckmateStatus Status = RulesController->GetBoardStatusForColor(Chessboard,EColor::White,ChessboardController);
+	//UE_LOG(LogTemp, Log, TEXT("Check mate status is %D"),Status);
 }
 
 void AChessController::SetSelectedFigure(AActor* Actor)

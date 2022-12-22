@@ -46,10 +46,11 @@ FTransform UChessboard::BoardToWorldTransform(const FVector2D Position) const
 	return Transform;
 }
 
-UObject* UChessboard::GetPieceAtPosition(FVector2D BoardPosition)
+UChessPiece* UChessboard::GetPieceAtPosition(FVector2D BoardPosition)
 {
+	UObject* Object = Board[BoardPosition.X][BoardPosition.Y];
 	//UE_LOG(LogTemp, Log, TEXT("Getting object from %s"),*FString(BoardPosition.ToString()))
-	return Board[BoardPosition.X][BoardPosition.Y];
+	return static_cast<UChessPiece*>(Object);
 }
 
 void UChessboard::SetPieceAtPosition(const FVector2D Position, UChessPiece* ChessPiece)

@@ -148,6 +148,8 @@ void UChessPiece::CreateActor(UWorld* World, IBoardHighlighter* Highlighter)
 	ChessPieceActor = Actor;
 	Actor->Highlighter = Highlighter;
 	Actor->SourcePiece = this;
-	Actor->SetActorLabel(FString(UEnum::GetValueAsString(GetColor()) + " " + UEnum::GetValueAsString(GetFigureType())))
-	;
+#if WITH_EDITOR
+	Actor->SetActorLabel(FString(UEnum::GetValueAsString(GetColor()) + " " + UEnum::GetValueAsString(GetFigureType())));
+#endif
+	
 }

@@ -15,7 +15,7 @@ TODO.
 ## Feature Roadmap
 
 - [x] Project setup
-- [ ] Basic Chess figures movement
+- [x] Basic Chess figures movement
 - [ ] Available moves highlighting 
 - [ ] Game state implementation
 - [ ] Basic environment

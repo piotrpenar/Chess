@@ -7,12 +7,16 @@ class UChessPawn final : public UChessPiece
 {
 	GENERATED_BODY()
 	
-	TArray<FIntPoint> GetPossiblePositions();
-	bool bHasMoved;
 	
 public:
 	virtual EFigure GetFigureType() override;
 	virtual TArray<FMove> GetAvailableMoves() override;
 	virtual void MoveToPosition(FIntPoint Position, FVector ActorPosition) override;
-	
+
+private:
+	TArray<FIntPoint> GetPossiblePositions();
+	bool bHasMoved;
+	bool bHasDoubleMoved;
+	void HandleTurnEnded(EColor& CurrentColor);
+	bool HasDoubleMoved(FIntPoint Position) const;
 };

@@ -33,12 +33,17 @@ public:
 	virtual void HighlightSelected(AActor* Source) override;
 	virtual EColor GetCurrentPlayer() override;
 	void ClearHighlights();
+	
+	DECLARE_DERIVED_EVENT( AChessController, IChessGameState::FTurnEnded, FTurnEnded);
+	virtual AChessController::FTurnEnded& OnTurnEnded() override;
+	AChessController::FTurnEnded TurnEndedEvent;
 
 	UPROPERTY(EditAnywhere)
 	UChessData* ChessData;
 	
 	UPROPERTY(EditAnywhere)
 	AActor* ChessBoardOrigin;
+	
 	
 private:
 
@@ -59,6 +64,7 @@ private:
 	
 	FTransform GenerateChessPieceTransform(int TargetRow, int TargetColumn, EColor Color);
 	void GenerateChessRow(TArray<EFigure> Figures, const EColor Color, const int TargetRow);
+	void BroadcastTurnEnded(EColor Color);
 	
 	const TArray<EFigure> Pawns = {
 		EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn,

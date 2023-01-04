@@ -21,3 +21,8 @@ TArray<FMove> IMovementVerifier::GetValidMovesFromDirections(TArray<FIntPoint> D
 {
 	return {};
 }
+
+TArray<FMove> IMovementVerifier::GetValidSpecialMoves(UChessPawn* ChessPawn)
+{
+	return {};
+}

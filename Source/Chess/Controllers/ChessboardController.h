@@ -37,7 +37,13 @@ public:
 	virtual bool IsValidMove(const FIntPoint Position, UObject* ChessPiece) override;
 	virtual TArray<FMove> GetValidMovesFromPositions(TArray<FIntPoint> Directions, UObject* ChessPieceObject) override;
 	virtual TArray<FMove> GetValidMovesFromDirections(TArray<FIntPoint> InputDirections, UObject* ChessPieceObject) override;
+	virtual TArray<FMove> GetValidSpecialMoves(UChessPawn* ChessPawn) override;
 	UChessPiece* GetOtherPieceAtPosition(FIntPoint BoardPosition) const;
 	void SetAsSimulation();
+	
+private:
+	TArray<FMove> GetPawnSpecialMoves();
+	TArray<FMove> GetKingSpecialMoves();
+	
 };
 

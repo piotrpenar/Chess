@@ -4,6 +4,7 @@
 #include "ChessboardController.h"
 
 #include "ChessRulesController.h"
+#include "../../../../../UnrealEngine/UE_5.1/Engine/Shaders/Private/PhysicsFieldEval.ush"
 #include "Chess/ChessPieces/ChessPiece.h"
 #include "Chess/Helpers/ChessPiecesFactory.h"
 #include "Chess/Utils/ECheckmateStatus.h"
@@ -131,6 +132,21 @@ TArray<FMove> UChessboardController::GetValidMovesFromDirections(TArray<FIntPoin
 	return AvailableMoves;
 }
 
+TArray<FMove> UChessboardController::GetValidSpecialMoves(UChessPawn* ChessPawn)
+{
+	EFigure TargetFigure = ChessPawn->GetFigureType();
+	if(TargetFigure == EFigure::Pawn)
+	{
+		return GetPawnSpecialMoves();
+	}
+	if (TargetFigure == EFigure::King)
+	{
+		return GetKingSpecialMoves();
+	}
+
+	return {};
+}
+
 UChessPiece* UChessboardController::GetOtherPieceAtPosition(const FIntPoint BoardPosition) const
 {
 	return Chessboard->GetPieceAtPosition(BoardPosition);
@@ -139,4 +155,14 @@ UChessPiece* UChessboardController::GetOtherPieceAtPosition(const FIntPoint Boar
 void UChessboardController::SetAsSimulation()
 {
 	bIsSimulation = true;
+}
+
+TArray<FMove> UChessboardController::GetPawnSpecialMoves()
+{
+	return {};
+}
+
+TArray<FMove> UChessboardController::GetKingSpecialMoves()
+{
+	return {};
 }

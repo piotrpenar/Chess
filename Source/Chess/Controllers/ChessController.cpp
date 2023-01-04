@@ -55,6 +55,11 @@ void AChessController::GenerateChessRow(TArray<EFigure> Figures, const EColor Co
 	}
 }
 
+void AChessController::BroadcastTurnEnded(EColor Color)
+{
+	TurnEndedEvent.Broadcast(Color);
+}
+
 UChessPiece* AChessController::GenerateChessPiece(const EFigure Figure)
 {
 	return UChessPiecesFactory::GenerateChessPiece(Figure,this);
@@ -111,6 +116,11 @@ void AChessController::ClearHighlights()
 		Highlight->Destroy();
 	}
 	CurrentHighlights.Empty();
+}
+
+AChessController::FTurnEnded& AChessController::OnTurnEnded()
+{
+	return TurnEndedEvent;
 }
 
 void AChessController::CreateHighlights(TArray<FMove> Moves)

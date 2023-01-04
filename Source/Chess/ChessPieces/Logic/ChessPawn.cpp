@@ -22,8 +22,31 @@ TArray<FIntPoint> UChessPawn::GetPossiblePositions()
 	return PossibleMoves;
 }
 
+void UChessPawn::HandleTurnEnded(EColor& CurrentColor)
+{
+	if (!IsValid(this))
+	{
+		return;
+	}
+	if(CurrentColor != Color)
+	{
+		bHasDoubleMoved = false;
+	}
+}
+
+bool UChessPawn::HasDoubleMoved(const FIntPoint Position) const
+{
+	const FIntPoint PreviousPosition = BoardPosition;
+	return abs(PreviousPosition.Y - Position.Y) == 2;
+}
+
 void UChessPawn::MoveToPosition(FIntPoint Position, FVector ActorPosition)
 {
+	if(HasDoubleMoved(Position))
+	{
+		bHasDoubleMoved = true;
+		ChessGameState->OnTurnEnded().AddUObject(this,&UChessPawn::HandleTurnEnded);
+	}
 	Super::MoveToPosition(Position,ActorPosition);
 	bHasMoved = true;
 }
@@ -32,6 +55,7 @@ TArray<FMove> UChessPawn::GetAvailableMoves()
 {
 	TArray<FIntPoint> PossibleMoves = GetPossiblePositions();
 	TArray<FMove> ValidPositions = MovementVerifier->GetValidMovesFromPositions(GetPossiblePositions(),this);
+	TArray<FMove> SpecialMoves = MovementVerifier->GetValidSpecialMoves(this);
 	TArray<FMove> AvailableMoves;
 
 	for (const FMove ValidPosition : ValidPositions)

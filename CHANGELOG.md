@@ -10,3 +10,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added 
 
 - Basic project files
+- Chess Controller system
+- Types of chess piece
+- Movement for every chess piece

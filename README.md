@@ -20,7 +20,7 @@ TODO.
 - [x] Game state implementation
 - [x] Basic environment
 - [x] Basic grayboxing of the area
-- [ ] Adding vegetation and foliage
+- [x] Adding vegetation and foliage
 - [ ] Advanced environment for the play area
 - [ ] Adding details to the environment
 - [ ] Adding special moves (En Passant, Castling, Pawn Promotion)

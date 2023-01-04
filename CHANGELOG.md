@@ -18,4 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Chessboard, Chessboard Controller and Chessboard Rules classes
 - Secondary simulation of movement validity
 - Terrain and landscape for the game
-- Basic Grayboxing for the area
+- Basic grayboxing for the area
+- Vegetation and trees
+- Proper water and sky configurations
+- Procedural landscape material 
+- Rocks and new landscape material textures

@@ -7,8 +7,15 @@
   <component name="ChangeListManager">
     <list default="true" id="13e30f9d-f09a-40e8-91e8-793056d40f25" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Chess/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Chess/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ChessLevelGraybox.umap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MSPresets/M_MS_Billboard_Material/M_MS_Billboard_Material.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MSPresets/M_MS_Billboard_Material/M_MS_Billboard_Material.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MSPresets/M_MS_Default_Fuzz_Material/M_MS_Default_Fuzz_Material.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MSPresets/M_MS_Default_Fuzz_Material/M_MS_Default_Fuzz_Material.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MSPresets/M_MS_Default_Material/M_MS_Default_Material.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MSPresets/M_MS_Default_Material/M_MS_Default_Material.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MSPresets/M_MS_Foliage_Material/M_MS_Foliage_Material.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MSPresets/M_MS_Foliage_Material/M_MS_Foliage_Material.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Megascans/3D_Plants/Softstem_Bulrush_uehjcafia/MI_Softstem_Bulrush_uehjcafia_4K.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Megascans/3D_Plants/Softstem_Bulrush_uehjcafia/MI_Softstem_Bulrush_uehjcafia_4K.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Materials/M_AssetPlatform.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Materials/M_AssetPlatform.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Particles/P_Ambient_Dust.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Particles/P_Ambient_Dust.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/ChessPieces/ChessPiece.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,6 +195,7 @@
       <workItem from="1671713276997" duration="5487000" />
       <workItem from="1671719560430" duration="1540000" />
       <workItem from="1671791663589" duration="1338000" />
+      <workItem from="1672742686669" duration="1514000" />
     </task>
     <servers />
   </component>

@@ -6,17 +6,16 @@ struct FMove
 {
 	GENERATED_BODY()
 	
-public:
 	UPROPERTY()
-	FVector2D TargetPosition;
+	FIntPoint TargetPosition;
 	UPROPERTY()
 	UObject* TargetObject;
 
-	FMove()
+	FMove(): TargetObject(nullptr)
 	{
 	}
-	
-	FMove(FVector2D Position,UObject* Object)
+
+	FMove(const FIntPoint Position,UObject* Object)
 	{
 		TargetPosition = Position;
 		TargetObject = Object;

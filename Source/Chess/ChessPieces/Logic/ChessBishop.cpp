@@ -1,15 +1,21 @@
 ﻿#include "ChessBishop.h"
 
-#include "Chess/Helpers/ChessMovesHelper.h"
-
-TArray<FMove> UChessBishop::GetAvailableMoves() 
+EFigure UChessBishop::GetFigureType()
 {
-	const TArray<FVector2D> Directions = {
-		FVector2D(-1, -1),
-		FVector2D(1, -1),
-		FVector2D(1, 1),
-		FVector2D(-1, 1),
+	return EFigure::Bishop;
+}
+
+TArray<FIntPoint> UChessBishop::GetPossibleDirections() const
+{
+	return  {
+		FIntPoint(-1, -1),
+		FIntPoint(1, -1),
+		FIntPoint(1, 1),
+		FIntPoint(-1, 1),
 	};
-	UE_LOG(LogTemp, Log, TEXT("Bishop"))
-	return UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData(Directions,BoardProvider,Color,BoardPosition),ChessData);
+}
+
+TArray<FMove> UChessBishop::GetAvailableMoves()
+{
+	return MovementVerifier->GetValidMovesFromDirections(GetPossibleDirections(),this);
 }

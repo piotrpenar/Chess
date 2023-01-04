@@ -3,17 +3,23 @@
 
 #include "ChessRook.h"
 
-#include "Chess/Helpers/ChessMovesHelper.h"
+
+EFigure UChessRook::GetFigureType()
+{
+	return EFigure::Rook;
+}
+
+TArray<FIntPoint> UChessRook::GetPossibleDirections() const
+{
+	return  {
+		FIntPoint(1, 0),
+		FIntPoint(-1, 0),
+		FIntPoint(0, -1),
+		FIntPoint(0, 1),
+	};
+}
 
 TArray<FMove> UChessRook::GetAvailableMoves()
 {
-	TArray<FVector2D> Directions = {
-		FVector2D(1, 0),
-		FVector2D(-1, 0),
-		FVector2D(0, -1),
-		FVector2D(0, 1),
-	};
-	UE_LOG(LogTemp, Log, TEXT("Rook"))
-	return UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData(Directions, BoardProvider, Color, BoardPosition),
-	                                                      ChessData);
+	return MovementVerifier->GetValidMovesFromDirections(GetPossibleDirections(),this);
 }

@@ -7,12 +7,16 @@ UCLASS()
 class AChessFigure final : public AActor
 {
 	GENERATED_BODY()
+
+	UPROPERTY()
+	FIntPoint BoardPosition;
 public:
 
 	UFUNCTION(BlueprintCallable)
-	void GetAvailableMoves();
+	void HandleFigureClick();
 	
 	IMovesProvider* SourcePiece;
 	IBoardHighlighter* Highlighter;
-	
+	void SetBoardPosition(FIntPoint NewBoardPosition);
+	FIntPoint GetBoardPosition() const;
 };

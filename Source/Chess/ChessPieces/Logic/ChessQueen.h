@@ -1,12 +1,16 @@
 ﻿#pragma once
 #include "Chess/ChessPieces/ChessPiece.h"
+
 #include "ChessQueen.generated.h"
 
 UCLASS()
 class UChessQueen final : public UChessPiece
 {
 	GENERATED_BODY()
+	
+	
+	TArray<FIntPoint> GetPossibleDirections() const;
 public:
-	virtual EFigureType GetFigureType() override { return EFigureType::Queen;};
-	virtual TArray<FMove> GetAvailableMoves()  override;
+	virtual EFigure GetFigureType() override;
+	virtual TArray<FMove> GetAvailableMoves() override;
 };

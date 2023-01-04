@@ -9,6 +9,11 @@
 	return {};
 }
 
-void IMovesProvider::MoveToPosition(FVector2D Position)
+void IMovesProvider::MoveToPosition(FIntPoint Position, FVector ActorPosition)
 {
+}
+
+bool IMovesProvider::CanMoveThisTurn()
+{
+ 	return false;
 }

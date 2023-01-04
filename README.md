@@ -17,7 +17,7 @@ TODO.
 - [x] Project setup
 - [x] Basic Chess figures movement
 - [x] Available moves highlighting 
-- [ ] Game state implementation
+- [x] Game state implementation
 - [ ] Basic environment
 - [ ] Basic grayboxing of the area
 - [ ] Adding vegetation and foliage

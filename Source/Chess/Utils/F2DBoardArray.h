@@ -9,23 +9,23 @@ struct F2DBoardArray
 	UPROPERTY()
 	TArray<UObject*> Array;
 
-	UObject* operator[](int32 i)
+	UObject* operator[](const int Index)
 	{
-		return Array[i];
+		return Array[Index];
 	}
 
-	void operator=(TArray<UObject*> newArray)
+	void operator=(const TArray<UObject*> NewArray)
 	{
-		Array = newArray;
+		Array = NewArray;
 	}
 	
-	void Set(int i,UObject* piece)
+	void Set(const int Index,UObject* Object)
 	{
-		Array[i] = piece;
+		Array[Index] = Object;
 	}
 
-	void Add(UObject* piece)
+	void Add(UObject* Object)
 	{
-		Array.Add(piece);
+		Array.Add(Object);
 	}
 };

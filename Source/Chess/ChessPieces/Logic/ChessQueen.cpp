@@ -1,20 +1,29 @@
 ﻿#include "ChessQueen.h"
 
-#include "Chess/Helpers/ChessMovesHelper.h"
 
 
-TArray<FMove> UChessQueen::GetAvailableMoves() 
+
+EFigure UChessQueen::GetFigureType()
 {
-	TArray<FVector2D> PossibleMoves = {
-		FVector2D(-1, -1),
-		FVector2D(1, -1),
-		FVector2D(1, 1),
-		FVector2D(-1, 1),
-		FVector2D(1, 0),
-		FVector2D(-1, 0),
-		FVector2D(0, -1),
-		FVector2D(0, 1),
+	return EFigure::Queen;
+}
+
+
+TArray<FIntPoint> UChessQueen::GetPossibleDirections() const
+{
+	return  {
+		FIntPoint(-1, -1),
+		FIntPoint(1, -1),
+		FIntPoint(1, 1),
+		FIntPoint(-1, 1),
+		FIntPoint(1, 0),
+		FIntPoint(-1, 0),
+		FIntPoint(0, -1),
+		FIntPoint(0, 1),
 	};
-	UE_LOG(LogTemp, Log, TEXT("Queen"))
-	return UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData(PossibleMoves,BoardProvider,Color,BoardPosition),ChessData);
+}
+
+TArray<FMove> UChessQueen::GetAvailableMoves()
+{
+	return MovementVerifier->GetValidMovesFromDirections(GetPossibleDirections(),this);
 }

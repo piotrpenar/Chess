@@ -1,20 +1,26 @@
 ﻿#include "ChessKing.h"
-#include "Chess/Helpers/ChessMovesHelper.h"
 
 
-TArray<FMove> UChessKing::GetAvailableMoves() 
+EFigure UChessKing::GetFigureType()
 {
-	TArray<FVector2D> PossibleMoves = {
-		BoardPosition + FVector2D(-1, -1),
-		BoardPosition + FVector2D(-1, 0),
-		BoardPosition + FVector2D(-1, 1),
-		BoardPosition + FVector2D(0, 1),
-		BoardPosition + FVector2D(1, 1),
-		BoardPosition + FVector2D(1, 0),
-		BoardPosition + FVector2D(1, -1),
-		BoardPosition + FVector2D(0, -1),
+	return EFigure::King;
+}
+
+TArray<FIntPoint> UChessKing::GetPossiblePositions() const
+{
+	return {
+		BoardPosition + FIntPoint(-1, -1),
+		BoardPosition + FIntPoint(-1, 0),
+		BoardPosition + FIntPoint(-1, 1),
+		BoardPosition + FIntPoint(0, 1),
+		BoardPosition + FIntPoint(1, 1),
+		BoardPosition + FIntPoint(1, 0),
+		BoardPosition + FIntPoint(1, -1),
+		BoardPosition + FIntPoint(0, -1),
 	};
-	
-	UE_LOG(LogTemp, Log, TEXT("King"))
-	return UChessMovesHelper::GetValidMovesFromPositions(FChessMovesData(PossibleMoves,BoardProvider,Color,BoardPosition),ChessData);
+}
+
+TArray<FMove> UChessKing::GetAvailableMoves()
+{
+	return MovementVerifier->GetValidMovesFromPositions(GetPossiblePositions(),this);
 }

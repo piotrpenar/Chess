@@ -19,5 +19,6 @@ class CHESS_API IMovesProvider
 
 public:
 	virtual TArray<FMove> GetAvailableMoves();
-	virtual void MoveToPosition(FVector2D Position);
+	virtual void MoveToPosition(FIntPoint Position, FVector ActorPosition);
+	virtual bool CanMoveThisTurn();
 };

@@ -13,3 +13,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Chess Controller system
 - Types of chess piece
 - Movement for every chess piece
+- Basic move highlighting system

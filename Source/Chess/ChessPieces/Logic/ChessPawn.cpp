@@ -46,8 +46,8 @@ TArray<FMove> UChessPawn::GetAvailableMoves()
 	return ValidMoves;
 }
 
-void UChessPawn::MoveToPosition()
+void UChessPawn::MoveToPosition(FVector2D Position)
 {
-	Super::MoveToPosition();
+	Super::MoveToPosition(Position);
 	bHasMoved = true;
 }

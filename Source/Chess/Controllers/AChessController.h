@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 #include "Chess/Data/ChessData.h"
+#include "Chess/Interfaces/BoardHighlighter.h"
 #include "Chess/Interfaces/ChessBoardProvider.h"
 #include "Chess/Utils/EColor.h"
 #include "Chess/Utils/EFigureType.h"
@@ -15,31 +16,43 @@
  * 
 */
 UCLASS(Blueprintable)
-class CHESS_API AChessController : public AActor , public IChessBoardProvider
+class CHESS_API AChessController : public AActor , public IChessBoardProvider, public IBoardHighlighter
 {
 	GENERATED_BODY()
 
 public:
 	void CreateChessPiece();
 	void CreateFigures(const EColor FigureColor);
-	virtual void BeginPlay() override;
 	UChessPiece* GenerateChessPiece(const EFigureType Figure);
+	
+	virtual FTransform BoardToWorldTransform(const int X, const int Y) override;
+	virtual FTransform BoardToWorldTransform(FVector2D Position) override;
+	virtual UObject* GetPieceAtPosition(FVector2D BoardPosition) override;
+	virtual void SetPieceAtPosition(const FVector2D Vector2, UObject* ChessPiece) override;
+	virtual void CreateHighlights(TArray<FMove> Moves) override;
+	virtual void SetSelectedFigure(AActor* Figure) override;
+	virtual void HighlightSelected(AActor* Source) override;
+	void ClearHighlights();
+	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere)
 	UChessData* ChessData;
 	
 	UPROPERTY(EditAnywhere)
 	AActor* ChessBoardOrigin;
-	virtual UObject* GetPieceAtPosition(FVector2D BoardPosition) override;
-
+	
 private:
 	UPROPERTY()
 	TArray<F2DBoardArray> Board;
 
 	UPROPERTY()
 	TMap<EFigureType, UChessPiece*> FigureTypeMap;
+	UPROPERTY()
+	TArray<AActor*> CurrentHighlights;
+	UPROPERTY()
+	AChessFigure* CurrentSelectedFigure;
 	FTransform GetChessBoardTransform() const; 
-	FTransform GenerateChessPieceTransform(int TargetRow, int TargetColumn, EColor Color) const;
+	FTransform GenerateChessPieceTransform(int TargetRow, int TargetColumn, EColor Color);
 	void GenerateChessRow(TArray<EFigureType> Figures, const EColor Color, const int TargetRow);
 	
 	const TArray<EFigureType> Pawns = {

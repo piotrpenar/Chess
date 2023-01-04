@@ -14,5 +14,5 @@ public:
 private:
 	bool bHasMoved;
 	
-	virtual void MoveToPosition() override;
+	virtual void MoveToPosition(FVector2D Position) override;
 };

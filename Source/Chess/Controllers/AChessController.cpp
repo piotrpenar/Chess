@@ -34,11 +34,15 @@ void AChessController::CreateChessPiece()
 	CreateFigures(EColor::Black);
 }
 
-FTransform AChessController::GenerateChessPieceTransform(const int X,const  int Y,const  EColor Color) const
+FTransform AChessController::BoardToWorldTransform(const int X, const int Y) 
 {
-	const float BoardDistance = ChessData->BoardCheckerSize;
-	FTransform Transform = GetChessBoardTransform();
-	Transform.SetLocation(Transform.GetLocation() + FVector(BoardDistance/2 + X*BoardDistance,BoardDistance/2 + Y*BoardDistance,0));
+	FVector2D Position = FVector2D(X,Y);
+	return BoardToWorldTransform(Position);
+}
+
+FTransform AChessController::GenerateChessPieceTransform(const int X,const  int Y,const  EColor Color)
+{
+	FTransform Transform = BoardToWorldTransform(X, Y);
 	if(Color == EColor::Black)
 	{
 		FRotator Rotator = Transform.GetRotation().Rotator();
@@ -57,16 +61,38 @@ void AChessController::GenerateChessRow(TArray<EFigureType> Figures, const EColo
 		Clone->SetPosition(Column, TargetRow);
 		Clone->ChessData = ChessData;
 		Clone->BoardProvider = this;
-		Clone->CreateActor(GetWorld(),Clone);
+		Clone->CreateActor(GetWorld(),this);
 		Clone->SetActorTransform(GenerateChessPieceTransform(Column,TargetRow,Color));
 		Board[Column].Set(TargetRow,Clone);
 	}
+}
+
+FTransform AChessController::BoardToWorldTransform(FVector2D Position)
+{
+	FTransform Transform= GetChessBoardTransform();
+	const float BoardDistance = ChessData->BoardCheckerSize;
+	Transform.SetLocation(Transform.GetLocation() + FVector(BoardDistance/2 + Position.X*BoardDistance,BoardDistance/2 + Position.Y*BoardDistance,ChessData->BoardOffset));
+	return Transform;
 }
 
 UObject* AChessController::GetPieceAtPosition(FVector2D BoardPosition)
 {
 	UE_LOG(LogTemp, Log, TEXT("Getting object from %s"),*FString(BoardPosition.ToString()))
 	return Board[BoardPosition.X][BoardPosition.Y];
+}
+
+void AChessController::SetPieceAtPosition(const FVector2D Vector2, UObject* ChessPiece)
+{
+	UObject* CurrentObject = Board[Vector2.X][Vector2.Y];
+	if(CurrentObject)
+	{
+		if(ChessPiece)
+		{
+			static_cast<UChessPiece*>(CurrentObject)->DestroyChessPiece();
+		}
+	}
+	UE_LOG(LogTemp, Log, TEXT("Setting object at %s"),*FString(Vector2.ToString()))
+	Board[Vector2.X].Set(Vector2.Y,ChessPiece);
 }
 
 void AChessController::CreateFigures(const EColor FigureColor)
@@ -84,6 +110,42 @@ void AChessController::CreateFigures(const EColor FigureColor)
 	GenerateChessRow(MenTargetArray, FigureColor, ManRow);
 	GenerateChessRow(Pawns, FigureColor, PawnRow);
 };
+
+void AChessController::SetSelectedFigure(AActor* Actor)
+{
+	AChessFigure* Figure = static_cast<AChessFigure*>(Actor);
+	CurrentSelectedFigure = Figure;
+}
+
+void AChessController::HighlightSelected(AActor* Source)
+{
+	ClearHighlights();
+	const ACheckerHighlight* CheckerHighlight = static_cast<ACheckerHighlight*>(Source);
+	CurrentSelectedFigure->SourcePiece->MoveToPosition(CheckerHighlight->Position);
+}
+
+void AChessController::ClearHighlights()
+{
+	for (const auto Highlight : CurrentHighlights)
+	{
+		Highlight->Destroy();
+	}
+	CurrentHighlights.Empty();
+}
+
+void AChessController::CreateHighlights(TArray<FMove> Moves)
+{
+	UE_LOG(LogTemp, Log, TEXT("Generating highlights"))
+	ClearHighlights();
+	for (const auto Move : Moves)
+	{
+		ACheckerHighlight* Actor = GetWorld()->SpawnActor<ACheckerHighlight>(ChessData->GetCheckerHighlightActor());
+		Actor->SetActorTransform(BoardToWorldTransform(Move.TargetPosition.X,Move.TargetPosition.Y));
+		Actor->Position = Move.TargetPosition;
+		Actor->Highlighter = this;
+		CurrentHighlights.Add(Actor);
+	}
+}
 
 FTransform AChessController::GetChessBoardTransform() const
 {

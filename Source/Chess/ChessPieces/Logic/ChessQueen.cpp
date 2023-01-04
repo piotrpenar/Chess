@@ -16,5 +16,5 @@ TArray<FMove> UChessQueen::GetAvailableMoves()
 		FVector2D(0, 1),
 	};
 	UE_LOG(LogTemp, Log, TEXT("Queen"))
-	return UChessMovesHelper::GetValidMovesFromPositions(FChessMovesData(PossibleMoves,BoardProvider,Color,BoardPosition),ChessData);
+	return UChessMovesHelper::GetValidMovesFromDirections(FChessMovesData(PossibleMoves,BoardProvider,Color,BoardPosition),ChessData);
 }

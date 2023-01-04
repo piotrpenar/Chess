@@ -8,3 +8,7 @@
 {
 	return {};
 }
+
+void IMovesProvider::MoveToPosition(FVector2D Position)
+{
+}

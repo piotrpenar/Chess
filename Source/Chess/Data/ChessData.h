@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Chess/ChessPieces/Figures/AChessFigure.h"
+#include "Chess/Highlight/CheckerHighlight.h"
 #include "Chess/Utils/EFigureType.h"
 #include "ChessData.generated.h"
 
@@ -17,14 +18,19 @@ class CHESS_API UChessData final : public UDataAsset
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AChessFigure> ChessFigureActor;
 	UPROPERTY(EditAnywhere)
+	TSubclassOf<ACheckerHighlight> ChessHighlightActor;
+	UPROPERTY(EditAnywhere)
 	TMap<EFigureType, UStaticMesh*> FigureToMesh;
 public:
 	UStaticMesh* GetMeshForType(EFigureType Figure) const;
 	TSubclassOf<AChessFigure> GetChessFigureActor() const;
+	TSubclassOf<ACheckerHighlight> GetCheckerHighlightActor() const;
 	bool IsValidPosition(const FVector2D& Vector2) const;
 	UPROPERTY(EditAnywhere)
 	float BoardCheckerSize = 100;
 	UPROPERTY(EditAnywhere)
 	int BoardSize = 8;
+	UPROPERTY(EditAnywhere)
+	float BoardOffset = 1;
 	
 };

@@ -19,7 +19,7 @@ TODO.
 - [x] Available moves highlighting 
 - [x] Game state implementation
 - [x] Basic environment
-- [ ] Basic grayboxing of the area
+- [x] Basic grayboxing of the area
 - [ ] Adding vegetation and foliage
 - [ ] Advanced environment for the play area
 - [ ] Adding details to the environment

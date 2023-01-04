@@ -8,10 +8,7 @@
     <list default="true" id="13e30f9d-f09a-40e8-91e8-793056d40f25" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Chess/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Chess/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Controllers/ChessController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Controllers/ChessController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Controllers/ChessRulesController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Controllers/ChessRulesController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Controllers/ChessboardController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Controllers/ChessboardController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Chess/Controllers/ChessboardController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Chess/Controllers/ChessboardController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,7 +186,8 @@
       <workItem from="1671653839618" duration="12328000" />
       <workItem from="1671701121908" duration="11609000" />
       <workItem from="1671713276997" duration="5487000" />
-      <workItem from="1671719560430" duration="342000" />
+      <workItem from="1671719560430" duration="1540000" />
+      <workItem from="1671791663589" duration="1338000" />
     </task>
     <servers />
   </component>

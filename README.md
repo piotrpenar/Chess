@@ -18,7 +18,7 @@ TODO.
 - [x] Basic Chess figures movement
 - [x] Available moves highlighting 
 - [x] Game state implementation
-- [ ] Basic environment
+- [x] Basic environment
 - [ ] Basic grayboxing of the area
 - [ ] Adding vegetation and foliage
 - [ ] Advanced environment for the play area

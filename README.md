@@ -21,8 +21,8 @@ TODO.
 - [x] Basic environment
 - [x] Basic grayboxing of the area
 - [x] Adding vegetation and foliage
-- [ ] Advanced environment for the play area
-- [ ] Adding details to the environment
+- [x] Advanced environment for the play area
+- [x] Adding details to the environment
 - [ ] Adding special moves (En Passant, Castling, Pawn Promotion)
 - [ ] Refactor + Cleanup of the code
 - [ ] SFX creation and implementation

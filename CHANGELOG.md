@@ -23,3 +23,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Proper water and sky configurations
 - Procedural landscape material 
 - Rocks and new landscape material textures
+- Added wooden deck and terrace 
+- Changed play area details
+- Added roads and paths

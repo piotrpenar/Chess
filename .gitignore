@@ -1,9 +1,16 @@
-# Visual Studio 2015 user specific files
+# Visual Studio / Rider user specific files
 .vs/
 .idea/
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+.idea/**/*.xml
 
 #Rider Plugin
-Plugins/*/RiderLink/*
+Plugins/**/*
+Plugins/**/RiderLink/*
 
 # Compiled Object files
 *.slo

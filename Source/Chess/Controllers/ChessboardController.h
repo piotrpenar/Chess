@@ -34,7 +34,7 @@ public:
 	void Initialize(UChessData* NewChessData,UChessboard* NewBoard,TScriptInterface<IChessGameState> NewChessGameState);
 	void CreateChessboardSimulation();
 	void MoveChessPieceToPosition(UChessPiece* ChessPiece, FIntPoint Position);
-	void SetChessPieceAtPosition(FIntPoint Position, UChessPiece* ChessPiece);
+	void RemoveChessPieceAtPosition(FIntPoint Position);
 	virtual bool IsValidMove(const FIntPoint Position, UObject* ChessPiece) override;
 	void AdjustMoveType(FMove* Move);
 	virtual TArray<FMove> GetValidMovesFromPositions(TArray<FIntPoint> Directions, UObject* ChessPieceObject) override;
@@ -42,7 +42,8 @@ public:
 	virtual TArray<FMove> GetValidSpecialMoves(UObject* ChessPieceObject) override;
 	UChessPiece* GetPieceAtPosition(FIntPoint BoardPosition) const;
 	void SetAsSimulation();
-	
+	void AddChessPieceAtPosition(UChessPiece* NewFigure, const FIntPoint Position);
+
 private:
 	TArray<FMove> GetPawnSpecialMoves(UChessPiece* Pawn);
 	TArray<UChessPiece*> GetChessPiecesOfType(EColor Color, EFigure FigureType);

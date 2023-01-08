@@ -144,6 +144,13 @@ void UChessPiece::CreateActor(UWorld* World, IBoardHighlighter* Highlighter)
 		UE_LOG(LogTemp, Warning, TEXT("Mesh is invalid"))
 		return;
 	}
+	
+	UMaterialInstance* Material = ChessData->GetMaterialForType(GetFigureType(),Color);
+	if (!IsValid(Material))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Material is invalid"))
+		return;
+	}
 	UStaticMeshComponent* StaticMeshComponent = static_cast<UStaticMeshComponent*>(Component);
 	if (!IsValid(StaticMeshComponent))
 	{
@@ -151,6 +158,7 @@ void UChessPiece::CreateActor(UWorld* World, IBoardHighlighter* Highlighter)
 		return;
 	}
 	StaticMeshComponent->SetStaticMesh(Mesh);
+	StaticMeshComponent->SetMaterial(0,Material);
 	ChessPieceActor = Actor;
 	Actor->Highlighter = Highlighter;
 	Actor->SourcePiece = this;

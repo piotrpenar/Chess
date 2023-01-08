@@ -5,12 +5,22 @@
 #include "CoreMinimal.h"
 #include "Chess/ChessPieces/Figures/AChessFigure.h"
 #include "Chess/Highlight/CheckerHighlight.h"
+#include "Chess/Utils/EColor.h"
 #include "Chess/Utils/EFigure.h"
 #include "ChessData.generated.h"
 
-/**
- * 
- */
+USTRUCT()
+struct FMeshMaterialData
+{
+	GENERATED_BODY()
+	UPROPERTY(EditAnywhere)
+	UStaticMesh* Mesh;
+	UPROPERTY(EditAnywhere)
+	UMaterialInstance* WhiteMaterial;
+	UPROPERTY(EditAnywhere)
+	UMaterialInstance* BlackMaterial;
+};
+
 UCLASS()
 class CHESS_API UChessData final : public UDataAsset
 {
@@ -21,7 +31,7 @@ class CHESS_API UChessData final : public UDataAsset
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<ACheckerHighlight> ChessHighlightActor;
 	UPROPERTY(EditAnywhere)
-	TMap<EFigure, UStaticMesh*> FigureToMesh;
+	TMap<EFigure, FMeshMaterialData> FigureToMesh;
 	UPROPERTY(EditAnywhere)
 	float BoardCheckerSize = 100;
 	UPROPERTY(EditAnywhere)
@@ -31,6 +41,7 @@ class CHESS_API UChessData final : public UDataAsset
 	
 public:
 	UStaticMesh* GetMeshForType(EFigure Figure) const;
+	UMaterialInstance* GetMaterialForType(EFigure Figure, EColor Color) const;
 	TSubclassOf<AChessFigure> GetChessFigureActor() const;
 	TSubclassOf<ACheckerHighlight> GetCheckerHighlightActor() const;
 	bool IsValidBoardPosition(const FIntPoint& Position) const;

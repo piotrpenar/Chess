@@ -76,10 +76,10 @@ void UChessboardController::MoveChessPieceToPosition(UChessPiece* ChessPiece, FI
 	ChessGameState->EndTurn();
 }
 
-void UChessboardController::SetChessPieceAtPosition(FIntPoint Position, UChessPiece* ChessPiece)
+void UChessboardController::RemoveChessPieceAtPosition(FIntPoint Position)
 {
-	Chessboard->SetPieceAtPosition(Position, ChessPiece);
-	SimulatedBoard->SetPieceAtPosition(Position, ChessPiece);
+	Chessboard->SetPieceAtPosition(Position, nullptr);
+	SimulatedBoard->SetPieceAtPosition(Position, nullptr);
 }
 
 TArray<FMove> UChessboardController::GetValidMovesFromPositions(TArray<FIntPoint> InputDirections, UObject* ChessPieceObject)
@@ -162,6 +162,13 @@ UChessPiece* UChessboardController::GetPieceAtPosition(const FIntPoint BoardPosi
 void UChessboardController::SetAsSimulation()
 {
 	bIsSimulation = true;
+}
+
+void UChessboardController::AddChessPieceAtPosition(UChessPiece* NewFigure, const FIntPoint Position)
+{
+	Chessboard->SetPieceAtPosition(Position, NewFigure);
+	UChessPiece* SimulatedChessPiece = SimulatedBoard->CreateSimulatedChessPiece(SimulatedController,NewFigure);
+	SimulatedBoard->SetPieceAtPosition(Position,SimulatedChessPiece);
 }
 
 TArray<FMove> UChessboardController::GetKingSpecialMoves(UChessPiece* KingPiece)

@@ -20,6 +20,7 @@ TArray<FIntPoint> UChessPawn::GetPossiblePositions()
 
 void UChessPawn::HandleTurnEnded(EColor& CurrentColor)
 {
+	UE_LOG(LogTemp, Log, TEXT("Subscription called!"))
 	if (!IsValid(this))
 	{
 		return;
@@ -41,6 +42,7 @@ void UChessPawn::MoveToPosition(FIntPoint Position, FVector ActorPosition)
 	if(HasDoubleMoved(Position))
 	{
 		bHasDoubleMoved = true;
+		UE_LOG(LogTemp, Log, TEXT("Subscribing for event!"))
 		ChessGameState->OnTurnEnded().AddUObject(this,&UChessPawn::HandleTurnEnded);
 	}
 	Super::MoveToPosition(Position,ActorPosition);

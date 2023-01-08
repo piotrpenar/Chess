@@ -34,11 +34,13 @@ public:
 	void Initialize(UChessData* NewChessData,UChessboard* NewBoard,TScriptInterface<IChessGameState> NewChessGameState);
 	void CreateChessboardSimulation();
 	void MoveChessPieceToPosition(UChessPiece* ChessPiece, FIntPoint Position);
+	void SetChessPieceAtPosition(FIntPoint Position, UChessPiece* ChessPiece);
 	virtual bool IsValidMove(const FIntPoint Position, UObject* ChessPiece) override;
+	void AdjustMoveType(FMove* Move);
 	virtual TArray<FMove> GetValidMovesFromPositions(TArray<FIntPoint> Directions, UObject* ChessPieceObject) override;
 	virtual TArray<FMove> GetValidMovesFromDirections(TArray<FIntPoint> InputDirections, UObject* ChessPieceObject) override;
 	virtual TArray<FMove> GetValidSpecialMoves(UObject* ChessPieceObject) override;
-	UChessPiece* GetOtherPieceAtPosition(FIntPoint BoardPosition) const;
+	UChessPiece* GetPieceAtPosition(FIntPoint BoardPosition) const;
 	void SetAsSimulation();
 	
 private:

@@ -29,6 +29,7 @@ public:
 	FTransform BoardToWorldTransform(const int X, const int Y) const;
 	FTransform BoardToWorldTransform(FIntPoint Position) const;
 	void SetPieceAtPosition(const FIntPoint Position, UChessPiece* ChessPiece);
+	void MovePieceFromToPosition(UChessPiece* ChessPiece, FIntPoint FromPosition, FIntPoint ToPosition);
 	void GenerateEmptyBoard();
 	FTransform GetChessBoardTransform() const;
 	TArray<UChessPiece*> GetAllPiecesOfColor(const EColor Color);

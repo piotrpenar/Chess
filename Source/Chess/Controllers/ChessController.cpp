@@ -8,6 +8,7 @@
 #include "Chess/Helpers/ChessPiecesFactory.h"
 #include "Chess/Utils/EColor.h"
 #include "Chess/Utils/EFigure.h"
+#include "Chess/Utils/EMoveType.h"
 #include "Chess/Utils/F2DBoardArray.h"
 
 
@@ -79,6 +80,7 @@ FTransform AChessController::GenerateChessPieceTransform(const int X,const  int 
 
 
 void AChessController::EndTurn(){
+	EColor CurrentPlayerColor = CurrentPlayer;
 	EColor EnemyPlayer = CurrentPlayer == EColor::Black ? EColor::White : EColor::Black;
 	if(CurrentPlayer == EColor::White)
 	{
@@ -90,6 +92,7 @@ void AChessController::EndTurn(){
 	}
 	ECheckmateStatus Status = RulesController->GetBoardStatusForColor(Chessboard,EnemyPlayer,ChessboardController);
 	FString Value= UEnum::GetValueAsString(Status);
+	BroadcastTurnEnded(CurrentPlayerColor);
 	UE_LOG(LogTemp, Log, TEXT("Check mate status is %s"),*FString(Value));
 }
 
@@ -99,14 +102,41 @@ void AChessController::SetSelectedFigure(AActor* Actor)
 	CurrentSelectedFigure = Figure;
 }
 
+void AChessController::HandleSpecialMoveType(const FMove& Move)
+{
+	UE_LOG(LogTemp, Log, TEXT("Is special move!"));
+	UChessPiece* TargetChessPiece = static_cast<UChessPiece*>(Move.TargetObject);
+	switch (Move.MoveType)
+	{
+	case EMoveType::DoubleMove:
+		break;
+	case EMoveType::EnPassant:
+		UE_LOG(LogTemp, Log, TEXT("En Passant!"));
+		ChessboardController->SetChessPieceAtPosition(TargetChessPiece->GetBoardPosition(),nullptr);
+		break;
+	case EMoveType::Castling:
+		UE_LOG(LogTemp, Log, TEXT("Castling!"));
+		break;
+	case EMoveType::PawnPromotion:
+		UE_LOG(LogTemp, Log, TEXT("Pawn Promotion!"));
+		break;
+	default: ;
+	}
+}
+
 void AChessController::HighlightSelected(AActor* Source)
 {
 	ClearHighlights();
 	const ACheckerHighlight* CheckerHighlight = static_cast<ACheckerHighlight*>(Source);
-	FIntPoint BoardPosition = CheckerHighlight->SourceFigure->GetBoardPosition();
-	FIntPoint TargetPosition = CheckerHighlight->Position;
-	UChessPiece* ChessPiece = ChessboardController->GetOtherPieceAtPosition(BoardPosition);
-	ChessboardController->MoveChessPieceToPosition(ChessPiece,TargetPosition);
+	FMove TargetMove = CheckerHighlight->Move;
+	UChessPiece* SourcePiece = static_cast<UChessPiece*>(TargetMove.SourcePiece);
+	UChessPiece* TargetPiece = static_cast<UChessPiece*>(TargetMove.TargetObject);
+	FIntPoint TargetPosition = TargetMove.TargetPosition;
+	ChessboardController->MoveChessPieceToPosition(SourcePiece,TargetPosition);
+	if(TargetMove.MoveType != EMoveType::Standard)
+	{
+		HandleSpecialMoveType(TargetMove);
+	}
 }
 
 void AChessController::ClearHighlights()

@@ -30,6 +30,7 @@ public:
 	virtual void EndTurn() override;
 	virtual void CreateHighlights(TArray<FMove> Moves) override;
 	virtual void SetSelectedFigure(AActor* Figure) override;
+	void HandleSpecialMoveType(const FMove& Move);
 	virtual void HighlightSelected(AActor* Source) override;
 	virtual EColor GetCurrentPlayer() override;
 	void ClearHighlights();

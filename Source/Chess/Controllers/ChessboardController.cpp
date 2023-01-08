@@ -48,6 +48,17 @@ bool UChessboardController::IsValidMove(const FIntPoint Position, UObject* Chess
 	return !bIsKingInCheck;
 }
 
+void UChessboardController::AdjustMoveType(FMove* Move)
+{
+	UChessPiece* SourcePiece = static_cast<UChessPiece*>(Move->SourcePiece);
+	bool bIsOnBoardEdge = Move->TargetPosition.Y == 0 || Move->TargetPosition.Y == ChessData->GetBoardSize()-1;
+	bool bIsValidPawn = SourcePiece && SourcePiece->GetFigureType() == EFigure::Pawn;
+	if( bIsValidPawn && bIsOnBoardEdge)
+	{
+		Move->MoveType = EMoveType::PawnPromotion;
+	}
+}
+
 void UChessboardController::Initialize(UChessData* NewChessData, UChessboard* NewBoard, TScriptInterface<IChessGameState> NewChessGameState)
 {
 	this->ChessData = NewChessData;
@@ -59,12 +70,16 @@ void UChessboardController::MoveChessPieceToPosition(UChessPiece* ChessPiece, FI
 {
 	const FIntPoint PreviousPosition = FIntPoint(ChessPiece->GetBoardPosition());
 	ChessPiece->MoveToPosition(Position, Chessboard->BoardToWorldTransform(Position).GetTranslation());
-	Chessboard->SetPieceAtPosition(Position, ChessPiece);
-	Chessboard->SetPieceAtPosition(PreviousPosition, nullptr);
-	UChessPiece* SimulatedChessPiece = SimulatedController->GetOtherPieceAtPosition(PreviousPosition);
-	SimulatedBoard->SetPieceAtPosition(Position, SimulatedChessPiece);
-	SimulatedBoard->SetPieceAtPosition(PreviousPosition, nullptr);
+	Chessboard->MovePieceFromToPosition(ChessPiece,PreviousPosition,Position);
+	UChessPiece* SimulatedChessPiece = SimulatedController->GetPieceAtPosition(PreviousPosition);
+	SimulatedBoard->MovePieceFromToPosition(SimulatedChessPiece,PreviousPosition,Position);
 	ChessGameState->EndTurn();
+}
+
+void UChessboardController::SetChessPieceAtPosition(FIntPoint Position,UChessPiece* ChessPiece)
+{
+	Chessboard->SetPieceAtPosition(Position, ChessPiece);
+	SimulatedBoard->SetPieceAtPosition(Position, ChessPiece);
 }
 
 TArray<FMove> UChessboardController::GetValidMovesFromPositions(TArray<FIntPoint> InputDirections, UObject* ChessPieceObject)
@@ -82,10 +97,12 @@ TArray<FMove> UChessboardController::GetValidMovesFromPositions(TArray<FIntPoint
 			//UE_LOG(LogTemp, Log, TEXT("Invalid Position - from %s to %s"),*FString(text),*FString(PossibleMove.ToString()))
 			continue;
 		}
-		UChessPiece* TargetObject = GetOtherPieceAtPosition(PossibleMove);
+		UChessPiece* TargetObject = GetPieceAtPosition(PossibleMove);
 		if (!TargetObject || TargetObject->GetColor() != ChessPiece->GetColor())
 		{
-			ValidMoves.Add(FMove(ChessPiece, PossibleMove, TargetObject));
+			FMove Move = FMove(ChessPiece, PossibleMove, TargetObject);
+			AdjustMoveType(&Move);
+			ValidMoves.Add(Move);
 		}
 	}
 	return ValidMoves;
@@ -104,7 +121,7 @@ TArray<FMove> UChessboardController::GetValidMovesFromDirections(TArray<FIntPoin
 		NextPosition += Direction;
 		while (IsValidMove(NextPosition, ChessPiece))
 		{
-			if (UChessPiece* TargetObject = GetOtherPieceAtPosition(NextPosition))
+			if (UChessPiece* TargetObject = GetPieceAtPosition(NextPosition))
 			{
 				if (TargetObject->GetColor() != ChessPiece->GetColor())
 				{
@@ -139,7 +156,7 @@ TArray<FMove> UChessboardController::GetValidSpecialMoves(UObject* ChessPieceObj
 	return {};
 }
 
-UChessPiece* UChessboardController::GetOtherPieceAtPosition(const FIntPoint BoardPosition) const
+UChessPiece* UChessboardController::GetPieceAtPosition(const FIntPoint BoardPosition) const
 {
 	return Chessboard->GetPieceAtPosition(BoardPosition);
 }
@@ -201,7 +218,7 @@ TArray<FMove> UChessboardController::GetEnPassantMoves(UChessPiece* ChessPiece, 
 			const FIntPoint PositionBehindTarget = Position + FIntPoint(0, Direction);
 			if (IsValidMove(PositionBehindTarget, ChessPiece))
 			{
-				SpecialMoves.Add(FMove(ChessPiece, PositionBehindTarget, OtherPiece));
+				SpecialMoves.Add(FMove(ChessPiece, PositionBehindTarget, OtherPiece,EMoveType::EnPassant));
 			}
 		}
 	}
@@ -224,7 +241,7 @@ TArray<FMove> UChessboardController::GetPawnSpecialMoves(UChessPiece* ChessPiece
 	
 	if (CanPawnDoubleMove(ChessPiece, PawnPosition, Direction))
 	{
-		return {FMove(ChessPiece, PawnPosition + FIntPoint(0, Direction * 2), nullptr)};
+		return {FMove(ChessPiece, PawnPosition + FIntPoint(0, Direction * 2), nullptr,EMoveType::DoubleMove)};
 	}
 	
 	return {};

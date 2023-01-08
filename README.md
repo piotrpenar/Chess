@@ -4,13 +4,24 @@ ChillChess is a side project that I have been working on in the free time, in or
 
 This game allows the player to play chess in a calm relaxing environment.
 
+## Current version 
+
+Current version of the game allows for basic playthrough and serves as MVP. There is no UI, and the player can move freely through the environment (this will be changed later on). The project will be further developed, to include UI, much better optimization, and more interesting features as the project progresses. 
+
 ## Screenshots 
 
-TODO.
+![Screenshot1](https://i.imgur.com/Fevzjx5.png)
+
+![Screenshot1](https://i.imgur.com/05bBrk2.png)
 
 ## Project Features
 
-TODO.
+* Heavy usage of Lumen and Nanite
+* Usage of experimental 5.1 Unreal water system
+* Wind-affected 
+* Chess code written from the ground up in C++, without usage of external libraries
+* Game features a simulation system that helps in detecting checks and checkmates. 
+* Procedural landscape material
 
 ## Feature Roadmap
 
@@ -38,4 +49,6 @@ TODO.
 
 ## Additional information
 
-TODO.
+All models and textures visible in the game, were either downloaded from the Megascans library, or bought on Unreal Asset Store.
+
+Everything else is being done by me, as a part of the training. This includes all the code, level design, landscape (including landscape material), VFX, Music, SFX etc. 

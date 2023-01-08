@@ -5,7 +5,7 @@ EFigure UChessPawn::GetFigureType()
 	return EFigure::Pawn;
 }
 
-TArray<FIntPoint> UChessPawn::GetPossiblePositions()
+TArray<FIntPoint> UChessPawn::GetPossiblePositions() const
 {
 	const bool bIsWhite = Color == EColor::White;
 	const int Direction = bIsWhite ? 1 : -1;
@@ -17,6 +17,7 @@ TArray<FIntPoint> UChessPawn::GetPossiblePositions()
 	return PossibleMoves;
 }
 
+// ReSharper disable once CppParameterMayBeConstPtrOrRef
 void UChessPawn::HandleTurnEnded(EColor& CurrentColor)
 {
 	UE_LOG(LogTemp, Log, TEXT("Subscription called!"))
@@ -36,7 +37,7 @@ bool UChessPawn::HasDoubleMoved(const FIntPoint Position) const
 	return abs(PreviousPosition.Y - Position.Y) == 2;
 }
 
-void UChessPawn::MoveToPosition(FIntPoint Position, FVector ActorPosition)
+void UChessPawn::MoveToPosition(const FIntPoint Position, const FVector ActorPosition)
 {
 	if (HasDoubleMoved(Position))
 	{
@@ -46,7 +47,7 @@ void UChessPawn::MoveToPosition(FIntPoint Position, FVector ActorPosition)
 	Super::MoveToPosition(Position, ActorPosition);
 }
 
-bool UChessPawn::IsValidPassantTarget()
+bool UChessPawn::IsValidPassantTarget() const
 {
 	return bHasDoubleMoved;
 }
@@ -55,13 +56,13 @@ TArray<FMove> UChessPawn::GetAvailableMoves()
 {
 	TArray<FIntPoint> PossibleMoves = GetPossiblePositions();
 	TArray<FMove> ValidPositions = MovementVerifier->GetValidMovesFromPositions(GetPossiblePositions(), this);
-	TArray<FMove> SpecialMoves = MovementVerifier->GetValidSpecialMoves(this);
+	const TArray<FMove> SpecialMoves = MovementVerifier->GetValidSpecialMoves(this);
 	TArray<FMove> AvailableMoves = SpecialMoves;
 
 	for (const FMove ValidPosition : ValidPositions)
 	{
 		const bool bPositionsHaveSameX = ValidPosition.TargetPosition.X == BoardPosition.X;
-		UChessPiece* TargetChessPiece = static_cast<UChessPiece*>(ValidPosition.TargetObject);
+		const UChessPiece* TargetChessPiece = static_cast<UChessPiece*>(ValidPosition.TargetObject);
 		if (TargetChessPiece)
 		{
 			if (!bPositionsHaveSameX && TargetChessPiece->GetColor() != Color)

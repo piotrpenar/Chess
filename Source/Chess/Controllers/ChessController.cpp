@@ -56,7 +56,7 @@ void AChessController::GenerateChessRow(TArray<EFigure> Figures, const EColor Co
 	}
 }
 
-void AChessController::BroadcastTurnEnded(EColor Color)
+void AChessController::BroadcastTurnEnded(EColor Color) const
 {
 	TurnEndedEvent.Broadcast(Color);
 }
@@ -66,7 +66,7 @@ UChessPiece* AChessController::GenerateChessPiece(const EFigure Figure)
 	return UChessPiecesFactory::GenerateChessPiece(Figure, this);
 }
 
-FTransform AChessController::GenerateChessPieceTransform(const int X, const int Y, const EColor Color)
+FTransform AChessController::GenerateChessPieceTransform(const int X, const int Y, const EColor Color) const
 {
 	FTransform Transform = Chessboard->BoardToWorldTransform(X, Y);
 	if (Color == EColor::Black)
@@ -81,8 +81,8 @@ FTransform AChessController::GenerateChessPieceTransform(const int X, const int 
 
 void AChessController::EndTurn()
 {
-	EColor CurrentPlayerColor = CurrentPlayer;
-	EColor EnemyPlayer = CurrentPlayer == EColor::Black ? EColor::White : EColor::Black;
+	const EColor CurrentPlayerColor = CurrentPlayer;
+	const EColor EnemyPlayer = CurrentPlayer == EColor::Black ? EColor::White : EColor::Black;
 	if (CurrentPlayer == EColor::White)
 	{
 		CurrentPlayer = EColor::Black;
@@ -91,8 +91,8 @@ void AChessController::EndTurn()
 	{
 		CurrentPlayer = EColor::White;
 	}
-	ECheckmateStatus Status = RulesController->GetBoardStatusForColor(Chessboard, EnemyPlayer, ChessboardController);
-	FString Value = UEnum::GetValueAsString(Status);
+	const ECheckmateStatus Status = RulesController->GetBoardStatusForColor(Chessboard, EnemyPlayer, ChessboardController);
+	const FString Value = UEnum::GetValueAsString(Status);
 	BroadcastTurnEnded(CurrentPlayerColor);
 	UE_LOG(LogTemp, Log, TEXT("Check mate status is %s"), *FString(Value));
 }
@@ -103,15 +103,15 @@ void AChessController::SetSelectedFigure(AActor* SelectedFigureActor)
 	CurrentSelectedFigure = Figure;
 }
 
-void AChessController::HandleCastling(const FMove& Move, UChessPiece* ChessPiece)
+void AChessController::HandleCastling(const FMove& Move, UChessPiece* ChessPiece) const
 {
 	UChessPiece* SourceChessPiece = static_cast<UChessPiece*>(Move.SourcePiece);
-	int Direction = FMath::Sign(SourceChessPiece->GetBoardPosition().X - ChessPiece->GetBoardPosition().X);
-	FIntPoint TargetPosition = Move.TargetPosition + FIntPoint(Direction, 0);
+	const int Direction = FMath::Sign(SourceChessPiece->GetBoardPosition().X - ChessPiece->GetBoardPosition().X);
+	const FIntPoint TargetPosition = Move.TargetPosition + FIntPoint(Direction, 0);
 	ChessboardController->MoveChessPieceToPosition(ChessPiece, TargetPosition);
 }
 
-void AChessController::HandleEnPassant(UChessPiece* ChessPiece)
+void AChessController::HandleEnPassant(UChessPiece* ChessPiece) const
 {
 	ChessboardController->RemoveChessPieceAtPosition(ChessPiece->GetBoardPosition());
 }
@@ -119,7 +119,7 @@ void AChessController::HandleEnPassant(UChessPiece* ChessPiece)
 void AChessController::PromotePawn(UChessPiece* ChessPiece, EFigure TargetFigure)
 {
 	UChessPiece* NewFigure = UChessPiecesFactory::GenerateChessPiece(TargetFigure, this);
-	FIntPoint TargetPos = ChessPiece->GetBoardPosition();
+	const FIntPoint TargetPos = ChessPiece->GetBoardPosition();
 	SetupChessPiece(NewFigure, ChessPiece->GetColor(), TargetPos.X, TargetPos.Y);
 	ChessboardController->RemoveChessPieceAtPosition(ChessPiece->GetBoardPosition());
 	ChessboardController->AddChessPieceAtPosition(NewFigure, TargetPos);
@@ -158,10 +158,10 @@ void AChessController::HighlightSelected(AActor* Source)
 {
 	ClearHighlights();
 	const ACheckerHighlight* CheckerHighlight = static_cast<ACheckerHighlight*>(Source);
-	FMove TargetMove = CheckerHighlight->Move;
+	const FMove TargetMove = CheckerHighlight->Move;
 	UChessPiece* SourcePiece = static_cast<UChessPiece*>(TargetMove.SourcePiece);
 	UChessPiece* TargetPiece = static_cast<UChessPiece*>(TargetMove.TargetObject);
-	FIntPoint TargetPosition = TargetMove.TargetPosition;
+	const FIntPoint TargetPosition = TargetMove.TargetPosition;
 	ChessboardController->MoveChessPieceToPosition(SourcePiece, TargetPosition);
 	if (TargetMove.MoveType != EMoveType::Standard)
 	{

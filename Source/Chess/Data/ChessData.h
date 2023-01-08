@@ -1,9 +1,9 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
 #include "Chess/ChessPieces/Figures/AChessFigure.h"
-#include "Chess/Highlight/CheckerHighlight.h"
 #include "Chess/Enums/EColor.h"
 #include "Chess/Enums/EFigure.h"
+#include "Chess/Highlight/CheckerHighlight.h"
 #include "ChessData.generated.h"
 
 USTRUCT()

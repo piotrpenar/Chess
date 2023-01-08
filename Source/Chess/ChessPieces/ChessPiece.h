@@ -1,11 +1,11 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
 #include "Chess/Data/ChessData.h"
+#include "Chess/Enums/EColor.h"
+#include "Chess/Enums/EFigure.h"
 #include "Chess/Interfaces/ChessGameState.h"
 #include "Chess/Interfaces/MovementVerifier.h"
 #include "Chess/Interfaces/MovesProvider.h"
-#include "Chess/Enums/EColor.h"
-#include "Chess/Enums/EFigure.h"
 #include "Chess/Utils/FMove.h"
 #include "ChessPiece.generated.h"
 
@@ -42,7 +42,7 @@ public:
 	virtual TArray<FMove> GetAvailableMoves() override;
 	virtual bool CanMoveThisTurn() override;
 
-	bool HasMoved();
+	bool HasMoved() const;
 	void SetColor(EColor PieceColor);
 	void SetPosition(int X, int Y);
 	void SetActorTransform(FTransform Transform) const;
@@ -53,6 +53,6 @@ public:
 	EColor GetColor() const;
 	FIntPoint GetBoardPosition();
 	void SetAsSimulated(TScriptInterface<IMovementVerifier> SimulatedMovementVerifier);
-	bool IsSimulated();
+	bool IsSimulated() const;
 	void SetReferences(UChessData* NewChessData, TScriptInterface<IMovementVerifier> NewMovementVerifier, TScriptInterface<IChessGameState> NewGameState);
 };

@@ -1,6 +1,6 @@
 ﻿#include "ChessRulesController.h"
 
-ECheckmateStatus UChessRulesController::GetBoardStatusForColor(UChessboard* Chessboard, EColor Color, IMovementVerifier* MovementVerifier)
+ECheckmateStatus UChessRulesController::GetBoardStatusForColor(UChessboard* Chessboard, const EColor Color, IMovementVerifier* MovementVerifier)
 {
 	const EColor EnemyColor = Color == EColor::White ? EColor::Black : EColor::White;
 	const TArray<UChessPiece*> AllyPieces = Chessboard->GetAllPiecesOfColor(Color);
@@ -13,10 +13,10 @@ ECheckmateStatus UChessRulesController::GetBoardStatusForColor(UChessboard* Ches
 	return CheckmateStatus;
 }
 
-bool UChessRulesController::IsKingInCheck(UChessboard* Chessboard, EColor Color)
+bool UChessRulesController::IsKingInCheck(UChessboard* Chessboard, const EColor Color)
 {
 	const EColor EnemyColor = Color == EColor::White ? EColor::Black : EColor::White;
-	UChessPiece* AlliedKing = Chessboard->GetChessPiece(EFigure::King, Color);
+	const UChessPiece* AlliedKing = Chessboard->GetChessPiece(EFigure::King, Color);
 	const TArray<UChessPiece*> EnemyPieces = Chessboard->GetAllPiecesOfColor(EnemyColor);
 	const TArray<FEnemyMove> EnemiesAvailableMoves = GetEnemiesAvailableMoves(EnemyPieces);
 	const TArray ThreateningEnemies = GetThreateningEnemies(EnemiesAvailableMoves, AlliedKing);
@@ -24,7 +24,7 @@ bool UChessRulesController::IsKingInCheck(UChessboard* Chessboard, EColor Color)
 }
 
 
-ECheckmateStatus UChessRulesController::CalculateCheckmateStatus(TArray<UChessPiece*> EnemyPieces, TArray<UChessPiece*> AllyPieces, IMovementVerifier* MovementVerifier)
+ECheckmateStatus UChessRulesController::CalculateCheckmateStatus(const TArray<UChessPiece*> EnemyPieces, TArray<UChessPiece*> AllyPieces, IMovementVerifier* MovementVerifier)
 {
 	UChessPiece* AlliedKing = GetFigureFromArray(AllyPieces, EFigure::King);
 	ECheckmateStatus CheckmateStatus = ECheckmateStatus::None;
@@ -70,12 +70,12 @@ TArray<UChessRulesController::FEnemyMove> UChessRulesController::GetEnemiesAvail
 	return AllEnemyAvailableMoves;
 }
 
-TArray<UChessPiece*> UChessRulesController::GetThreateningEnemies(TArray<FEnemyMove> EnemyMoves, UChessPiece* King)
+TArray<UChessPiece*> UChessRulesController::GetThreateningEnemies(TArray<FEnemyMove> EnemyMoves, const UChessPiece* ChessPiece)
 {
 	TArray<UChessPiece*> EndangeringFigures;
 	for (FEnemyMove EnemyMove : EnemyMoves)
 	{
-		if (EnemyMove.Move.TargetObject == King)
+		if (EnemyMove.Move.TargetObject == ChessPiece)
 		{
 			EndangeringFigures.Add(EnemyMove.Enemy);
 		}
@@ -88,7 +88,7 @@ bool UChessRulesController::IsKingAbleToEscape(TArray<FEnemyMove> EnemyAvailable
 	const TArray<FMove> KingMoves = AlliedKing->GetAvailableMoves();
 	for (FMove KingMove : KingMoves)
 	{
-		if (EnemyAvailableMoves.FindByPredicate([&KingMove](FEnemyMove& Move) { return KingMove.TargetPosition == Move.Move.TargetPosition; }) == nullptr)
+		if (EnemyAvailableMoves.FindByPredicate([&KingMove](const FEnemyMove& Move) { return KingMove.TargetPosition == Move.Move.TargetPosition; }) == nullptr)
 		{
 			return true;
 		}

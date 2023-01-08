@@ -16,14 +16,14 @@ FIntPoint UChessPiece::GetBoardPosition()
 	return BoardPosition;
 }
 
-void UChessPiece::SetAsSimulated(TScriptInterface<IMovementVerifier> SimulatedMovementVerifier)
+void UChessPiece::SetAsSimulated(const TScriptInterface<IMovementVerifier> SimulatedMovementVerifier)
 {
 	bIsSimulated = true;
 	MovementVerifier = SimulatedMovementVerifier;
 	ChessPieceActor = nullptr;
 }
 
-bool UChessPiece::IsSimulated()
+bool UChessPiece::IsSimulated() const
 {
 	return bIsSimulated;
 }
@@ -40,7 +40,7 @@ bool UChessPiece::CanMoveThisTurn()
 	return ChessGameState->GetCurrentPlayer() == Color;
 }
 
-bool UChessPiece::HasMoved()
+bool UChessPiece::HasMoved() const
 {
 	return bHasMoved;
 }
@@ -63,7 +63,7 @@ void UChessPiece::DestroyChessPiece() const
 	}
 }
 
-void UChessPiece::SetPosition(FIntPoint Position)
+void UChessPiece::SetPosition(const FIntPoint Position)
 {
 	this->BoardPosition = Position;
 	if (!bIsSimulated)
@@ -101,7 +101,7 @@ void UChessPiece::SetActorTransform(const FTransform Transform) const
 	}
 }
 
-void UChessPiece::MoveToPosition(FIntPoint Position, FVector ActorPosition)
+void UChessPiece::MoveToPosition(const FIntPoint Position, const FVector ActorPosition)
 {
 	bHasMoved = true;
 	BoardPosition = Position;

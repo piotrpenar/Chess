@@ -1,15 +1,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Chess/Chessboard/ChessboardController.h"
 #include "ChessRulesController.h"
 #include "Chess/Chessboard/Chessboard.h"
+#include "Chess/Chessboard/ChessboardController.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 #include "Chess/Data/ChessData.h"
-#include "Chess/Interfaces/BoardHighlighter.h"
-#include "Chess/Interfaces/ChessGameState.h"
 #include "Chess/Enums/EColor.h"
 #include "Chess/Enums/EFigure.h"
+#include "Chess/Interfaces/BoardHighlighter.h"
+#include "Chess/Interfaces/ChessGameState.h"
 #include "ChessController.generated.h"
 
 UCLASS(Blueprintable)
@@ -25,9 +25,9 @@ public:
 	virtual void EndTurn() override;
 	virtual void CreateHighlights(TArray<FMove> Moves) override;
 	virtual void SetSelectedFigure(AActor* Figure) override;
-	void HandleCastling(const FMove& Move, UChessPiece* ChessPiece);
-	void HandleEnPassant(UChessPiece* ChessPiece);
-	void PromotePawn(UChessPiece* Object, EFigure Queen);
+	void HandleCastling(const FMove& Move, UChessPiece* ChessPiece) const;
+	void HandleEnPassant(UChessPiece* ChessPiece) const;
+	void PromotePawn(UChessPiece* ChessPiece, EFigure TargetFigure);
 	void HandlePawnPromotion(const FMove& Move);
 	void HandleSpecialMoveType(const FMove& Move);
 	virtual void HighlightSelected(AActor* Source) override;
@@ -62,9 +62,9 @@ private:
 
 	EColor CurrentPlayer = EColor::White;
 
-	FTransform GenerateChessPieceTransform(int TargetRow, int TargetColumn, EColor Color);
+	FTransform GenerateChessPieceTransform(int TargetRow, int TargetColumn, EColor Color) const;
 	void GenerateChessRow(TArray<EFigure> Figures, const EColor Color, const int Y);
-	void BroadcastTurnEnded(EColor Color);
+	void BroadcastTurnEnded(EColor Color) const;
 
 	const TArray<EFigure> Pawns = {
 		EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn,

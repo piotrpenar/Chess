@@ -6,7 +6,7 @@
 #include "ChessboardController.generated.h"
 
 UCLASS()
-class CHESS_API UChessboardController : public UObject, public IMovementVerifier
+class CHESS_API UChessboardController final : public UObject, public IMovementVerifier
 {
 	GENERATED_BODY()
 
@@ -25,11 +25,11 @@ class CHESS_API UChessboardController : public UObject, public IMovementVerifier
 public:
 	void Initialize(UChessData* NewChessData, UChessboard* NewBoard, TScriptInterface<IChessGameState> NewChessGameState);
 	void CreateChessboardSimulation();
-	void MoveChessPieceToPosition(UChessPiece* ChessPiece, FIntPoint Position);
-	void RemoveChessPieceAtPosition(FIntPoint Position);
+	void MoveChessPieceToPosition(UChessPiece* ChessPiece, FIntPoint Position) const;
+	void RemoveChessPieceAtPosition(FIntPoint Position) const;
 	virtual bool IsValidMove(const FIntPoint Position, UObject* ChessPiece) override;
-	void AdjustMoveType(FMove* Move);
-	virtual TArray<FMove> GetValidMovesFromPositions(TArray<FIntPoint> Directions, UObject* ChessPieceObject) override;
+	void AdjustMoveType(FMove* Move) const;
+	virtual TArray<FMove> GetValidMovesFromPositions(TArray<FIntPoint> InputDirections, UObject* ChessPieceObject) override;
 	virtual TArray<FMove> GetValidMovesFromDirections(TArray<FIntPoint> InputDirections, UObject* ChessPieceObject) override;
 	virtual TArray<FMove> GetValidSpecialMoves(UObject* ChessPieceObject) override;
 	UChessPiece* GetPieceAtPosition(FIntPoint BoardPosition) const;
@@ -37,9 +37,9 @@ public:
 	void AddChessPieceAtPosition(UChessPiece* NewFigure, const FIntPoint Position);
 
 private:
-	TArray<FMove> GetPawnSpecialMoves(UChessPiece* Pawn);
-	TArray<UChessPiece*> GetChessPiecesOfType(EColor Color, EFigure FigureType);
-	TArray<FMove> GetKingSpecialMoves(UChessPiece* King);
+	TArray<FMove> GetPawnSpecialMoves(UChessPiece* ChessPiece);
+	TArray<UChessPiece*> GetChessPiecesOfType(EColor Color, EFigure FigureType) const;
+	TArray<FMove> GetKingSpecialMoves(UChessPiece* KingPiece);
 	bool CanPawnDoubleMove(UChessPiece* ChessPiece, FIntPoint PawnPos, int Direction);
 	TArray<FMove> GetEnPassantMoves(UChessPiece* ChessPiece, FIntPoint PawnPos, int Direction);
 };

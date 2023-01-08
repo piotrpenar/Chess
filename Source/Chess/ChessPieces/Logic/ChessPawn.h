@@ -11,13 +11,13 @@ public:
 	virtual EFigure GetFigureType() override;
 	virtual TArray<FMove> GetAvailableMoves() override;
 	virtual void MoveToPosition(FIntPoint Position, FVector ActorPosition) override;
-	bool IsValidPassantTarget();
+	bool IsValidPassantTarget() const;
 
 private:
 	UPROPERTY()
 	bool bHasDoubleMoved;
 
-	TArray<FIntPoint> GetPossiblePositions();
+	TArray<FIntPoint> GetPossiblePositions() const;
 	void HandleTurnEnded(EColor& CurrentColor);
 	bool HasDoubleMoved(FIntPoint Position) const;
 };

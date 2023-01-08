@@ -22,7 +22,7 @@ TArray<FIntPoint> UChessKing::GetPossiblePositions() const
 TArray<FMove> UChessKing::GetAvailableMoves()
 {
 	TArray<FMove> ValidMoves = MovementVerifier->GetValidMovesFromPositions(GetPossiblePositions(), this);
-	TArray<FMove> SpecialMoves = MovementVerifier->GetValidSpecialMoves(this);
+	const TArray<FMove> SpecialMoves = MovementVerifier->GetValidSpecialMoves(this);
 	ValidMoves.Append(SpecialMoves);
 	return ValidMoves;
 }

@@ -7,8 +7,7 @@ UCLASS()
 class UChessKing final : public UChessPiece
 {
 	GENERATED_BODY()
-	
-	
+		
 	TArray<FIntPoint> GetPossiblePositions() const;
 	
 public:

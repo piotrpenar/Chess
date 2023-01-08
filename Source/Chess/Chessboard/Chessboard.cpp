@@ -55,7 +55,6 @@ UChessPiece* UChessboard::GetPieceAtPosition(FIntPoint BoardPosition)
 		UE_LOG(LogTemp, Error, TEXT("Cannot get object from %s"),*FString(BoardPosition.ToString()))
 		return nullptr;
 	}
-	UE_LOG(LogTemp, Log, TEXT("Getting object from %s"),*FString(BoardPosition.ToString()))
 	UObject* Object = Board[BoardPosition.X][BoardPosition.Y];
 	return static_cast<UChessPiece*>(Object);
 }

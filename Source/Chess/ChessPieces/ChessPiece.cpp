@@ -41,6 +41,11 @@ bool UChessPiece::CanMoveThisTurn()
 	return ChessGameState->GetCurrentPlayer() == Color;
 }
 
+bool UChessPiece::HasMoved()
+{
+	return bHasMoved;
+}
+
 EColor UChessPiece::GetColor() const
 {
 	return Color;
@@ -99,6 +104,7 @@ void UChessPiece::SetActorTransform(const FTransform Transform) const
 
 void UChessPiece::MoveToPosition(FIntPoint Position, FVector ActorPosition)
 {
+	bHasMoved = true;
 	BoardPosition = Position;
 	if (ChessPieceActor)
 	{

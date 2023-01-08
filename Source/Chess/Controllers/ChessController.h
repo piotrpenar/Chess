@@ -30,14 +30,16 @@ public:
 	virtual void EndTurn() override;
 	virtual void CreateHighlights(TArray<FMove> Moves) override;
 	virtual void SetSelectedFigure(AActor* Figure) override;
+	void HandleCastling(const FMove& Move, UChessPiece* ChessPiece);
+	void HandleEnPassant(UChessPiece* ChessPiece);
 	void HandleSpecialMoveType(const FMove& Move);
 	virtual void HighlightSelected(AActor* Source) override;
 	virtual EColor GetCurrentPlayer() override;
 	void ClearHighlights();
 	
 	DECLARE_DERIVED_EVENT( AChessController, IChessGameState::FTurnEnded, FTurnEnded);
-	virtual AChessController::FTurnEnded& OnTurnEnded() override;
-	AChessController::FTurnEnded TurnEndedEvent;
+	virtual FTurnEnded& OnTurnEnded() override;
+	FTurnEnded TurnEndedEvent;
 
 	UPROPERTY(EditAnywhere)
 	UChessData* ChessData;

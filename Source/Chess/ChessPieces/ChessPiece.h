@@ -18,6 +18,7 @@ class CHESS_API UChessPiece : public UObject, public IMovesProvider
 	AChessFigure* ChessPieceActor;
 
 	bool bIsSimulated;
+	bool bHasMoved;
 	
 	void SetActorRotation(FRotator Rotation) const;
 
@@ -42,6 +43,7 @@ public:
 	virtual TArray<FMove> GetAvailableMoves() override;
 	virtual bool CanMoveThisTurn() override;
 
+	bool HasMoved();
 	void SetColor(EColor PieceColor);
 	void SetPosition(int X, int Y);
 	void SetActorTransform(FTransform Transform) const;

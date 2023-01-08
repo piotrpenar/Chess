@@ -102,6 +102,21 @@ void AChessController::SetSelectedFigure(AActor* Actor)
 	CurrentSelectedFigure = Figure;
 }
 
+void AChessController::HandleCastling(const FMove& Move, UChessPiece* ChessPiece)
+{
+	UE_LOG(LogTemp, Log, TEXT("Castling!"));
+	UChessPiece* SourceChessPiece = static_cast<UChessPiece*>(Move.SourcePiece);
+	int Direction = FMath::Sign(SourceChessPiece->GetBoardPosition().X - ChessPiece->GetBoardPosition().X);
+	FIntPoint TargetPosition = Move.TargetPosition + FIntPoint(Direction,0);
+	ChessboardController->MoveChessPieceToPosition(ChessPiece,TargetPosition);
+}
+
+void AChessController::HandleEnPassant(UChessPiece* ChessPiece)
+{
+	UE_LOG(LogTemp, Log, TEXT("En Passant!"));
+	ChessboardController->SetChessPieceAtPosition(ChessPiece->GetBoardPosition(),nullptr);
+}
+
 void AChessController::HandleSpecialMoveType(const FMove& Move)
 {
 	UE_LOG(LogTemp, Log, TEXT("Is special move!"));
@@ -111,11 +126,10 @@ void AChessController::HandleSpecialMoveType(const FMove& Move)
 	case EMoveType::DoubleMove:
 		break;
 	case EMoveType::EnPassant:
-		UE_LOG(LogTemp, Log, TEXT("En Passant!"));
-		ChessboardController->SetChessPieceAtPosition(TargetChessPiece->GetBoardPosition(),nullptr);
+		HandleEnPassant(TargetChessPiece);
 		break;
 	case EMoveType::Castling:
-		UE_LOG(LogTemp, Log, TEXT("Castling!"));
+		HandleCastling(Move,TargetChessPiece);
 		break;
 	case EMoveType::PawnPromotion:
 		UE_LOG(LogTemp, Log, TEXT("Pawn Promotion!"));

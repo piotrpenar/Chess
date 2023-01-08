@@ -13,11 +13,9 @@ public:
 	virtual TArray<FMove> GetAvailableMoves() override;
 	virtual void MoveToPosition(FIntPoint Position, FVector ActorPosition) override;
 	bool IsValidPassantTarget();
-	bool HasMoved();
 
 private:
 	TArray<FIntPoint> GetPossiblePositions();
-	bool bHasMoved;
 	bool bHasDoubleMoved;
 	void HandleTurnEnded(EColor& CurrentColor);
 	bool HasDoubleMoved(FIntPoint Position) const;

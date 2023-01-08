@@ -45,8 +45,10 @@ public:
 	
 private:
 	TArray<FMove> GetPawnSpecialMoves(UChessPiece* Pawn);
+	TArray<UChessPiece*> GetChessPiecesOfType(EColor Color, EFigure FigureType);
 	TArray<FMove> GetKingSpecialMoves(UChessPiece* King);
 	bool CanPawnDoubleMove(UChessPiece* ChessPiece, FIntPoint PawnPos, int Direction);
 	TArray<FMove> GetEnPassantMoves(UChessPiece* ChessPiece, FIntPoint PawnPos, int Direction);
 };
+
 

@@ -46,17 +46,11 @@ void UChessPawn::MoveToPosition(FIntPoint Position, FVector ActorPosition)
 		ChessGameState->OnTurnEnded().AddUObject(this,&UChessPawn::HandleTurnEnded);
 	}
 	Super::MoveToPosition(Position,ActorPosition);
-	bHasMoved = true;
 }
 
 bool UChessPawn::IsValidPassantTarget()
 {
 	return bHasDoubleMoved;
-}
-
-bool UChessPawn::HasMoved()
-{
-	return bHasMoved;
 }
 
 TArray<FMove> UChessPawn::GetAvailableMoves()

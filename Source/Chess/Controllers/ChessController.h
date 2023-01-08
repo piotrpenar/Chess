@@ -32,6 +32,8 @@ public:
 	virtual void SetSelectedFigure(AActor* Figure) override;
 	void HandleCastling(const FMove& Move, UChessPiece* ChessPiece);
 	void HandleEnPassant(UChessPiece* ChessPiece);
+	void PromotePawn(UChessPiece* Object, EFigure Queen);
+	void HandlePawnPromotion(const FMove& Move);
 	void HandleSpecialMoveType(const FMove& Move);
 	virtual void HighlightSelected(AActor* Source) override;
 	virtual EColor GetCurrentPlayer() override;

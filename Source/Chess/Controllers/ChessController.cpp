@@ -104,7 +104,6 @@ void AChessController::SetSelectedFigure(AActor* Actor)
 
 void AChessController::HandleCastling(const FMove& Move, UChessPiece* ChessPiece)
 {
-	UE_LOG(LogTemp, Log, TEXT("Castling!"));
 	UChessPiece* SourceChessPiece = static_cast<UChessPiece*>(Move.SourcePiece);
 	int Direction = FMath::Sign(SourceChessPiece->GetBoardPosition().X - ChessPiece->GetBoardPosition().X);
 	FIntPoint TargetPosition = Move.TargetPosition + FIntPoint(Direction,0);
@@ -113,8 +112,21 @@ void AChessController::HandleCastling(const FMove& Move, UChessPiece* ChessPiece
 
 void AChessController::HandleEnPassant(UChessPiece* ChessPiece)
 {
-	UE_LOG(LogTemp, Log, TEXT("En Passant!"));
 	ChessboardController->SetChessPieceAtPosition(ChessPiece->GetBoardPosition(),nullptr);
+}
+
+void AChessController::PromotePawn(UChessPiece* ChessPiece, EFigure TargetFigure)
+{
+	UChessPiece* NewFigure = UChessPiecesFactory::GenerateChessPiece(TargetFigure,this);
+	Chessboard->SetPieceAtPosition(ChessPiece->GetBoardPosition(),NewFigure);
+}
+
+//TODO: Add proper UI Implementation here. Currently we always switch for queen.
+void AChessController::HandlePawnPromotion(const FMove& Move)
+{
+	UE_LOG(LogTemp, Log, TEXT("Pawn Promotion!"));
+	UChessPiece* Pawn = static_cast<UChessPiece*>(Move.SourcePiece);
+	PromotePawn(Pawn,EFigure::Queen);
 }
 
 void AChessController::HandleSpecialMoveType(const FMove& Move)
@@ -132,7 +144,7 @@ void AChessController::HandleSpecialMoveType(const FMove& Move)
 		HandleCastling(Move,TargetChessPiece);
 		break;
 	case EMoveType::PawnPromotion:
-		UE_LOG(LogTemp, Log, TEXT("Pawn Promotion!"));
+		HandlePawnPromotion(Move);
 		break;
 	default: ;
 	}

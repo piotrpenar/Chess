@@ -62,6 +62,7 @@ TArray<FMove> UChessPawn::GetAvailableMoves()
 
 	for (const FMove ValidPosition : ValidPositions)
 	{
+		UE_LOG(LogTemp, Log, TEXT("Number for valid Positions: %d"),ValidPositions.Num())
 		const bool bPositionsHaveSameX = ValidPosition.TargetPosition.X == BoardPosition.X;
 		UChessPiece* TargetChessPiece = static_cast<UChessPiece*>(ValidPosition.TargetObject);
 		if (TargetChessPiece)

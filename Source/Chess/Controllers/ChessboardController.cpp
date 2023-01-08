@@ -21,6 +21,7 @@ bool UChessboardController::IsValidMove(const FIntPoint Position, UObject* Chess
 {
 	if (!ChessData->IsValidBoardPosition(Position))
 	{
+		UE_LOG(LogTemp, Log, TEXT("Invalid board position"))
 		return false;
 	}
 	if (bIsSimulation)
@@ -38,6 +39,7 @@ bool UChessboardController::IsValidMove(const FIntPoint Position, UObject* Chess
 	}
 	if (SimulatedTargetPiece && SimulatedTargetPiece->GetColor() == SimulatedPiece->GetColor())
 	{
+		UE_LOG(LogTemp, Log, TEXT("Same color %s"), *FString(Position.ToString()))
 		return false;
 	}
 	SimulatedBoard->SetPieceAtPosition(Position, SimulatedPiece);
@@ -93,16 +95,23 @@ TArray<FMove> UChessboardController::GetValidMovesFromPositions(TArray<FIntPoint
 		FIntPoint PossibleMove = PossibleMoves[i];
 		if (!IsValidMove(PossibleMove, ChessPiece))
 		{
-			//FString text = FString(ChessPiece->GetBoardPosition().ToString());
-			//UE_LOG(LogTemp, Log, TEXT("Invalid Position - from %s to %s"),*FString(text),*FString(PossibleMove.ToString()))
+			FString text = FString(ChessPiece->GetBoardPosition().ToString());
+			UE_LOG(LogTemp, Log, TEXT("Invalid Position - from %s to %s"),*FString(text),*FString(PossibleMove.ToString()))
 			continue;
 		}
 		UChessPiece* TargetObject = GetPieceAtPosition(PossibleMove);
 		if (!TargetObject || TargetObject->GetColor() != ChessPiece->GetColor())
 		{
+			FString text = FString(ChessPiece->GetBoardPosition().ToString());
+			UE_LOG(LogTemp, Log, TEXT("VALID Position - from %s to %s"),*FString(text),*FString(PossibleMove.ToString()))
 			FMove Move = FMove(ChessPiece, PossibleMove, TargetObject);
 			AdjustMoveType(&Move);
 			ValidMoves.Add(Move);
+		}
+		else if(TargetObject->GetColor() == ChessPiece->GetColor())
+		{
+			FString text = FString(ChessPiece->GetBoardPosition().ToString());
+			UE_LOG(LogTemp, Log, TEXT("Same colors - from %s to %s"),*FString(text),*FString(PossibleMove.ToString()))
 		}
 	}
 	return ValidMoves;
@@ -177,7 +186,7 @@ TArray<FMove> UChessboardController::GetKingSpecialMoves(UChessPiece* KingPiece)
 	TArray<UChessPiece*> Rooks = GetChessPiecesOfType(KingPiece->GetColor(), EFigure::Rook);
 	for (UChessPiece* Rook : Rooks)
 	{
-		if (Rook->HasMoved())
+		if (Rook->HasMoved() || Rook->GetBoardPosition().Y != KingPos.Y)
 		{
 			continue;
 		}

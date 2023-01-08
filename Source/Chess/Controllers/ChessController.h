@@ -25,6 +25,7 @@ class CHESS_API AChessController final : public AActor , public IBoardHighlighte
 
 public:
 	void GenerateChessPieces(const EColor FigureColor);
+	void SetupChessPiece( UChessPiece* ChessPiece,EColor Color, int X, int Y);
 	UChessPiece* GenerateChessPiece(const EFigure Figure);
 	virtual void BeginPlay() override;
 	virtual void EndTurn() override;
@@ -68,7 +69,7 @@ private:
 	EColor CurrentPlayer = EColor::White;
 	
 	FTransform GenerateChessPieceTransform(int TargetRow, int TargetColumn, EColor Color);
-	void GenerateChessRow(TArray<EFigure> Figures, const EColor Color, const int TargetRow);
+	void GenerateChessRow(TArray<EFigure> Figures, const EColor Color, const int Y);
 	void BroadcastTurnEnded(EColor Color);
 	
 	const TArray<EFigure> Pawns = {

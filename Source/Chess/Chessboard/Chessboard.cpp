@@ -50,13 +50,23 @@ FTransform UChessboard::BoardToWorldTransform(const FIntPoint Position) const
 
 UChessPiece* UChessboard::GetPieceAtPosition(FIntPoint BoardPosition)
 {
+	if(!ChessData->IsValidBoardPosition(BoardPosition))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Cannot get object from %s"),*FString(BoardPosition.ToString()))
+		return nullptr;
+	}
+	UE_LOG(LogTemp, Log, TEXT("Getting object from %s"),*FString(BoardPosition.ToString()))
 	UObject* Object = Board[BoardPosition.X][BoardPosition.Y];
-	//UE_LOG(LogTemp, Log, TEXT("Getting object from %s"),*FString(BoardPosition.ToString()))
 	return static_cast<UChessPiece*>(Object);
 }
 
 void UChessboard::SetPieceAtPosition(const FIntPoint Position, UChessPiece* ChessPiece)
 {
+	if(!ChessData->IsValidBoardPosition(Position))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Cannot set any object at %s"),*FString(Position.ToString()))
+		return;
+	}
 	UObject* CurrentObject = Board[Position.X][Position.Y];
 	if (CurrentObject && !bIsSimulation)
 	{

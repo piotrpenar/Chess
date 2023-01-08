@@ -42,17 +42,22 @@ void AChessController::GenerateChessPieces(const EColor FigureColor)
 	GenerateChessRow(Pawns, FigureColor, PawnRow);
 }
 
-void AChessController::GenerateChessRow(TArray<EFigure> Figures, const EColor Color, const int TargetRow)
+void AChessController::SetupChessPiece( UChessPiece* ChessPiece,const EColor Color, const int X, int Y)
 {
-	for (int Column = 0; Column < ChessData->GetBoardSize(); Column++)
+	ChessPiece->SetReferences(ChessData,ChessboardController,this);
+	ChessPiece->SetColor(Color);
+	ChessPiece->CreateActor(GetWorld(),this);
+	ChessPiece->SetPosition(X, Y);
+	ChessPiece->SetActorTransform(GenerateChessPieceTransform(X,Y,Color));
+}
+
+void AChessController::GenerateChessRow(TArray<EFigure> Figures, const EColor Color, const int Y)
+{
+	for (int X = 0; X < ChessData->GetBoardSize(); X++)
 	{
-		UChessPiece* Clone = GenerateChessPiece(Figures[Column]);
-		Clone->SetReferences(ChessData,ChessboardController,this);
-		Clone->SetColor(Color);
-		Clone->CreateActor(GetWorld(),this);
-		Clone->SetPosition(Column, TargetRow);
-		Clone->SetActorTransform(GenerateChessPieceTransform(Column,TargetRow,Color));
-		Chessboard->SetPieceAtPosition(FIntPoint(Column,TargetRow),Clone);
+		UChessPiece* ChessPiece = GenerateChessPiece(Figures[X]);
+		SetupChessPiece(ChessPiece,Color, X,Y);
+		Chessboard->SetPieceAtPosition(FIntPoint(X,Y),ChessPiece);
 	}
 }
 
@@ -118,7 +123,9 @@ void AChessController::HandleEnPassant(UChessPiece* ChessPiece)
 void AChessController::PromotePawn(UChessPiece* ChessPiece, EFigure TargetFigure)
 {
 	UChessPiece* NewFigure = UChessPiecesFactory::GenerateChessPiece(TargetFigure,this);
-	Chessboard->SetPieceAtPosition(ChessPiece->GetBoardPosition(),NewFigure);
+	FIntPoint TargetPos = ChessPiece->GetBoardPosition();
+	SetupChessPiece(NewFigure,ChessPiece->GetColor(),TargetPos.X,TargetPos.Y);
+	ChessboardController->SetChessPieceAtPosition(ChessPiece->GetBoardPosition(),NewFigure);
 }
 
 //TODO: Add proper UI Implementation here. Currently we always switch for queen.

@@ -117,37 +117,37 @@ void UChessPiece::CreateActor(UWorld* World, IBoardHighlighter* Highlighter)
 {
 	if (!IsValid(World))
 	{
-		UE_LOG(LogTemp, Log, TEXT("World is invalid"))
+		UE_LOG(LogTemp, Warning, TEXT("World is invalid"))
 		return;
 	}
 	AChessFigure* Actor = World->SpawnActor<AChessFigure>(ChessData->GetChessFigureActor());
 	if (!IsValid(Actor))
 	{
-		UE_LOG(LogTemp, Log, TEXT("Actor is invalid"))
+		UE_LOG(LogTemp, Warning, TEXT("Actor is invalid"))
 		return;
 	}
 	UActorComponent* Component = Actor->GetComponentByClass(UStaticMeshComponent::StaticClass());
 	if (!IsValid(Component))
 	{
-		UE_LOG(LogTemp, Log, TEXT("Component is invalid"))
+		UE_LOG(LogTemp, Warning, TEXT("Component is invalid"))
 		return;
 	}
 	if (!IsValid(ChessData))
 	{
-		UE_LOG(LogTemp, Log, TEXT("ChessData is invalid"))
+		UE_LOG(LogTemp, Warning, TEXT("ChessData is invalid"))
 		return;
 	}
 
 	UStaticMesh* Mesh = ChessData->GetMeshForType(GetFigureType());
 	if (!IsValid(Mesh))
 	{
-		UE_LOG(LogTemp, Log, TEXT("Mesh is invalid"))
+		UE_LOG(LogTemp, Warning, TEXT("Mesh is invalid"))
 		return;
 	}
 	UStaticMeshComponent* StaticMeshComponent = static_cast<UStaticMeshComponent*>(Component);
 	if (!IsValid(StaticMeshComponent))
 	{
-		UE_LOG(LogTemp, Log, TEXT("StaticMeshComponent is invalid"))
+		UE_LOG(LogTemp, Warning, TEXT("StaticMeshComponent is invalid"))
 		return;
 	}
 	StaticMeshComponent->SetStaticMesh(Mesh);

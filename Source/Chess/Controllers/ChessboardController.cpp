@@ -21,7 +21,6 @@ bool UChessboardController::IsValidMove(const FIntPoint Position, UObject* Chess
 {
 	if (!ChessData->IsValidBoardPosition(Position))
 	{
-		UE_LOG(LogTemp, Log, TEXT("Invalid board position"))
 		return false;
 	}
 	if (bIsSimulation)
@@ -39,7 +38,6 @@ bool UChessboardController::IsValidMove(const FIntPoint Position, UObject* Chess
 	}
 	if (SimulatedTargetPiece && SimulatedTargetPiece->GetColor() == SimulatedPiece->GetColor())
 	{
-		UE_LOG(LogTemp, Log, TEXT("Same color %s"), *FString(Position.ToString()))
 		return false;
 	}
 	SimulatedBoard->SetPieceAtPosition(Position, SimulatedPiece);
@@ -95,23 +93,14 @@ TArray<FMove> UChessboardController::GetValidMovesFromPositions(TArray<FIntPoint
 		FIntPoint PossibleMove = PossibleMoves[i];
 		if (!IsValidMove(PossibleMove, ChessPiece))
 		{
-			FString text = FString(ChessPiece->GetBoardPosition().ToString());
-			UE_LOG(LogTemp, Log, TEXT("Invalid Position - from %s to %s"),*FString(text),*FString(PossibleMove.ToString()))
 			continue;
 		}
 		UChessPiece* TargetObject = GetPieceAtPosition(PossibleMove);
 		if (!TargetObject || TargetObject->GetColor() != ChessPiece->GetColor())
 		{
-			FString text = FString(ChessPiece->GetBoardPosition().ToString());
-			UE_LOG(LogTemp, Log, TEXT("VALID Position - from %s to %s"),*FString(text),*FString(PossibleMove.ToString()))
 			FMove Move = FMove(ChessPiece, PossibleMove, TargetObject);
 			AdjustMoveType(&Move);
 			ValidMoves.Add(Move);
-		}
-		else if(TargetObject->GetColor() == ChessPiece->GetColor())
-		{
-			FString text = FString(ChessPiece->GetBoardPosition().ToString());
-			UE_LOG(LogTemp, Log, TEXT("Same colors - from %s to %s"),*FString(text),*FString(PossibleMove.ToString()))
 		}
 	}
 	return ValidMoves;
@@ -240,16 +229,31 @@ TArray<UChessPiece*> UChessboardController::GetChessPiecesOfType(EColor Color, E
 
 bool UChessboardController::CanPawnDoubleMove(UChessPiece* ChessPiece, FIntPoint PawnPos, int Direction)
 {
+	if(ChessPiece->HasMoved())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Cannot Double Move"))
+		return false;
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Has not moved"))
+	}
 	TArray<FMove> SpecialMoves;
 	bool canDoubleMove = true;
 	FIntPoint TargetPosition = PawnPos;
 	for (int i = 0; i < 2; i++)
 	{
 		TargetPosition += FIntPoint(0, Direction);
+		if(!ChessData->IsValidBoardPosition(TargetPosition))
+		{
+			canDoubleMove = false;
+			break;
+		}
 		UChessPiece* OtherPiece = Chessboard->GetPieceAtPosition(TargetPosition);
 		if (OtherPiece)
 		{
 			canDoubleMove = false;
+			break;
 		}
 	}
 	if (canDoubleMove && IsValidMove(TargetPosition, ChessPiece))

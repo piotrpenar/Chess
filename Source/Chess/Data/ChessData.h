@@ -33,7 +33,7 @@ public:
 	UStaticMesh* GetMeshForType(EFigure Figure) const;
 	TSubclassOf<AChessFigure> GetChessFigureActor() const;
 	TSubclassOf<ACheckerHighlight> GetCheckerHighlightActor() const;
-	bool IsValidBoardPosition(const FIntPoint& Vector2) const;
+	bool IsValidBoardPosition(const FIntPoint& Position) const;
 	float GetBoardCheckerSize();
 	float GetBoardSize();
 	float GetBoardOffset();

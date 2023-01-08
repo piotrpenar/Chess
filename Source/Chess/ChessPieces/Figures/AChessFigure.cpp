@@ -15,6 +15,10 @@ void AChessFigure::HandleFigureClick()
 
 void AChessFigure::SetBoardPosition(FIntPoint NewBoardPosition)
 {
+	if(!IsValid(this))
+	{
+		return;
+	}
 	this->BoardPosition = NewBoardPosition;
 }
 

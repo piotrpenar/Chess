@@ -126,6 +126,13 @@ UChessPiece* UChessboard::GetChessPiece(const EFigure Figure, const EColor Color
 	return nullptr;
 }
 
+UChessPiece* UChessboard::CreateSimulatedChessPiece(TScriptInterface<IMovementVerifier> SimulatedMovementVerifier, UChessPiece* ChessPiece)
+{
+	UChessPiece* Clone = UChessPiecesFactory::CloneChessPiece(ChessPiece, this);
+	Clone->SetAsSimulated(SimulatedMovementVerifier);
+	return Clone;
+}
+
 void UChessboard::SetAsSimulated(UChessboard* OriginalBoard, TScriptInterface<IMovementVerifier> SimulatedMovementVerifier)
 {
 	bIsSimulation = true;
@@ -140,8 +147,7 @@ void UChessboard::SetAsSimulated(UChessboard* OriginalBoard, TScriptInterface<IM
 				NewRow.Add(nullptr);
 				continue;
 			}
-			UChessPiece* Clone = UChessPiecesFactory::CloneChessPiece(ChessPiece, this);
-			Clone->SetAsSimulated(SimulatedMovementVerifier);
+			UChessPiece* Clone = CreateSimulatedChessPiece(SimulatedMovementVerifier, ChessPiece);;
 			NewRow.Add(Clone);
 		}
 		Board.Add(NewRow);

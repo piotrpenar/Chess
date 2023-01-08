@@ -117,7 +117,7 @@ void AChessController::HandleCastling(const FMove& Move, UChessPiece* ChessPiece
 
 void AChessController::HandleEnPassant(UChessPiece* ChessPiece)
 {
-	ChessboardController->SetChessPieceAtPosition(ChessPiece->GetBoardPosition(),nullptr);
+	ChessboardController->RemoveChessPieceAtPosition(ChessPiece->GetBoardPosition());
 }
 
 void AChessController::PromotePawn(UChessPiece* ChessPiece, EFigure TargetFigure)
@@ -125,7 +125,8 @@ void AChessController::PromotePawn(UChessPiece* ChessPiece, EFigure TargetFigure
 	UChessPiece* NewFigure = UChessPiecesFactory::GenerateChessPiece(TargetFigure,this);
 	FIntPoint TargetPos = ChessPiece->GetBoardPosition();
 	SetupChessPiece(NewFigure,ChessPiece->GetColor(),TargetPos.X,TargetPos.Y);
-	ChessboardController->SetChessPieceAtPosition(ChessPiece->GetBoardPosition(),NewFigure);
+	ChessboardController->RemoveChessPieceAtPosition(ChessPiece->GetBoardPosition());
+	ChessboardController->AddChessPieceAtPosition(NewFigure,TargetPos);
 }
 
 //TODO: Add proper UI Implementation here. Currently we always switch for queen.

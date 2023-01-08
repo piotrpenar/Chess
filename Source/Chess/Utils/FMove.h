@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "EMoveType.h"
+#include "Chess/Enums/EMoveType.h"
 #include "FMove.generated.h"
 
 USTRUCT(BlueprintType)

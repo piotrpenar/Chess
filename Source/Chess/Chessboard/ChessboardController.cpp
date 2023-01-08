@@ -1,5 +1,5 @@
 ﻿#include "ChessboardController.h"
-#include "ChessRulesController.h"
+#include "Chess/Controllers/ChessRulesController.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 #include "Chess/ChessPieces/Logic/ChessPawn.h"
 

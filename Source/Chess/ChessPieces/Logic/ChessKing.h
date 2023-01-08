@@ -10,6 +10,6 @@ class UChessKing final : public UChessPiece
 	TArray<FIntPoint> GetPossiblePositions() const;
 
 public:
-	virtual EFigure GetFigureType() override;;
+	virtual EFigure GetFigureType() override;
 	virtual TArray<FMove> GetAvailableMoves() override;
 };

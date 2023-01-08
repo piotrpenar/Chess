@@ -1,10 +1,10 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
-#include "ChessboardController.h"
+#include "Chess/Chessboard/ChessboardController.h"
 #include "Chess/Chessboard/Chessboard.h"
 #include "Chess/ChessPieces/ChessPiece.h"
-#include "Chess/Utils/ECheckmateStatus.h"
+#include "Chess/Enums/ECheckmateStatus.h"
 #include "ChessRulesController.generated.h"
 
 UCLASS()

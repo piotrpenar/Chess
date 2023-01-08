@@ -1,10 +1,10 @@
 #include "ChessController.h"
-#include "ChessboardController.h"
+#include "Chess/Chessboard/ChessboardController.h"
 #include "Chess/Chessboard/Chessboard.h"
 #include "Chess/Helpers/ChessPiecesFactory.h"
-#include "Chess/Utils/EColor.h"
-#include "Chess/Utils/EFigure.h"
-#include "Chess/Utils/EMoveType.h"
+#include "Chess/Enums/EColor.h"
+#include "Chess/Enums/EFigure.h"
+#include "Chess/Enums/EMoveType.h"
 
 
 void AChessController::BeginPlay()
@@ -97,9 +97,9 @@ void AChessController::EndTurn()
 	UE_LOG(LogTemp, Log, TEXT("Check mate status is %s"), *FString(Value));
 }
 
-void AChessController::SetSelectedFigure(AActor* Actor)
+void AChessController::SetSelectedFigure(AActor* SelectedFigureActor)
 {
-	AChessFigure* Figure = static_cast<AChessFigure*>(Actor);
+	AChessFigure* Figure = static_cast<AChessFigure*>(SelectedFigureActor);
 	CurrentSelectedFigure = Figure;
 }
 

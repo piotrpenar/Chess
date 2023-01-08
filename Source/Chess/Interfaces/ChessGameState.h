@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
-#include "Chess/Utils/EColor.h"
+#include "Chess/Enums/EColor.h"
 #include "ChessGameState.generated.h"
 
 UINTERFACE()

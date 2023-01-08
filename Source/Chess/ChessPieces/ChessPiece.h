@@ -4,8 +4,8 @@
 #include "Chess/Interfaces/ChessGameState.h"
 #include "Chess/Interfaces/MovementVerifier.h"
 #include "Chess/Interfaces/MovesProvider.h"
-#include "Chess/Utils/EColor.h"
-#include "Chess/Utils/EFigure.h"
+#include "Chess/Enums/EColor.h"
+#include "Chess/Enums/EFigure.h"
 #include "Chess/Utils/FMove.h"
 #include "ChessPiece.generated.h"
 

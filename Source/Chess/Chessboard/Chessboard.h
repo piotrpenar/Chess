@@ -1,10 +1,9 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
 #include "Chess/ChessPieces/ChessPiece.h"
-#include "Chess/Utils/EColor.h"
-#include "Chess/Utils/EFigure.h"
+#include "Chess/Enums/EColor.h"
+#include "Chess/Enums/EFigure.h"
 #include "Chess/Utils/F2DBoardArray.h"
-#include "Chess/Helpers/ChessPiecesFactory.h"
 #include "Chessboard.generated.h"
 
 UCLASS()

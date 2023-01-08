@@ -1,4 +1,5 @@
 ﻿#include "Chessboard.h"
+#include "Chess/Helpers/ChessPiecesFactory.h"
 
 void UChessboard::Initialize(UChessData* Data, AActor* NewChessBoardOrigin)
 {

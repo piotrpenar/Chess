@@ -18,9 +18,9 @@ TSubclassOf<ACheckerHighlight> UChessData::GetCheckerHighlightActor() const
 	return ChessHighlightActor;
 }
 
-bool UChessData::IsValidBoardPosition(const FIntPoint& Vector2) const
+bool UChessData::IsValidBoardPosition(const FIntPoint& Position) const
 {
-	return Vector2.X >= 0 && Vector2.X < BoardSize && Vector2.Y >= 0 && Vector2.Y < BoardSize;
+	return Position.X >= 0 && Position.X < BoardSize && Position.Y >= 0 && Position.Y < BoardSize;
 }
 
 float UChessData::GetBoardCheckerSize()

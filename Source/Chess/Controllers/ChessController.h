@@ -25,20 +25,31 @@ class CHESS_API AChessController final : public AActor , public IBoardHighlighte
 
 public:
 	void GenerateChessPieces(const EColor FigureColor);
+	void SetupChessPiece( UChessPiece* ChessPiece,EColor Color, int X, int Y);
 	UChessPiece* GenerateChessPiece(const EFigure Figure);
 	virtual void BeginPlay() override;
 	virtual void EndTurn() override;
 	virtual void CreateHighlights(TArray<FMove> Moves) override;
 	virtual void SetSelectedFigure(AActor* Figure) override;
+	void HandleCastling(const FMove& Move, UChessPiece* ChessPiece);
+	void HandleEnPassant(UChessPiece* ChessPiece);
+	void PromotePawn(UChessPiece* Object, EFigure Queen);
+	void HandlePawnPromotion(const FMove& Move);
+	void HandleSpecialMoveType(const FMove& Move);
 	virtual void HighlightSelected(AActor* Source) override;
 	virtual EColor GetCurrentPlayer() override;
 	void ClearHighlights();
+	
+	DECLARE_DERIVED_EVENT( AChessController, IChessGameState::FTurnEnded, FTurnEnded);
+	virtual FTurnEnded& OnTurnEnded() override;
+	FTurnEnded TurnEndedEvent;
 
 	UPROPERTY(EditAnywhere)
 	UChessData* ChessData;
 	
 	UPROPERTY(EditAnywhere)
 	AActor* ChessBoardOrigin;
+	
 	
 private:
 
@@ -58,7 +69,8 @@ private:
 	EColor CurrentPlayer = EColor::White;
 	
 	FTransform GenerateChessPieceTransform(int TargetRow, int TargetColumn, EColor Color);
-	void GenerateChessRow(TArray<EFigure> Figures, const EColor Color, const int TargetRow);
+	void GenerateChessRow(TArray<EFigure> Figures, const EColor Color, const int Y);
+	void BroadcastTurnEnded(EColor Color);
 	
 	const TArray<EFigure> Pawns = {
 		EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn,

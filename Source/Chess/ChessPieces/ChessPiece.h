@@ -14,13 +14,6 @@ class CHESS_API UChessPiece : public UObject, public IMovesProvider
 {
 	GENERATED_BODY()
 
-	UPROPERTY()
-	AChessFigure* ChessPieceActor;
-
-	bool bIsSimulated;
-	
-	void SetActorRotation(FRotator Rotation) const;
-
 protected:
 	UPROPERTY()
 	EColor Color = EColor::White;
@@ -28,7 +21,14 @@ protected:
 	FIntPoint BoardPosition;
 	UPROPERTY()
 	FVector3f WorldPosition;
+	UPROPERTY()
+	bool bIsSimulated = false;
+	UPROPERTY()
+	bool bHasMoved = false;
+	UPROPERTY()
+	AChessFigure* ChessPieceActor;
 	
+	void SetActorRotation(FRotator Rotation) const;
 public:
 	UPROPERTY()
 	UChessData* ChessData;
@@ -42,6 +42,7 @@ public:
 	virtual TArray<FMove> GetAvailableMoves() override;
 	virtual bool CanMoveThisTurn() override;
 
+	bool HasMoved();
 	void SetColor(EColor PieceColor);
 	void SetPosition(int X, int Y);
 	void SetActorTransform(FTransform Transform) const;

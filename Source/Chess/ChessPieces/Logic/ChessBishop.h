@@ -8,7 +8,6 @@ class UChessBishop final : public UChessPiece
 {
 	GENERATED_BODY()
 	
-	
 	TArray<FIntPoint> GetPossibleDirections() const;
 	
 public:

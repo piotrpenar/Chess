@@ -8,7 +8,6 @@ class UChessQueen final : public UChessPiece
 {
 	GENERATED_BODY()
 	
-	
 	TArray<FIntPoint> GetPossibleDirections() const;
 public:
 	virtual EFigure GetFigureType() override;

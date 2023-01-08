@@ -8,7 +8,7 @@
 #include "Chess/Utils/F2DBoardArray.h"
 
 
-void UChessboard::Initialize(UChessData* NewChessData, AActor* NewChessBoardOrigin) 
+void UChessboard::Initialize(UChessData* NewChessData, AActor* NewChessBoardOrigin)
 {
 	this->ChessData = NewChessData;
 	this->ChessBoardOrigin = NewChessBoardOrigin;
@@ -34,41 +34,54 @@ FTransform UChessboard::GetChessBoardTransform() const
 
 FTransform UChessboard::BoardToWorldTransform(const int X, const int Y) const
 {
-	const FIntPoint Position = FIntPoint(X,Y);
+	const FIntPoint Position = FIntPoint(X, Y);
 	return BoardToWorldTransform(Position);
 }
 
 FTransform UChessboard::BoardToWorldTransform(const FIntPoint Position) const
 {
-	FTransform Transform= GetChessBoardTransform();
+	FTransform Transform = GetChessBoardTransform();
 	const float BoardDistance = ChessData->GetBoardCheckerSize();
-	Transform.SetLocation(Transform.GetLocation() + FVector(BoardDistance/2 + Position.X*BoardDistance,BoardDistance/2 + Position.Y*BoardDistance,ChessData->GetBoardOffset()));
+	FVector PositionOffset = FVector(BoardDistance / 2 + Position.X * BoardDistance, BoardDistance / 2 + Position.Y * BoardDistance, ChessData->GetBoardOffset());
+	PositionOffset = Transform.Rotator().RotateVector(PositionOffset);
+	Transform.SetLocation(Transform.GetLocation() + PositionOffset);
 	return Transform;
 }
 
 UChessPiece* UChessboard::GetPieceAtPosition(FIntPoint BoardPosition)
 {
+	if(!ChessData->IsValidBoardPosition(BoardPosition))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Cannot get object from %s"),*FString(BoardPosition.ToString()))
+		return nullptr;
+	}
 	UObject* Object = Board[BoardPosition.X][BoardPosition.Y];
-	//UE_LOG(LogTemp, Log, TEXT("Getting object from %s"),*FString(BoardPosition.ToString()))
 	return static_cast<UChessPiece*>(Object);
 }
 
 void UChessboard::SetPieceAtPosition(const FIntPoint Position, UChessPiece* ChessPiece)
 {
-	UObject* CurrentObject = Board[Position.X][Position.Y];
-	if(CurrentObject)
+	if(!ChessData->IsValidBoardPosition(Position))
 	{
-		if(ChessPiece)
-		{
-			static_cast<UChessPiece*>(CurrentObject)->DestroyChessPiece();
-		}
+		UE_LOG(LogTemp, Error, TEXT("Cannot set any object at %s"),*FString(Position.ToString()))
+		return;
 	}
-	//UE_LOG(LogTemp, Log, TEXT("Setting object at %s"),*FString(Vector2.ToString()))
-	Board[Position.X].Set(Position.Y,ChessPiece);
-	if(ChessPiece)
+	UObject* CurrentObject = Board[Position.X][Position.Y];
+	if (CurrentObject && !bIsSimulation)
+	{
+		static_cast<UChessPiece*>(CurrentObject)->DestroyChessPiece();
+	}
+	Board[Position.X].Set(Position.Y, ChessPiece);
+	if (ChessPiece)
 	{
 		ChessPiece->SetPosition(Position);
 	}
+}
+
+void UChessboard::MovePieceFromToPosition(UChessPiece* ChessPiece, const FIntPoint FromPosition, const FIntPoint ToPosition)
+{
+	SetPieceAtPosition(ToPosition, ChessPiece);
+	Board[FromPosition.X].Set(FromPosition.Y, nullptr);
 }
 
 TArray<UChessPiece*> UChessboard::GetAllPiecesOfColor(const EColor Color)
@@ -93,7 +106,7 @@ TArray<UChessPiece*> UChessboard::GetAllPiecesOfColor(const EColor Color)
 }
 
 
-UChessPiece* UChessboard::GetChessPiece(const EFigure Figure,const EColor Color)
+UChessPiece* UChessboard::GetChessPiece(const EFigure Figure, const EColor Color)
 {
 	for (F2DBoardArray Row : Board)
 	{
@@ -113,21 +126,21 @@ UChessPiece* UChessboard::GetChessPiece(const EFigure Figure,const EColor Color)
 	return nullptr;
 }
 
-void UChessboard::SetAsSimulated(UChessboard* OriginalBoard,TScriptInterface<IMovementVerifier> SimulatedMovementVerifier)
+void UChessboard::SetAsSimulated(UChessboard* OriginalBoard, TScriptInterface<IMovementVerifier> SimulatedMovementVerifier)
 {
-	bIsSimulation=true;
-	for (int i=0;i<ChessData->GetBoardSize();i++)
+	bIsSimulation = true;
+	for (int i = 0; i < ChessData->GetBoardSize(); i++)
 	{
 		F2DBoardArray NewRow = F2DBoardArray();
-		for (int j=0;j<ChessData->GetBoardSize();j++)
+		for (int j = 0; j < ChessData->GetBoardSize(); j++)
 		{
-			UChessPiece* ChessPiece = OriginalBoard->GetPieceAtPosition(FIntPoint(i,j));
+			UChessPiece* ChessPiece = OriginalBoard->GetPieceAtPosition(FIntPoint(i, j));
 			if (!ChessPiece)
 			{
 				NewRow.Add(nullptr);
 				continue;
 			}
-			UChessPiece* Clone = UChessPiecesFactory::CloneChessPiece(ChessPiece,this);
+			UChessPiece* Clone = UChessPiecesFactory::CloneChessPiece(ChessPiece, this);
 			Clone->SetAsSimulated(SimulatedMovementVerifier);
 			NewRow.Add(Clone);
 		}

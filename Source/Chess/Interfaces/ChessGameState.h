@@ -25,4 +25,6 @@ class CHESS_API IChessGameState
 public:
 	virtual EColor GetCurrentPlayer() ;
 	virtual void EndTurn();
+	DECLARE_EVENT_OneParam( IChessGameState, FTurnEnded, EColor&);
+	virtual FTurnEnded& OnTurnEnded() = 0;
 };

@@ -15,24 +15,49 @@ TArray<FIntPoint> UChessPawn::GetPossiblePositions()
 		BoardPosition + FIntPoint(0, Direction),
 		BoardPosition + FIntPoint(1, Direction),
 	};
-	if (!bHasMoved)
-	{
-		PossibleMoves.Add(BoardPosition + FIntPoint(0, Direction * 2));
-	}
 	return PossibleMoves;
+}
+
+void UChessPawn::HandleTurnEnded(EColor& CurrentColor)
+{
+	UE_LOG(LogTemp, Log, TEXT("Subscription called!"))
+	if (!IsValid(this))
+	{
+		return;
+	}
+	if(CurrentColor != Color)
+	{
+		bHasDoubleMoved = false;
+	}
+}
+
+bool UChessPawn::HasDoubleMoved(const FIntPoint Position) const
+{
+	const FIntPoint PreviousPosition = BoardPosition;
+	return abs(PreviousPosition.Y - Position.Y) == 2;
 }
 
 void UChessPawn::MoveToPosition(FIntPoint Position, FVector ActorPosition)
 {
+	if(HasDoubleMoved(Position))
+	{
+		bHasDoubleMoved = true;
+		ChessGameState->OnTurnEnded().AddUObject(this,&UChessPawn::HandleTurnEnded);
+	}
 	Super::MoveToPosition(Position,ActorPosition);
-	bHasMoved = true;
+}
+
+bool UChessPawn::IsValidPassantTarget()
+{
+	return bHasDoubleMoved;
 }
 
 TArray<FMove> UChessPawn::GetAvailableMoves()
 {
 	TArray<FIntPoint> PossibleMoves = GetPossiblePositions();
 	TArray<FMove> ValidPositions = MovementVerifier->GetValidMovesFromPositions(GetPossiblePositions(),this);
-	TArray<FMove> AvailableMoves;
+	TArray<FMove> SpecialMoves = MovementVerifier->GetValidSpecialMoves(this);
+	TArray<FMove> AvailableMoves = SpecialMoves;
 
 	for (const FMove ValidPosition : ValidPositions)
 	{

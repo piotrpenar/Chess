@@ -15,10 +15,6 @@ TArray<FIntPoint> UChessPawn::GetPossiblePositions()
 		BoardPosition + FIntPoint(0, Direction),
 		BoardPosition + FIntPoint(1, Direction),
 	};
-	if (!bHasMoved)
-	{
-		PossibleMoves.Add(BoardPosition + FIntPoint(0, Direction * 2));
-	}
 	return PossibleMoves;
 }
 
@@ -51,12 +47,22 @@ void UChessPawn::MoveToPosition(FIntPoint Position, FVector ActorPosition)
 	bHasMoved = true;
 }
 
+bool UChessPawn::IsValidPassantTarget()
+{
+	return bHasDoubleMoved;
+}
+
+bool UChessPawn::HasMoved()
+{
+	return bHasMoved;
+}
+
 TArray<FMove> UChessPawn::GetAvailableMoves()
 {
 	TArray<FIntPoint> PossibleMoves = GetPossiblePositions();
 	TArray<FMove> ValidPositions = MovementVerifier->GetValidMovesFromPositions(GetPossiblePositions(),this);
 	TArray<FMove> SpecialMoves = MovementVerifier->GetValidSpecialMoves(this);
-	TArray<FMove> AvailableMoves;
+	TArray<FMove> AvailableMoves = SpecialMoves;
 
 	for (const FMove ValidPosition : ValidPositions)
 	{

@@ -42,7 +42,9 @@ FTransform UChessboard::BoardToWorldTransform(const FIntPoint Position) const
 {
 	FTransform Transform= GetChessBoardTransform();
 	const float BoardDistance = ChessData->GetBoardCheckerSize();
-	Transform.SetLocation(Transform.GetLocation() + FVector(BoardDistance/2 + Position.X*BoardDistance,BoardDistance/2 + Position.Y*BoardDistance,ChessData->GetBoardOffset()));
+	FVector PositionOffset = FVector(BoardDistance/2 + Position.X*BoardDistance,BoardDistance/2 + Position.Y*BoardDistance,ChessData->GetBoardOffset());
+	PositionOffset = Transform.Rotator().RotateVector(PositionOffset);
+	Transform.SetLocation(Transform.GetLocation() + PositionOffset);
 	return Transform;
 }
 

@@ -20,7 +20,8 @@ public:
 	AChessFigure* SourceFigure;
 	IBoardHighlighter* Highlighter;
 	FIntPoint Position;
-	
+	FMove Move;
+
 	UFUNCTION(BlueprintCallable)
 	void NotifyHighlighterOnClick();
 };

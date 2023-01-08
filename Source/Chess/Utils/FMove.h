@@ -7,6 +7,8 @@ struct FMove
 	GENERATED_BODY()
 	
 	UPROPERTY()
+	UObject* SourcePiece;
+	UPROPERTY()
 	FIntPoint TargetPosition;
 	UPROPERTY()
 	UObject* TargetObject;
@@ -15,8 +17,9 @@ struct FMove
 	{
 	}
 
-	FMove(const FIntPoint Position,UObject* Object)
+	FMove(UObject* Source,const FIntPoint Position,UObject* Object)
 	{
+		SourcePiece = Source;
 		TargetPosition = Position;
 		TargetObject = Object;
 	}

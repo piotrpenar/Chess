@@ -134,6 +134,7 @@ void AChessController::CreateHighlights(TArray<FMove> Moves)
 		Actor->Position = Move.TargetPosition;
 		Actor->Highlighter = this;
 		Actor->SourceFigure = CurrentSelectedFigure;
+		Actor->Move = Move;
 		CurrentHighlights.Add(Actor);
 	}
 }

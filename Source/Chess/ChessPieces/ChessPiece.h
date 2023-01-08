@@ -17,9 +17,11 @@ class CHESS_API UChessPiece : public UObject, public IMovesProvider
 	UPROPERTY()
 	AChessFigure* ChessPieceActor;
 
+private:
+	UPROPERTY()
 	bool bIsSimulated;
+	UPROPERTY()
 	bool bHasMoved;
-	
 	void SetActorRotation(FRotator Rotation) const;
 
 protected:

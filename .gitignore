@@ -10,7 +10,7 @@
 
 #Rider Plugin
 Plugins/**/*
-Plugins/**/RiderLink/*
+Plugins/**/RiderLink/**/*.*
 
 # Compiled Object files
 *.slo
@@ -84,3 +84,6 @@ Plugins/*/Intermediate/*
 # Cache files for the editor to use
 DerivedDataCache/*
 .idea/.idea.Chess/.idea/workspace.xml
+
+#Hololense Platform config
+Platforms/HoloLens/Config/

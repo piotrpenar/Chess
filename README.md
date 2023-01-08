@@ -23,7 +23,7 @@ TODO.
 - [x] Adding vegetation and foliage
 - [x] Advanced environment for the play area
 - [x] Adding details to the environment
-- [ ] Adding special moves (En Passant, Castling, Pawn Promotion)
+- [x] Adding special moves (En Passant, Castling, Pawn Promotion)
 - [ ] Refactor + Cleanup of the code
 - [ ] SFX creation and implementation
 - [ ] Music creation and implementation

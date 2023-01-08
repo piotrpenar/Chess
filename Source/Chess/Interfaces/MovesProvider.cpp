@@ -1,7 +1,4 @@
-﻿
-
-#pragma once
-
+﻿#pragma once
 #include "MovesProvider.h"
 
 TArray<FMove> IMovesProvider::GetAvailableMoves()

@@ -1,7 +1,4 @@
-﻿
-
-#pragma once
-
+﻿#pragma once
 #include "CoreMinimal.h"
 #include "Chess/ChessPieces/Figures/AChessFigure.h"
 #include "GameFramework/Actor.h"

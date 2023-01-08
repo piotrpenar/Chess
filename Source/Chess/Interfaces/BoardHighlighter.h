@@ -1,10 +1,6 @@
-﻿
-
-#pragma once
-
+﻿#pragma once
 #include "CoreMinimal.h"
 #include "Chess/Utils/FMove.h"
-#include "UObject/Interface.h"
 #include "BoardHighlighter.generated.h"
 
 UINTERFACE()
@@ -13,9 +9,6 @@ class UBoardHighlighter : public UInterface
 	GENERATED_BODY()
 };
 
-/**
- * 
- */
 class CHESS_API IBoardHighlighter
 {
 	GENERATED_BODY()

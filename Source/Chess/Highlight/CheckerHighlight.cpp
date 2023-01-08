@@ -1,10 +1,5 @@
-﻿
+﻿#include "CheckerHighlight.h"
 
-
-#include "CheckerHighlight.h"
-
-
-// Sets default values
 ACheckerHighlight::ACheckerHighlight()
 {
 }

@@ -1,10 +1,4 @@
-﻿
-
-
-#include "ChessRulesController.h"
-
-#include "Chess/ChessPieces/ChessPiece.h"
-
+﻿#include "ChessRulesController.h"
 
 ECheckmateStatus UChessRulesController::GetBoardStatusForColor(UChessboard* Chessboard, EColor Color, IMovementVerifier* MovementVerifier)
 {

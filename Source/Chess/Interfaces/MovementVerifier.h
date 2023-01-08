@@ -1,22 +1,14 @@
-﻿
-
-#pragma once
-
+﻿#pragma once
 #include "CoreMinimal.h"
-#include "UObject/Interface.h"
 #include "Chess/Utils/FMove.h"
 #include "MovementVerifier.generated.h"
 
-// This class does not need to be modified.
 UINTERFACE()
 class UMovementVerifier : public UInterface
 {
 	GENERATED_BODY()
 };
 
-/**
- * 
- */
 class CHESS_API IMovementVerifier
 {
 	GENERATED_BODY()

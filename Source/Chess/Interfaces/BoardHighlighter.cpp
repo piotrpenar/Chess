@@ -1,10 +1,5 @@
-﻿
+﻿#include "BoardHighlighter.h"
 
-
-#include "BoardHighlighter.h"
-
-
-// Add default functionality here for any IBoardHighlighter functions that are not pure virtual.
 void IBoardHighlighter::CreateHighlights(TArray<FMove> Moves)
 {
 }

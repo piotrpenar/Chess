@@ -1,10 +1,6 @@
-﻿
-
-#pragma once
-
+﻿#pragma once
 #include "CoreMinimal.h"
 #include "Chess/Utils/FMove.h"
-#include "UObject/Interface.h"
 #include "MovesProvider.generated.h"
 
 UINTERFACE()

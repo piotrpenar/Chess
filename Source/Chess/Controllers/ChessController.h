@@ -1,5 +1,3 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -14,9 +12,6 @@
 #include "Chess/Utils/EFigure.h"
 #include "ChessController.generated.h"
 
-/**
- * 
-*/
 UCLASS(Blueprintable)
 class CHESS_API AChessController final : public AActor, public IBoardHighlighter, public IChessGameState
 {

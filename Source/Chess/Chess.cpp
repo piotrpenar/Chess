@@ -1,5 +1,3 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #include "Chess.h"
 #include "Modules/ModuleManager.h"
 

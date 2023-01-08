@@ -1,9 +1,4 @@
-﻿
-
-
-#include "ChessData.h"
-
-#include "Chess/Utils/EColor.h"
+﻿#include "ChessData.h"
 
 UStaticMesh* UChessData::GetMeshForType(const EFigure Figure) const
 {

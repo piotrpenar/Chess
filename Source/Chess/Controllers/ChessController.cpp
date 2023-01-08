@@ -1,8 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
-
 #include "ChessController.h"
-
 #include "ChessboardController.h"
 #include "Chess/Chessboard/Chessboard.h"
 #include "Chess/Helpers/ChessPiecesFactory.h"

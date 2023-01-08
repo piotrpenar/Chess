@@ -1,8 +1,4 @@
-﻿
-
-
-#include "ChessPiecesFactory.h"
-
+﻿#include "ChessPiecesFactory.h"
 #include "Chess/ChessPieces/Logic/ChessBishop.h"
 #include "Chess/ChessPieces/Logic/ChessKing.h"
 #include "Chess/ChessPieces/Logic/ChessKnight.h"

@@ -1,11 +1,5 @@
-﻿
-
-
-#include "MovementVerifier.h"
+﻿#include "MovementVerifier.h"
 #include "Chess/Utils/FMove.h"
-
-
-// Add default functionality here for any IIMovementVeryfier functions that are not pure virtual.
 
 bool IMovementVerifier::IsValidMove(const FIntPoint Position, UObject* ChessPiece)
 {

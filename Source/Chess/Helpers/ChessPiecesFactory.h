@@ -1,15 +1,8 @@
-﻿
-
-#pragma once
-
+﻿#pragma once
 #include "CoreMinimal.h"
 #include "Chess/ChessPieces/ChessPiece.h"
-#include "UObject/Object.h"
 #include "ChessPiecesFactory.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class CHESS_API UChessPiecesFactory final : public UObject
 {

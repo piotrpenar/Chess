@@ -1,18 +1,12 @@
-﻿
-
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
 #include "ChessboardController.h"
 #include "Chess/Chessboard/Chessboard.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 #include "Chess/Utils/ECheckmateStatus.h"
-#include "UObject/Object.h"
 #include "ChessRulesController.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class CHESS_API UChessRulesController final : public UObject
 {

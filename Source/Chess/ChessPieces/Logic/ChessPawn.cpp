@@ -1,6 +1,5 @@
 ﻿#include "ChessPawn.h"
 
-
 EFigure UChessPawn::GetFigureType()
 {
 	return EFigure::Pawn;
@@ -25,7 +24,7 @@ void UChessPawn::HandleTurnEnded(EColor& CurrentColor)
 	{
 		return;
 	}
-	if(CurrentColor != Color)
+	if (CurrentColor != Color)
 	{
 		bHasDoubleMoved = false;
 	}
@@ -39,12 +38,12 @@ bool UChessPawn::HasDoubleMoved(const FIntPoint Position) const
 
 void UChessPawn::MoveToPosition(FIntPoint Position, FVector ActorPosition)
 {
-	if(HasDoubleMoved(Position))
+	if (HasDoubleMoved(Position))
 	{
 		bHasDoubleMoved = true;
-		ChessGameState->OnTurnEnded().AddUObject(this,&UChessPawn::HandleTurnEnded);
+		ChessGameState->OnTurnEnded().AddUObject(this, &UChessPawn::HandleTurnEnded);
 	}
-	Super::MoveToPosition(Position,ActorPosition);
+	Super::MoveToPosition(Position, ActorPosition);
 }
 
 bool UChessPawn::IsValidPassantTarget()
@@ -55,7 +54,7 @@ bool UChessPawn::IsValidPassantTarget()
 TArray<FMove> UChessPawn::GetAvailableMoves()
 {
 	TArray<FIntPoint> PossibleMoves = GetPossiblePositions();
-	TArray<FMove> ValidPositions = MovementVerifier->GetValidMovesFromPositions(GetPossiblePositions(),this);
+	TArray<FMove> ValidPositions = MovementVerifier->GetValidMovesFromPositions(GetPossiblePositions(), this);
 	TArray<FMove> SpecialMoves = MovementVerifier->GetValidSpecialMoves(this);
 	TArray<FMove> AvailableMoves = SpecialMoves;
 

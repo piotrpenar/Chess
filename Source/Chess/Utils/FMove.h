@@ -6,7 +6,7 @@ USTRUCT(BlueprintType)
 struct FMove
 {
 	GENERATED_BODY()
-	
+
 	UPROPERTY()
 	UObject* SourcePiece;
 	UPROPERTY()
@@ -20,7 +20,7 @@ struct FMove
 	{
 	}
 
-	FMove(UObject* Source,const FIntPoint Position,UObject* Object,EMoveType Type = EMoveType::Standard)
+	FMove(UObject* Source, const FIntPoint Position, UObject* Object, EMoveType Type = EMoveType::Standard)
 	{
 		SourcePiece = Source;
 		TargetPosition = Position;

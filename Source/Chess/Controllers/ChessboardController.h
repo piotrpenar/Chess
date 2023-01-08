@@ -1,17 +1,10 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
-#pragma once
-
+﻿#pragma once
 #include "CoreMinimal.h"
 #include "Chess/Chessboard/Chessboard.h"
 #include "Chess/Data/ChessData.h"
 #include "Chess/Interfaces/MovementVerifier.h"
-#include "UObject/Object.h"
 #include "ChessboardController.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class CHESS_API UChessboardController : public UObject, public IMovementVerifier
 {
@@ -30,8 +23,7 @@ class CHESS_API UChessboardController : public UObject, public IMovementVerifier
 
 	bool bIsSimulation = false;
 public:
-
-	void Initialize(UChessData* NewChessData,UChessboard* NewBoard,TScriptInterface<IChessGameState> NewChessGameState);
+	void Initialize(UChessData* NewChessData, UChessboard* NewBoard, TScriptInterface<IChessGameState> NewChessGameState);
 	void CreateChessboardSimulation();
 	void MoveChessPieceToPosition(UChessPiece* ChessPiece, FIntPoint Position);
 	void RemoveChessPieceAtPosition(FIntPoint Position);
@@ -51,5 +43,3 @@ private:
 	bool CanPawnDoubleMove(UChessPiece* ChessPiece, FIntPoint PawnPos, int Direction);
 	TArray<FMove> GetEnPassantMoves(UChessPiece* ChessPiece, FIntPoint PawnPos, int Direction);
 };
-
-

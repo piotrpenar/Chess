@@ -1,4 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿
 
 
 #include "CheckerHighlight.h"
@@ -13,5 +13,3 @@ void ACheckerHighlight::NotifyHighlighterOnClick()
 {
 	Highlighter->HighlightSelected(this);
 }
-
-

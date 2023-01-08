@@ -11,10 +11,9 @@ class AChessFigure final : public AActor
 	UPROPERTY()
 	FIntPoint BoardPosition;
 public:
-
 	UFUNCTION(BlueprintCallable)
 	void HandleFigureClick();
-	
+
 	IMovesProvider* SourcePiece;
 	IBoardHighlighter* Highlighter;
 	void SetBoardPosition(FIntPoint NewBoardPosition);

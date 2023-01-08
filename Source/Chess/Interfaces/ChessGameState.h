@@ -1,4 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿
 
 #pragma once
 
@@ -23,8 +23,9 @@ class CHESS_API IChessGameState
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	virtual EColor GetCurrentPlayer() ;
+	virtual EColor GetCurrentPlayer();
 	virtual void EndTurn();
-	DECLARE_EVENT_OneParam( IChessGameState, FTurnEnded, EColor&);
+	DECLARE_EVENT_OneParam(IChessGameState, FTurnEnded, EColor&);
+
 	virtual FTurnEnded& OnTurnEnded() = 0;
 };

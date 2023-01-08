@@ -1,11 +1,7 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
-
-#include "ChessboardController.h"
-
+﻿#include "ChessboardController.h"
 #include "ChessRulesController.h"
 #include "Chess/ChessPieces/ChessPiece.h"
-#include "Chess/Helpers/ChessPiecesFactory.h"
+#include "Chess/ChessPieces/Logic/ChessPawn.h"
 
 void UChessboardController::CreateChessboardSimulation()
 {
@@ -167,8 +163,8 @@ void UChessboardController::SetAsSimulation()
 void UChessboardController::AddChessPieceAtPosition(UChessPiece* NewFigure, const FIntPoint Position)
 {
 	Chessboard->SetPieceAtPosition(Position, NewFigure);
-	UChessPiece* SimulatedChessPiece = SimulatedBoard->CreateSimulatedChessPiece(SimulatedController,NewFigure);
-	SimulatedBoard->SetPieceAtPosition(Position,SimulatedChessPiece);
+	UChessPiece* SimulatedChessPiece = SimulatedBoard->CreateSimulatedChessPiece(SimulatedController, NewFigure);
+	SimulatedBoard->SetPieceAtPosition(Position, SimulatedChessPiece);
 }
 
 TArray<FMove> UChessboardController::GetKingSpecialMoves(UChessPiece* KingPiece)
@@ -186,36 +182,36 @@ TArray<FMove> UChessboardController::GetKingSpecialMoves(UChessPiece* KingPiece)
 		{
 			continue;
 		}
-		int SignedDistance =  Rook->GetBoardPosition().X - KingPiece->GetBoardPosition().X;
+		int SignedDistance = Rook->GetBoardPosition().X - KingPiece->GetBoardPosition().X;
 		int Direction = FMath::Sign(SignedDistance);
 
-		FIntPoint FinalKingPosition = KingPos + FIntPoint(Direction*2,0);
-		if(!IsValidMove( FinalKingPosition,KingPiece))
-		{
-			continue;
-		}
-		
-		bool bCanCastle = true;
-		for (int i = KingPos.X+Direction; i < FMath::Abs(SignedDistance)-1; i += Direction)
-		{
-			FIntPoint TargetPosition = FIntPoint(i,KingPos.Y);
-			if(GetPieceAtPosition(TargetPosition))
-			{
-				bCanCastle = false;
-				break;
-			}
-			if(!IsValidMove(TargetPosition,KingPiece))
-			{
-				bCanCastle = false;
-				break;
-			}
-		}
-		if(!bCanCastle)
+		FIntPoint FinalKingPosition = KingPos + FIntPoint(Direction * 2, 0);
+		if (!IsValidMove(FinalKingPosition, KingPiece))
 		{
 			continue;
 		}
 
-		SpecialMoves.Add(FMove(KingPiece,FinalKingPosition,Rook,EMoveType::Castling));
+		bool bCanCastle = true;
+		for (int i = KingPos.X + Direction; i < FMath::Abs(SignedDistance) - 1; i += Direction)
+		{
+			FIntPoint TargetPosition = FIntPoint(i, KingPos.Y);
+			if (GetPieceAtPosition(TargetPosition))
+			{
+				bCanCastle = false;
+				break;
+			}
+			if (!IsValidMove(TargetPosition, KingPiece))
+			{
+				bCanCastle = false;
+				break;
+			}
+		}
+		if (!bCanCastle)
+		{
+			continue;
+		}
+
+		SpecialMoves.Add(FMove(KingPiece, FinalKingPosition, Rook, EMoveType::Castling));
 	}
 	return SpecialMoves;
 }
@@ -236,22 +232,19 @@ TArray<UChessPiece*> UChessboardController::GetChessPiecesOfType(EColor Color, E
 
 bool UChessboardController::CanPawnDoubleMove(UChessPiece* ChessPiece, FIntPoint PawnPos, int Direction)
 {
-	if(ChessPiece->HasMoved())
+	if (ChessPiece->HasMoved())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Cannot Double Move"))
 		return false;
 	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Has not moved"))
-	}
+	UE_LOG(LogTemp, Warning, TEXT("Has not moved"))
 	TArray<FMove> SpecialMoves;
 	bool canDoubleMove = true;
 	FIntPoint TargetPosition = PawnPos;
 	for (int i = 0; i < 2; i++)
 	{
 		TargetPosition += FIntPoint(0, Direction);
-		if(!ChessData->IsValidBoardPosition(TargetPosition))
+		if (!ChessData->IsValidBoardPosition(TargetPosition))
 		{
 			canDoubleMove = false;
 			break;

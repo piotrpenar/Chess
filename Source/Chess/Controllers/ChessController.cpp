@@ -9,7 +9,6 @@
 #include "Chess/Utils/EColor.h"
 #include "Chess/Utils/EFigure.h"
 #include "Chess/Utils/EMoveType.h"
-#include "Chess/Utils/F2DBoardArray.h"
 
 
 void AChessController::BeginPlay()
@@ -17,10 +16,10 @@ void AChessController::BeginPlay()
 	Super::BeginPlay();
 	RulesController = NewObject<UChessRulesController>();
 	Chessboard = NewObject<UChessboard>();
-	Chessboard->Initialize(ChessData,ChessBoardOrigin);
+	Chessboard->Initialize(ChessData, ChessBoardOrigin);
 	Chessboard->GenerateEmptyBoard();
 	ChessboardController = NewObject<UChessboardController>();
-	ChessboardController->Initialize(ChessData,Chessboard,this);
+	ChessboardController->Initialize(ChessData, Chessboard, this);
 	GenerateChessPieces(EColor::White);
 	GenerateChessPieces(EColor::Black);
 	ChessboardController->CreateChessboardSimulation();
@@ -42,13 +41,13 @@ void AChessController::GenerateChessPieces(const EColor FigureColor)
 	GenerateChessRow(Pawns, FigureColor, PawnRow);
 }
 
-void AChessController::SetupChessPiece( UChessPiece* ChessPiece,const EColor Color, const int X, int Y)
+void AChessController::SetupChessPiece(UChessPiece* ChessPiece, const EColor Color, const int X, int Y)
 {
-	ChessPiece->SetReferences(ChessData,ChessboardController,this);
+	ChessPiece->SetReferences(ChessData, ChessboardController, this);
 	ChessPiece->SetColor(Color);
-	ChessPiece->CreateActor(GetWorld(),this);
+	ChessPiece->CreateActor(GetWorld(), this);
 	ChessPiece->SetPosition(X, Y);
-	ChessPiece->SetActorTransform(GenerateChessPieceTransform(X,Y,Color));
+	ChessPiece->SetActorTransform(GenerateChessPieceTransform(X, Y, Color));
 }
 
 void AChessController::GenerateChessRow(TArray<EFigure> Figures, const EColor Color, const int Y)
@@ -56,8 +55,8 @@ void AChessController::GenerateChessRow(TArray<EFigure> Figures, const EColor Co
 	for (int X = 0; X < ChessData->GetBoardSize(); X++)
 	{
 		UChessPiece* ChessPiece = GenerateChessPiece(Figures[X]);
-		SetupChessPiece(ChessPiece,Color, X,Y);
-		Chessboard->SetPieceAtPosition(FIntPoint(X,Y),ChessPiece);
+		SetupChessPiece(ChessPiece, Color, X, Y);
+		Chessboard->SetPieceAtPosition(FIntPoint(X, Y), ChessPiece);
 	}
 }
 
@@ -68,26 +67,27 @@ void AChessController::BroadcastTurnEnded(EColor Color)
 
 UChessPiece* AChessController::GenerateChessPiece(const EFigure Figure)
 {
-	return UChessPiecesFactory::GenerateChessPiece(Figure,this);
+	return UChessPiecesFactory::GenerateChessPiece(Figure, this);
 }
 
-FTransform AChessController::GenerateChessPieceTransform(const int X,const  int Y,const  EColor Color)
+FTransform AChessController::GenerateChessPieceTransform(const int X, const int Y, const EColor Color)
 {
 	FTransform Transform = Chessboard->BoardToWorldTransform(X, Y);
-	if(Color == EColor::Black)
+	if (Color == EColor::Black)
 	{
 		FRotator Rotator = Transform.GetRotation().Rotator();
-		Rotator.Yaw+=90;
+		Rotator.Yaw += 90;
 		Transform.SetRotation(Rotator.Quaternion());
 	}
 	return Transform;
 }
 
 
-void AChessController::EndTurn(){
+void AChessController::EndTurn()
+{
 	EColor CurrentPlayerColor = CurrentPlayer;
 	EColor EnemyPlayer = CurrentPlayer == EColor::Black ? EColor::White : EColor::Black;
-	if(CurrentPlayer == EColor::White)
+	if (CurrentPlayer == EColor::White)
 	{
 		CurrentPlayer = EColor::Black;
 	}
@@ -95,10 +95,10 @@ void AChessController::EndTurn(){
 	{
 		CurrentPlayer = EColor::White;
 	}
-	ECheckmateStatus Status = RulesController->GetBoardStatusForColor(Chessboard,EnemyPlayer,ChessboardController);
-	FString Value= UEnum::GetValueAsString(Status);
+	ECheckmateStatus Status = RulesController->GetBoardStatusForColor(Chessboard, EnemyPlayer, ChessboardController);
+	FString Value = UEnum::GetValueAsString(Status);
 	BroadcastTurnEnded(CurrentPlayerColor);
-	UE_LOG(LogTemp, Log, TEXT("Check mate status is %s"),*FString(Value));
+	UE_LOG(LogTemp, Log, TEXT("Check mate status is %s"), *FString(Value));
 }
 
 void AChessController::SetSelectedFigure(AActor* Actor)
@@ -111,8 +111,8 @@ void AChessController::HandleCastling(const FMove& Move, UChessPiece* ChessPiece
 {
 	UChessPiece* SourceChessPiece = static_cast<UChessPiece*>(Move.SourcePiece);
 	int Direction = FMath::Sign(SourceChessPiece->GetBoardPosition().X - ChessPiece->GetBoardPosition().X);
-	FIntPoint TargetPosition = Move.TargetPosition + FIntPoint(Direction,0);
-	ChessboardController->MoveChessPieceToPosition(ChessPiece,TargetPosition);
+	FIntPoint TargetPosition = Move.TargetPosition + FIntPoint(Direction, 0);
+	ChessboardController->MoveChessPieceToPosition(ChessPiece, TargetPosition);
 }
 
 void AChessController::HandleEnPassant(UChessPiece* ChessPiece)
@@ -122,11 +122,11 @@ void AChessController::HandleEnPassant(UChessPiece* ChessPiece)
 
 void AChessController::PromotePawn(UChessPiece* ChessPiece, EFigure TargetFigure)
 {
-	UChessPiece* NewFigure = UChessPiecesFactory::GenerateChessPiece(TargetFigure,this);
+	UChessPiece* NewFigure = UChessPiecesFactory::GenerateChessPiece(TargetFigure, this);
 	FIntPoint TargetPos = ChessPiece->GetBoardPosition();
-	SetupChessPiece(NewFigure,ChessPiece->GetColor(),TargetPos.X,TargetPos.Y);
+	SetupChessPiece(NewFigure, ChessPiece->GetColor(), TargetPos.X, TargetPos.Y);
 	ChessboardController->RemoveChessPieceAtPosition(ChessPiece->GetBoardPosition());
-	ChessboardController->AddChessPieceAtPosition(NewFigure,TargetPos);
+	ChessboardController->AddChessPieceAtPosition(NewFigure, TargetPos);
 }
 
 //TODO: Add proper UI Implementation here. Currently we always switch for queen.
@@ -134,7 +134,7 @@ void AChessController::HandlePawnPromotion(const FMove& Move)
 {
 	UE_LOG(LogTemp, Log, TEXT("Pawn Promotion!"));
 	UChessPiece* Pawn = static_cast<UChessPiece*>(Move.SourcePiece);
-	PromotePawn(Pawn,EFigure::Queen);
+	PromotePawn(Pawn, EFigure::Queen);
 }
 
 void AChessController::HandleSpecialMoveType(const FMove& Move)
@@ -149,7 +149,7 @@ void AChessController::HandleSpecialMoveType(const FMove& Move)
 		HandleEnPassant(TargetChessPiece);
 		break;
 	case EMoveType::Castling:
-		HandleCastling(Move,TargetChessPiece);
+		HandleCastling(Move, TargetChessPiece);
 		break;
 	case EMoveType::PawnPromotion:
 		HandlePawnPromotion(Move);
@@ -166,8 +166,8 @@ void AChessController::HighlightSelected(AActor* Source)
 	UChessPiece* SourcePiece = static_cast<UChessPiece*>(TargetMove.SourcePiece);
 	UChessPiece* TargetPiece = static_cast<UChessPiece*>(TargetMove.TargetObject);
 	FIntPoint TargetPosition = TargetMove.TargetPosition;
-	ChessboardController->MoveChessPieceToPosition(SourcePiece,TargetPosition);
-	if(TargetMove.MoveType != EMoveType::Standard)
+	ChessboardController->MoveChessPieceToPosition(SourcePiece, TargetPosition);
+	if (TargetMove.MoveType != EMoveType::Standard)
 	{
 		HandleSpecialMoveType(TargetMove);
 	}
@@ -194,7 +194,7 @@ void AChessController::CreateHighlights(TArray<FMove> Moves)
 	for (const auto Move : Moves)
 	{
 		ACheckerHighlight* Actor = GetWorld()->SpawnActor<ACheckerHighlight>(ChessData->GetCheckerHighlightActor());
-		Actor->SetActorTransform(Chessboard->BoardToWorldTransform(Move.TargetPosition.X,Move.TargetPosition.Y));
+		Actor->SetActorTransform(Chessboard->BoardToWorldTransform(Move.TargetPosition.X, Move.TargetPosition.Y));
 		Actor->Position = Move.TargetPosition;
 		Actor->Highlighter = this;
 		Actor->SourceFigure = CurrentSelectedFigure;
@@ -202,6 +202,7 @@ void AChessController::CreateHighlights(TArray<FMove> Moves)
 		CurrentHighlights.Add(Actor);
 	}
 }
+
 EColor AChessController::GetCurrentPlayer()
 {
 	return CurrentPlayer;

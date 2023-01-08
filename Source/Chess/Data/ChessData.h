@@ -1,4 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿
 
 #pragma once
 
@@ -25,7 +25,7 @@ UCLASS()
 class CHESS_API UChessData final : public UDataAsset
 {
 	GENERATED_BODY()
-	
+
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AChessFigure> ChessFigureActor;
 	UPROPERTY(EditAnywhere)
@@ -38,7 +38,7 @@ class CHESS_API UChessData final : public UDataAsset
 	int BoardSize = 8;
 	UPROPERTY(EditAnywhere)
 	float BoardOffset = 1;
-	
+
 public:
 	UStaticMesh* GetMeshForType(EFigure Figure) const;
 	UMaterialInstance* GetMaterialForType(EFigure Figure, EColor Color) const;

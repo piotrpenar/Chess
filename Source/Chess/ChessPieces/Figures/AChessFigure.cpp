@@ -3,7 +3,7 @@
 
 void AChessFigure::HandleFigureClick()
 {
-	if(!SourcePiece->CanMoveThisTurn())
+	if (!SourcePiece->CanMoveThisTurn())
 	{
 		return;
 	}
@@ -15,7 +15,7 @@ void AChessFigure::HandleFigureClick()
 
 void AChessFigure::SetBoardPosition(FIntPoint NewBoardPosition)
 {
-	if(!IsValid(this))
+	if (!IsValid(this))
 	{
 		return;
 	}

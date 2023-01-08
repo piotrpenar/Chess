@@ -1,5 +1,4 @@
 ﻿#include "ChessPiece.h"
-
 #include "Figures/AChessFigure.h"
 
 void UChessPiece::SetColor(const EColor PieceColor)
@@ -144,8 +143,8 @@ void UChessPiece::CreateActor(UWorld* World, IBoardHighlighter* Highlighter)
 		UE_LOG(LogTemp, Warning, TEXT("Mesh is invalid"))
 		return;
 	}
-	
-	UMaterialInstance* Material = ChessData->GetMaterialForType(GetFigureType(),Color);
+
+	UMaterialInstance* Material = ChessData->GetMaterialForType(GetFigureType(), Color);
 	if (!IsValid(Material))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Material is invalid"))
@@ -158,12 +157,11 @@ void UChessPiece::CreateActor(UWorld* World, IBoardHighlighter* Highlighter)
 		return;
 	}
 	StaticMeshComponent->SetStaticMesh(Mesh);
-	StaticMeshComponent->SetMaterial(0,Material);
+	StaticMeshComponent->SetMaterial(0, Material);
 	ChessPieceActor = Actor;
 	Actor->Highlighter = Highlighter;
 	Actor->SourcePiece = this;
 #if WITH_EDITOR
 	Actor->SetActorLabel(FString(UEnum::GetValueAsString(GetColor()) + " " + UEnum::GetValueAsString(GetFigureType())));
 #endif
-	
 }

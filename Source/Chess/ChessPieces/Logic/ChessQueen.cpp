@@ -1,17 +1,13 @@
 ﻿#include "ChessQueen.h"
 
-
-
-
 EFigure UChessQueen::GetFigureType()
 {
 	return EFigure::Queen;
 }
 
-
 TArray<FIntPoint> UChessQueen::GetPossibleDirections() const
 {
-	return  {
+	return {
 		FIntPoint(-1, -1),
 		FIntPoint(1, -1),
 		FIntPoint(1, 1),
@@ -25,5 +21,5 @@ TArray<FIntPoint> UChessQueen::GetPossibleDirections() const
 
 TArray<FMove> UChessQueen::GetAvailableMoves()
 {
-	return MovementVerifier->GetValidMovesFromDirections(GetPossibleDirections(),this);
+	return MovementVerifier->GetValidMovesFromDirections(GetPossibleDirections(), this);
 }

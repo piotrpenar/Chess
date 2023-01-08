@@ -1,16 +1,8 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿#include "Chessboard.h"
 
-#pragma once
-
-#include "Chessboard.h"
-
-#include "Chess/Helpers/ChessPiecesFactory.h"
-#include "Chess/Utils/F2DBoardArray.h"
-
-
-void UChessboard::Initialize(UChessData* NewChessData, AActor* NewChessBoardOrigin)
+void UChessboard::Initialize(UChessData* Data, AActor* NewChessBoardOrigin)
 {
-	this->ChessData = NewChessData;
+	this->ChessData = Data;
 	this->ChessBoardOrigin = NewChessBoardOrigin;
 };
 
@@ -48,11 +40,11 @@ FTransform UChessboard::BoardToWorldTransform(const FIntPoint Position) const
 	return Transform;
 }
 
-UChessPiece* UChessboard::GetPieceAtPosition(FIntPoint BoardPosition)
+UChessPiece* UChessboard::GetPieceAtPosition(const FIntPoint BoardPosition)
 {
-	if(!ChessData->IsValidBoardPosition(BoardPosition))
+	if (!ChessData->IsValidBoardPosition(BoardPosition))
 	{
-		UE_LOG(LogTemp, Error, TEXT("Cannot get object from %s"),*FString(BoardPosition.ToString()))
+		UE_LOG(LogTemp, Error, TEXT("Cannot get object from %s"), *FString(BoardPosition.ToString()))
 		return nullptr;
 	}
 	UObject* Object = Board[BoardPosition.X][BoardPosition.Y];
@@ -61,15 +53,16 @@ UChessPiece* UChessboard::GetPieceAtPosition(FIntPoint BoardPosition)
 
 void UChessboard::SetPieceAtPosition(const FIntPoint Position, UChessPiece* ChessPiece)
 {
-	if(!ChessData->IsValidBoardPosition(Position))
+	if (!ChessData->IsValidBoardPosition(Position))
 	{
-		UE_LOG(LogTemp, Error, TEXT("Cannot set any object at %s"),*FString(Position.ToString()))
+		UE_LOG(LogTemp, Error, TEXT("Cannot set any object at %s"), *FString(Position.ToString()))
 		return;
 	}
-	UObject* CurrentObject = Board[Position.X][Position.Y];
+
+	const UChessPiece* CurrentObject = GetPieceAtPosition(Position);
 	if (CurrentObject && !bIsSimulation)
 	{
-		static_cast<UChessPiece*>(CurrentObject)->DestroyChessPiece();
+		CurrentObject->DestroyChessPiece();
 	}
 	Board[Position.X].Set(Position.Y, ChessPiece);
 	if (ChessPiece)
@@ -147,7 +140,7 @@ void UChessboard::SetAsSimulated(UChessboard* OriginalBoard, TScriptInterface<IM
 				NewRow.Add(nullptr);
 				continue;
 			}
-			UChessPiece* Clone = CreateSimulatedChessPiece(SimulatedMovementVerifier, ChessPiece);;
+			UChessPiece* Clone = CreateSimulatedChessPiece(SimulatedMovementVerifier, ChessPiece);
 			NewRow.Add(Clone);
 		}
 		Board.Add(NewRow);

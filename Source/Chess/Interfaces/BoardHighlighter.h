@@ -1,4 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿
 
 #pragma once
 
@@ -19,7 +19,7 @@ class UBoardHighlighter : public UInterface
 class CHESS_API IBoardHighlighter
 {
 	GENERATED_BODY()
-	
+
 public:
 	virtual void CreateHighlights(TArray<FMove> Moves);
 	virtual void SetSelectedFigure(AActor* SourceFigure);

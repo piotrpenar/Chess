@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "IntVectorTypes.h"
+#include "CoreMinimal.h"
 #include "Chess/Data/ChessData.h"
 #include "Chess/Interfaces/ChessGameState.h"
 #include "Chess/Interfaces/MovementVerifier.h"
@@ -27,7 +27,7 @@ protected:
 	bool bHasMoved = false;
 	UPROPERTY()
 	AChessFigure* ChessPieceActor;
-	
+
 	void SetActorRotation(FRotator Rotation) const;
 public:
 	UPROPERTY()
@@ -36,7 +36,7 @@ public:
 	TScriptInterface<IMovementVerifier> MovementVerifier;
 	UPROPERTY()
 	TScriptInterface<IChessGameState> ChessGameState;
-	
+
 	virtual void MoveToPosition(FIntPoint Position, FVector ActorPosition) override;
 	virtual EFigure GetFigureType();
 	virtual TArray<FMove> GetAvailableMoves() override;

@@ -1,6 +1,5 @@
 ﻿#include "ChessKing.h"
 
-
 EFigure UChessKing::GetFigureType()
 {
 	return EFigure::King;
@@ -22,7 +21,7 @@ TArray<FIntPoint> UChessKing::GetPossiblePositions() const
 
 TArray<FMove> UChessKing::GetAvailableMoves()
 {
-	TArray<FMove> ValidMoves = MovementVerifier->GetValidMovesFromPositions(GetPossiblePositions(),this);
+	TArray<FMove> ValidMoves = MovementVerifier->GetValidMovesFromPositions(GetPossiblePositions(), this);
 	TArray<FMove> SpecialMoves = MovementVerifier->GetValidSpecialMoves(this);
 	ValidMoves.Append(SpecialMoves);
 	return ValidMoves;

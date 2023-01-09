@@ -5,6 +5,12 @@
 #include "Chess/ChessPieces/Logic/ChessPawn.h"
 
 
+void UChessboardMovementRulesBase::InitializeMovementRules(UChessData* ChessDataReference, UChessboardBase* ChessboardReference)
+{
+	ChessData = ChessDataReference;
+	Chessboard = ChessboardReference;
+}
+
 bool UChessboardMovementRulesBase::IsValidMove(const FIntPoint Position, UObject* ChessPieceObject)
 {
 	return ChessData->IsValidBoardPosition(Position);

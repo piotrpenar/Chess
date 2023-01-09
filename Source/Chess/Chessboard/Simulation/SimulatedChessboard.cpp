@@ -3,6 +3,7 @@
 
 #include "SimulatedChessboard.h"
 
+#include "Chess/Chessboard/BaseClasses/ChessboardMovementRulesBase.h"
 #include "Chess/Helpers/ChessPiecesFactory.h"
 
 UChessPiece* USimulatedChessboard::CreateSimulatedChessPiece(UChessPiece* ChessPiece)
@@ -12,8 +13,9 @@ UChessPiece* USimulatedChessboard::CreateSimulatedChessPiece(UChessPiece* ChessP
 	return Clone;
 }
 
-void USimulatedChessboard::InitializeSimulatedBoard(UChessboardBase* OriginalBoard)
+void USimulatedChessboard::InitializeSimulatedBoard(UChessData* ChessDataReference,UChessboardBase* OriginalBoard)
 {
+	Initialize(ChessDataReference);
 	GenerateEmptyBoard();
 	UChessboardMovementRulesBase* MovementRules = NewObject<UChessboardMovementRulesBase>();
 	MovementRules->InitializeMovementRules(ChessData,this);

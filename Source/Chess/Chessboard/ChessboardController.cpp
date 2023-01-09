@@ -8,7 +8,7 @@ void UChessboardController::Initialize(UChessData* NewChessData, AActor* ChessBo
 	Chessboard = NewObject<UChessboard>();
 	Chessboard->Initialize(ChessData, ChessBoardOrigin,FigureClickedCallback);
 	SimulatedBoard = NewObject<USimulatedChessboard>();
-	SimulatedBoard->InitializeSimulatedBoard(Chessboard);
+	SimulatedBoard->InitializeSimulatedBoard(ChessData,Chessboard);
 	Chessboard->InitializeMovementRules(SimulatedBoard);
 }
 
@@ -17,6 +17,11 @@ void UChessboardController::AddChessPieceAtPosition(UChessPiece* ChessPiece, con
 	Chessboard->SetPieceAtPosition(Position, ChessPiece);
 	UChessPiece* SimulatedChessPiece = SimulatedBoard->CreateSimulatedChessPiece(ChessPiece);
 	SimulatedBoard->SetPieceAtPosition(Position, SimulatedChessPiece);
+}
+
+IMovementRulesProvider* UChessboardController::GetChessboardMovementRuleProvider()
+{
+	return Chessboard->GetMovementRuleProvider();
 }
 
 void UChessboardController::RemoveChessPieceAtPosition(const FIntPoint Position) const

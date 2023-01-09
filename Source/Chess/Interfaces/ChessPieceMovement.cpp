@@ -10,7 +10,3 @@ void IChessPieceMovement::MoveToPosition(FIntPoint Position, FVector ActorPositi
 {
 }
 
-bool IChessPieceMovement::CanMoveThisTurn()
-{
-	return false;
-}

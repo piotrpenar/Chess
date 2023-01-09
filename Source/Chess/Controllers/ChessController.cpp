@@ -9,12 +9,16 @@ void AChessController::BeginPlay()
 	Highlighter = NewObject<UChessHighlighter>();
 	Highlighter->Initialize(ChessData->GetCheckerHighlightActor());
 	ChessboardController = NewObject<UChessboardController>();
-	ChessboardController->Initialize(ChessData, ChessBoardOrigin, this);
+	ChessboardController->Initialize(ChessData, ChessBoardOrigin,[this](const AChessFigure* Param)
+	{
+		this->ChessFigureSelected(Param);
+	});
 }
 
 void AChessController::ChessFigureSelected(const AChessFigure* ChessFigure) const
 {
 	UE_LOG(LogTemp, Log, TEXT("Callback called %d!"), ChessFigure->GetBoardPosition().X)
+	Highlighter->CreateHighlights(ChessFigure->GetSourcePiece()->GetAvailableMoves());
 }
 
 void AChessController::HighlightSelected(const ABoardHighlight* BoardHighlight) const

@@ -3,6 +3,11 @@
 
 #include "ChessboardBase.h"
 
+void UChessboardBase::Initialize(UChessData* ChessDataReference)
+{
+	ChessData = ChessDataReference;
+}
+
 void UChessboardBase::GenerateEmptyBoard()
 {
 	for (int i = 0; i < ChessData->GetBoardSize(); i++)

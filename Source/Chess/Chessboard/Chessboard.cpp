@@ -1,11 +1,12 @@
 ﻿#include "Chessboard.h"
 
+#include "ChessboardMovementRules.h"
 #include "Chess/Helpers/ChessPiecesFactory.h"
 #include "Chess/Interfaces/MovementRulesProvider.h"
 
 void UChessboard::Initialize(UChessData* Data, AActor* BoardOrigin, const TFunction<void(AChessFigure*)> ExternalFigureClickedCallback)
 {
-	ChessData = Data;
+	Super::Initialize(Data);
 	ChessBoardOrigin = BoardOrigin;
 	World = BoardOrigin->GetWorld();
 	FigureClickedCallback = ExternalFigureClickedCallback;
@@ -85,6 +86,11 @@ FTransform UChessboard::GenerateChessPieceTransform(const FIntPoint Position, co
 FTransform UChessboard::GetChessBoardTransform() const
 {
 	return ChessBoardOrigin->GetActorTransform();
+}
+
+IMovementRulesProvider* UChessboard::GetMovementRuleProvider() const
+{
+	return ChessboardMovementRules.GetInterface();
 }
 
 FTransform UChessboard::BoardToWorldTransform(const FIntPoint Position) const

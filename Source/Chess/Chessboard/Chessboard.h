@@ -2,6 +2,7 @@
 #include "CoreMinimal.h"
 #include "BaseClasses/ChessboardBase.h"
 #include "Chess/ChessPieces/ChessPiece.h"
+#include "Simulation/SimulatedChessboard.h"
 #include "Chessboard.generated.h"
 
 UCLASS()
@@ -15,7 +16,6 @@ class CHESS_API UChessboard final : public UChessboardBase
 	UPROPERTY()
 	UWorld* World;
 	
-	UPROPERTY()
 	TFunction<void(AChessFigure*)> FigureClickedCallback;
 	
 private:
@@ -33,4 +33,5 @@ public:
 	FTransform GenerateChessPieceTransform(FIntPoint Position, const EColor Color) const;
 	FTransform BoardToWorldTransform(FIntPoint Position) const;
 	FTransform GetChessBoardTransform() const;
+	IMovementRulesProvider* GetMovementRuleProvider() const;
 };

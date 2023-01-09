@@ -1,8 +1,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ChessHighlighter.h"
-#include "ChessRulesController.h"
 #include "Chess/Chessboard/Chessboard.h"
 #include "Chess/Chessboard/ChessboardController.h"
 #include "Chess/ChessPieces/ChessPiece.h"

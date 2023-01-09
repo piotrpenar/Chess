@@ -1,5 +1,4 @@
 ﻿#pragma once
-#include "Chess/Chessboard/Chessboard.h"
 #include "Chess/Interfaces/ChessPieceMovement.h"
 #include "AChessFigure.generated.h"
 
@@ -23,5 +22,6 @@ public:
 	void SetBoardPosition(FIntPoint NewBoardPosition);
 	FIntPoint GetBoardPosition() const;
 	void SetSourcePiece(TScriptInterface<IChessPieceMovement> ChessPiece);
+	TScriptInterface<IChessPieceMovement> GetSourcePiece() const;
 	void SetClickCallback(TFunction<void(AChessFigure*)> Function);
 };

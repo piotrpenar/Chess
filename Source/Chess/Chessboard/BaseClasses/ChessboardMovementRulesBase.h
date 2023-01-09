@@ -4,9 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "ChessboardBase.h"
-#include "ChessboardController.h"
 #include "Chess/ChessPieces/ChessPiece.h"
-#include "Chess/Interfaces/ChessMovesProvider.h"
+#include "Chess/Interfaces/MovementRulesProvider.h"
 #include "UObject/Object.h"
 #include "ChessboardMovementRulesBase.generated.h"
 
@@ -24,7 +23,7 @@ protected:
 	UChessboardBase* Chessboard;
 	
 public:
-	virtual void InitializeMovementRules(UChessData* ChessDataReference,UChessboardBase* Chessboard);
+	virtual void InitializeMovementRules(UChessData* ChessDataReference,UChessboardBase* ChessboardReference);
 	virtual bool IsValidMove(const FIntPoint Position, UObject* ChessPieceObject) override;
 	virtual TArray<FMove> GetValidMovesFromPositions(TArray<FIntPoint> InputDirections, UObject* ChessPieceObject) override;
 	virtual TArray<FMove> GetValidMovesFromDirections(TArray<FIntPoint> InputDirections, UObject* ChessPieceObject) override;

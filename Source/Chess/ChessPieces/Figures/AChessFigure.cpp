@@ -1,12 +1,7 @@
 ﻿#include "AChessFigure.h"
-#include "Chess/Utils/FMove.h"
 
 void AChessFigure::HandleFigureClick()
 {
-	if (!SourcePiece->CanMoveThisTurn())
-	{
-		return;
-	}
 	BroadcastChessFigureOnClick();
 }
 
@@ -32,6 +27,11 @@ FIntPoint AChessFigure::GetBoardPosition() const
 void AChessFigure::SetSourcePiece(const TScriptInterface<IChessPieceMovement> ChessPiece)
 {
 	SourcePiece = ChessPiece;
+}
+
+TScriptInterface<IChessPieceMovement> AChessFigure::GetSourcePiece() const
+{
+	return SourcePiece;
 }
 
 void AChessFigure::SetClickCallback(const TFunction<void(AChessFigure*)> Function)

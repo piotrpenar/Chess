@@ -6,7 +6,7 @@
 #include "ChessboardMovementRules.generated.h"
 
 UCLASS()
-class CHESS_API UChessboardMovementRules final : public UChessboardMovementRulesBase, public IMovementRulesProvider
+class CHESS_API UChessboardMovementRules final : public UChessboardMovementRulesBase
 {
 	UPROPERTY()
 	USimulatedChessboard* SimulatedChessboard;

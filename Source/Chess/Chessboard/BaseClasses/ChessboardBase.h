@@ -3,8 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ChessboardMovementRulesBase.h"
 #include "Chess/ChessPieces/ChessPiece.h"
+#include "Chess/Interfaces/MovementRulesProvider.h"
 #include "Chess/Utils/F2DBoardArray.h"
 #include "UObject/Object.h"
 #include "ChessboardBase.generated.h"
@@ -23,6 +23,7 @@ protected:
 	TScriptInterface<IMovementRulesProvider> ChessboardMovementRules;
 
 public:
+	void Initialize(UChessData* ChessDataReference);
 	void GenerateEmptyBoard();
 	virtual void SetPieceAtPosition(const FIntPoint Position, UChessPiece* ChessPiece);
 	void MovePieceFromToPosition(UChessPiece* ChessPiece, FIntPoint FromPosition, FIntPoint ToPosition);

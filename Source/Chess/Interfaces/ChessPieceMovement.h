@@ -16,5 +16,4 @@ class CHESS_API IChessPieceMovement
 public:
 	virtual TArray<FMove> GetAvailableMoves();
 	virtual void MoveToPosition(FIntPoint Position, FVector ActorPosition);
-	virtual bool CanMoveThisTurn();
 };

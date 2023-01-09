@@ -23,7 +23,7 @@ void AChessGameState::EndTurn()
 	{
 		CurrentPlayer = EColor::White;
 	}
-	const ECheckmateStatus Status = RulesController->GetCheckmateStatusForPlayer(Chessboard, EnemyPlayer, ChessboardController);
+	const ECheckmateStatus Status = RulesController->GetCheckmateStatusForPlayer(Chessboard, EnemyPlayer, ChessboardController->GetChessboardMovementRuleProvider());
 	const FString Value = UEnum::GetValueAsString(Status);
 	BroadcastTurnEnded(CurrentPlayerColor);
 	UE_LOG(LogTemp, Log, TEXT("Check mate status is %s"), *FString(Value));

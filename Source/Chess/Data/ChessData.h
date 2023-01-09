@@ -49,7 +49,7 @@ public:
 	UStaticMesh* GetMeshForType(EFigure Figure) const;
 	UMaterialInstance* GetMaterialForType(EFigure Figure, EColor Color) const;
 	TSubclassOf<AChessFigure> GetChessFigureActor() const;
-	TSubclassOf<ABoardHighlight> GetCheckerHighlightActor() const;
+	TSubclassOf<ABoardHighlight> GetBoardHighlightActor() const;
 	float GetBoardCheckerSize() const;
 	float GetBoardSize() const;
 	float GetBoardOffset() const;

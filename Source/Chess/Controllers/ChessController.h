@@ -40,5 +40,5 @@ private:
 	UPROPERTY()
 	TScriptInterface<IChessMovesHighlighter> Highlighter;
 	UPROPERTY()
-	UChessboardTransformUtilities* ChessboardTransformUtilities;
+	UChessSceneUtilities* ChessboardTransformUtilities;
 };

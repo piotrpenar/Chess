@@ -2,9 +2,9 @@
 #include "Figures/AChessFigure.h"
 
 
-void UChessPiece::Initialize(const TScriptInterface<IMovementRulesProvider> SimulatedMovementRules,AChessFigure* ChessFigure)
+void UChessPiece::Initialize(const TScriptInterface<IMovementRulesProvider> MovementRulesReference,AChessFigure* ChessFigure)
 {
-	MovementRules = SimulatedMovementRules;
+	MovementRules = MovementRulesReference;
 	ChessPieceActor = ChessFigure;
 }
 

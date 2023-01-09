@@ -1,17 +1,13 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
-
-#include "ChessboardTransformUtilities.h"
-
+﻿#include "ChessSceneUtilities.h"
 #include "Chess/Enums/EColor.h"
 
-void UChessboardTransformUtilities::Initialize(UChessData* ChessDataReference, AActor* ChessBoardOriginReference)
+void UChessSceneUtilities::Initialize(UChessData* ChessDataReference, AActor* ChessBoardOriginReference)
 {
 	ChessData = ChessDataReference;
 	ChessBoardOrigin = ChessBoardOriginReference;
 }
 
-FTransform UChessboardTransformUtilities::GenerateChessPieceTransform(const FIntPoint Position, const EColor Color) const
+FTransform UChessSceneUtilities::GenerateChessPieceTransform(const FIntPoint Position, const EColor Color) const
 {
 	FTransform Transform = BoardToWorldTransform(Position);
 	if (Color == EColor::Black)
@@ -23,12 +19,12 @@ FTransform UChessboardTransformUtilities::GenerateChessPieceTransform(const FInt
 	return Transform;
 }
 
-FTransform UChessboardTransformUtilities::GetChessBoardTransform() const
+FTransform UChessSceneUtilities::GetChessBoardTransform() const
 {
 	return ChessBoardOrigin->GetActorTransform();
 }
 
-FTransform UChessboardTransformUtilities::BoardToWorldTransform(const FIntPoint Position) const
+FTransform UChessSceneUtilities::BoardToWorldTransform(const FIntPoint Position) const
 {
 	FTransform Transform = GetChessBoardTransform();
 	const float BoardDistance = ChessData->GetBoardCheckerSize();
@@ -36,4 +32,9 @@ FTransform UChessboardTransformUtilities::BoardToWorldTransform(const FIntPoint 
 	PositionOffset = Transform.Rotator().RotateVector(PositionOffset);
 	Transform.SetLocation(Transform.GetLocation() + PositionOffset);
 	return Transform;
+}
+
+UWorld* UChessSceneUtilities::GetBoardWorld() const
+{
+	return ChessBoardOrigin->GetWorld();
 }

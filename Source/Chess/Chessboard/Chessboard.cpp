@@ -4,29 +4,29 @@
 #include "Chess/Helpers/ChessPiecesFactory.h"
 #include "Chess/Interfaces/MovementRulesProvider.h"
 
-void UChessboard::Initialize(UChessData* Data, AActor* BoardOrigin, const TFunction<void(AChessFigure*)> ExternalFigureClickedCallback)
+void UChessboard::Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference,UChessData* Data, const TFunction<void(AChessFigure*)> ExternalFigureClickedCallback)
 {
 	Super::Initialize(Data);
-	ChessBoardOrigin = BoardOrigin;
-	World = BoardOrigin->GetWorld();
+	ChessboardTransformUtilities = ChessSceneUtilitiesReference;
+	World = ChessboardTransformUtilities->GetBoardWorld();
 	FigureClickedCallback = ExternalFigureClickedCallback;
+}
+
+void UChessboard::InitializeBoardPieces()
+{
 	GenerateEmptyBoard();
 	GenerateChessPieces(EColor::White);
 	GenerateChessPieces(EColor::Black);
 }
-
-void UChessboard::SetTransformUtilities(UChessboardTransformUtilities* ChessboardTransformUtilitiesReference)
-{
-	ChessboardTransformUtilities = ChessboardTransformUtilitiesReference;
-};
 
 void UChessboard::InitializeMovementRules(USimulatedChessboard* SimulatedBoard)
 {
 	UChessboardMovementRules* MovementRules = NewObject<UChessboardMovementRules>();
 	MovementRules->InitializeMovementRules(ChessData,this);
 	MovementRules->SetSimulatedChessboard(SimulatedBoard);
-	ChessboardMovementRules.SetObject(reinterpret_cast<UObject*>(MovementRules));
+	ChessboardMovementRules.SetObject(MovementRules);
 	ChessboardMovementRules.SetInterface(Cast<IMovementRulesProvider>(MovementRules));
+	InitializeBoardPieces();
 }
 
 void UChessboard::GenerateChessPieces(const EColor FigureColor)
@@ -99,6 +99,11 @@ void UChessboard::SetPieceAtPosition(const FIntPoint Position, UChessPiece* Ches
 
 AChessFigure* UChessboard::CreateActorForChessPiece(UChessPiece* SourceChessPiece) const
 {
+	if (!IsValid(ChessData))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("ChessData is invalid"))
+		return nullptr;
+	}
 	AChessFigure* Actor = World->SpawnActor<AChessFigure>(ChessData->GetChessFigureActor());
 	if (!IsValid(Actor))
 	{

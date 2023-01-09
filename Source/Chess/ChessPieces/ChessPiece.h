@@ -25,16 +25,15 @@ protected:
 	bool bHasMoved = false;
 	UPROPERTY()
 	AChessFigure* ChessPieceActor;
-
-public:
 	UPROPERTY()
 	UChessData* ChessData;
 	UPROPERTY()
 	TScriptInterface<IMovementRulesProvider> MovementRules;
 	UPROPERTY()
 	TScriptInterface<ITurnsProvider> TurnsProvider;
-
-	void Initialize(TScriptInterface<IMovementRulesProvider> SimulatedMovementRules, AChessFigure* ChessFigure);
+	
+public:
+	void Initialize(TScriptInterface<IMovementRulesProvider> MovementRulesReference, AChessFigure* ChessFigure);
 	virtual void MoveToPosition(FIntPoint Position, FVector ActorPosition) override;
 	virtual EFigure GetFigureType();
 	virtual TArray<FMove> GetAvailableMoves() override;

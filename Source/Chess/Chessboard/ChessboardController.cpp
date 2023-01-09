@@ -2,15 +2,15 @@
 #include "Chess/Controllers/ChessRulesController.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 
-void UChessboardController::Initialize(UChessboardTransformUtilities* ChessboardTransformUtilitiesReference,UChessData* NewChessData, AActor* ChessBoardOrigin, TFunction<void(AChessFigure*)> FigureClickedCallback)
+void UChessboardController::Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference,UChessData* NewChessData, AActor* ChessBoardOrigin, TFunction<void(AChessFigure*)> FigureClickedCallback)
 {
-	ChessboardTransformUtilities = ChessboardTransformUtilitiesReference;
+	ChessboardTransformUtilities = ChessSceneUtilitiesReference;
 	this->ChessData = NewChessData;
 	Chessboard = NewObject<UChessboard>();
-	Chessboard->Initialize(ChessData, ChessBoardOrigin,FigureClickedCallback);
+	Chessboard->Initialize(ChessboardTransformUtilities, ChessData,FigureClickedCallback);
 	SimulatedBoard = NewObject<USimulatedChessboard>();
-	SimulatedBoard->InitializeSimulatedBoard(ChessData,Chessboard);
 	Chessboard->InitializeMovementRules(SimulatedBoard);
+	SimulatedBoard->InitializeSimulatedBoard(ChessData,Chessboard);
 }
 
 void UChessboardController::AddChessPieceAtPosition(UChessPiece* ChessPiece, const FIntPoint Position) const

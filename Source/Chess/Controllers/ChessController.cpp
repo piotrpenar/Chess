@@ -6,10 +6,10 @@
 void AChessController::BeginPlay()
 {
 	Super::BeginPlay();
-	ChessboardTransformUtilities = NewObject<UChessboardTransformUtilities>();
+	ChessboardTransformUtilities = NewObject<UChessSceneUtilities>();
 	ChessboardTransformUtilities->Initialize(ChessData,ChessBoardOrigin);
 	Highlighter = NewObject<UChessHighlighter>();
-	Highlighter->Initialize(ChessData->GetCheckerHighlightActor(),ChessboardTransformUtilities);
+	Highlighter->Initialize(ChessData->GetBoardHighlightActor(), ChessboardTransformUtilities);
 	ChessboardController = NewObject<UChessboardController>();
 	auto FigureClickedCallback = [this](const AChessFigure* Param)
 	{

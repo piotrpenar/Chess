@@ -1,8 +1,8 @@
 ﻿#include "ChessMovesHighlighter.h"
 
-#include "Chess/Chessboard/ChessboardTransformUtilities.h"
+#include "Chess/Chessboard/ChessSceneUtilities.h"
 
-void IChessMovesHighlighter::Initialize(TSubclassOf<ABoardHighlight> BoardHighlightSourceActor, UChessboardTransformUtilities* ChessboardTransformUtilities)
+void IChessMovesHighlighter::Initialize(const TSubclassOf<ABoardHighlight> BoardHighlightSourceActor, UChessSceneUtilities* ChessboardTransformUtilities)
 {
 }
 

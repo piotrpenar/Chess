@@ -55,7 +55,7 @@ TSubclassOf<AChessFigure> UChessData::GetChessFigureActor() const
 	return ChessFigureActor;
 }
 
-TSubclassOf<ABoardHighlight> UChessData::GetCheckerHighlightActor() const
+TSubclassOf<ABoardHighlight> UChessData::GetBoardHighlightActor() const
 {
 	return ChessHighlightActor;
 }

@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
-#include "ChessboardTransformUtilities.h"
+#include "ChessSceneUtilities.h"
 #include "BaseClasses/ChessboardBase.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 #include "Simulation/SimulatedChessboard.h"
@@ -18,7 +18,7 @@ class CHESS_API UChessboard final : public UChessboardBase
 	UWorld* World;
 
 	UPROPERTY()
-	UChessboardTransformUtilities* ChessboardTransformUtilities;
+	UChessSceneUtilities* ChessboardTransformUtilities;
 	
 	TFunction<void(AChessFigure*)> FigureClickedCallback;
 	
@@ -30,8 +30,8 @@ private:
 	void SetupChessPiece(UChessPiece* ChessPiece, const EColor Color, FIntPoint Position) const;
 
 public:
-	void Initialize(UChessData* Data, AActor* BoardOrigin, TFunction<void(AChessFigure*)> ExternalFigureClickedCallback);
-	void SetTransformUtilities(UChessboardTransformUtilities* ChessboardTransformUtilitiesReference);
+	void Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference, UChessData* Data, const TFunction<void(AChessFigure*)> ExternalFigureClickedCallback);
+	void InitializeBoardPieces();
 	void InitializeMovementRules(USimulatedChessboard* SimulatedBoard);
 	UChessPiece* GenerateChessPieceAtPosition(EFigure Figure, EColor Color, FIntPoint Position);
 	virtual void SetPieceAtPosition(FIntPoint Position, UChessPiece* ChessPiece) override;

@@ -22,37 +22,30 @@ protected:
 	UPROPERTY()
 	FVector3f WorldPosition;
 	UPROPERTY()
-	bool bIsSimulated = false;
-	UPROPERTY()
 	bool bHasMoved = false;
 	UPROPERTY()
 	AChessFigure* ChessPieceActor;
 
-	void SetActorRotation(FRotator Rotation) const;
 public:
 	UPROPERTY()
 	UChessData* ChessData;
 	UPROPERTY()
-	TScriptInterface<IChessMovesProvider> MovementVerifier;
+	TScriptInterface<IMovementRulesProvider> MovementRules;
 	UPROPERTY()
-	TScriptInterface<ITurnsProvider> ChessGameState;
+	TScriptInterface<ITurnsProvider> TurnsProvider;
 
+	void Initialize(TScriptInterface<IMovementRulesProvider> SimulatedMovementRules, AChessFigure* ChessFigure);
 	virtual void MoveToPosition(FIntPoint Position, FVector ActorPosition) override;
 	virtual EFigure GetFigureType();
 	virtual TArray<FMove> GetAvailableMoves() override;
-	virtual bool CanMoveThisTurn() override;
 
+	void SetPosition(FIntPoint Position);
 	bool HasMoved() const;
 	void SetColor(EColor PieceColor);
-	void SetPosition(int X, int Y);
 	void SetActorTransform(FTransform Transform) const;
-	void CreateActor(UWorld* World);
-	void DestroyChessPiece() const;
-	void SetPosition(FIntPoint Position);
 	void SetActorPosition(FVector Position) const;
+	void SetActorRotation(FRotator Rotation) const;
 	EColor GetColor() const;
 	FIntPoint GetBoardPosition();
-	void SetAsSimulated(TScriptInterface<IChessMovesProvider> SimulatedMovementVerifier);
-	bool IsSimulated() const;
-	void SetReferences(UChessData* NewChessData, TScriptInterface<IChessMovesProvider> NewMovementVerifier, TScriptInterface<ITurnsProvider> NewGameState);
+	void DestroyActor() const;
 };

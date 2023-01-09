@@ -12,15 +12,10 @@ void AChessFigure::HandleFigureClick()
 
 void AChessFigure::BroadcastChessFigureOnClick()
 {
-	ChessFigureClicked.ExecuteIfBound(this);
+	CallbackFunction(this);
 }
 
-AChessFigure::FChessFigureClicked AChessFigure::OnChessFigureClicked()
-{
-	return ChessFigureClicked;
-}
-
-void AChessFigure::SetBoardPosition(FIntPoint NewBoardPosition)
+void AChessFigure::SetBoardPosition(const FIntPoint NewBoardPosition)
 {
 	if (!IsValid(this))
 	{
@@ -32,4 +27,14 @@ void AChessFigure::SetBoardPosition(FIntPoint NewBoardPosition)
 FIntPoint AChessFigure::GetBoardPosition() const
 {
 	return BoardPosition;
+}
+
+void AChessFigure::SetSourcePiece(const TScriptInterface<IChessPieceMovement> ChessPiece)
+{
+	SourcePiece = ChessPiece;
+}
+
+void AChessFigure::SetClickCallback(const TFunction<void(AChessFigure*)> Function)
+{
+	CallbackFunction = Function;
 }

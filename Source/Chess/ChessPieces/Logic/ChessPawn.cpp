@@ -42,7 +42,7 @@ void UChessPawn::MoveToPosition(const FIntPoint Position, const FVector ActorPos
 	if (HasDoubleMoved(Position))
 	{
 		bHasDoubleMoved = true;
-		ChessGameState->OnTurnEnded().AddUObject(this, &UChessPawn::HandleTurnEnded);
+		TurnsProvider->OnTurnEnded().AddUObject(this, &UChessPawn::HandleTurnEnded);
 	}
 	Super::MoveToPosition(Position, ActorPosition);
 }
@@ -55,8 +55,8 @@ bool UChessPawn::IsValidPassantTarget() const
 TArray<FMove> UChessPawn::GetAvailableMoves()
 {
 	TArray<FIntPoint> PossibleMoves = GetPossiblePositions();
-	TArray<FMove> ValidPositions = MovementVerifier->GetValidMovesFromPositions(GetPossiblePositions(), this);
-	const TArray<FMove> SpecialMoves = MovementVerifier->GetValidSpecialMoves(this);
+	TArray<FMove> ValidPositions = MovementRules->GetValidMovesFromPositions(GetPossiblePositions(), this);
+	const TArray<FMove> SpecialMoves = MovementRules->GetValidSpecialMoves(this);
 	TArray<FMove> AvailableMoves = SpecialMoves;
 
 	for (const FMove ValidPosition : ValidPositions)

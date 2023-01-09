@@ -21,5 +21,5 @@ TArray<FIntPoint> UChessQueen::GetPossibleDirections() const
 
 TArray<FMove> UChessQueen::GetAvailableMoves()
 {
-	return MovementVerifier->GetValidMovesFromDirections(GetPossibleDirections(), this);
+	return MovementRules->GetValidMovesFromDirections(GetPossibleDirections(), this);
 }

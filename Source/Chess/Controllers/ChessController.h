@@ -9,6 +9,7 @@
 #include "Chess/Data/ChessData.h"
 #include "Chess/Enums/EColor.h"
 #include "Chess/Enums/EFigure.h"
+#include "Chess/Interfaces/ChessMovesHighlighter.h"
 #include "ChessController.generated.h"
 
 UCLASS(Blueprintable)
@@ -16,15 +17,10 @@ class CHESS_API AChessController final : public AActor
 {
 	GENERATED_BODY()
 public:
-	void GenerateChessPieces(const EColor FigureColor);
-	void SetupChessPiece(UChessPiece* ChessPiece, EColor Color, int X, int Y);
-	UChessPiece* GenerateChessPiece(const EFigure Figure);
 	virtual void BeginPlay() override;
-	void HandleCastling(const FMove& Move, UChessPiece* ChessPiece) const;
-	void HandleEnPassant(UChessPiece* ChessPiece) const;
-	void PromotePawn(UChessPiece* ChessPiece, EFigure TargetFigure);
-	void HandlePawnPromotion(const FMove& Move);
-	void HandleSpecialMoveType(const FMove& Move);
+	void ChessFigureSelected(const AChessFigure* ChessFigure) const;
+	void HighlightSelected(const ABoardHighlight* BoardHighlight) const;
+	void ExecutePlayerMove(FMove Move) const;
 
 	UPROPERTY(EditAnywhere)
 	UChessData* ChessData;

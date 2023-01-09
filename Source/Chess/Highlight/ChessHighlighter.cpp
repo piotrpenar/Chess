@@ -19,14 +19,7 @@ void UChessHighlighter::HighlightSelected(ABoardHighlight* CheckerHighlight)
 {
 	ClearHighlights();
 	const FMove TargetMove = CheckerHighlight->GetSourceMove();
-	UChessPiece* SourcePiece = static_cast<UChessPiece*>(TargetMove.SourcePiece);
-	UChessPiece* TargetPiece = static_cast<UChessPiece*>(TargetMove.TargetObject);
-	const FIntPoint TargetPosition = TargetMove.TargetPosition;
-	//ChessboardController->MoveChessPieceToPosition(SourcePiece, TargetPosition);
-	if (TargetMove.MoveType != EMoveType::Standard)
-	{
-		//HandleSpecialMoveType(TargetMove);
-	}
+	//Invoke Hightlight Selected
 }
 void UChessHighlighter::CreateHighlights(TArray<FMove> Moves)
 {

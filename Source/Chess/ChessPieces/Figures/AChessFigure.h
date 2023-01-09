@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "Chess/Chessboard/Chessboard.h"
 #include "Chess/Interfaces/ChessPieceMovement.h"
 #include "AChessFigure.generated.h"
 
@@ -10,18 +11,17 @@ class AChessFigure final : public AActor
 	UPROPERTY()
 	FIntPoint BoardPosition;
 	
-	DECLARE_DELEGATE_OneParam(FChessFigureClicked, AChessFigure*)
-	FChessFigureClicked ChessFigureClicked;
+	UPROPERTY()
+	TScriptInterface<IChessPieceMovement> SourcePiece;
+
+	TFunction<void(AChessFigure*)> CallbackFunction;
 	
 public:
 	UFUNCTION(BlueprintCallable)
 	void HandleFigureClick();
-
-	UPROPERTY()
-	TScriptInterface<IChessPieceMovement> SourcePiece;
-	
 	void BroadcastChessFigureOnClick();
-	FChessFigureClicked OnChessFigureClicked();
 	void SetBoardPosition(FIntPoint NewBoardPosition);
 	FIntPoint GetBoardPosition() const;
+	void SetSourcePiece(TScriptInterface<IChessPieceMovement> ChessPiece);
+	void SetClickCallback(TFunction<void(AChessFigure*)> Function);
 };

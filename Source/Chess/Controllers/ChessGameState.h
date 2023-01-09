@@ -21,6 +21,7 @@ class CHESS_API AChessGameState final : public AGameState, public ITurnsProvider
 	void Initialize();
 	void BroadcastTurnEnded(EColor Color) const;
 	EColor CurrentPlayer = EColor::White;
+	
 	UPROPERTY()
 	UChessRulesController* RulesController;
 	UPROPERTY()

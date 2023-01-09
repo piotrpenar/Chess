@@ -1,15 +1,15 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
 #include "Chess/Enums/EColor.h"
-#include "ChessGameState.generated.h"
+#include "TurnsProvider.generated.h"
 
 UINTERFACE()
-class UChessGameState : public UInterface
+class UTurnsProvider : public UInterface
 {
 	GENERATED_BODY()
 };
 
-class CHESS_API IChessGameState
+class CHESS_API ITurnsProvider
 {
 	GENERATED_BODY()
 

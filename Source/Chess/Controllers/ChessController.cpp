@@ -10,7 +10,8 @@
 void AChessController::BeginPlay()
 {
 	Super::BeginPlay();
-	RulesController = NewObject<UChessRulesController>();
+	Highlighter = NewObject<UChessHighlighter>();
+	Highlighter->Initialize(ChessData->GetCheckerHighlightActor());
 	Chessboard = NewObject<UChessboard>();
 	Chessboard->Initialize(ChessData, ChessBoardOrigin);
 	Chessboard->GenerateEmptyBoard();
@@ -26,7 +27,7 @@ void AChessController::GenerateChessPieces(const EColor FigureColor)
 	const bool bIsWhite = FigureColor == EColor::White;
 	const int ManRow = bIsWhite ? 0 : 7;
 	const int PawnRow = bIsWhite ? 1 : 6;
-	TArray<EFigure> MenTargetArray = Men;
+	TArray<EFigure> MenTargetArray = ChessData->GetMen();
 
 	if (!bIsWhite)
 	{
@@ -34,14 +35,14 @@ void AChessController::GenerateChessPieces(const EColor FigureColor)
 	}
 
 	GenerateChessRow(MenTargetArray, FigureColor, ManRow);
-	GenerateChessRow(Pawns, FigureColor, PawnRow);
+	GenerateChessRow(ChessData->GetPawns(), FigureColor, PawnRow);
 }
 
 void AChessController::SetupChessPiece(UChessPiece* ChessPiece, const EColor Color, const int X, int Y)
 {
 	ChessPiece->SetReferences(ChessData, ChessboardController, this);
 	ChessPiece->SetColor(Color);
-	ChessPiece->CreateActor(GetWorld(), this);
+	ChessPiece->CreateActor(GetWorld());
 	ChessPiece->SetPosition(X, Y);
 	ChessPiece->SetActorTransform(GenerateChessPieceTransform(X, Y, Color));
 }
@@ -54,11 +55,6 @@ void AChessController::GenerateChessRow(TArray<EFigure> Figures, const EColor Co
 		SetupChessPiece(ChessPiece, Color, X, Y);
 		Chessboard->SetPieceAtPosition(FIntPoint(X, Y), ChessPiece);
 	}
-}
-
-void AChessController::BroadcastTurnEnded(EColor Color) const
-{
-	TurnEndedEvent.Broadcast(Color);
 }
 
 UChessPiece* AChessController::GenerateChessPiece(const EFigure Figure)
@@ -79,30 +75,6 @@ FTransform AChessController::GenerateChessPieceTransform(const int X, const int 
 }
 
 
-void AChessController::EndTurn()
-{
-	const EColor CurrentPlayerColor = CurrentPlayer;
-	const EColor EnemyPlayer = CurrentPlayer == EColor::Black ? EColor::White : EColor::Black;
-	if (CurrentPlayer == EColor::White)
-	{
-		CurrentPlayer = EColor::Black;
-	}
-	else
-	{
-		CurrentPlayer = EColor::White;
-	}
-	const ECheckmateStatus Status = RulesController->GetBoardStatusForColor(Chessboard, EnemyPlayer, ChessboardController);
-	const FString Value = UEnum::GetValueAsString(Status);
-	BroadcastTurnEnded(CurrentPlayerColor);
-	UE_LOG(LogTemp, Log, TEXT("Check mate status is %s"), *FString(Value));
-}
-
-void AChessController::SetSelectedFigure(AActor* SelectedFigureActor)
-{
-	AChessFigure* Figure = static_cast<AChessFigure*>(SelectedFigureActor);
-	CurrentSelectedFigure = Figure;
-}
-
 void AChessController::HandleCastling(const FMove& Move, UChessPiece* ChessPiece) const
 {
 	UChessPiece* SourceChessPiece = static_cast<UChessPiece*>(Move.SourcePiece);
@@ -116,7 +88,7 @@ void AChessController::HandleEnPassant(UChessPiece* ChessPiece) const
 	ChessboardController->RemoveChessPieceAtPosition(ChessPiece->GetBoardPosition());
 }
 
-void AChessController::PromotePawn(UChessPiece* ChessPiece, EFigure TargetFigure)
+void AChessController::PromotePawn(UChessPiece* ChessPiece, const EFigure TargetFigure)
 {
 	UChessPiece* NewFigure = UChessPiecesFactory::GenerateChessPiece(TargetFigure, this);
 	const FIntPoint TargetPos = ChessPiece->GetBoardPosition();
@@ -154,52 +126,3 @@ void AChessController::HandleSpecialMoveType(const FMove& Move)
 	}
 }
 
-void AChessController::HighlightSelected(AActor* Source)
-{
-	ClearHighlights();
-	const ACheckerHighlight* CheckerHighlight = static_cast<ACheckerHighlight*>(Source);
-	const FMove TargetMove = CheckerHighlight->Move;
-	UChessPiece* SourcePiece = static_cast<UChessPiece*>(TargetMove.SourcePiece);
-	UChessPiece* TargetPiece = static_cast<UChessPiece*>(TargetMove.TargetObject);
-	const FIntPoint TargetPosition = TargetMove.TargetPosition;
-	ChessboardController->MoveChessPieceToPosition(SourcePiece, TargetPosition);
-	if (TargetMove.MoveType != EMoveType::Standard)
-	{
-		HandleSpecialMoveType(TargetMove);
-	}
-}
-
-void AChessController::ClearHighlights()
-{
-	for (const auto Highlight : CurrentHighlights)
-	{
-		Highlight->Destroy();
-	}
-	CurrentHighlights.Empty();
-}
-
-AChessController::FTurnEnded& AChessController::OnTurnEnded()
-{
-	return TurnEndedEvent;
-}
-
-void AChessController::CreateHighlights(TArray<FMove> Moves)
-{
-	UE_LOG(LogTemp, Log, TEXT("Generating highlights"))
-	ClearHighlights();
-	for (const auto Move : Moves)
-	{
-		ACheckerHighlight* Actor = GetWorld()->SpawnActor<ACheckerHighlight>(ChessData->GetCheckerHighlightActor());
-		Actor->SetActorTransform(Chessboard->BoardToWorldTransform(Move.TargetPosition.X, Move.TargetPosition.Y));
-		Actor->Position = Move.TargetPosition;
-		Actor->Highlighter = this;
-		Actor->SourceFigure = CurrentSelectedFigure;
-		Actor->Move = Move;
-		CurrentHighlights.Add(Actor);
-	}
-}
-
-EColor AChessController::GetCurrentPlayer()
-{
-	return CurrentPlayer;
-}

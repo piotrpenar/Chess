@@ -1,14 +1,14 @@
 ﻿#include "ChessRulesController.h"
 
-ECheckmateStatus UChessRulesController::GetBoardStatusForColor(UChessboard* Chessboard, const EColor Color, IMovementVerifier* MovementVerifier)
+ECheckmateStatus UChessRulesController::GetCheckmateStatusForPlayer(UChessboard* Chessboard, const EColor PlayerColor, IChessMovesProvider* MovesProvider)
 {
-	const EColor EnemyColor = Color == EColor::White ? EColor::Black : EColor::White;
-	const TArray<UChessPiece*> AllyPieces = Chessboard->GetAllPiecesOfColor(Color);
+	const EColor EnemyColor = PlayerColor == EColor::White ? EColor::Black : EColor::White;
+	const TArray<UChessPiece*> AllyPieces = Chessboard->GetAllPiecesOfColor(PlayerColor);
 	const TArray<UChessPiece*> EnemyPieces = Chessboard->GetAllPiecesOfColor(EnemyColor);
-	const ECheckmateStatus CheckmateStatus = CalculateCheckmateStatus(EnemyPieces, AllyPieces, MovementVerifier);
+	const ECheckmateStatus CheckmateStatus = CalculateCheckmateStatus(EnemyPieces, AllyPieces, MovesProvider);
 	if (CheckmateStatus != ECheckmateStatus::None)
 	{
-		UE_LOG(LogTemp, Log, TEXT("Mate for Color %d - %d!"), Color, CheckmateStatus)
+		UE_LOG(LogTemp, Log, TEXT("Mate for Color %d - %d!"), PlayerColor, CheckmateStatus)
 	}
 	return CheckmateStatus;
 }
@@ -23,8 +23,7 @@ bool UChessRulesController::IsKingInCheck(UChessboard* Chessboard, const EColor 
 	return ThreateningEnemies.Num() > 0;
 }
 
-
-ECheckmateStatus UChessRulesController::CalculateCheckmateStatus(const TArray<UChessPiece*> EnemyPieces, TArray<UChessPiece*> AllyPieces, IMovementVerifier* MovementVerifier)
+ECheckmateStatus UChessRulesController::CalculateCheckmateStatus(const TArray<UChessPiece*> EnemyPieces, TArray<UChessPiece*> AllyPieces, IChessMovesProvider* MovesProvider)
 {
 	UChessPiece* AlliedKing = GetFigureFromArray(AllyPieces, EFigure::King);
 	ECheckmateStatus CheckmateStatus = ECheckmateStatus::None;
@@ -47,7 +46,7 @@ ECheckmateStatus UChessRulesController::CalculateCheckmateStatus(const TArray<UC
 
 	for (UChessPiece* AllyPiece : AllyPieces)
 	{
-		if (CanAllyEliminateCheck(EnemiesAvailableMoves, AllyPiece, MovementVerifier))
+		if (CanAllyEliminateCheck(EnemiesAvailableMoves, AllyPiece, MovesProvider))
 		{
 			return CheckmateStatus;
 		}
@@ -56,7 +55,7 @@ ECheckmateStatus UChessRulesController::CalculateCheckmateStatus(const TArray<UC
 	return ECheckmateStatus::Checkmate;
 }
 
-TArray<UChessRulesController::FEnemyMove> UChessRulesController::GetEnemiesAvailableMoves(TArray<UChessPiece*> EnemyPieces)
+TArray<FEnemyMove> UChessRulesController::GetEnemiesAvailableMoves(TArray<UChessPiece*> EnemyPieces)
 {
 	TArray<FEnemyMove> AllEnemyAvailableMoves = TArray<FEnemyMove>();
 	for (UChessPiece* EnemyPiece : EnemyPieces)
@@ -101,7 +100,7 @@ bool UChessRulesController::CanAllyCoverAnyEnemyMove(TArray<FEnemyMove> EnemyAva
 	return EnemyAvailableMoves.FindByPredicate([&AllyMove](const FEnemyMove& Move) { return AllyMove.TargetPosition == Move.Move.TargetPosition; }) == nullptr;
 }
 
-bool UChessRulesController::CanAllyDestroyEnemy(const UChessPiece* ThreateningEnemy, UChessPiece* Ally, const FMove AllyMove, IMovementVerifier* MovementVerifier)
+bool UChessRulesController::CanAllyDestroyEnemy(const UChessPiece* ThreateningEnemy, UChessPiece* Ally, const FMove AllyMove, IChessMovesProvider* MovementVerifier)
 {
 	const UChessPiece* TargetPiece = static_cast<UChessPiece*>(AllyMove.TargetObject);
 	if (TargetPiece == ThreateningEnemy)
@@ -114,13 +113,13 @@ bool UChessRulesController::CanAllyDestroyEnemy(const UChessPiece* ThreateningEn
 	return false;
 }
 
-bool UChessRulesController::CanAllyEliminateCheck(TArray<FEnemyMove> EnemyAvailableMoves, UChessPiece* AllyPiece, IMovementVerifier* MovementVerifier)
+bool UChessRulesController::CanAllyEliminateCheck(TArray<FEnemyMove> EnemyAvailableMoves, UChessPiece* AllyPiece, IChessMovesProvider* MovesProvider)
 {
 	UChessPiece* ThreateningEnemy = EnemyAvailableMoves[0].Enemy;
 	TArray<FMove> AllyAvailableMoves = AllyPiece->GetAvailableMoves();
 	for (const FMove AllyMove : AllyAvailableMoves)
 	{
-		if (CanAllyDestroyEnemy(ThreateningEnemy, AllyPiece, AllyMove, MovementVerifier))
+		if (CanAllyDestroyEnemy(ThreateningEnemy, AllyPiece, AllyMove, MovesProvider))
 		{
 			return true;
 		}
@@ -130,7 +129,7 @@ bool UChessRulesController::CanAllyEliminateCheck(TArray<FEnemyMove> EnemyAvaila
 			{
 				continue;
 			}
-			if (MovementVerifier->IsValidMove(AllyMove.TargetPosition, AllyPiece))
+			if (MovesProvider->IsValidMove(AllyMove.TargetPosition, AllyPiece))
 			{
 				return true;
 			}

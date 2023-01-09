@@ -3,14 +3,14 @@
 #include "Chess/Data/ChessData.h"
 #include "Chess/Enums/EColor.h"
 #include "Chess/Enums/EFigure.h"
-#include "Chess/Interfaces/ChessGameState.h"
-#include "Chess/Interfaces/MovementVerifier.h"
-#include "Chess/Interfaces/MovesProvider.h"
+#include "Chess/Interfaces/TurnsProvider.h"
+#include "Chess/Interfaces/ChessMovesProvider.h"
+#include "Chess/Interfaces/ChessPieceMovement.h"
 #include "Chess/Utils/FMove.h"
 #include "ChessPiece.generated.h"
 
 UCLASS()
-class CHESS_API UChessPiece : public UObject, public IMovesProvider
+class CHESS_API UChessPiece : public UObject, public IChessPieceMovement
 {
 	GENERATED_BODY()
 
@@ -33,9 +33,9 @@ public:
 	UPROPERTY()
 	UChessData* ChessData;
 	UPROPERTY()
-	TScriptInterface<IMovementVerifier> MovementVerifier;
+	TScriptInterface<IChessMovesProvider> MovementVerifier;
 	UPROPERTY()
-	TScriptInterface<IChessGameState> ChessGameState;
+	TScriptInterface<ITurnsProvider> ChessGameState;
 
 	virtual void MoveToPosition(FIntPoint Position, FVector ActorPosition) override;
 	virtual EFigure GetFigureType();
@@ -46,13 +46,13 @@ public:
 	void SetColor(EColor PieceColor);
 	void SetPosition(int X, int Y);
 	void SetActorTransform(FTransform Transform) const;
-	void CreateActor(UWorld* World, IBoardHighlighter* Highlighter);
+	void CreateActor(UWorld* World);
 	void DestroyChessPiece() const;
 	void SetPosition(FIntPoint Position);
 	void SetActorPosition(FVector Position) const;
 	EColor GetColor() const;
 	FIntPoint GetBoardPosition();
-	void SetAsSimulated(TScriptInterface<IMovementVerifier> SimulatedMovementVerifier);
+	void SetAsSimulated(TScriptInterface<IChessMovesProvider> SimulatedMovementVerifier);
 	bool IsSimulated() const;
-	void SetReferences(UChessData* NewChessData, TScriptInterface<IMovementVerifier> NewMovementVerifier, TScriptInterface<IChessGameState> NewGameState);
+	void SetReferences(UChessData* NewChessData, TScriptInterface<IChessMovesProvider> NewMovementVerifier, TScriptInterface<ITurnsProvider> NewGameState);
 };

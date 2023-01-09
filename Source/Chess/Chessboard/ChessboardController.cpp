@@ -55,7 +55,7 @@ void UChessboardController::AdjustMoveType(FMove* Move) const
 	}
 }
 
-void UChessboardController::Initialize(UChessData* NewChessData, UChessboard* NewBoard, const TScriptInterface<IChessGameState> NewChessGameState)
+void UChessboardController::Initialize(UChessData* NewChessData, UChessboard* NewBoard, const TScriptInterface<ITurnsProvider> NewChessGameState)
 {
 	this->ChessData = NewChessData;
 	this->Chessboard = NewBoard;

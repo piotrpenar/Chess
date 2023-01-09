@@ -35,7 +35,7 @@ UChessPiece* UChessPiecesFactory::CloneChessPiece(UChessPiece* Original, UObject
 	{
 	case EFigure::Pawn:
 		{
-			UChessPawn* OriginalPawn = static_cast<UChessPawn*>(Original);
+			const UChessPawn* OriginalPawn = static_cast<UChessPawn*>(Original);
 			return DuplicateObject(OriginalPawn, Initializer);
 		}
 	case EFigure::Rook:

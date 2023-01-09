@@ -7,10 +7,17 @@ void AChessFigure::HandleFigureClick()
 	{
 		return;
 	}
-	const TArray<FMove> Moves = SourcePiece->GetAvailableMoves();
-	Highlighter->SetSelectedFigure(this);
-	Highlighter->CreateHighlights(Moves);
-	UE_LOG(LogTemp, Log, TEXT("Avaliable Moves: %d"), Moves.Num())
+	BroadcastChessFigureOnClick();
+}
+
+void AChessFigure::BroadcastChessFigureOnClick()
+{
+	ChessFigureClicked.ExecuteIfBound(this);
+}
+
+AChessFigure::FChessFigureClicked AChessFigure::OnChessFigureClicked()
+{
+	return ChessFigureClicked;
 }
 
 void AChessFigure::SetBoardPosition(FIntPoint NewBoardPosition)

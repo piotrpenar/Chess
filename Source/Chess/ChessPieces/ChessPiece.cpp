@@ -16,7 +16,7 @@ FIntPoint UChessPiece::GetBoardPosition()
 	return BoardPosition;
 }
 
-void UChessPiece::SetAsSimulated(const TScriptInterface<IMovementVerifier> SimulatedMovementVerifier)
+void UChessPiece::SetAsSimulated(const TScriptInterface<IChessMovesProvider> SimulatedMovementVerifier)
 {
 	bIsSimulated = true;
 	MovementVerifier = SimulatedMovementVerifier;
@@ -28,7 +28,7 @@ bool UChessPiece::IsSimulated() const
 	return bIsSimulated;
 }
 
-void UChessPiece::SetReferences(UChessData* NewChessData, TScriptInterface<IMovementVerifier> NewMovementVerifier, TScriptInterface<IChessGameState> NewGameState)
+void UChessPiece::SetReferences(UChessData* NewChessData, TScriptInterface<IChessMovesProvider> NewMovementVerifier, TScriptInterface<ITurnsProvider> NewGameState)
 {
 	this->ChessData = NewChessData;
 	this->MovementVerifier = NewMovementVerifier;
@@ -112,7 +112,7 @@ void UChessPiece::MoveToPosition(const FIntPoint Position, const FVector ActorPo
 	}
 }
 
-void UChessPiece::CreateActor(UWorld* World, IBoardHighlighter* Highlighter)
+void UChessPiece::CreateActor(UWorld* World)
 {
 	if (!IsValid(World))
 	{
@@ -159,7 +159,6 @@ void UChessPiece::CreateActor(UWorld* World, IBoardHighlighter* Highlighter)
 	StaticMeshComponent->SetStaticMesh(Mesh);
 	StaticMeshComponent->SetMaterial(0, Material);
 	ChessPieceActor = Actor;
-	Actor->Highlighter = Highlighter;
 	Actor->SourcePiece = this;
 #if WITH_EDITOR
 	Actor->SetActorLabel(FString(UEnum::GetValueAsString(GetColor()) + " " + UEnum::GetValueAsString(GetFigureType())));

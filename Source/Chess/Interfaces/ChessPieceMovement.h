@@ -1,15 +1,15 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
 #include "Chess/Utils/FMove.h"
-#include "MovesProvider.generated.h"
+#include "ChessPieceMovement.generated.h"
 
 UINTERFACE()
-class UMovesProvider : public UInterface
+class UChessPieceMovement : public UInterface
 {
 	GENERATED_BODY()
 };
 
-class CHESS_API IMovesProvider
+class CHESS_API IChessPieceMovement
 {
 	GENERATED_BODY()
 

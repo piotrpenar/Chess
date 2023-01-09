@@ -2,11 +2,11 @@
 #include "CoreMinimal.h"
 #include "Chess/Chessboard/Chessboard.h"
 #include "Chess/Data/ChessData.h"
-#include "Chess/Interfaces/MovementVerifier.h"
+#include "Chess/Interfaces/ChessMovesProvider.h"
 #include "ChessboardController.generated.h"
 
 UCLASS()
-class CHESS_API UChessboardController final : public UObject, public IMovementVerifier
+class CHESS_API UChessboardController final : public UObject, public IChessMovesProvider
 {
 	GENERATED_BODY()
 
@@ -15,7 +15,7 @@ class CHESS_API UChessboardController final : public UObject, public IMovementVe
 	UPROPERTY()
 	UChessboard* Chessboard;
 	UPROPERTY()
-	TScriptInterface<IChessGameState> ChessGameState;
+	TScriptInterface<ITurnsProvider> ChessGameState;
 	UPROPERTY()
 	UChessboardController* SimulatedController;
 	UPROPERTY()
@@ -23,7 +23,7 @@ class CHESS_API UChessboardController final : public UObject, public IMovementVe
 
 	bool bIsSimulation = false;
 public:
-	void Initialize(UChessData* NewChessData, UChessboard* NewBoard, TScriptInterface<IChessGameState> NewChessGameState);
+	void Initialize(UChessData* NewChessData, UChessboard* NewBoard, TScriptInterface<ITurnsProvider> NewChessGameState);
 	void CreateChessboardSimulation();
 	void MoveChessPieceToPosition(UChessPiece* ChessPiece, FIntPoint Position) const;
 	void RemoveChessPieceAtPosition(FIntPoint Position) const;

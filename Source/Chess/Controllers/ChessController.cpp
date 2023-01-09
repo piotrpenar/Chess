@@ -6,13 +6,16 @@
 void AChessController::BeginPlay()
 {
 	Super::BeginPlay();
+	ChessboardTransformUtilities = NewObject<UChessboardTransformUtilities>();
+	ChessboardTransformUtilities->Initialize(ChessData,ChessBoardOrigin);
 	Highlighter = NewObject<UChessHighlighter>();
-	Highlighter->Initialize(ChessData->GetCheckerHighlightActor());
+	Highlighter->Initialize(ChessData->GetCheckerHighlightActor(),ChessboardTransformUtilities);
 	ChessboardController = NewObject<UChessboardController>();
-	ChessboardController->Initialize(ChessData, ChessBoardOrigin,[this](const AChessFigure* Param)
+	auto FigureClickedCallback = [this](const AChessFigure* Param)
 	{
 		this->ChessFigureSelected(Param);
-	});
+	};
+	ChessboardController->Initialize(ChessboardTransformUtilities, ChessData,ChessBoardOrigin, FigureClickedCallback);
 }
 
 void AChessController::ChessFigureSelected(const AChessFigure* ChessFigure) const

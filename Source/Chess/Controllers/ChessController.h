@@ -39,7 +39,6 @@ private:
 	AChessFigure* CurrentSelectedFigure;
 	UPROPERTY()
 	TScriptInterface<IChessMovesHighlighter> Highlighter;
-
-	FTransform GenerateChessPieceTransform(int TargetRow, int TargetColumn, EColor Color) const;
-	void GenerateChessRow(TArray<EFigure> Figures, const EColor Color, const int Y);
+	UPROPERTY()
+	UChessboardTransformUtilities* ChessboardTransformUtilities;
 };

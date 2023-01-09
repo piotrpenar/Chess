@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
+#include "Chess/Chessboard/ChessboardTransformUtilities.h"
 #include "Chess/ChessPieces/Figures/AChessFigure.h"
 #include "Chess/Highlight/BoardHighlight.h"
 #include "Chess/Interfaces/ChessMovesHighlighter.h"
@@ -13,7 +14,7 @@ class CHESS_API UChessHighlighter final :  public UObject, public IChessMovesHig
 	GENERATED_BODY()
 	
 public:
-	virtual void Initialize(TSubclassOf<ABoardHighlight> BoardHighlightSourceActor) override;
+	virtual void Initialize(TSubclassOf<ABoardHighlight> BoardHighlightSourceActor, UChessboardTransformUtilities* ChessboardTransformUtilitiesReference) override;
 	virtual void CreateHighlights(TArray<FMove> Moves) override;
 	virtual void SetSelectedFigure(AActor* SelectedFigureActor) override;
 	virtual void HighlightSelected(ABoardHighlight* CheckerHighlight) override;
@@ -26,4 +27,6 @@ private:
 	AChessFigure* CurrentSelectedFigure;
 	UPROPERTY()
 	TSubclassOf<ABoardHighlight> BoardHighlightActor;
+	UPROPERTY()
+	UChessboardTransformUtilities* ChessboardTransformUtilities;
 };

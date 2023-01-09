@@ -20,13 +20,15 @@ class CHESS_API UChessboardController final : public UObject
 	USimulatedChessboard* SimulatedBoard;
 	UPROPERTY()
 	UChessboardMovementRulesBase* SimulationMovementRules;
+	UPROPERTY()
+	UChessboardTransformUtilities* ChessboardTransformUtilities;
 	
 	UPROPERTY()
 	TScriptInterface<ITurnsProvider> ChessGameState;
 
 	bool bIsSimulation = false;
 public:
-	void Initialize(UChessData* NewChessData, AActor* ChessBoardOrigin, TFunction<void(AChessFigure*)> FigureClickedCallback);
+	void Initialize(UChessboardTransformUtilities* ChessboardTransformUtilitiesReference, UChessData* NewChessData, AActor* ChessBoardOrigin, TFunction<void(AChessFigure*)> FigureClickedCallback);
 	void MoveChessPieceToPosition(UChessPiece* ChessPiece, FIntPoint Position) const;
 	void HandleCastling(const FMove& Move, UChessPiece* ChessPiece) const;
 	void HandleEnPassant(UChessPiece* ChessPiece) const;
@@ -35,5 +37,5 @@ public:
 	void HandleSpecialMoveType(const FMove& Move) const;
 	void RemoveChessPieceAtPosition(FIntPoint Position) const;
 	void AddChessPieceAtPosition(UChessPiece* ChessPiece, const FIntPoint Position) const;
-	IMovementRulesProvider* GetChessboardMovementRuleProvider();
+	IMovementRulesProvider* GetChessboardMovementRuleProvider() const;
 };

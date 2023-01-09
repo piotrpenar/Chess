@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
+#include "ChessboardTransformUtilities.h"
 #include "BaseClasses/ChessboardBase.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 #include "Simulation/SimulatedChessboard.h"
@@ -15,6 +16,9 @@ class CHESS_API UChessboard final : public UChessboardBase
 
 	UPROPERTY()
 	UWorld* World;
+
+	UPROPERTY()
+	UChessboardTransformUtilities* ChessboardTransformUtilities;
 	
 	TFunction<void(AChessFigure*)> FigureClickedCallback;
 	
@@ -27,11 +31,9 @@ private:
 
 public:
 	void Initialize(UChessData* Data, AActor* BoardOrigin, TFunction<void(AChessFigure*)> ExternalFigureClickedCallback);
+	void SetTransformUtilities(UChessboardTransformUtilities* ChessboardTransformUtilitiesReference);
 	void InitializeMovementRules(USimulatedChessboard* SimulatedBoard);
 	UChessPiece* GenerateChessPieceAtPosition(EFigure Figure, EColor Color, FIntPoint Position);
 	virtual void SetPieceAtPosition(FIntPoint Position, UChessPiece* ChessPiece) override;
-	FTransform GenerateChessPieceTransform(FIntPoint Position, const EColor Color) const;
-	FTransform BoardToWorldTransform(FIntPoint Position) const;
-	FTransform GetChessBoardTransform() const;
 	IMovementRulesProvider* GetMovementRuleProvider() const;
 };

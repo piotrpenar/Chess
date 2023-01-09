@@ -2,8 +2,9 @@
 #include "Chess/Controllers/ChessRulesController.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 
-void UChessboardController::Initialize(UChessData* NewChessData, AActor* ChessBoardOrigin, TFunction<void(AChessFigure*)> FigureClickedCallback)
+void UChessboardController::Initialize(UChessboardTransformUtilities* ChessboardTransformUtilitiesReference,UChessData* NewChessData, AActor* ChessBoardOrigin, TFunction<void(AChessFigure*)> FigureClickedCallback)
 {
+	ChessboardTransformUtilities = ChessboardTransformUtilitiesReference;
 	this->ChessData = NewChessData;
 	Chessboard = NewObject<UChessboard>();
 	Chessboard->Initialize(ChessData, ChessBoardOrigin,FigureClickedCallback);
@@ -18,8 +19,7 @@ void UChessboardController::AddChessPieceAtPosition(UChessPiece* ChessPiece, con
 	UChessPiece* SimulatedChessPiece = SimulatedBoard->CreateSimulatedChessPiece(ChessPiece);
 	SimulatedBoard->SetPieceAtPosition(Position, SimulatedChessPiece);
 }
-
-IMovementRulesProvider* UChessboardController::GetChessboardMovementRuleProvider()
+IMovementRulesProvider* UChessboardController::GetChessboardMovementRuleProvider() const
 {
 	return Chessboard->GetMovementRuleProvider();
 }
@@ -33,7 +33,7 @@ void UChessboardController::RemoveChessPieceAtPosition(const FIntPoint Position)
 void UChessboardController::MoveChessPieceToPosition(UChessPiece* ChessPiece, const FIntPoint Position) const
 {
 	const FIntPoint PreviousPosition = FIntPoint(ChessPiece->GetBoardPosition());
-	ChessPiece->MoveToPosition(Position, Chessboard->BoardToWorldTransform(Position).GetTranslation());
+	ChessPiece->MoveToPosition(Position, ChessboardTransformUtilities->BoardToWorldTransform(Position).GetTranslation());
 	Chessboard->MovePieceFromToPosition(ChessPiece, PreviousPosition, Position);
 	UChessPiece* SimulatedChessPiece = SimulatedBoard->GetPieceAtPosition(PreviousPosition);
 	SimulatedBoard->MovePieceFromToPosition(SimulatedChessPiece, PreviousPosition, Position);

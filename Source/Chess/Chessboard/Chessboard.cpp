@@ -13,6 +13,11 @@ void UChessboard::Initialize(UChessData* Data, AActor* BoardOrigin, const TFunct
 	GenerateEmptyBoard();
 	GenerateChessPieces(EColor::White);
 	GenerateChessPieces(EColor::Black);
+}
+
+void UChessboard::SetTransformUtilities(UChessboardTransformUtilities* ChessboardTransformUtilitiesReference)
+{
+	ChessboardTransformUtilities = ChessboardTransformUtilitiesReference;
 };
 
 void UChessboard::InitializeMovementRules(USimulatedChessboard* SimulatedBoard)
@@ -68,24 +73,7 @@ void UChessboard::SetupChessPiece(UChessPiece* ChessPiece, const EColor Color, c
 	ChessPiece->SetPosition(Position);
 	AChessFigure* ChessFigure = CreateActorForChessPiece(ChessPiece);
 	ChessPiece->Initialize(ChessboardMovementRules, ChessFigure);
-	ChessPiece->SetActorTransform(GenerateChessPieceTransform(Position, Color));
-}
-
-FTransform UChessboard::GenerateChessPieceTransform(const FIntPoint Position, const EColor Color) const
-{
-	FTransform Transform = BoardToWorldTransform(Position);
-	if (Color == EColor::Black)
-	{
-		FRotator Rotator = Transform.GetRotation().Rotator();
-		Rotator.Yaw += 90;
-		Transform.SetRotation(Rotator.Quaternion());
-	}
-	return Transform;
-}
-
-FTransform UChessboard::GetChessBoardTransform() const
-{
-	return ChessBoardOrigin->GetActorTransform();
+	ChessPiece->SetActorTransform(ChessboardTransformUtilities->GenerateChessPieceTransform(Position, Color));
 }
 
 IMovementRulesProvider* UChessboard::GetMovementRuleProvider() const
@@ -93,15 +81,6 @@ IMovementRulesProvider* UChessboard::GetMovementRuleProvider() const
 	return ChessboardMovementRules.GetInterface();
 }
 
-FTransform UChessboard::BoardToWorldTransform(const FIntPoint Position) const
-{
-	FTransform Transform = GetChessBoardTransform();
-	const float BoardDistance = ChessData->GetBoardCheckerSize();
-	FVector PositionOffset = FVector(BoardDistance / 2 + Position.X * BoardDistance, BoardDistance / 2 + Position.Y * BoardDistance, ChessData->GetBoardOffset());
-	PositionOffset = Transform.Rotator().RotateVector(PositionOffset);
-	Transform.SetLocation(Transform.GetLocation() + PositionOffset);
-	return Transform;
-}
 
 void UChessboard::SetPieceAtPosition(const FIntPoint Position, UChessPiece* ChessPiece)
 {

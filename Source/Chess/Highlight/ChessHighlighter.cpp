@@ -4,9 +4,10 @@
 #include "Chess/ChessPieces/Figures/AChessFigure.h"
 #include "Chess/Highlight/BoardHighlight.h"
 
-void UChessHighlighter::Initialize(const TSubclassOf<ABoardHighlight> BoardHighlightSourceActor)
+void UChessHighlighter::Initialize(const TSubclassOf<ABoardHighlight> BoardHighlightSourceActor, UChessboardTransformUtilities* ChessboardTransformUtilitiesReference)
 {
 	BoardHighlightActor = BoardHighlightSourceActor;
+	ChessboardTransformUtilities = ChessboardTransformUtilitiesReference;
 }
 
 void UChessHighlighter::SetSelectedFigure(AActor* SelectedFigureActor)
@@ -27,7 +28,7 @@ void UChessHighlighter::CreateHighlights(TArray<FMove> Moves)
 	for (const FMove Move : Moves)
 	{
 		ABoardHighlight* Actor = GetWorld()->SpawnActor<ABoardHighlight>();
-		//SetActorTransform(Chessboard->BoardToWorldTransform(Move.TargetPosition.X, Move.TargetPosition.Y));
+		Actor->SetActorTransform(ChessboardTransformUtilities->BoardToWorldTransform(Move.TargetPosition));
 		Actor->Initialize(Move,CurrentSelectedFigure);
 		Actor->OnHighlightClicked().BindUObject(this,&UChessHighlighter::HighlightSelected);
 		CurrentHighlights.Add(Actor);

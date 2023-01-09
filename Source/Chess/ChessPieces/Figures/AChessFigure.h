@@ -23,5 +23,5 @@ public:
 	FIntPoint GetBoardPosition() const;
 	void SetSourcePiece(TScriptInterface<IChessPieceMovement> ChessPiece);
 	TScriptInterface<IChessPieceMovement> GetSourcePiece() const;
-	void SetClickCallback(TFunction<void(AChessFigure*)> Function);
+	void SetClickCallback(TFunction<void(AChessFigure*)> FigureClickedCallback);
 };

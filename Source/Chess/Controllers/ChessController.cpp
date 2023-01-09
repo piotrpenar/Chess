@@ -9,11 +9,15 @@ void AChessController::BeginPlay()
 	ChessboardTransformUtilities = NewObject<UChessSceneUtilities>();
 	ChessboardTransformUtilities->Initialize(ChessData,ChessBoardOrigin);
 	Highlighter = NewObject<UChessHighlighter>();
-	Highlighter->Initialize(ChessData->GetBoardHighlightActor(), ChessboardTransformUtilities);
-	ChessboardController = NewObject<UChessboardController>();
-	auto FigureClickedCallback = [this](const AChessFigure* Param)
+	auto HighlightClickedCallback = [this](const FMove* Highlight)
 	{
-		this->ChessFigureSelected(Param);
+		this->HighlightSelected(Highlight);
+	};
+	Highlighter->Initialize(ChessData->GetBoardHighlightActor(), ChessboardTransformUtilities,HighlightClickedCallback);
+	ChessboardController = NewObject<UChessboardController>();
+	auto FigureClickedCallback = [this](const AChessFigure* Figure)
+	{
+		this->ChessFigureSelected(Figure);
 	};
 	ChessboardController->Initialize(ChessboardTransformUtilities, ChessData,ChessBoardOrigin, FigureClickedCallback);
 }
@@ -24,9 +28,10 @@ void AChessController::ChessFigureSelected(const AChessFigure* ChessFigure) cons
 	Highlighter->CreateHighlights(ChessFigure->GetSourcePiece()->GetAvailableMoves());
 }
 
-void AChessController::HighlightSelected(const ABoardHighlight* BoardHighlight) const
+void AChessController::HighlightSelected(const FMove* Move) const
 {
-	ExecutePlayerMove(BoardHighlight->GetSourceMove());
+	UE_LOG(LogTemp, Log, TEXT("Callback called %s!"), *FString(Move->TargetPosition.ToString()))
+	ExecutePlayerMove(*Move);
 }
 
 void AChessController::ExecutePlayerMove(const FMove Move) const

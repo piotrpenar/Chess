@@ -34,7 +34,7 @@ TScriptInterface<IChessPieceMovement> AChessFigure::GetSourcePiece() const
 	return SourcePiece;
 }
 
-void AChessFigure::SetClickCallback(const TFunction<void(AChessFigure*)> Function)
+void AChessFigure::SetClickCallback(const TFunction<void(AChessFigure*)> FigureClickedCallback)
 {
-	CallbackFunction = Function;
+	CallbackFunction = FigureClickedCallback;
 }

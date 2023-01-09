@@ -2,7 +2,7 @@
 
 #include "Chess/Chessboard/ChessSceneUtilities.h"
 
-void IChessMovesHighlighter::Initialize(const TSubclassOf<ABoardHighlight> BoardHighlightSourceActor, UChessSceneUtilities* ChessboardTransformUtilities)
+void IChessMovesHighlighter::Initialize(const TSubclassOf<ABoardHighlight> BoardHighlightSourceActor, UChessSceneUtilities* ChessSceneUtilitiesReference, TFunction<void(FMove*)> HighlightClickCallbackReference)
 {
 }
 

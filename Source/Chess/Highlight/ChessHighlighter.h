@@ -23,8 +23,10 @@ private:
 	UPROPERTY()
 	UChessSceneUtilities* ChessboardTransformUtilities;
 	
+	TFunction<void(FMove*)> HighlightClickCallback;
+	
 public:
-	virtual void Initialize(const TSubclassOf<ABoardHighlight> BoardHighlightSourceActor, UChessSceneUtilities* ChessSceneUtilitiesReference) override;
+	virtual void Initialize(const TSubclassOf<ABoardHighlight> BoardHighlightSourceActor, UChessSceneUtilities* ChessSceneUtilitiesReference, const TFunction<void(FMove*)> HighlightClickCallbackReference) override;
 	virtual void CreateHighlights(TArray<FMove> Moves) override;
 	virtual void SetSelectedFigure(AActor* SelectedFigureActor) override;
 	virtual void HighlightSelected(ABoardHighlight* CheckerHighlight) override;

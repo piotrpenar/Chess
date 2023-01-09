@@ -17,7 +17,7 @@ class CHESS_API AChessController final : public AActor
 public:
 	virtual void BeginPlay() override;
 	void ChessFigureSelected(const AChessFigure* ChessFigure) const;
-	void HighlightSelected(const ABoardHighlight* BoardHighlight) const;
+	void HighlightSelected(const FMove* BoardHighlight) const;
 	void ExecutePlayerMove(FMove Move) const;
 
 	UPROPERTY(EditAnywhere)

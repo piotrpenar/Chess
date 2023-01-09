@@ -2,10 +2,11 @@
 #include "Chess/ChessPieces/Figures/AChessFigure.h"
 #include "Chess/Highlight/BoardHighlight.h"
 
-void UChessHighlighter::Initialize(const TSubclassOf<ABoardHighlight> BoardHighlightSourceActor, UChessSceneUtilities* ChessSceneUtilitiesReference)
+void UChessHighlighter::Initialize(const TSubclassOf<ABoardHighlight> BoardHighlightSourceActor, UChessSceneUtilities* ChessSceneUtilitiesReference, TFunction<void(FMove*)> HighlightClickCallbackReference)
 {
 	BoardHighlightActor = BoardHighlightSourceActor;
 	ChessboardTransformUtilities = ChessSceneUtilitiesReference;
+	HighlightClickCallback = HighlightClickCallbackReference;
 }
 
 void UChessHighlighter::SetSelectedFigure(AActor* SelectedFigureActor)
@@ -17,8 +18,8 @@ void UChessHighlighter::SetSelectedFigure(AActor* SelectedFigureActor)
 void UChessHighlighter::HighlightSelected(ABoardHighlight* CheckerHighlight)
 {
 	ClearHighlights();
-	const FMove TargetMove = CheckerHighlight->GetSourceMove();
-	//Invoke Hightlight Selected
+	FMove Move = CheckerHighlight->GetSourceMove();
+	HighlightClickCallback(&Move);
 }
 void UChessHighlighter::CreateHighlights(TArray<FMove> Moves)
 {

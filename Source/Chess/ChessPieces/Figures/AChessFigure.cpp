@@ -1,21 +1,18 @@
 ﻿#include "AChessFigure.h"
-#include "Chess/Utils/FMove.h"
 
 void AChessFigure::HandleFigureClick()
 {
-	if(!SourcePiece->CanMoveThisTurn())
-	{
-		return;
-	}
-	const TArray<FMove> Moves = SourcePiece->GetAvailableMoves();
-	Highlighter->SetSelectedFigure(this);
-	Highlighter->CreateHighlights(Moves);
-	UE_LOG(LogTemp, Log, TEXT("Avaliable Moves: %d"), Moves.Num())
+	BroadcastChessFigureOnClick();
 }
 
-void AChessFigure::SetBoardPosition(FIntPoint NewBoardPosition)
+void AChessFigure::BroadcastChessFigureOnClick()
 {
-	if(!IsValid(this))
+	CallbackFunction(this);
+}
+
+void AChessFigure::SetBoardPosition(const FIntPoint NewBoardPosition)
+{
+	if (!IsValid(this))
 	{
 		return;
 	}
@@ -25,4 +22,29 @@ void AChessFigure::SetBoardPosition(FIntPoint NewBoardPosition)
 FIntPoint AChessFigure::GetBoardPosition() const
 {
 	return BoardPosition;
+}
+
+void AChessFigure::SetSourcePiece(const TScriptInterface<IChessPieceMovement> ChessPiece)
+{
+	SourcePiece = ChessPiece;
+}
+
+TScriptInterface<IChessPieceMovement> AChessFigure::GetSourcePiece() const
+{
+	return SourcePiece;
+}
+
+void AChessFigure::SetClickCallback(const TFunction<void(AChessFigure*)> FigureClickedCallback)
+{
+	CallbackFunction = FigureClickedCallback;
+}
+
+EColor AChessFigure::GetColor() const
+{
+	return FigureColor;
+}
+
+void AChessFigure::SetColor(const EColor Color)
+{
+	FigureColor = Color;
 }

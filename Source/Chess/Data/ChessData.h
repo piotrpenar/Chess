@@ -1,12 +1,9 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
-#pragma once
-
+﻿#pragma once
 #include "CoreMinimal.h"
 #include "Chess/ChessPieces/Figures/AChessFigure.h"
-#include "Chess/Highlight/CheckerHighlight.h"
-#include "Chess/Utils/EColor.h"
-#include "Chess/Utils/EFigure.h"
+#include "Chess/Enums/EColor.h"
+#include "Chess/Enums/EFigure.h"
+#include "Chess/Highlight/BoardHighlight.h"
 #include "ChessData.generated.h"
 
 USTRUCT()
@@ -25,11 +22,11 @@ UCLASS()
 class CHESS_API UChessData final : public UDataAsset
 {
 	GENERATED_BODY()
-	
+
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AChessFigure> ChessFigureActor;
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<ACheckerHighlight> ChessHighlightActor;
+	TSubclassOf<ABoardHighlight> ChessHighlightActor;
 	UPROPERTY(EditAnywhere)
 	TMap<EFigure, FMeshMaterialData> FigureToMesh;
 	UPROPERTY(EditAnywhere)
@@ -38,14 +35,26 @@ class CHESS_API UChessData final : public UDataAsset
 	int BoardSize = 8;
 	UPROPERTY(EditAnywhere)
 	float BoardOffset = 1;
-	
+
+	const TArray<EFigure> Pawns = {
+		EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn,
+		EFigure::Pawn, EFigure::Pawn
+	};
+	const TArray<EFigure> Men = {
+		EFigure::Rook, EFigure::Knight, EFigure::Bishop, EFigure::King, EFigure::Queen, EFigure::Bishop,
+		EFigure::Knight, EFigure::Rook
+	};
+
 public:
 	UStaticMesh* GetMeshForType(EFigure Figure) const;
 	UMaterialInstance* GetMaterialForType(EFigure Figure, EColor Color) const;
 	TSubclassOf<AChessFigure> GetChessFigureActor() const;
-	TSubclassOf<ACheckerHighlight> GetCheckerHighlightActor() const;
+	TSubclassOf<ABoardHighlight> GetBoardHighlightActor() const;
+	float GetBoardCheckerSize() const;
+	float GetBoardSize() const;
+	float GetBoardOffset() const;
+	TArray<EFigure> GetMen() const;
+	TArray<EFigure> GetPawns() const;
+
 	bool IsValidBoardPosition(const FIntPoint& Position) const;
-	float GetBoardCheckerSize();
-	float GetBoardSize();
-	float GetBoardOffset();
 };

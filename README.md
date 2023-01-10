@@ -35,14 +35,15 @@ Current version of the game allows for basic playthrough and serves as MVP. Ther
 - [x] Advanced environment for the play area
 - [x] Adding details to the environment
 - [x] Adding special moves (En Passant, Castling, Pawn Promotion)
-- [ ] Refactor + Cleanup of the code
+- [x] Refactor + Cleanup of the code
 - [ ] SFX creation and implementation
 - [ ] Music creation and implementation
 - [ ] Optimization of the environment
 - [ ] Design and implementation of the Game UI
 - [ ] Polishing the graphics and details of the project
 - [ ] Project and repository cleanup
-- [ ] (Optional) Code optimization 
+- [ ] (Optional) Code optimization
+- [ ] (Stretch Goal) Adding Dev tools to the game
 - [ ] (Stretch Goal) Adding Tests to the game
 - [ ] (Stretch Goal) Adding AI to the game
 

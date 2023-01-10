@@ -1,8 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
-
-#include "ChessRook.h"
-
+﻿#include "ChessRook.h"
 
 EFigure UChessRook::GetFigureType()
 {
@@ -11,7 +7,7 @@ EFigure UChessRook::GetFigureType()
 
 TArray<FIntPoint> UChessRook::GetPossibleDirections() const
 {
-	return  {
+	return {
 		FIntPoint(1, 0),
 		FIntPoint(-1, 0),
 		FIntPoint(0, -1),
@@ -21,5 +17,5 @@ TArray<FIntPoint> UChessRook::GetPossibleDirections() const
 
 TArray<FMove> UChessRook::GetAvailableMoves()
 {
-	return MovementVerifier->GetValidMovesFromDirections(GetPossibleDirections(),this);
+	return MovementRules->GetValidMovesFromDirections(GetPossibleDirections(), this);
 }

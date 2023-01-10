@@ -1,12 +1,11 @@
 ﻿#include "ChessPawn.h"
 
-
 EFigure UChessPawn::GetFigureType()
 {
 	return EFigure::Pawn;
 }
 
-TArray<FIntPoint> UChessPawn::GetPossiblePositions()
+TArray<FIntPoint> UChessPawn::GetPossiblePositions() const
 {
 	const bool bIsWhite = Color == EColor::White;
 	const int Direction = bIsWhite ? 1 : -1;
@@ -18,14 +17,13 @@ TArray<FIntPoint> UChessPawn::GetPossiblePositions()
 	return PossibleMoves;
 }
 
-void UChessPawn::HandleTurnEnded(EColor& CurrentColor)
+void UChessPawn::HandleTurnEnded(const EColor CurrentColor)
 {
-	UE_LOG(LogTemp, Log, TEXT("Subscription called!"))
 	if (!IsValid(this))
 	{
 		return;
 	}
-	if(CurrentColor != Color)
+	if (CurrentColor != Color)
 	{
 		bHasDoubleMoved = false;
 	}
@@ -37,32 +35,36 @@ bool UChessPawn::HasDoubleMoved(const FIntPoint Position) const
 	return abs(PreviousPosition.Y - Position.Y) == 2;
 }
 
-void UChessPawn::MoveToPosition(FIntPoint Position, FVector ActorPosition)
+void UChessPawn::MoveToPosition(const FIntPoint Position, const FVector ActorPosition)
 {
-	if(HasDoubleMoved(Position))
+	if (HasDoubleMoved(Position))
 	{
 		bHasDoubleMoved = true;
-		ChessGameState->OnTurnEnded().AddUObject(this,&UChessPawn::HandleTurnEnded);
 	}
-	Super::MoveToPosition(Position,ActorPosition);
+	Super::MoveToPosition(Position, ActorPosition);
 }
 
-bool UChessPawn::IsValidPassantTarget()
+bool UChessPawn::IsValidPassantTarget() const
 {
 	return bHasDoubleMoved;
+}
+
+void UChessPawn::BindToTurnEndedEvent(ITurnsProvider* TurnsProvider)
+{
+	TurnsProvider->OnTurnEnded().AddUObject(this, &UChessPawn::HandleTurnEnded);
 }
 
 TArray<FMove> UChessPawn::GetAvailableMoves()
 {
 	TArray<FIntPoint> PossibleMoves = GetPossiblePositions();
-	TArray<FMove> ValidPositions = MovementVerifier->GetValidMovesFromPositions(GetPossiblePositions(),this);
-	TArray<FMove> SpecialMoves = MovementVerifier->GetValidSpecialMoves(this);
+	TArray<FMove> ValidPositions = MovementRules->GetValidMovesFromPositions(GetPossiblePositions(), this);
+	const TArray<FMove> SpecialMoves = MovementRules->GetValidSpecialMoves(this);
 	TArray<FMove> AvailableMoves = SpecialMoves;
 
 	for (const FMove ValidPosition : ValidPositions)
 	{
 		const bool bPositionsHaveSameX = ValidPosition.TargetPosition.X == BoardPosition.X;
-		UChessPiece* TargetChessPiece = static_cast<UChessPiece*>(ValidPosition.TargetObject);
+		const UChessPiece* TargetChessPiece = Cast<UChessPiece>(ValidPosition.TargetObject);
 		if (TargetChessPiece)
 		{
 			if (!bPositionsHaveSameX && TargetChessPiece->GetColor() != Color)

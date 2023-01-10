@@ -1,8 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
-
-#include "ChessPiecesFactory.h"
-
+﻿#include "ChessPiecesFactory.h"
 #include "Chess/ChessPieces/Logic/ChessBishop.h"
 #include "Chess/ChessPieces/Logic/ChessKing.h"
 #include "Chess/ChessPieces/Logic/ChessKnight.h"
@@ -39,32 +35,32 @@ UChessPiece* UChessPiecesFactory::CloneChessPiece(UChessPiece* Original, UObject
 	{
 	case EFigure::Pawn:
 		{
-			UChessPawn* OriginalPawn = static_cast<UChessPawn*>(Original);
+			const UChessPawn* OriginalPawn = Cast<UChessPawn>(Original);
 			return DuplicateObject(OriginalPawn, Initializer);
 		}
 	case EFigure::Rook:
 		{
-			const UChessRook* OriginalRook = static_cast<UChessRook*>(Original);
+			const UChessRook* OriginalRook = Cast<UChessRook>(Original);
 			return DuplicateObject(OriginalRook, Initializer);
 		}
 	case EFigure::Knight:
 		{
-			const UChessKnight* OriginalKnight = static_cast<UChessKnight*>(Original);
+			const UChessKnight* OriginalKnight = Cast<UChessKnight>(Original);
 			return DuplicateObject(OriginalKnight, Initializer);
 		}
 	case EFigure::Bishop:
 		{
-			const UChessBishop* OriginalBishop = static_cast<UChessBishop*>(Original);
+			const UChessBishop* OriginalBishop = Cast<UChessBishop>(Original);
 			return DuplicateObject(OriginalBishop, Initializer);
 		}
 	case EFigure::Queen:
 		{
-			const UChessQueen* OriginalQueen = static_cast<UChessQueen*>(Original);
+			const UChessQueen* OriginalQueen = Cast<UChessQueen>(Original);
 			return DuplicateObject(OriginalQueen, Initializer);
 		}
 	case EFigure::King:
 		{
-			const UChessKing* OriginalKing = static_cast<UChessKing*>(Original);
+			const UChessKing* OriginalKing = Cast<UChessKing>(Original);
 			return DuplicateObject(OriginalKing, Initializer);
 		}
 	default:

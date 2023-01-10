@@ -7,7 +7,7 @@ EFigure UChessBishop::GetFigureType()
 
 TArray<FIntPoint> UChessBishop::GetPossibleDirections() const
 {
-	return  {
+	return {
 		FIntPoint(-1, -1),
 		FIntPoint(1, -1),
 		FIntPoint(1, 1),
@@ -17,5 +17,5 @@ TArray<FIntPoint> UChessBishop::GetPossibleDirections() const
 
 TArray<FMove> UChessBishop::GetAvailableMoves()
 {
-	return MovementVerifier->GetValidMovesFromDirections(GetPossibleDirections(),this);
+	return MovementRules->GetValidMovesFromDirections(GetPossibleDirections(), this);
 }

@@ -1,6 +1,5 @@
 ﻿#include "ChessKnight.h"
 
-
 EFigure UChessKnight::GetFigureType()
 {
 	return EFigure::Knight;
@@ -23,5 +22,5 @@ TArray<FIntPoint> UChessKnight::GetPossiblePositions()
 
 TArray<FMove> UChessKnight::GetAvailableMoves()
 {
-	return MovementVerifier->GetValidMovesFromPositions(GetPossiblePositions(),this);
+	return MovementRules->GetValidMovesFromPositions(GetPossiblePositions(), this);
 }

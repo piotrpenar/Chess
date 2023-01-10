@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "Chess/Interfaces/BoardHighlighter.h"
-#include "Chess/Interfaces/MovesProvider.h"
+#include "Chess/Enums/EColor.h"
+#include "Chess/Interfaces/ChessPieceMovement.h"
 #include "AChessFigure.generated.h"
 
 UCLASS()
@@ -10,13 +10,26 @@ class AChessFigure final : public AActor
 
 	UPROPERTY()
 	FIntPoint BoardPosition;
-public:
+	
+	UPROPERTY()
+	EColor FigureColor;
+
+	UPROPERTY()
+	TScriptInterface<IChessPieceMovement> SourcePiece;
+
+	TFunction<void(AChessFigure*)> CallbackFunction;
 
 	UFUNCTION(BlueprintCallable)
 	void HandleFigureClick();
 	
-	IMovesProvider* SourcePiece;
-	IBoardHighlighter* Highlighter;
+	void BroadcastChessFigureOnClick();
+	
+public:
 	void SetBoardPosition(FIntPoint NewBoardPosition);
 	FIntPoint GetBoardPosition() const;
+	void SetSourcePiece(TScriptInterface<IChessPieceMovement> ChessPiece);
+	TScriptInterface<IChessPieceMovement> GetSourcePiece() const;
+	void SetClickCallback(TFunction<void(AChessFigure*)> FigureClickedCallback);
+	EColor GetColor() const;
+	void SetColor(EColor Color);
 };

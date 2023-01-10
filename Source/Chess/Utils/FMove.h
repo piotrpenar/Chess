@@ -1,12 +1,12 @@
 ﻿#pragma once
-#include "EMoveType.h"
+#include "Chess/Enums/EMoveType.h"
 #include "FMove.generated.h"
 
 USTRUCT(BlueprintType)
 struct FMove
 {
 	GENERATED_BODY()
-	
+
 	UPROPERTY()
 	UObject* SourcePiece;
 	UPROPERTY()
@@ -16,11 +16,11 @@ struct FMove
 	UPROPERTY()
 	EMoveType MoveType;
 
-	FMove(): TargetObject(nullptr)
+	FMove(): SourcePiece(nullptr), TargetPosition(), TargetObject(nullptr), MoveType()
 	{
 	}
 
-	FMove(UObject* Source,const FIntPoint Position,UObject* Object,EMoveType Type = EMoveType::Standard)
+	FMove(UObject* Source, const FIntPoint Position, UObject* Object, EMoveType Type = EMoveType::Standard)
 	{
 		SourcePiece = Source;
 		TargetPosition = Position;

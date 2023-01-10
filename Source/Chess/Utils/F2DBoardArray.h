@@ -5,7 +5,7 @@ USTRUCT(BlueprintType)
 struct F2DBoardArray
 {
 	GENERATED_BODY()
-	
+
 	UPROPERTY()
 	TArray<UObject*> Array;
 
@@ -18,8 +18,8 @@ struct F2DBoardArray
 	{
 		Array = NewArray;
 	}
-	
-	void Set(const int Index,UObject* Object)
+
+	void Set(const int Index, UObject* Object)
 	{
 		Array[Index] = Object;
 	}

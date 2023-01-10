@@ -1,155 +1,143 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿#include "Chessboard.h"
 
-#pragma once
-
-#include "Chessboard.h"
-
+#include "ChessboardMovementRules.h"
 #include "Chess/Helpers/ChessPiecesFactory.h"
-#include "Chess/Utils/F2DBoardArray.h"
+#include "Chess/Interfaces/MovementRulesProvider.h"
 
-
-void UChessboard::Initialize(UChessData* NewChessData, AActor* NewChessBoardOrigin)
+void UChessboard::Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference, UChessData* Data, const TFunction<void(AChessFigure*)> ExternalFigureClickedCallback)
 {
-	this->ChessData = NewChessData;
-	this->ChessBoardOrigin = NewChessBoardOrigin;
-};
+	Super::Initialize(Data);
+	ChessboardTransformUtilities = ChessSceneUtilitiesReference;
+	World = ChessboardTransformUtilities->GetBoardWorld();
+	FigureClickedCallback = ExternalFigureClickedCallback;
+}
 
-void UChessboard::GenerateEmptyBoard()
+void UChessboard::InitializeBoardPieces()
 {
-	for (int i = 0; i < ChessData->GetBoardSize(); i++)
+	GenerateEmptyBoard();
+	GenerateChessPieces(EColor::White);
+	GenerateChessPieces(EColor::Black);
+}
+
+void UChessboard::InitializeMovementRules(USimulatedChessboard* SimulatedBoard)
+{
+	UChessboardMovementRules* MovementRules = NewObject<UChessboardMovementRules>();
+	MovementRules->InitializeMovementRules(ChessData, this);
+	MovementRules->SetSimulatedChessboard(SimulatedBoard);
+	ChessboardMovementRules.SetObject(MovementRules);
+	ChessboardMovementRules.SetInterface(Cast<IMovementRulesProvider>(MovementRules));
+	InitializeBoardPieces();
+}
+
+void UChessboard::GenerateChessPieces(const EColor FigureColor)
+{
+	const bool bIsWhite = FigureColor == EColor::White;
+	const int ManRow = bIsWhite ? 0 : 7;
+	const int PawnRow = bIsWhite ? 1 : 6;
+	TArray<EFigure> MenTargetArray = ChessData->GetMen();
+	TArray<EFigure> Pawns = ChessData->GetPawns();
+	GenerateChessRow(MenTargetArray, FigureColor, ManRow);
+	GenerateChessRow(Pawns, FigureColor, PawnRow);
+}
+
+UChessPiece* UChessboard::GenerateChessPieceAtPosition(const EFigure Figure, const EColor Color, const FIntPoint Position)
+{
+	UChessPiece* ChessPiece = GenerateChessPiece(Figure);
+	SetupChessPiece(ChessPiece, Color, Position);
+	return ChessPiece;
+}
+
+void UChessboard::GenerateChessRow(TArray<EFigure>& Figures, const EColor Color, const int Y)
+{
+	for (int X = 0; X < ChessData->GetBoardSize(); X++)
 	{
-		F2DBoardArray Row = F2DBoardArray();
-		for (int j = 0; j < ChessData->GetBoardSize(); j++)
-		{
-			Row.Add(nullptr);
-		}
-		Board.Add(Row);
+		const FIntPoint Position = FIntPoint(X, Y);
+		UChessPiece* ChessPiece = GenerateChessPieceAtPosition(Figures[X], Color, Position);
+		SetPieceAtPosition(Position, ChessPiece);
 	}
 }
 
-FTransform UChessboard::GetChessBoardTransform() const
+UChessPiece* UChessboard::GenerateChessPiece(const EFigure Figure)
 {
-	return ChessBoardOrigin->GetActorTransform();
+	return UChessPiecesFactory::GenerateChessPiece(Figure, this);
 }
 
-FTransform UChessboard::BoardToWorldTransform(const int X, const int Y) const
+void UChessboard::SetupChessPiece(UChessPiece* ChessPiece, const EColor Color, const FIntPoint Position) const
 {
-	const FIntPoint Position = FIntPoint(X, Y);
-	return BoardToWorldTransform(Position);
+	ChessPiece->SetColor(Color);
+	ChessPiece->SetPosition(Position);
+	AChessFigure* ChessFigure = CreateActorForChessPiece(ChessPiece);
+	ChessPiece->Initialize(ChessboardMovementRules, ChessFigure);
+	ChessPiece->SetActorTransform(ChessboardTransformUtilities->GenerateChessPieceTransform(Position, Color));
 }
 
-FTransform UChessboard::BoardToWorldTransform(const FIntPoint Position) const
+TScriptInterface<IMovementRulesProvider> UChessboard::GetMovementRuleProvider() const
 {
-	FTransform Transform = GetChessBoardTransform();
-	const float BoardDistance = ChessData->GetBoardCheckerSize();
-	FVector PositionOffset = FVector(BoardDistance / 2 + Position.X * BoardDistance, BoardDistance / 2 + Position.Y * BoardDistance, ChessData->GetBoardOffset());
-	PositionOffset = Transform.Rotator().RotateVector(PositionOffset);
-	Transform.SetLocation(Transform.GetLocation() + PositionOffset);
-	return Transform;
+	return ChessboardMovementRules;
 }
 
-UChessPiece* UChessboard::GetPieceAtPosition(FIntPoint BoardPosition)
-{
-	if(!ChessData->IsValidBoardPosition(BoardPosition))
-	{
-		UE_LOG(LogTemp, Error, TEXT("Cannot get object from %s"),*FString(BoardPosition.ToString()))
-		return nullptr;
-	}
-	UObject* Object = Board[BoardPosition.X][BoardPosition.Y];
-	return static_cast<UChessPiece*>(Object);
-}
 
 void UChessboard::SetPieceAtPosition(const FIntPoint Position, UChessPiece* ChessPiece)
 {
-	if(!ChessData->IsValidBoardPosition(Position))
+	if (!ChessData->IsValidBoardPosition(Position))
 	{
-		UE_LOG(LogTemp, Error, TEXT("Cannot set any object at %s"),*FString(Position.ToString()))
+		UE_LOG(LogTemp, Error, TEXT("Cannot set any object at %s"), *FString(Position.ToString()))
 		return;
 	}
-	UObject* CurrentObject = Board[Position.X][Position.Y];
-	if (CurrentObject && !bIsSimulation)
+	const UChessPiece* CurrentObject = GetPieceAtPosition(Position);
+	if (CurrentObject)
 	{
-		static_cast<UChessPiece*>(CurrentObject)->DestroyChessPiece();
+		CurrentObject->DestroyActor();
 	}
-	Board[Position.X].Set(Position.Y, ChessPiece);
-	if (ChessPiece)
-	{
-		ChessPiece->SetPosition(Position);
-	}
+	Super::SetPieceAtPosition(Position, ChessPiece);
 }
 
-void UChessboard::MovePieceFromToPosition(UChessPiece* ChessPiece, const FIntPoint FromPosition, const FIntPoint ToPosition)
+AChessFigure* UChessboard::CreateActorForChessPiece(UChessPiece* SourceChessPiece) const
 {
-	SetPieceAtPosition(ToPosition, ChessPiece);
-	Board[FromPosition.X].Set(FromPosition.Y, nullptr);
-}
-
-TArray<UChessPiece*> UChessboard::GetAllPiecesOfColor(const EColor Color)
-{
-	TArray<UChessPiece*> Pieces;
-	for (F2DBoardArray Row : Board)
+	const EFigure PieceFigure = SourceChessPiece->GetFigureType();
+	const EColor PieceColor = SourceChessPiece->GetColor();
+	if (!IsValid(ChessData))
 	{
-		for (UObject* ChessPieceObject : Row.Array)
-		{
-			if (!ChessPieceObject)
-			{
-				continue;
-			}
-			UChessPiece* ChessPiece = static_cast<UChessPiece*>(ChessPieceObject);
-			if (ChessPiece->GetColor() == Color)
-			{
-				Pieces.Add(ChessPiece);
-			}
-		}
+		UE_LOG(LogTemp, Warning, TEXT("ChessData is invalid"))
+		return nullptr;
 	}
-	return Pieces;
-}
-
-
-UChessPiece* UChessboard::GetChessPiece(const EFigure Figure, const EColor Color)
-{
-	for (F2DBoardArray Row : Board)
+	AChessFigure* Actor = World->SpawnActor<AChessFigure>(ChessData->GetChessFigureActor());
+	if (!IsValid(Actor))
 	{
-		for (UObject* ChessPieceObject : Row.Array)
-		{
-			if (!ChessPieceObject)
-			{
-				continue;
-			}
-			UChessPiece* ChessPiece = static_cast<UChessPiece*>(ChessPieceObject);
-			if (ChessPiece->GetFigureType() == Figure && ChessPiece->GetColor() == Color)
-			{
-				return ChessPiece;
-			}
-		}
+		UE_LOG(LogTemp, Warning, TEXT("Actor is invalid"))
+		return nullptr;
 	}
-	return nullptr;
-}
-
-UChessPiece* UChessboard::CreateSimulatedChessPiece(TScriptInterface<IMovementVerifier> SimulatedMovementVerifier, UChessPiece* ChessPiece)
-{
-	UChessPiece* Clone = UChessPiecesFactory::CloneChessPiece(ChessPiece, this);
-	Clone->SetAsSimulated(SimulatedMovementVerifier);
-	return Clone;
-}
-
-void UChessboard::SetAsSimulated(UChessboard* OriginalBoard, TScriptInterface<IMovementVerifier> SimulatedMovementVerifier)
-{
-	bIsSimulation = true;
-	for (int i = 0; i < ChessData->GetBoardSize(); i++)
+	UActorComponent* Component = Actor->GetComponentByClass(UStaticMeshComponent::StaticClass());
+	if (!IsValid(Component))
 	{
-		F2DBoardArray NewRow = F2DBoardArray();
-		for (int j = 0; j < ChessData->GetBoardSize(); j++)
-		{
-			UChessPiece* ChessPiece = OriginalBoard->GetPieceAtPosition(FIntPoint(i, j));
-			if (!ChessPiece)
-			{
-				NewRow.Add(nullptr);
-				continue;
-			}
-			UChessPiece* Clone = CreateSimulatedChessPiece(SimulatedMovementVerifier, ChessPiece);;
-			NewRow.Add(Clone);
-		}
-		Board.Add(NewRow);
+		UE_LOG(LogTemp, Warning, TEXT("Component is invalid"))
+		return nullptr;
 	}
+	UStaticMesh* Mesh = ChessData->GetMeshForType(PieceFigure);
+	if (!IsValid(Mesh))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Mesh is invalid"))
+		return nullptr;
+	}
+	UMaterialInstance* Material = ChessData->GetMaterialForType(PieceFigure, PieceColor);
+	if (!IsValid(Material))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Material is invalid"))
+		return nullptr;
+	}
+	UStaticMeshComponent* StaticMeshComponent = Cast<UStaticMeshComponent>(Component);
+	if (!IsValid(StaticMeshComponent))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("StaticMeshComponent is invalid"))
+		return nullptr;
+	}
+	StaticMeshComponent->SetStaticMesh(Mesh);
+	StaticMeshComponent->SetMaterial(0, Material);
+	Actor->SetSourcePiece(SourceChessPiece);
+	Actor->SetClickCallback(FigureClickedCallback);
+	Actor->SetColor(PieceColor);
+#if WITH_EDITOR
+	Actor->SetActorLabel(FString(UEnum::GetValueAsString(PieceColor) + " " + UEnum::GetValueAsString(PieceFigure)));
+#endif
+	return Actor;
 }

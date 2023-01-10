@@ -16,9 +16,7 @@ struct FMove
 	UPROPERTY()
 	EMoveType MoveType;
 
-	FMove(): TargetObject(nullptr)
-	{
-	}
+	FMove(){}
 
 	FMove(UObject* Source, const FIntPoint Position, UObject* Object, EMoveType Type = EMoveType::Standard)
 	{

@@ -128,7 +128,7 @@ AChessFigure* UChessboard::CreateActorForChessPiece(UChessPiece* SourceChessPiec
 		UE_LOG(LogTemp, Warning, TEXT("Material is invalid"))
 		return nullptr;
 	}
-	UStaticMeshComponent* StaticMeshComponent = static_cast<UStaticMeshComponent*>(Component);
+	UStaticMeshComponent* StaticMeshComponent = Cast<UStaticMeshComponent>(Component);
 	if (!IsValid(StaticMeshComponent))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("StaticMeshComponent is invalid"))

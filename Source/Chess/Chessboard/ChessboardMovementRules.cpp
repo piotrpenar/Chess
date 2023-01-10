@@ -13,7 +13,7 @@ bool UChessboardMovementRules::IsValidMove(const FIntPoint Position, UObject* Ch
 	{
 		return false;
 	}
-	UChessPiece* ChessPiece = static_cast<UChessPiece*>(ChessPieceObject);
+	UChessPiece* ChessPiece = Cast<UChessPiece>(ChessPieceObject);
 	if (!ChessPiece)
 	{
 		UE_LOG(LogTemp, Log, TEXT("Cloud not cast to ChessPiece!"))

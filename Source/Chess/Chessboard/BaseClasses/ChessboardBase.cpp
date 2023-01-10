@@ -29,7 +29,7 @@ UChessPiece* UChessboardBase::GetPieceAtPosition(const FIntPoint BoardPosition)
 		return nullptr;
 	}
 	UObject* Object = Board[BoardPosition.X][BoardPosition.Y];
-	return static_cast<UChessPiece*>(Object);
+	return Cast<UChessPiece>(Object);
 }
 
 void UChessboardBase::SetPieceAtPosition(const FIntPoint Position, UChessPiece* ChessPiece)
@@ -63,7 +63,7 @@ TArray<UChessPiece*> UChessboardBase::GetAllPiecesOfColor(const EColor Color) co
 			{
 				continue;
 			}
-			UChessPiece* ChessPiece = static_cast<UChessPiece*>(ChessPieceObject);
+			UChessPiece* ChessPiece = Cast<UChessPiece>(ChessPieceObject);
 			if (ChessPiece->GetColor() == Color)
 			{
 				Pieces.Add(ChessPiece);

@@ -102,7 +102,7 @@ bool UChessRulesController::CanAllyCoverAnyEnemyMove(TArray<FEnemyMove> EnemyAva
 
 bool UChessRulesController::CanAllyDestroyEnemy(const UChessPiece* ThreateningEnemy, UChessPiece* Ally, const FMove AllyMove, IMovementRulesProvider* MovementVerifier)
 {
-	const UChessPiece* TargetPiece = static_cast<UChessPiece*>(AllyMove.TargetObject);
+	const UChessPiece* TargetPiece = Cast<UChessPiece>(AllyMove.TargetObject);
 	if (TargetPiece == ThreateningEnemy)
 	{
 		if (MovementVerifier->IsValidMove(AllyMove.TargetPosition, Ally))

@@ -19,7 +19,7 @@ bool UChessboardMovementRulesBase::IsValidMove(const FIntPoint Position, UObject
 TArray<FMove> UChessboardMovementRulesBase::GetValidMovesFromPositions(const TArray<FIntPoint> InputDirections, UObject* ChessPieceObject)
 {
 	TArray<FMove> ValidMoves = TArray<FMove>();
-	UChessPiece* ChessPiece = static_cast<UChessPiece*>(ChessPieceObject);
+	UChessPiece* ChessPiece = Cast<UChessPiece>(ChessPieceObject);
 	TArray<FIntPoint> PossibleMoves = TArray(InputDirections);
 
 	for (int i = 0; i < PossibleMoves.Num(); i++)
@@ -43,7 +43,7 @@ TArray<FMove> UChessboardMovementRulesBase::GetValidMovesFromPositions(const TAr
 TArray<FMove> UChessboardMovementRulesBase::GetValidMovesFromDirections(const TArray<FIntPoint> InputDirections, UObject* ChessPieceObject)
 {
 	TArray<FMove> AvailableMoves = TArray<FMove>();
-	UChessPiece* ChessPiece = static_cast<UChessPiece*>(ChessPieceObject);
+	UChessPiece* ChessPiece = Cast<UChessPiece>(ChessPieceObject);
 	TArray<FIntPoint> Directions = TArray(InputDirections);
 
 	for (int i = 0; i < Directions.Num(); i++)
@@ -74,7 +74,7 @@ TArray<FMove> UChessboardMovementRulesBase::GetValidMovesFromDirections(const TA
 
 void UChessboardMovementRulesBase::AdjustMoveType(FMove* Move) const
 {
-	UChessPiece* SourcePiece = static_cast<UChessPiece*>(Move->SourcePiece);
+	UChessPiece* SourcePiece = Cast<UChessPiece>(Move->SourcePiece);
 	const bool bIsOnBoardEdge = Move->TargetPosition.Y == 0 || Move->TargetPosition.Y == ChessData->GetBoardSize() - 1;
 	const bool bIsValidPawn = SourcePiece && SourcePiece->GetFigureType() == EFigure::Pawn;
 	if (bIsValidPawn && bIsOnBoardEdge)
@@ -85,7 +85,7 @@ void UChessboardMovementRulesBase::AdjustMoveType(FMove* Move) const
 
 TArray<FMove> UChessboardMovementRulesBase::GetValidSpecialMoves(UObject* ChessPieceObject)
 {
-	UChessPiece* ChessPiece = static_cast<UChessPiece*>(ChessPieceObject);
+	UChessPiece* ChessPiece = Cast<UChessPiece>(ChessPieceObject);
 	const EFigure TargetFigure = ChessPiece->GetFigureType();
 	if (TargetFigure == EFigure::Pawn)
 	{
@@ -199,7 +199,7 @@ TArray<FMove> UChessboardMovementRulesBase::GetEnPassantMoves(UChessPiece* Chess
 		UChessPiece* OtherPiece = Chessboard->GetPieceAtPosition(Position);
 		if (OtherPiece && OtherPiece->GetFigureType() == EFigure::Pawn && OtherPiece->GetColor() != ChessPiece->GetColor())
 		{
-			const UChessPawn* OtherPawn = static_cast<UChessPawn*>(OtherPiece);
+			const UChessPawn* OtherPawn = Cast<UChessPawn>(OtherPiece);
 			if (!OtherPawn->IsValidPassantTarget())
 			{
 				continue;
@@ -218,7 +218,7 @@ TArray<FMove> UChessboardMovementRulesBase::GetPawnSpecialMoves(UChessPiece* Che
 {
 	TArray<FMove> SpecialMoves;
 	const FIntPoint PawnPosition = ChessPiece->GetBoardPosition();
-	const UChessPawn* Pawn = static_cast<UChessPawn*>(ChessPiece);
+	const UChessPawn* Pawn = Cast<UChessPawn>(ChessPiece);
 	const bool bHasMoved = Pawn->HasMoved();
 
 	const int Direction = ChessPiece->GetColor() == EColor::White ? 1 : -1;

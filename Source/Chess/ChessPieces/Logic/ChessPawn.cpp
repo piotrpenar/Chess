@@ -67,7 +67,7 @@ TArray<FMove> UChessPawn::GetAvailableMoves()
 	for (const FMove ValidPosition : ValidPositions)
 	{
 		const bool bPositionsHaveSameX = ValidPosition.TargetPosition.X == BoardPosition.X;
-		const UChessPiece* TargetChessPiece = static_cast<UChessPiece*>(ValidPosition.TargetObject);
+		const UChessPiece* TargetChessPiece = Cast<UChessPiece>(ValidPosition.TargetObject);
 		if (TargetChessPiece)
 		{
 			if (!bPositionsHaveSameX && TargetChessPiece->GetColor() != Color)

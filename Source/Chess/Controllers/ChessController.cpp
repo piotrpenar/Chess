@@ -61,7 +61,7 @@ void AChessController::MoveSelected(const FMove* Move) const
 
 void AChessController::ExecutePlayerMove(const FMove Move) const
 {
-	UChessPiece* SourcePiece = static_cast<UChessPiece*>(Move.SourcePiece);
+	UChessPiece* SourcePiece = Cast<UChessPiece>(Move.SourcePiece);
 	const FIntPoint TargetPosition = Move.TargetPosition;
 	ChessboardController->MoveChessPieceToPosition(SourcePiece, TargetPosition);
 	if (Move.MoveType != EMoveType::Standard)

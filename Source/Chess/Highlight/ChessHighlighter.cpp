@@ -11,7 +11,7 @@ void UChessHighlighter::Initialize(const TSubclassOf<ABoardHighlight> BoardHighl
 
 void UChessHighlighter::SetSelectedFigure(AActor* SelectedFigureActor)
 {
-	AChessFigure* Figure = static_cast<AChessFigure*>(SelectedFigureActor);
+	AChessFigure* Figure = Cast<AChessFigure>(SelectedFigureActor);
 	CurrentSelectedFigure = Figure;
 }
 

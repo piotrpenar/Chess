@@ -49,7 +49,7 @@ void UChessboardController::SetupPiecesCallbacks(ITurnsProvider* TurnsProvider) 
 	Pawns.Append(Chessboard->GetChessPieces(EColor::Black,EFigure::Pawn));
 	for (UChessPiece* ChessPiece : Pawns)
 	{
-		UChessPawn* Pawn = static_cast<UChessPawn*>(ChessPiece);
+		UChessPawn* Pawn = Cast<UChessPawn>(ChessPiece);
 		Pawn->BindToTurnEndedEvent(TurnsProvider);
 	}
 }
@@ -76,7 +76,7 @@ void UChessboardController::MoveChessPieceToPosition(UChessPiece* ChessPiece, co
 
 void UChessboardController::HandleCastling(const FMove& Move, UChessPiece* ChessPiece) const
 {
-	UChessPiece* SourceChessPiece = static_cast<UChessPiece*>(Move.SourcePiece);
+	UChessPiece* SourceChessPiece = Cast<UChessPiece>(Move.SourcePiece);
 	const int Direction = FMath::Sign(SourceChessPiece->GetBoardPosition().X - ChessPiece->GetBoardPosition().X);
 	const FIntPoint TargetPosition = Move.TargetPosition + FIntPoint(Direction, 0);
 	MoveChessPieceToPosition(ChessPiece, TargetPosition);
@@ -100,14 +100,14 @@ void UChessboardController::PromotePawn(UChessPiece* ChessPiece, const EFigure T
 void UChessboardController::HandlePawnPromotion(const FMove& Move) const
 {
 	UE_LOG(LogTemp, Log, TEXT("Pawn Promotion!"));
-	UChessPiece* Pawn = static_cast<UChessPiece*>(Move.SourcePiece);
+	UChessPiece* Pawn = Cast<UChessPiece>(Move.SourcePiece);
 	PromotePawn(Pawn, EFigure::Queen);
 }
 
 void UChessboardController::HandleSpecialMoveType(const FMove& Move) const
 {
 	UE_LOG(LogTemp, Log, TEXT("Is special move!"));
-	UChessPiece* TargetChessPiece = static_cast<UChessPiece*>(Move.TargetObject);
+	UChessPiece* TargetChessPiece = Cast<UChessPiece>(Move.TargetObject);
 	switch (Move.MoveType)
 	{
 	case EMoveType::DoubleMove:

@@ -1,9 +1,5 @@
 ﻿#include "BoardHighlight.h"
 
-ABoardHighlight::ABoardHighlight()
-{
-}
-
 AChessFigure* ABoardHighlight::GetSourceFigure() const
 {
 	return SourceFigure;

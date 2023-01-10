@@ -10,9 +10,10 @@ class CHESS_API UChessboardMovementRules final : public UChessboardMovementRules
 {
 	UPROPERTY()
 	USimulatedChessboard* SimulatedChessboard;
+	
+	bool CanMoveInSimulation(FIntPoint Position, UChessPiece* ChessPiece) const;
 public:
 	GENERATED_BODY()
 	void SetSimulatedChessboard(USimulatedChessboard* SimulatedChessboardReference);
 	virtual bool IsValidMove(const FIntPoint Position, UObject* ChessPieceObject) override;
-	bool CanMoveInSimulation(FIntPoint Position, UChessPiece* ChessPiece) const;
 };

@@ -118,8 +118,8 @@ TArray<FMove> UChessboardMovementRulesBase::GetKingSpecialMoves(UChessPiece* Kin
 		}
 		const int SignedDistance = Rook->GetBoardPosition().X - KingPiece->GetBoardPosition().X;
 		const int Direction = FMath::Sign(SignedDistance);
-
 		const FIntPoint FinalKingPosition = KingPos + FIntPoint(Direction * 2, 0);
+		
 		if (!IsValidMove(FinalKingPosition, KingPiece))
 		{
 			continue;
@@ -129,12 +129,7 @@ TArray<FMove> UChessboardMovementRulesBase::GetKingSpecialMoves(UChessPiece* Kin
 		for (int i = KingPos.X + Direction; i < FMath::Abs(SignedDistance) - 1; i += Direction)
 		{
 			const FIntPoint TargetPosition = FIntPoint(i, KingPos.Y);
-			if (Chessboard->GetPieceAtPosition(TargetPosition))
-			{
-				bCanCastle = false;
-				break;
-			}
-			if (!IsValidMove(TargetPosition, KingPiece))
+			if (Chessboard->GetPieceAtPosition(TargetPosition) || !IsValidMove(TargetPosition, KingPiece))
 			{
 				bCanCastle = false;
 				break;
@@ -154,7 +149,6 @@ bool UChessboardMovementRulesBase::CanPawnDoubleMove(UChessPiece* ChessPiece, co
 {
 	if (ChessPiece->HasMoved())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Cannot Double Move"))
 		return false;
 	}
 	TArray<FMove> SpecialMoves;

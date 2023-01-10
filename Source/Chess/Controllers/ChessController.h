@@ -32,17 +32,21 @@ private:
 	UChessSceneUtilities* ChessboardSceneUtilities;
 	UPROPERTY()
 	AChessGameMode* GameMode;
+	UPROPERTY()
+	AChessGameState* GameState;
 	UPROPERTY(EditAnywhere)
 	UChessData* ChessData;
 	UPROPERTY(EditAnywhere)
 	AActor* ChessBoardOrigin;
-
-public:
+	
 	void CreateChessboardSceneUtilities();
 	void CreateChessHighlighter();
 	void CreateChessboardController();
-	virtual void BeginPlay() override;
 	void ChessFigureSelected(const AChessFigure* ChessFigure) const;
 	void MoveSelected(const FMove Move) const;
 	void ExecutePlayerMove(FMove Move) const;
+	
+protected:
+	virtual void BeginPlay() override;
+	
 };

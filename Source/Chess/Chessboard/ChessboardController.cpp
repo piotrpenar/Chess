@@ -99,14 +99,12 @@ void UChessboardController::PromotePawn(UChessPiece* ChessPiece, const EFigure T
 //TODO: Add proper UI Implementation here. Currently we always switch for queen.
 void UChessboardController::HandlePawnPromotion(const FMove& Move) const
 {
-	UE_LOG(LogTemp, Log, TEXT("Pawn Promotion!"));
 	UChessPiece* Pawn = Cast<UChessPiece>(Move.SourcePiece);
 	PromotePawn(Pawn, EFigure::Queen);
 }
 
 void UChessboardController::HandleSpecialMoveType(const FMove& Move) const
 {
-	UE_LOG(LogTemp, Log, TEXT("Is special move!"));
 	UChessPiece* TargetChessPiece = Cast<UChessPiece>(Move.TargetObject);
 	switch (Move.MoveType)
 	{

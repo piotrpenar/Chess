@@ -16,6 +16,13 @@ UCLASS()
 class CHESS_API UChessboardMovementRulesBase : public UObject, public IMovementRulesProvider
 {
 	GENERATED_BODY()
+private:
+	TArray<FMove> GetPawnSpecialMoves(UChessPiece* ChessPiece);
+	TArray<FMove> GetKingSpecialMoves(UChessPiece* KingPiece);
+	bool CanPawnDoubleMove(UChessPiece* ChessPiece, FIntPoint PawnPos, int Direction);
+	TArray<FMove> GetEnPassantMoves(UChessPiece* ChessPiece, FIntPoint PawnPos, int Direction);
+	void AdjustMoveType(FMove& Move) const;
+	
 protected:
 	UPROPERTY()
 	UChessData* ChessData;
@@ -29,10 +36,4 @@ public:
 	virtual TArray<FMove> GetValidMovesFromDirections(const TArray<FIntPoint>& InputDirections, UObject* ChessPieceObject) override;
 	virtual TArray<FMove> GetValidSpecialMoves(UObject* ChessPieceObject) override;
 
-private:
-	TArray<FMove> GetPawnSpecialMoves(UChessPiece* ChessPiece);
-	TArray<FMove> GetKingSpecialMoves(UChessPiece* KingPiece);
-	bool CanPawnDoubleMove(UChessPiece* ChessPiece, FIntPoint PawnPos, int Direction);
-	TArray<FMove> GetEnPassantMoves(UChessPiece* ChessPiece, FIntPoint PawnPos, int Direction);
-	void AdjustMoveType(FMove& Move) const;
 };

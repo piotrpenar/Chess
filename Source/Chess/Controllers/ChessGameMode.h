@@ -22,12 +22,15 @@ private:
 	TScriptInterface<IMovementRulesProvider> MovementRulesProvider;
 
 	FTurnEnded TurnEndedEvent;
-
-public:
+	
 	void Initialize();
-	virtual void BeginPlay() override;
-	virtual void EndTurn() override;
 	void BroadcastTurnEnded(EColor Color) const;
+
+protected:
+	virtual void BeginPlay() override;
+	
+public:
+	virtual void EndTurn() override;
 	void SetMovementProvider(TScriptInterface<IMovementRulesProvider> MovementRulesProviderReference);
 
 	DECLARE_DERIVED_EVENT(AChessGameState, ITurnsProvider::FTurnEnded, FTurnEndedEvent);

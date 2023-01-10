@@ -17,13 +17,11 @@ private:
 	FMove Move;
 
 	TFunction<void(ABoardHighlight*)> HighlightClickedCallback;
-
-public:
-	ABoardHighlight();
-
+	
 	UFUNCTION(BlueprintCallable)
 	void BroadcastHighlightOnClick();
 
+public:
 	void Initialize(const FMove SourceMove, AChessFigure* ChessFigure, TFunction<void(ABoardHighlight*)> HighlightClickedCallbackReference);
 	AChessFigure* GetSourceFigure() const;
 	FMove GetSourceMove() const;

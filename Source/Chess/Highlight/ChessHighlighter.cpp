@@ -20,7 +20,6 @@ void UChessHighlighter::HighlightSelected(ABoardHighlight* CheckerHighlight)
 {
 	ClearHighlights();
 	FMove Move = CheckerHighlight->GetSourceMove();
-	UE_LOG(LogTemp, Log, TEXT("Callback called %s!"), *FString(Move.TargetPosition.ToString()))
 	HighlightClickCallback(Move);
 }
 

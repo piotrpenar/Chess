@@ -24,14 +24,14 @@ class CHESS_API UChessRulesController final : public UObject
 {
 	GENERATED_BODY()
 
-	static TArray<FEnemyMove> GetEnemiesAvailableMoves(TArray<UChessPiece*>& EnemyPieces);
-	static TArray<UChessPiece*> GetThreateningEnemies(TArray<FEnemyMove>& EnemyMoves, const UChessPiece* ChessPiece);
+	static TArray<FMove> GetAvailableMovesForPieces(TArray<UChessPiece*>& Pieces);
+	static TArray<UChessPiece*> GetThreateningEnemies(TArray<FMove>& AvailableMoves, const UChessPiece* ChessPiece);
 	static ECheckmateStatus CalculateCheckmateStatus(TArray<UChessPiece*>& EnemyPieces, TArray<UChessPiece*>& AllyPieces, IMovementRulesProvider* MovementProvider);
 	static UChessPiece* GetFigureFromArray(const TArray<UChessPiece*>& Array, const EFigure Figure);
-	static bool IsKingAbleToEscape(TArray<FEnemyMove>& EnemyAvailableMoves, UChessPiece* AlliedKing);
-	static bool CanAllyCoverAnyEnemyMove(TArray<FEnemyMove>& EnemyAvailableMoves, FMove AllyMove);
+	static bool IsKingAbleToEscape(TArray<FMove>& EnemyAvailableMoves, UChessPiece* AlliedKing);
+	static bool CanAllyCoverAnyMove(TArray<FMove>& EnemyAvailableMoves, FMove AllyMove);
 	static bool CanAllyDestroyEnemy(const UChessPiece* ThreateningEnemy, UChessPiece* Ally, const FMove AllyMove, IMovementRulesProvider* MovementVerifier);
-	static bool CanAllyEliminateCheck(TArray<FEnemyMove>& EnemyAvailableMoves, UChessPiece* AllyPiece, IMovementRulesProvider* MovementProvider);
+	static bool CanAllyEliminateCheck(TArray<FMove>& EnemyAvailableMoves, UChessPiece* AllyPiece, IMovementRulesProvider* MovementProvider);
 
 public:
 	static ECheckmateStatus GetCheckmateStatusForPlayer(const UChessboardBase* Chessboard, const EColor PlayerColor, IMovementRulesProvider* MovementProvider);

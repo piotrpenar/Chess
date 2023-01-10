@@ -9,6 +9,7 @@ void AChessController::BeginPlay()
 	Super::BeginPlay();
 	CreateChessboardSceneUtilities();
 	GameMode = ChessboardSceneUtilities->GetBoardWorld()->GetAuthGameMode<AChessGameMode>();
+	GameState = ChessboardSceneUtilities->GetBoardWorld()->GetGameState<AChessGameState>();
 	CreateChessHighlighter();
 	CreateChessboardController();
 	GameMode->SetMovementProvider(ChessboardController->GetChessboardMovementRuleProvider());
@@ -49,14 +50,16 @@ void AChessController::CreateChessboardController()
 
 void AChessController::ChessFigureSelected(const AChessFigure* ChessFigure) const
 {
-	UE_LOG(LogTemp, Log, TEXT("Callback called %d!"), ChessFigure->GetBoardPosition().X)
+	if(ChessFigure->GetColor() != GameState->GetCurrentPlayer())
+	{
+		return;
+	}
 	TArray<FMove> Moves = ChessFigure->GetSourcePiece()->GetAvailableMoves();
 	Highlighter->CreateHighlights(Moves);
 }
 
 void AChessController::MoveSelected(const FMove Move) const
 {
-	UE_LOG(LogTemp, Log, TEXT("Callback called 123 %s!"), *FString(Move.TargetPosition.ToString()))
 	ExecutePlayerMove(Move);
 }
 

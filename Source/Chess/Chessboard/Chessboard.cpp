@@ -36,12 +36,6 @@ void UChessboard::GenerateChessPieces(const EColor FigureColor)
 	const int PawnRow = bIsWhite ? 1 : 6;
 	TArray<EFigure> MenTargetArray = ChessData->GetMen();
 	TArray<EFigure> Pawns = ChessData->GetPawns();
-
-	if (!bIsWhite)
-	{
-		Algo::Reverse(MenTargetArray);
-	}
-
 	GenerateChessRow(MenTargetArray, FigureColor, ManRow);
 	GenerateChessRow(Pawns, FigureColor, PawnRow);
 }
@@ -100,6 +94,8 @@ void UChessboard::SetPieceAtPosition(const FIntPoint Position, UChessPiece* Ches
 
 AChessFigure* UChessboard::CreateActorForChessPiece(UChessPiece* SourceChessPiece) const
 {
+	const EFigure PieceFigure = SourceChessPiece->GetFigureType();
+	const EColor PieceColor = SourceChessPiece->GetColor();
 	if (!IsValid(ChessData))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("ChessData is invalid"))
@@ -117,13 +113,13 @@ AChessFigure* UChessboard::CreateActorForChessPiece(UChessPiece* SourceChessPiec
 		UE_LOG(LogTemp, Warning, TEXT("Component is invalid"))
 		return nullptr;
 	}
-	UStaticMesh* Mesh = ChessData->GetMeshForType(SourceChessPiece->GetFigureType());
+	UStaticMesh* Mesh = ChessData->GetMeshForType(PieceFigure);
 	if (!IsValid(Mesh))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Mesh is invalid"))
 		return nullptr;
 	}
-	UMaterialInstance* Material = ChessData->GetMaterialForType(SourceChessPiece->GetFigureType(), SourceChessPiece->GetColor());
+	UMaterialInstance* Material = ChessData->GetMaterialForType(PieceFigure, PieceColor);
 	if (!IsValid(Material))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Material is invalid"))
@@ -139,8 +135,9 @@ AChessFigure* UChessboard::CreateActorForChessPiece(UChessPiece* SourceChessPiec
 	StaticMeshComponent->SetMaterial(0, Material);
 	Actor->SetSourcePiece(SourceChessPiece);
 	Actor->SetClickCallback(FigureClickedCallback);
+	Actor->SetColor(PieceColor);
 #if WITH_EDITOR
-	Actor->SetActorLabel(FString(UEnum::GetValueAsString(SourceChessPiece->GetColor()) + " " + UEnum::GetValueAsString(SourceChessPiece->GetFigureType())));
+	Actor->SetActorLabel(FString(UEnum::GetValueAsString(PieceColor) + " " + UEnum::GetValueAsString(PieceFigure)));
 #endif
 	return Actor;
 }

@@ -38,3 +38,13 @@ void AChessFigure::SetClickCallback(const TFunction<void(AChessFigure*)> FigureC
 {
 	CallbackFunction = FigureClickedCallback;
 }
+
+EColor AChessFigure::GetColor() const
+{
+	return FigureColor;
+}
+
+void AChessFigure::SetColor(const EColor Color)
+{
+	FigureColor = Color;
+}

@@ -19,7 +19,6 @@ TArray<FIntPoint> UChessPawn::GetPossiblePositions() const
 
 void UChessPawn::HandleTurnEnded(const EColor CurrentColor)
 {
-	UE_LOG(LogTemp, Log, TEXT("Subscription called!"))
 	if (!IsValid(this))
 	{
 		return;

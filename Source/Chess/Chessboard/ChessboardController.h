@@ -25,20 +25,21 @@ class CHESS_API UChessboardController final : public UObject
 	UChessSceneUtilities* ChessboardTransformUtilities;
 	UPROPERTY()
 	TScriptInterface<ITurnsProvider> ChessGameState;
-
-public:
+	
 	void InitializeChessboard(TFunction<void(AChessFigure*)> FigureClickedCallback);
 	void CreateSimulatedChessboard();
 	void FinishChessboardsInitialization() const;
-	void Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference, UChessData* NewChessData, TFunction<void(AChessFigure*)> FigureClickedCallback);
-	void MoveChessPieceToPosition(UChessPiece* ChessPiece, FIntPoint Position) const;
+	void AddChessPieceAtPosition(UChessPiece* ChessPiece, const FIntPoint Position) const;
+	void RemoveChessPieceAtPosition(FIntPoint Position) const;
 	void HandleCastling(const FMove& Move, UChessPiece* ChessPiece) const;
 	void HandleEnPassant(UChessPiece* ChessPiece) const;
 	void PromotePawn(UChessPiece* ChessPiece, EFigure TargetFigure) const;
 	void HandlePawnPromotion(const FMove& Move) const;
+
+public:
+	void Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference, UChessData* NewChessData, TFunction<void(AChessFigure*)> FigureClickedCallback);
+	void MoveChessPieceToPosition(UChessPiece* ChessPiece, FIntPoint Position) const;
 	void HandleSpecialMoveType(const FMove& Move) const;
-	void RemoveChessPieceAtPosition(FIntPoint Position) const;
-	void AddChessPieceAtPosition(UChessPiece* ChessPiece, const FIntPoint Position) const;
-	TScriptInterface<IMovementRulesProvider> GetChessboardMovementRuleProvider() const;
 	void SetupPiecesCallbacks(ITurnsProvider* TurnsProvider) const;
+	TScriptInterface<IMovementRulesProvider> GetChessboardMovementRuleProvider() const;
 };

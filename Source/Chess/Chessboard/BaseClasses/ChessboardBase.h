@@ -21,10 +21,11 @@ protected:
 	TArray<F2DBoardArray> Board;
 	UPROPERTY()
 	TScriptInterface<IMovementRulesProvider> ChessboardMovementRules;
+	
+	void GenerateEmptyBoard();
 
 public:
 	void Initialize(UChessData* ChessDataReference);
-	void GenerateEmptyBoard();
 	virtual void SetPieceAtPosition(const FIntPoint Position, UChessPiece* ChessPiece);
 	void MovePieceFromToPosition(UChessPiece* ChessPiece, FIntPoint FromPosition, FIntPoint ToPosition);
 	UChessPiece* GetPieceAtPosition(FIntPoint BoardPosition);

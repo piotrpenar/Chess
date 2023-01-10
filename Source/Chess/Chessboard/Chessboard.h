@@ -35,5 +35,5 @@ public:
 	void InitializeMovementRules(USimulatedChessboard* SimulatedBoard);
 	UChessPiece* GenerateChessPieceAtPosition(EFigure Figure, EColor Color, FIntPoint Position);
 	virtual void SetPieceAtPosition(FIntPoint Position, UChessPiece* ChessPiece) override;
-	IMovementRulesProvider* GetMovementRuleProvider() const;
+	TScriptInterface<IMovementRulesProvider> GetMovementRuleProvider() const;
 };

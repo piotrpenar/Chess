@@ -3,6 +3,7 @@
 #include "ChessboardMovementRules.h"
 #include "Chess/Chessboard/Chessboard.h"
 #include "Chess/Data/ChessData.h"
+#include "Chess/Interfaces/TurnsProvider.h"
 #include "ChessboardController.generated.h"
 
 UCLASS()
@@ -26,7 +27,10 @@ class CHESS_API UChessboardController final : public UObject
 	TScriptInterface<ITurnsProvider> ChessGameState;
 
 public:
-	void Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference, UChessData* NewChessData, AActor* ChessBoardOrigin, TFunction<void(AChessFigure*)> FigureClickedCallback);
+	void InitializeChessboard(TFunction<void(AChessFigure*)> FigureClickedCallback);
+	void CreateSimulatedChessboard();
+	void FinishChessboardsInitialization() const;
+	void Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference, UChessData* NewChessData, TFunction<void(AChessFigure*)> FigureClickedCallback);
 	void MoveChessPieceToPosition(UChessPiece* ChessPiece, FIntPoint Position) const;
 	void HandleCastling(const FMove& Move, UChessPiece* ChessPiece) const;
 	void HandleEnPassant(UChessPiece* ChessPiece) const;
@@ -35,5 +39,6 @@ public:
 	void HandleSpecialMoveType(const FMove& Move) const;
 	void RemoveChessPieceAtPosition(FIntPoint Position) const;
 	void AddChessPieceAtPosition(UChessPiece* ChessPiece, const FIntPoint Position) const;
-	IMovementRulesProvider* GetChessboardMovementRuleProvider() const;
+	TScriptInterface<IMovementRulesProvider> GetChessboardMovementRuleProvider() const;
+	void SetupPiecesCallbacks(ITurnsProvider* TurnsProvider) const;
 };

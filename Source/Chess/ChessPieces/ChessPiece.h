@@ -3,7 +3,6 @@
 #include "Chess/Data/ChessData.h"
 #include "Chess/Enums/EColor.h"
 #include "Chess/Enums/EFigure.h"
-#include "Chess/Interfaces/TurnsProvider.h"
 #include "Chess/Interfaces/ChessPieceMovement.h"
 #include "Chess/Interfaces/MovementRulesProvider.h"
 #include "Chess/Utils/FMove.h"
@@ -29,8 +28,6 @@ protected:
 	UChessData* ChessData;
 	UPROPERTY()
 	TScriptInterface<IMovementRulesProvider> MovementRules;
-	UPROPERTY()
-	TScriptInterface<ITurnsProvider> TurnsProvider;
 	
 public:
 	void Initialize(TScriptInterface<IMovementRulesProvider> MovementRulesReference, AChessFigure* ChessFigure);

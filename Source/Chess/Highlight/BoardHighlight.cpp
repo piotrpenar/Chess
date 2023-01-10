@@ -14,19 +14,15 @@ FMove ABoardHighlight::GetSourceMove() const
 	return Move;
 }
 
-ABoardHighlight::FHighlightClicked ABoardHighlight::OnHighlightClicked()
-{
-	return HighlightClicked;
-}
-
-void ABoardHighlight::Initialize(const FMove& SourceMove, AChessFigure* ChessFigure)
+void ABoardHighlight::Initialize(const FMove& SourceMove, AChessFigure* ChessFigure,TFunction<void(ABoardHighlight*)> HighlightClickedCallbackReference)
 {
 	Position = SourceMove.TargetPosition;
 	SourceFigure = ChessFigure;
 	Move = SourceMove;
+	HighlightClickedCallback = HighlightClickedCallbackReference;
 }
 
 void ABoardHighlight::BroadcastHighlightOnClick()
 {
-	HighlightClicked.ExecuteIfBound(this);
+	HighlightClickedCallback(this);
 }

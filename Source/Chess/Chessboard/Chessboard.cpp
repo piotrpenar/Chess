@@ -76,9 +76,9 @@ void UChessboard::SetupChessPiece(UChessPiece* ChessPiece, const EColor Color, c
 	ChessPiece->SetActorTransform(ChessboardTransformUtilities->GenerateChessPieceTransform(Position, Color));
 }
 
-IMovementRulesProvider* UChessboard::GetMovementRuleProvider() const
+TScriptInterface<IMovementRulesProvider> UChessboard::GetMovementRuleProvider() const
 {
-	return ChessboardMovementRules.GetInterface();
+	return ChessboardMovementRules;
 }
 
 

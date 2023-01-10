@@ -19,6 +19,7 @@ void UChessHighlighter::HighlightSelected(ABoardHighlight* CheckerHighlight)
 {
 	ClearHighlights();
 	FMove Move = CheckerHighlight->GetSourceMove();
+	UE_LOG(LogTemp, Log, TEXT("Callback called %s!"), *FString(Move.TargetPosition.ToString()))
 	HighlightClickCallback(&Move);
 }
 void UChessHighlighter::CreateHighlights(TArray<FMove> Moves)
@@ -28,8 +29,11 @@ void UChessHighlighter::CreateHighlights(TArray<FMove> Moves)
 	{
 		ABoardHighlight* Actor = ChessboardTransformUtilities->GetBoardWorld()->SpawnActor<ABoardHighlight>(BoardHighlightActor);
 		Actor->SetActorTransform(ChessboardTransformUtilities->BoardToWorldTransform(Move.TargetPosition));
-		Actor->Initialize(Move,CurrentSelectedFigure);
-		Actor->OnHighlightClicked().BindUObject(this,&UChessHighlighter::HighlightSelected);
+		auto BoardHighlightClickedCallback = [this](ABoardHighlight* Highlight)
+		{
+			this->HighlightSelected(Highlight);
+		};
+		Actor->Initialize(Move,CurrentSelectedFigure,BoardHighlightClickedCallback);
 		CurrentHighlights.Add(Actor);
 	}
 }

@@ -1,11 +1,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ChessGameMode.h"
 #include "Chess/Chessboard/Chessboard.h"
 #include "Chess/Chessboard/ChessboardController.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 #include "Chess/Data/ChessData.h"
-#include "Chess/Enums/EColor.h"
 #include "Chess/Enums/EFigure.h"
 #include "Chess/Interfaces/ChessMovesHighlighter.h"
 #include "ChessController.generated.h"
@@ -15,9 +15,12 @@ class CHESS_API AChessController final : public AActor
 {
 	GENERATED_BODY()
 public:
+	void CreateChessboardSceneUtilities();
+	void CreateChessHighlighter();
+	void CreateChessboardController();
 	virtual void BeginPlay() override;
 	void ChessFigureSelected(const AChessFigure* ChessFigure) const;
-	void HighlightSelected(const FMove* BoardHighlight) const;
+	void MoveSelected(const FMove* Move) const;
 	void ExecutePlayerMove(FMove Move) const;
 
 	UPROPERTY(EditAnywhere)
@@ -40,5 +43,7 @@ private:
 	UPROPERTY()
 	TScriptInterface<IChessMovesHighlighter> Highlighter;
 	UPROPERTY()
-	UChessSceneUtilities* ChessboardTransformUtilities;
+	UChessSceneUtilities* ChessboardSceneUtilities;
+	UPROPERTY()
+	AChessGameMode* GameMode;
 };

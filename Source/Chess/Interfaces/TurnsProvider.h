@@ -14,9 +14,7 @@ class CHESS_API ITurnsProvider
 	GENERATED_BODY()
 
 public:
-	virtual EColor GetCurrentPlayer();
 	virtual void EndTurn();
-	
 	DECLARE_EVENT_OneParam(IChessGameState, FTurnEnded, EColor&);
 	virtual FTurnEnded& OnTurnEnded() = 0;
 };

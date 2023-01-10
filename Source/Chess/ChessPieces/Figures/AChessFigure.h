@@ -16,8 +16,10 @@ class AChessFigure final : public AActor
 	TFunction<void(AChessFigure*)> CallbackFunction;
 	
 public:
+	
 	UFUNCTION(BlueprintCallable)
 	void HandleFigureClick();
+	
 	void BroadcastChessFigureOnClick();
 	void SetBoardPosition(FIntPoint NewBoardPosition);
 	FIntPoint GetBoardPosition() const;

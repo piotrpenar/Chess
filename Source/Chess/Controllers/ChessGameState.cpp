@@ -1,40 +1,24 @@
 ﻿#include "ChessGameState.h"
 
-
-void AChessGameState::Initialize()
+void AChessGameState::CreateChessboard()
 {
-	RulesController = NewObject<UChessRulesController>();
-}
-
-void AChessGameState::BroadcastTurnEnded(EColor Color) const
-{
-	TurnEndedEvent.Broadcast(Color);
-}
-
-void AChessGameState::EndTurn()
-{
-	const EColor CurrentPlayerColor = CurrentPlayer;
-	const EColor EnemyPlayer = CurrentPlayer == EColor::Black ? EColor::White : EColor::Black;
-	if (CurrentPlayer == EColor::White)
+	if(!Chessboard)
 	{
-		CurrentPlayer = EColor::Black;
+		Chessboard = NewObject<UChessboard>();
 	}
-	else
-	{
-		CurrentPlayer = EColor::White;
-	}
-	const ECheckmateStatus Status = RulesController->GetCheckmateStatusForPlayer(Chessboard, EnemyPlayer, ChessboardController->GetChessboardMovementRuleProvider());
-	const FString Value = UEnum::GetValueAsString(Status);
-	BroadcastTurnEnded(CurrentPlayerColor);
-	UE_LOG(LogTemp, Log, TEXT("Check mate status is %s"), *FString(Value));
 }
 
-AChessGameState::FTurnEnded& AChessGameState::OnTurnEnded()
+UChessboard* AChessGameState::GetChessboard() const
 {
-	return TurnEndedEvent;
+	return Chessboard;
 }
 
-EColor AChessGameState::GetCurrentPlayer()
+EColor AChessGameState::GetCurrentPlayer() const
 {
 	return CurrentPlayer;
+}
+
+void AChessGameState::SetCurrentPlayer(const EColor Color)
+{
+	CurrentPlayer = Color;
 }

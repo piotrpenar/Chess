@@ -42,7 +42,6 @@ void UChessPawn::MoveToPosition(const FIntPoint Position, const FVector ActorPos
 	if (HasDoubleMoved(Position))
 	{
 		bHasDoubleMoved = true;
-		TurnsProvider->OnTurnEnded().AddUObject(this, &UChessPawn::HandleTurnEnded);
 	}
 	Super::MoveToPosition(Position, ActorPosition);
 }
@@ -51,6 +50,12 @@ bool UChessPawn::IsValidPassantTarget() const
 {
 	return bHasDoubleMoved;
 }
+
+void UChessPawn::BindToTurnEndedEvent(ITurnsProvider* TurnsProvider)
+{
+	TurnsProvider->OnTurnEnded().AddUObject(this, &UChessPawn::HandleTurnEnded);
+}
+
 
 TArray<FMove> UChessPawn::GetAvailableMoves()
 {

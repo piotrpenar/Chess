@@ -13,7 +13,7 @@ UCLASS()
 class CHESS_API UChessboardBase : public UObject
 {
 	GENERATED_BODY()
-	
+
 protected:
 	UPROPERTY()
 	UChessData* ChessData;

@@ -9,4 +9,3 @@ TArray<FMove> IChessPieceMovement::GetAvailableMoves()
 void IChessPieceMovement::MoveToPosition(FIntPoint Position, FVector ActorPosition)
 {
 }
-

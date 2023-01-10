@@ -15,18 +15,16 @@ private:
 	FIntPoint Position;
 	UPROPERTY()
 	FMove Move;
-	
+
 	TFunction<void(ABoardHighlight*)> HighlightClickedCallback;
-	
+
 public:
 	ABoardHighlight();
-	
+
 	UFUNCTION(BlueprintCallable)
 	void BroadcastHighlightOnClick();
-	
-	void Initialize(const FMove& SourceMove, AChessFigure* ChessFigure,TFunction<void(ABoardHighlight*)> HighlightClickedCallbackReference);
+
+	void Initialize(const FMove SourceMove, AChessFigure* ChessFigure, TFunction<void(ABoardHighlight*)> HighlightClickedCallbackReference);
 	AChessFigure* GetSourceFigure() const;
 	FMove GetSourceMove() const;
-	
-	
 };

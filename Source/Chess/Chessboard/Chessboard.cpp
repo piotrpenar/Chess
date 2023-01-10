@@ -4,7 +4,7 @@
 #include "Chess/Helpers/ChessPiecesFactory.h"
 #include "Chess/Interfaces/MovementRulesProvider.h"
 
-void UChessboard::Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference,UChessData* Data, const TFunction<void(AChessFigure*)> ExternalFigureClickedCallback)
+void UChessboard::Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference, UChessData* Data, const TFunction<void(AChessFigure*)> ExternalFigureClickedCallback)
 {
 	Super::Initialize(Data);
 	ChessboardTransformUtilities = ChessSceneUtilitiesReference;
@@ -22,7 +22,7 @@ void UChessboard::InitializeBoardPieces()
 void UChessboard::InitializeMovementRules(USimulatedChessboard* SimulatedBoard)
 {
 	UChessboardMovementRules* MovementRules = NewObject<UChessboardMovementRules>();
-	MovementRules->InitializeMovementRules(ChessData,this);
+	MovementRules->InitializeMovementRules(ChessData, this);
 	MovementRules->SetSimulatedChessboard(SimulatedBoard);
 	ChessboardMovementRules.SetObject(MovementRules);
 	ChessboardMovementRules.SetInterface(Cast<IMovementRulesProvider>(MovementRules));
@@ -35,6 +35,7 @@ void UChessboard::GenerateChessPieces(const EColor FigureColor)
 	const int ManRow = bIsWhite ? 0 : 7;
 	const int PawnRow = bIsWhite ? 1 : 6;
 	TArray<EFigure> MenTargetArray = ChessData->GetMen();
+	TArray<EFigure> Pawns = ChessData->GetPawns();
 
 	if (!bIsWhite)
 	{
@@ -42,7 +43,7 @@ void UChessboard::GenerateChessPieces(const EColor FigureColor)
 	}
 
 	GenerateChessRow(MenTargetArray, FigureColor, ManRow);
-	GenerateChessRow(ChessData->GetPawns(), FigureColor, PawnRow);
+	GenerateChessRow(Pawns, FigureColor, PawnRow);
 }
 
 UChessPiece* UChessboard::GenerateChessPieceAtPosition(const EFigure Figure, const EColor Color, const FIntPoint Position)
@@ -52,7 +53,7 @@ UChessPiece* UChessboard::GenerateChessPieceAtPosition(const EFigure Figure, con
 	return ChessPiece;
 }
 
-void UChessboard::GenerateChessRow(TArray<EFigure> Figures, const EColor Color, const int Y)
+void UChessboard::GenerateChessRow(TArray<EFigure>& Figures, const EColor Color, const int Y)
 {
 	for (int X = 0; X < ChessData->GetBoardSize(); X++)
 	{

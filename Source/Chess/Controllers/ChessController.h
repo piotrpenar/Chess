@@ -14,21 +14,7 @@ UCLASS(Blueprintable)
 class CHESS_API AChessController final : public AActor
 {
 	GENERATED_BODY()
-public:
-	void CreateChessboardSceneUtilities();
-	void CreateChessHighlighter();
-	void CreateChessboardController();
-	virtual void BeginPlay() override;
-	void ChessFigureSelected(const AChessFigure* ChessFigure) const;
-	void MoveSelected(const FMove* Move) const;
-	void ExecutePlayerMove(FMove Move) const;
 
-	UPROPERTY(EditAnywhere)
-	UChessData* ChessData;
-
-	UPROPERTY(EditAnywhere)
-	AActor* ChessBoardOrigin;
-	
 private:
 	UPROPERTY()
 	UChessboard* Chessboard;
@@ -46,4 +32,17 @@ private:
 	UChessSceneUtilities* ChessboardSceneUtilities;
 	UPROPERTY()
 	AChessGameMode* GameMode;
+	UPROPERTY(EditAnywhere)
+	UChessData* ChessData;
+	UPROPERTY(EditAnywhere)
+	AActor* ChessBoardOrigin;
+
+public:
+	void CreateChessboardSceneUtilities();
+	void CreateChessHighlighter();
+	void CreateChessboardController();
+	virtual void BeginPlay() override;
+	void ChessFigureSelected(const AChessFigure* ChessFigure) const;
+	void MoveSelected(const FMove Move) const;
+	void ExecutePlayerMove(FMove Move) const;
 };

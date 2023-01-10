@@ -17,8 +17,7 @@ TArray<FIntPoint> UChessPawn::GetPossiblePositions() const
 	return PossibleMoves;
 }
 
-// ReSharper disable once CppParameterMayBeConstPtrOrRef
-void UChessPawn::HandleTurnEnded(EColor& CurrentColor)
+void UChessPawn::HandleTurnEnded(const EColor CurrentColor)
 {
 	UE_LOG(LogTemp, Log, TEXT("Subscription called!"))
 	if (!IsValid(this))
@@ -55,7 +54,6 @@ void UChessPawn::BindToTurnEndedEvent(ITurnsProvider* TurnsProvider)
 {
 	TurnsProvider->OnTurnEnded().AddUObject(this, &UChessPawn::HandleTurnEnded);
 }
-
 
 TArray<FMove> UChessPawn::GetAvailableMoves()
 {

@@ -2,7 +2,7 @@
 #include "Figures/AChessFigure.h"
 
 
-void UChessPiece::Initialize(const TScriptInterface<IMovementRulesProvider> MovementRulesReference,AChessFigure* ChessFigure)
+void UChessPiece::Initialize(const TScriptInterface<IMovementRulesProvider> MovementRulesReference, AChessFigure* ChessFigure)
 {
 	MovementRules = MovementRulesReference;
 	ChessPieceActor = ChessFigure;

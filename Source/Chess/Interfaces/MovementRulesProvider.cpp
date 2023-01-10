@@ -6,12 +6,12 @@ bool IMovementRulesProvider::IsValidMove(const FIntPoint Position, UObject* Ches
 	return false;
 }
 
-TArray<FMove> IMovementRulesProvider::GetValidMovesFromPositions(TArray<FIntPoint> Directions, UObject* ChessPiece)
+TArray<FMove> IMovementRulesProvider::GetValidMovesFromPositions(const TArray<FIntPoint>& Directions, UObject* ChessPiece)
 {
 	return {};
 }
 
-TArray<FMove> IMovementRulesProvider::GetValidMovesFromDirections(TArray<FIntPoint> Directions, UObject* ChessPiece)
+TArray<FMove> IMovementRulesProvider::GetValidMovesFromDirections(const TArray<FIntPoint>& Directions, UObject* ChessPiece)
 {
 	return {};
 }

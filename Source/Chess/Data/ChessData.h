@@ -35,7 +35,7 @@ class CHESS_API UChessData final : public UDataAsset
 	int BoardSize = 8;
 	UPROPERTY(EditAnywhere)
 	float BoardOffset = 1;
-	
+
 	const TArray<EFigure> Pawns = {
 		EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn,
 		EFigure::Pawn, EFigure::Pawn
@@ -55,6 +55,6 @@ public:
 	float GetBoardOffset() const;
 	TArray<EFigure> GetMen() const;
 	TArray<EFigure> GetPawns() const;
-	
+
 	bool IsValidBoardPosition(const FIntPoint& Position) const;
 };

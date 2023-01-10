@@ -16,9 +16,9 @@ bool UChessboardMovementRulesBase::IsValidMove(const FIntPoint Position, UObject
 	return ChessData->IsValidBoardPosition(Position);
 }
 
-TArray<FMove> UChessboardMovementRulesBase::GetValidMovesFromPositions(const TArray<FIntPoint> InputDirections, UObject* ChessPieceObject)
+TArray<FMove> UChessboardMovementRulesBase::GetValidMovesFromPositions(const TArray<FIntPoint>& InputDirections, UObject* ChessPieceObject)
 {
-	TArray<FMove> ValidMoves = TArray<FMove>();
+	TArray<FMove> ValidMoves;
 	UChessPiece* ChessPiece = Cast<UChessPiece>(ChessPieceObject);
 	TArray<FIntPoint> PossibleMoves = TArray(InputDirections);
 
@@ -33,16 +33,16 @@ TArray<FMove> UChessboardMovementRulesBase::GetValidMovesFromPositions(const TAr
 		if (!TargetObject || TargetObject->GetColor() != ChessPiece->GetColor())
 		{
 			FMove Move = FMove(ChessPiece, PossibleMove, TargetObject);
-			AdjustMoveType(&Move);
+			AdjustMoveType(Move);
 			ValidMoves.Add(Move);
 		}
 	}
 	return ValidMoves;
 }
 
-TArray<FMove> UChessboardMovementRulesBase::GetValidMovesFromDirections(const TArray<FIntPoint> InputDirections, UObject* ChessPieceObject)
+TArray<FMove> UChessboardMovementRulesBase::GetValidMovesFromDirections(const TArray<FIntPoint>& InputDirections, UObject* ChessPieceObject)
 {
-	TArray<FMove> AvailableMoves = TArray<FMove>();
+	TArray<FMove> AvailableMoves;
 	UChessPiece* ChessPiece = Cast<UChessPiece>(ChessPieceObject);
 	TArray<FIntPoint> Directions = TArray(InputDirections);
 
@@ -72,31 +72,32 @@ TArray<FMove> UChessboardMovementRulesBase::GetValidMovesFromDirections(const TA
 	return AvailableMoves;
 }
 
-void UChessboardMovementRulesBase::AdjustMoveType(FMove* Move) const
+void UChessboardMovementRulesBase::AdjustMoveType(FMove& Move) const
 {
-	UChessPiece* SourcePiece = Cast<UChessPiece>(Move->SourcePiece);
-	const bool bIsOnBoardEdge = Move->TargetPosition.Y == 0 || Move->TargetPosition.Y == ChessData->GetBoardSize() - 1;
+	UChessPiece* SourcePiece = Cast<UChessPiece>(Move.SourcePiece);
+	const bool bIsOnBoardEdge = Move.TargetPosition.Y == 0 || Move.TargetPosition.Y == ChessData->GetBoardSize() - 1;
 	const bool bIsValidPawn = SourcePiece && SourcePiece->GetFigureType() == EFigure::Pawn;
 	if (bIsValidPawn && bIsOnBoardEdge)
 	{
-		Move->MoveType = EMoveType::PawnPromotion;
+		Move.MoveType = EMoveType::PawnPromotion;
 	}
 }
 
 TArray<FMove> UChessboardMovementRulesBase::GetValidSpecialMoves(UObject* ChessPieceObject)
 {
+	TArray<FMove> SpecialMoves;
 	UChessPiece* ChessPiece = Cast<UChessPiece>(ChessPieceObject);
 	const EFigure TargetFigure = ChessPiece->GetFigureType();
 	if (TargetFigure == EFigure::Pawn)
 	{
-		return GetPawnSpecialMoves(ChessPiece);
+		SpecialMoves = GetPawnSpecialMoves(ChessPiece);
 	}
 	if (TargetFigure == EFigure::King)
 	{
-		return GetKingSpecialMoves(ChessPiece);
+		SpecialMoves = GetKingSpecialMoves(ChessPiece);
 	}
 
-	return {};
+	return SpecialMoves;
 }
 
 
@@ -230,8 +231,8 @@ TArray<FMove> UChessboardMovementRulesBase::GetPawnSpecialMoves(UChessPiece* Che
 
 	if (CanPawnDoubleMove(ChessPiece, PawnPosition, Direction))
 	{
-		return {FMove(ChessPiece, PawnPosition + FIntPoint(0, Direction * 2), nullptr, EMoveType::DoubleMove)};
+		SpecialMoves.Add(FMove(ChessPiece, PawnPosition + FIntPoint(0, Direction * 2), nullptr, EMoveType::DoubleMove));
 	}
 
-	return {};
+	return SpecialMoves;
 }

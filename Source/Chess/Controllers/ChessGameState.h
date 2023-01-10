@@ -11,7 +11,7 @@ UCLASS(Blueprintable)
 class CHESS_API AChessGameState final : public AGameState
 {
 	GENERATED_BODY()
-	
+
 private:
 	UPROPERTY()
 	UChessboard* Chessboard;
@@ -19,7 +19,7 @@ private:
 	UChessboardController* ChessboardController;
 	UPROPERTY()
 	EColor CurrentPlayer = EColor::White;
-	
+
 public:
 	void CreateChessboard();
 	UChessboard* GetChessboard() const;

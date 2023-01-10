@@ -16,8 +16,9 @@ class CHESS_API IChessMovesHighlighter
 	GENERATED_BODY()
 
 public:
-	virtual void Initialize(const TSubclassOf<ABoardHighlight> BoardHighlightSourceActor, UChessSceneUtilities* ChessSceneUtilitiesReference, const TFunction<void(FMove*)> HighlightClickCallbackReference);
-	virtual void CreateHighlights(TArray<FMove> Moves);
+	virtual void Initialize(const TSubclassOf<ABoardHighlight> BoardHighlightSourceActor, UChessSceneUtilities* ChessSceneUtilitiesReference,
+	                        TFunction<void(FMove)> HighlightClickCallbackReference);
+	virtual void CreateHighlights(TArray<FMove>& Moves);
 	virtual void SetSelectedFigure(AActor* SourceFigure);
 	virtual void HighlightSelected(ABoardHighlight* CheckerHighlight);
 };

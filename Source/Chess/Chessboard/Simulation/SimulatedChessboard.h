@@ -10,8 +10,8 @@ UCLASS()
 class CHESS_API USimulatedChessboard final : public UChessboardBase
 {
 	GENERATED_BODY()
-	
+
 public:
 	UChessPiece* CreateSimulatedChessPiece(UChessPiece* ChessPiece);
-	void InitializeSimulatedBoard(UChessData* ChessDataReference,UChessboardBase* OriginalBoard);
+	void InitializeSimulatedBoard(UChessData* ChessDataReference, UChessboardBase* OriginalBoard);
 };

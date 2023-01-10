@@ -2,7 +2,8 @@
 #include "Chess/ChessPieces/Figures/AChessFigure.h"
 #include "Chess/Highlight/BoardHighlight.h"
 
-void UChessHighlighter::Initialize(const TSubclassOf<ABoardHighlight> BoardHighlightSourceActor, UChessSceneUtilities* ChessSceneUtilitiesReference, TFunction<void(FMove*)> HighlightClickCallbackReference)
+void UChessHighlighter::Initialize(const TSubclassOf<ABoardHighlight> BoardHighlightSourceActor, UChessSceneUtilities* ChessSceneUtilitiesReference,
+                                   TFunction<void(FMove)> HighlightClickCallbackReference)
 {
 	BoardHighlightActor = BoardHighlightSourceActor;
 	ChessboardTransformUtilities = ChessSceneUtilitiesReference;
@@ -20,9 +21,10 @@ void UChessHighlighter::HighlightSelected(ABoardHighlight* CheckerHighlight)
 	ClearHighlights();
 	FMove Move = CheckerHighlight->GetSourceMove();
 	UE_LOG(LogTemp, Log, TEXT("Callback called %s!"), *FString(Move.TargetPosition.ToString()))
-	HighlightClickCallback(&Move);
+	HighlightClickCallback(Move);
 }
-void UChessHighlighter::CreateHighlights(TArray<FMove> Moves)
+
+void UChessHighlighter::CreateHighlights(TArray<FMove>& Moves)
 {
 	ClearHighlights();
 	for (const FMove Move : Moves)
@@ -33,7 +35,7 @@ void UChessHighlighter::CreateHighlights(TArray<FMove> Moves)
 		{
 			this->HighlightSelected(Highlight);
 		};
-		Actor->Initialize(Move,CurrentSelectedFigure,BoardHighlightClickedCallback);
+		Actor->Initialize(Move, CurrentSelectedFigure, BoardHighlightClickedCallback);
 		CurrentHighlights.Add(Actor);
 	}
 }
@@ -46,6 +48,3 @@ void UChessHighlighter::ClearHighlights()
 	}
 	CurrentHighlights.Empty();
 }
-
-
-

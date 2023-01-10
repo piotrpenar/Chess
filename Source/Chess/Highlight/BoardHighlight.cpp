@@ -14,7 +14,7 @@ FMove ABoardHighlight::GetSourceMove() const
 	return Move;
 }
 
-void ABoardHighlight::Initialize(const FMove& SourceMove, AChessFigure* ChessFigure,TFunction<void(ABoardHighlight*)> HighlightClickedCallbackReference)
+void ABoardHighlight::Initialize(const FMove SourceMove, AChessFigure* ChessFigure, const TFunction<void(ABoardHighlight*)> HighlightClickedCallbackReference)
 {
 	Position = SourceMove.TargetPosition;
 	SourceFigure = ChessFigure;

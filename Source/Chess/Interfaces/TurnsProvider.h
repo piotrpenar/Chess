@@ -15,6 +15,7 @@ class CHESS_API ITurnsProvider
 
 public:
 	virtual void EndTurn();
-	DECLARE_EVENT_OneParam(IChessGameState, FTurnEnded, EColor&);
+	DECLARE_EVENT_OneParam(IChessGameState, FTurnEnded, EColor);
+
 	virtual FTurnEnded& OnTurnEnded() = 0;
 };

@@ -5,7 +5,7 @@
 #include "Chess/Controllers/ChessGameState.h"
 
 
-void UChessboardController::Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference,UChessData* NewChessData, const TFunction<void(AChessFigure*)> FigureClickedCallback)
+void UChessboardController::Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference, UChessData* NewChessData, const TFunction<void(AChessFigure*)> FigureClickedCallback)
 {
 	this->ChessData = NewChessData;
 	ChessboardTransformUtilities = ChessSceneUtilitiesReference;
@@ -17,7 +17,7 @@ void UChessboardController::Initialize(UChessSceneUtilities* ChessSceneUtilities
 void UChessboardController::InitializeChessboard(const TFunction<void(AChessFigure*)> FigureClickedCallback)
 {
 	Chessboard = ChessboardTransformUtilities->GetBoardWorld()->GetGameState<AChessGameState>()->GetChessboard();
-	Chessboard->Initialize(ChessboardTransformUtilities, ChessData,FigureClickedCallback);
+	Chessboard->Initialize(ChessboardTransformUtilities, ChessData, FigureClickedCallback);
 }
 
 void UChessboardController::CreateSimulatedChessboard()
@@ -28,7 +28,7 @@ void UChessboardController::CreateSimulatedChessboard()
 void UChessboardController::FinishChessboardsInitialization() const
 {
 	Chessboard->InitializeMovementRules(SimulatedBoard);
-	SimulatedBoard->InitializeSimulatedBoard(ChessData,Chessboard);
+	SimulatedBoard->InitializeSimulatedBoard(ChessData, Chessboard);
 }
 
 void UChessboardController::AddChessPieceAtPosition(UChessPiece* ChessPiece, const FIntPoint Position) const
@@ -45,8 +45,8 @@ TScriptInterface<IMovementRulesProvider> UChessboardController::GetChessboardMov
 
 void UChessboardController::SetupPiecesCallbacks(ITurnsProvider* TurnsProvider) const
 {
-	TArray<UChessPiece*> Pawns = Chessboard->GetChessPieces(EColor::White,EFigure::Pawn);
-	Pawns.Append(Chessboard->GetChessPieces(EColor::Black,EFigure::Pawn));
+	TArray<UChessPiece*> Pawns = Chessboard->GetChessPieces(EColor::White, EFigure::Pawn);
+	Pawns.Append(Chessboard->GetChessPieces(EColor::Black, EFigure::Pawn));
 	for (UChessPiece* ChessPiece : Pawns)
 	{
 		UChessPawn* Pawn = Cast<UChessPawn>(ChessPiece);
@@ -63,7 +63,7 @@ void UChessboardController::RemoveChessPieceAtPosition(const FIntPoint Position)
 void UChessboardController::MoveChessPieceToPosition(UChessPiece* ChessPiece, const FIntPoint Position) const
 {
 	const FIntPoint PreviousPosition = FIntPoint(ChessPiece->GetBoardPosition());
-	if(!ChessPiece)
+	if (!ChessPiece)
 	{
 		UE_LOG(LogTemp, Log, TEXT("Invalid Pawn!"));
 		return;
@@ -92,7 +92,7 @@ void UChessboardController::PromotePawn(UChessPiece* ChessPiece, const EFigure T
 	const FIntPoint TargetPosition = ChessPiece->GetBoardPosition();
 	const EColor Color = ChessPiece->GetColor();
 	RemoveChessPieceAtPosition(ChessPiece->GetBoardPosition());
-	UChessPiece* NewChessPiece = Chessboard->GenerateChessPieceAtPosition(TargetFigure,Color,TargetPosition);
+	UChessPiece* NewChessPiece = Chessboard->GenerateChessPieceAtPosition(TargetFigure, Color, TargetPosition);
 	AddChessPieceAtPosition(NewChessPiece, TargetPosition);
 }
 

@@ -9,18 +9,18 @@
 UChessPiece* USimulatedChessboard::CreateSimulatedChessPiece(UChessPiece* ChessPiece)
 {
 	UChessPiece* Clone = UChessPiecesFactory::CloneChessPiece(ChessPiece, this);
-	Clone->Initialize(ChessboardMovementRules,nullptr);
+	Clone->Initialize(ChessboardMovementRules, nullptr);
 	return Clone;
 }
 
-void USimulatedChessboard::InitializeSimulatedBoard(UChessData* ChessDataReference,UChessboardBase* OriginalBoard)
+void USimulatedChessboard::InitializeSimulatedBoard(UChessData* ChessDataReference, UChessboardBase* OriginalBoard)
 {
 	Initialize(ChessDataReference);
 	GenerateEmptyBoard();
 	UChessboardMovementRulesBase* MovementRules = NewObject<UChessboardMovementRulesBase>();
-	MovementRules->InitializeMovementRules(ChessData,this);
+	MovementRules->InitializeMovementRules(ChessData, this);
 	ChessboardMovementRules = MovementRules;
-	
+
 	for (int i = 0; i < ChessData->GetBoardSize(); i++)
 	{
 		for (int j = 0; j < ChessData->GetBoardSize(); j++)
@@ -31,7 +31,7 @@ void USimulatedChessboard::InitializeSimulatedBoard(UChessData* ChessDataReferen
 				continue;
 			}
 			UChessPiece* Clone = CreateSimulatedChessPiece(ChessPiece);
-			Board[i].Set(j,Clone);
+			Board[i].Set(j, Clone);
 		}
 	}
 }

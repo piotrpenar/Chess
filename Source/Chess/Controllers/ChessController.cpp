@@ -17,17 +17,17 @@ void AChessController::BeginPlay()
 void AChessController::CreateChessboardSceneUtilities()
 {
 	ChessboardSceneUtilities = NewObject<UChessSceneUtilities>();
-	ChessboardSceneUtilities->Initialize(ChessData,ChessBoardOrigin);
+	ChessboardSceneUtilities->Initialize(ChessData, ChessBoardOrigin);
 }
 
 void AChessController::CreateChessHighlighter()
 {
 	Highlighter = NewObject<UChessHighlighter>();
-	auto HighlightClickedCallback = [this](const FMove* Move)
+	auto HighlightClickedCallback = [this](const FMove Move)
 	{
 		this->MoveSelected(Move);
 	};
-	Highlighter->Initialize(ChessData->GetBoardHighlightActor(), ChessboardSceneUtilities,HighlightClickedCallback);
+	Highlighter->Initialize(ChessData->GetBoardHighlightActor(), ChessboardSceneUtilities, HighlightClickedCallback);
 }
 
 void AChessController::CreateChessboardController()
@@ -39,24 +39,25 @@ void AChessController::CreateChessboardController()
 	};
 
 	AChessGameState* ChessGameState = ChessboardSceneUtilities->GetBoardWorld()->GetGameState<AChessGameState>();
-	if(!ChessGameState->GetChessboard())
+	if (!ChessGameState->GetChessboard())
 	{
 		ChessGameState->CreateChessboard();
 	}
-	ChessboardController->Initialize(ChessboardSceneUtilities, ChessData,FigureClickedCallback);
+	ChessboardController->Initialize(ChessboardSceneUtilities, ChessData, FigureClickedCallback);
 	ChessboardController->SetupPiecesCallbacks(GameMode);
 }
 
 void AChessController::ChessFigureSelected(const AChessFigure* ChessFigure) const
 {
 	UE_LOG(LogTemp, Log, TEXT("Callback called %d!"), ChessFigure->GetBoardPosition().X)
-	Highlighter->CreateHighlights(ChessFigure->GetSourcePiece()->GetAvailableMoves());
+	TArray<FMove> Moves = ChessFigure->GetSourcePiece()->GetAvailableMoves();
+	Highlighter->CreateHighlights(Moves);
 }
 
-void AChessController::MoveSelected(const FMove* Move) const
+void AChessController::MoveSelected(const FMove Move) const
 {
-	UE_LOG(LogTemp, Log, TEXT("Callback called 123 %s!"), *FString(Move->TargetPosition.ToString()))
-	ExecutePlayerMove(*Move);
+	UE_LOG(LogTemp, Log, TEXT("Callback called 123 %s!"), *FString(Move.TargetPosition.ToString()))
+	ExecutePlayerMove(Move);
 }
 
 void AChessController::ExecutePlayerMove(const FMove Move) const
@@ -70,4 +71,3 @@ void AChessController::ExecutePlayerMove(const FMove Move) const
 	}
 	GameMode->EndTurn();
 }
-

@@ -28,7 +28,7 @@ protected:
 	UChessData* ChessData;
 	UPROPERTY()
 	TScriptInterface<IMovementRulesProvider> MovementRules;
-	
+
 public:
 	void Initialize(TScriptInterface<IMovementRulesProvider> MovementRulesReference, AChessFigure* ChessFigure);
 	virtual void MoveToPosition(FIntPoint Position, FVector ActorPosition) override;

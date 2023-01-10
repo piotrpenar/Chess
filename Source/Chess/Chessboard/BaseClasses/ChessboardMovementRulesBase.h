@@ -16,24 +16,23 @@ UCLASS()
 class CHESS_API UChessboardMovementRulesBase : public UObject, public IMovementRulesProvider
 {
 	GENERATED_BODY()
-protected:	
+protected:
 	UPROPERTY()
 	UChessData* ChessData;
 	UPROPERTY()
 	UChessboardBase* Chessboard;
-	
+
 public:
-	virtual void InitializeMovementRules(UChessData* ChessDataReference,UChessboardBase* ChessboardReference);
+	virtual void InitializeMovementRules(UChessData* ChessDataReference, UChessboardBase* ChessboardReference);
 	virtual bool IsValidMove(const FIntPoint Position, UObject* ChessPieceObject) override;
-	virtual TArray<FMove> GetValidMovesFromPositions(TArray<FIntPoint> InputDirections, UObject* ChessPieceObject) override;
-	virtual TArray<FMove> GetValidMovesFromDirections(TArray<FIntPoint> InputDirections, UObject* ChessPieceObject) override;
+	virtual TArray<FMove> GetValidMovesFromPositions(const TArray<FIntPoint>& InputDirections, UObject* ChessPieceObject) override;
+	virtual TArray<FMove> GetValidMovesFromDirections(const TArray<FIntPoint>& InputDirections, UObject* ChessPieceObject) override;
 	virtual TArray<FMove> GetValidSpecialMoves(UObject* ChessPieceObject) override;
-	
+
 private:
 	TArray<FMove> GetPawnSpecialMoves(UChessPiece* ChessPiece);
 	TArray<FMove> GetKingSpecialMoves(UChessPiece* KingPiece);
 	bool CanPawnDoubleMove(UChessPiece* ChessPiece, FIntPoint PawnPos, int Direction);
-	TArray<FMove> GetEnPassantMoves(UChessPiece* ChessPiece, FIntPoint PawnPos, int Direction);\
-	void AdjustMoveType(FMove* Move) const;
+	TArray<FMove> GetEnPassantMoves(UChessPiece* ChessPiece, FIntPoint PawnPos, int Direction);
+	void AdjustMoveType(FMove& Move) const;
 };
-

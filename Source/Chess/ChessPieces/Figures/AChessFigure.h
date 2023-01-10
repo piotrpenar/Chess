@@ -9,17 +9,16 @@ class AChessFigure final : public AActor
 
 	UPROPERTY()
 	FIntPoint BoardPosition;
-	
+
 	UPROPERTY()
 	TScriptInterface<IChessPieceMovement> SourcePiece;
 
 	TFunction<void(AChessFigure*)> CallbackFunction;
-	
+
 public:
-	
 	UFUNCTION(BlueprintCallable)
 	void HandleFigureClick();
-	
+
 	void BroadcastChessFigureOnClick();
 	void SetBoardPosition(FIntPoint NewBoardPosition);
 	FIntPoint GetBoardPosition() const;

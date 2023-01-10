@@ -2,7 +2,7 @@
 
 void AChessGameState::CreateChessboard()
 {
-	if(!Chessboard)
+	if (!Chessboard)
 	{
 		Chessboard = NewObject<UChessboard>();
 	}

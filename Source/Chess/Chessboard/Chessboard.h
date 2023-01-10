@@ -19,13 +19,13 @@ class CHESS_API UChessboard final : public UChessboardBase
 
 	UPROPERTY()
 	UChessSceneUtilities* ChessboardTransformUtilities;
-	
+
 	TFunction<void(AChessFigure*)> FigureClickedCallback;
-	
+
 private:
 	UChessPiece* GenerateChessPiece(EFigure Figure);
 	AChessFigure* CreateActorForChessPiece(UChessPiece* SourceChessPiece) const;
-	void GenerateChessRow(TArray<EFigure> Figures, const EColor Color, const int Y);
+	void GenerateChessRow(TArray<EFigure>& Figures, const EColor Color, const int Y);
 	void GenerateChessPieces(EColor FigureColor);
 	void SetupChessPiece(UChessPiece* ChessPiece, const EColor Color, FIntPoint Position) const;
 

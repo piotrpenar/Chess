@@ -1,5 +1,16 @@
-# Visual Studio 2015 user specific files
+# Visual Studio / Rider user specific files
 .vs/
+.idea/
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+.idea/**/*.xml
+
+#Rider Plugin
+Plugins/**/*
+Plugins/**/RiderLink/**/*.*
 
 # Compiled Object files
 *.slo
@@ -72,3 +83,7 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+.idea/.idea.Chess/.idea/workspace.xml
+
+#Hololense Platform config
+Platforms/HoloLens/Config/

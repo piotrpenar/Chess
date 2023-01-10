@@ -27,3 +27,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed play area details
 - Added roads and paths
 - Added En Passant, Castling, Pawn Promotion 
+- Added Stalemate Detection

@@ -38,7 +38,7 @@ Current version of the game allows for basic playthrough and serves as MVP. Ther
 - [x] Refactor + Cleanup of the code
 - [ ] SFX creation and implementation
 - [ ] Music creation and implementation
-- [ ] Optimization of the environment
+- [x] Optimization of the environment
 - [ ] Design and implementation of the Game UI
 - [ ] Polishing the graphics and details of the project
 - [ ] Project and repository cleanup

@@ -74,3 +74,16 @@ void AChessController::ExecutePlayerMove(const FMove Move) const
 	}
 	GameMode->EndTurn();
 }
+
+APawn* AChessController::GetPlayerPawn(const int Index) const
+{
+	if(Index==0)
+	{
+		return FirstPlayerPawn;
+	}
+	if(Index==1)
+	{
+		return SecondPlayerPawn;
+	}
+	throw "Invalid Player Index provided! Returning null.";
+}

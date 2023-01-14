@@ -38,6 +38,10 @@ private:
 	UChessData* ChessData;
 	UPROPERTY(EditAnywhere)
 	AActor* ChessBoardOrigin;
+	UPROPERTY(EditAnywhere)
+	APawn* FirstPlayerPawn;
+	UPROPERTY(EditAnywhere)
+	APawn* SecondPlayerPawn;
 	
 	void CreateChessboardSceneUtilities();
 	void CreateChessHighlighter();
@@ -48,5 +52,9 @@ private:
 	
 protected:
 	virtual void BeginPlay() override;
+
+public:
+	UFUNCTION(BlueprintCallable)
+	APawn* GetPlayerPawn(int Index) const;
 	
 };

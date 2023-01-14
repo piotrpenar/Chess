@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed 
 
 - Initial foliage and scene optimization 
+- Improved Player Camera behavior
   
 ## [0.0.1] - 10.01.2023
 

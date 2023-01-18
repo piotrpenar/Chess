@@ -1,6 +1,5 @@
 #include "ChessController.h"
 
-#include "ChessGameMode.h"
 #include "Chess/Chessboard/ChessboardController.h"
 #include "Chess/Highlight/ChessHighlighter.h"
 

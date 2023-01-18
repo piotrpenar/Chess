@@ -2,7 +2,7 @@
 #include "Chess/Controllers/ChessRulesController.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 #include "Chess/ChessPieces/Logic/ChessPawn.h"
-#include "Chess/Controllers/ChessGameState.h"
+#include "Chess/Global/ChessGameState.h"
 
 
 void UChessboardController::Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference, UChessData* NewChessData, const TFunction<void(AChessFigure*)> FigureClickedCallback)

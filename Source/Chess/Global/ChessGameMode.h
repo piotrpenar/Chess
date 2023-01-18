@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
 #include "ChessGameState.h"
-#include "ChessRulesController.h"
+#include "Chess/Controllers/ChessRulesController.h"
 #include "Chess/Interfaces/TurnsProvider.h"
 #include "GameFramework/GameMode.h"
 #include "ChessGameMode.generated.h"

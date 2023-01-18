@@ -1,12 +1,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ChessGameMode.h"
 #include "Chess/Chessboard/Chessboard.h"
 #include "Chess/Chessboard/ChessboardController.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 #include "Chess/Data/ChessData.h"
 #include "Chess/Enums/EFigure.h"
+#include "Chess/Global/ChessGameMode.h"
 #include "Chess/Interfaces/ChessMovesHighlighter.h"
 #include "ChessController.generated.h"
 

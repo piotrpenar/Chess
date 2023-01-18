@@ -22,6 +22,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintInternalUseOnly)
 	void SetCameraYInverted(const bool bValue) { bCameraInvertedY = bValue;}
 
+	virtual void ApplySettings(bool bCheckForCommandLineOverrides) override;
+	void ApplyVolume() const;
+
 private:
 	UPROPERTY(Config,BlueprintGetter=GetVolume, BlueprintSetter=SetVolume)
 	float Volume = 1;

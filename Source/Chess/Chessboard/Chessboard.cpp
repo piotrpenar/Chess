@@ -14,7 +14,6 @@ void UChessboard::Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference,
 
 void UChessboard::InitializeBoardPieces()
 {
-	GenerateEmptyBoard();
 	GenerateChessPieces(EColor::White);
 	GenerateChessPieces(EColor::Black);
 }
@@ -26,6 +25,7 @@ void UChessboard::InitializeMovementRules(USimulatedChessboard* SimulatedBoard)
 	MovementRules->SetSimulatedChessboard(SimulatedBoard);
 	ChessboardMovementRules.SetObject(MovementRules);
 	ChessboardMovementRules.SetInterface(Cast<IMovementRulesProvider>(MovementRules));
+	GenerateEmptyBoard();
 	InitializeBoardPieces();
 }
 

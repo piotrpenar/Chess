@@ -14,6 +14,14 @@ void UChessboardController::Initialize(UChessSceneUtilities* ChessSceneUtilities
 	FinishChessboardsInitialization();
 }
 
+void UChessboardController::ResetChessboard() const
+{
+	Chessboard->ResetChessboard();
+	SimulatedBoard->ResetChessboard();
+	Chessboard->InitializeBoardPieces();
+	FinishChessboardsInitialization();
+}
+
 void UChessboardController::InitializeChessboard(const TFunction<void(AChessFigure*)> FigureClickedCallback)
 {
 	Chessboard = ChessboardTransformUtilities->GetBoardWorld()->GetGameState<AChessGameState>()->GetChessboard();

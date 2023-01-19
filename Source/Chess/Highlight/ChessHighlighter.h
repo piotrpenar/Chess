@@ -25,9 +25,9 @@ private:
 
 	TFunction<void(FMove)> HighlightClickCallback;
 	
-	void ClearHighlights();
 
 public:
+	virtual void ClearHighlights() override;
 	virtual void Initialize(const TSubclassOf<ABoardHighlight> BoardHighlightSourceActor, UChessSceneUtilities* ChessSceneUtilitiesReference,
 	                        TFunction<void(FMove)> HighlightClickCallbackReference) override;
 	virtual void CreateHighlights(TArray<FMove>& Moves) override;

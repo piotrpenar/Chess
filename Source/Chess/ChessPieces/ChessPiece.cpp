@@ -2,6 +2,11 @@
 #include "Figures/AChessFigure.h"
 
 
+UChessPiece::~UChessPiece()
+{
+	DestroyActor();
+}
+
 void UChessPiece::Initialize(const TScriptInterface<IMovementRulesProvider> MovementRulesReference, AChessFigure* ChessFigure)
 {
 	MovementRules = MovementRulesReference;

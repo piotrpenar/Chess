@@ -17,15 +17,7 @@ class CHESS_API AChessController final : public AActor
 
 private:
 	UPROPERTY()
-	UChessboard* Chessboard;
-	UPROPERTY()
 	UChessboardController* ChessboardController;
-	UPROPERTY()
-	TMap<EFigure, UChessPiece*> FigureTypeMap;
-	UPROPERTY()
-	TArray<AActor*> CurrentHighlights;
-	UPROPERTY()
-	AChessFigure* CurrentSelectedFigure;
 	UPROPERTY()
 	TScriptInterface<IChessMovesHighlighter> Highlighter;
 	UPROPERTY()
@@ -56,5 +48,7 @@ protected:
 public:
 	UFUNCTION(BlueprintCallable)
 	APawn* GetPlayerPawn(int Index) const;
+	UFUNCTION(BlueprintCallable)
+	void ResetChessGame() const;
 	
 };

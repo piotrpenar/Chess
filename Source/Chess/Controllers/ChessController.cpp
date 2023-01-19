@@ -74,6 +74,13 @@ void AChessController::ExecutePlayerMove(const FMove Move) const
 	GameMode->EndTurn();
 }
 
+void AChessController::ResetChessGame() const
+{
+	ChessboardController->ResetChessboard();
+	Highlighter->ClearHighlights();
+	GameState->SetCurrentPlayer(EColor::White);
+}
+
 APawn* AChessController::GetPlayerPawn(const int Index) const
 {
 	if(Index==0)

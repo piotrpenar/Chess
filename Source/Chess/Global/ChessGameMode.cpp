@@ -1,8 +1,5 @@
 ﻿#include "ChessGameMode.h"
 
-#include "Chess/Chessboard/ChessboardController.h"
-#include "ChessRulesController.h"
-
 void AChessGameMode::Initialize()
 {
 	ChessGameState = GetWorld()->GetGameState<AChessGameState>();
@@ -16,7 +13,7 @@ void AChessGameMode::BeginPlay()
 	ChessGameState->CreateChessboard();
 }
 
-void AChessGameMode::BroadcastTurnEnded(EColor Color) const
+void AChessGameMode::BroadcastTurnEnded(const EColor Color) const
 {
 	TurnEndedEvent.Broadcast(Color);
 }

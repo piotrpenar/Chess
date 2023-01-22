@@ -26,6 +26,8 @@ protected:
 
 public:
 	void Initialize(UChessData* ChessDataReference);
+	void DestroyChessPieceActors();
+	void ResetChessboard();
 	virtual void SetPieceAtPosition(const FIntPoint Position, UChessPiece* ChessPiece);
 	void MovePieceFromToPosition(UChessPiece* ChessPiece, FIntPoint FromPosition, FIntPoint ToPosition);
 	UChessPiece* GetPieceAtPosition(FIntPoint BoardPosition);

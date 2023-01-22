@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - XX.XX.2023
 
+### Added
+- Main Menu UX
+- Gameplay overlay UX
+- Pause menu UX
+- Settings UX and settings logic
+- Engine Scalability
+- Custom Game Settings
+
 ### Changed 
 
 - Initial foliage and scene optimization 

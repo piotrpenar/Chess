@@ -28,11 +28,11 @@ private:
 	void GenerateChessRow(TArray<EFigure>& Figures, const EColor Color, const int Y);
 	void GenerateChessPieces(EColor FigureColor);
 	void SetupChessPiece(UChessPiece* ChessPiece, const EColor Color, FIntPoint Position) const;
-	void InitializeBoardPieces();
 
 public:
 	void Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference, UChessData* Data, const TFunction<void(AChessFigure*)> ExternalFigureClickedCallback);
 	void InitializeMovementRules(USimulatedChessboard* SimulatedBoard);
+	void InitializeBoardPieces();
 	UChessPiece* GenerateChessPieceAtPosition(EFigure Figure, EColor Color, FIntPoint Position);
 	virtual void SetPieceAtPosition(FIntPoint Position, UChessPiece* ChessPiece) override;
 	TScriptInterface<IMovementRulesProvider> GetMovementRuleProvider() const;

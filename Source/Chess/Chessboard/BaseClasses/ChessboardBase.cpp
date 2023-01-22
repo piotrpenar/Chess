@@ -8,6 +8,29 @@ void UChessboardBase::Initialize(UChessData* ChessDataReference)
 	ChessData = ChessDataReference;
 }
 
+void UChessboardBase::DestroyChessPieceActors()
+{
+	for (int i = 0; i < ChessData->GetBoardSize(); i++)
+	{
+		for (int j = 0; j < ChessData->GetBoardSize(); j++)
+		{
+			UObject* ChessPieceObject = Board[i][j];
+			if(!ChessPieceObject)
+			{
+				continue;
+			}
+			static_cast<UChessPiece*>(ChessPieceObject)->DestroyActor();
+		}
+	}
+}
+
+void UChessboardBase::ResetChessboard()
+{
+	DestroyChessPieceActors();
+	Board.Empty();
+	GenerateEmptyBoard();
+}
+
 void UChessboardBase::GenerateEmptyBoard()
 {
 	for (int i = 0; i < ChessData->GetBoardSize(); i++)

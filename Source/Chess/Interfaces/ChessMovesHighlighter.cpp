@@ -18,3 +18,7 @@ void IChessMovesHighlighter::SetSelectedFigure(AActor* SourceFigure)
 void IChessMovesHighlighter::HighlightSelected(ABoardHighlight* CheckerHighlight)
 {
 }
+
+void IChessMovesHighlighter::ClearHighlights()
+{
+}

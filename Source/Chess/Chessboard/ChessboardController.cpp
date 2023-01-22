@@ -2,7 +2,7 @@
 #include "Chess/Controllers/ChessRulesController.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 #include "Chess/ChessPieces/Logic/ChessPawn.h"
-#include "Chess/Controllers/ChessGameState.h"
+#include "Chess/Global/ChessGameState.h"
 
 
 void UChessboardController::Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference, UChessData* NewChessData, const TFunction<void(AChessFigure*)> FigureClickedCallback)
@@ -11,6 +11,14 @@ void UChessboardController::Initialize(UChessSceneUtilities* ChessSceneUtilities
 	ChessboardTransformUtilities = ChessSceneUtilitiesReference;
 	InitializeChessboard(FigureClickedCallback);
 	CreateSimulatedChessboard();
+	FinishChessboardsInitialization();
+}
+
+void UChessboardController::ResetChessboard() const
+{
+	Chessboard->ResetChessboard();
+	SimulatedBoard->ResetChessboard();
+	Chessboard->InitializeBoardPieces();
 	FinishChessboardsInitialization();
 }
 

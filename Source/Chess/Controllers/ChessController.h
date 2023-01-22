@@ -1,12 +1,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ChessGameMode.h"
 #include "Chess/Chessboard/Chessboard.h"
 #include "Chess/Chessboard/ChessboardController.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 #include "Chess/Data/ChessData.h"
 #include "Chess/Enums/EFigure.h"
+#include "Chess/Global/ChessGameMode.h"
 #include "Chess/Interfaces/ChessMovesHighlighter.h"
 #include "ChessController.generated.h"
 
@@ -17,15 +17,7 @@ class CHESS_API AChessController final : public AActor
 
 private:
 	UPROPERTY()
-	UChessboard* Chessboard;
-	UPROPERTY()
 	UChessboardController* ChessboardController;
-	UPROPERTY()
-	TMap<EFigure, UChessPiece*> FigureTypeMap;
-	UPROPERTY()
-	TArray<AActor*> CurrentHighlights;
-	UPROPERTY()
-	AChessFigure* CurrentSelectedFigure;
 	UPROPERTY()
 	TScriptInterface<IChessMovesHighlighter> Highlighter;
 	UPROPERTY()
@@ -38,6 +30,10 @@ private:
 	UChessData* ChessData;
 	UPROPERTY(EditAnywhere)
 	AActor* ChessBoardOrigin;
+	UPROPERTY(EditAnywhere)
+	APawn* FirstPlayerPawn;
+	UPROPERTY(EditAnywhere)
+	APawn* SecondPlayerPawn;
 	
 	void CreateChessboardSceneUtilities();
 	void CreateChessHighlighter();
@@ -48,5 +44,11 @@ private:
 	
 protected:
 	virtual void BeginPlay() override;
+
+public:
+	UFUNCTION(BlueprintCallable)
+	APawn* GetPlayerPawn(int Index) const;
+	UFUNCTION(BlueprintCallable)
+	void ResetChessGame() const;
 	
 };

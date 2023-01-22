@@ -19,7 +19,7 @@ void UChessHighlighter::SetSelectedFigure(AActor* SelectedFigureActor)
 void UChessHighlighter::HighlightSelected(ABoardHighlight* CheckerHighlight)
 {
 	ClearHighlights();
-	FMove Move = CheckerHighlight->GetSourceMove();
+	const FMove Move = CheckerHighlight->GetSourceMove();
 	HighlightClickCallback(Move);
 }
 

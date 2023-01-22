@@ -28,6 +28,7 @@ protected:
 	UChessData* ChessData;
 	UPROPERTY()
 	TScriptInterface<IMovementRulesProvider> MovementRules;
+	virtual ~UChessPiece() override;
 
 public:
 	void Initialize(TScriptInterface<IMovementRulesProvider> MovementRulesReference, AChessFigure* ChessFigure);

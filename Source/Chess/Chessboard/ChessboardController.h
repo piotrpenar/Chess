@@ -38,6 +38,7 @@ class CHESS_API UChessboardController final : public UObject
 
 public:
 	void Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference, UChessData* NewChessData, TFunction<void(AChessFigure*)> FigureClickedCallback);
+	void ResetChessboard() const;
 	void MoveChessPieceToPosition(UChessPiece* ChessPiece, FIntPoint Position) const;
 	void HandleSpecialMoveType(const FMove& Move) const;
 	void SetupPiecesCallbacks(ITurnsProvider* TurnsProvider) const;

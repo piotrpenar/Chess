@@ -136,6 +136,7 @@ AChessFigure* UChessboard::CreateActorForChessPiece(UChessPiece* SourceChessPiec
 	Actor->SetSourcePiece(SourceChessPiece);
 	Actor->SetClickCallback(FigureClickedCallback);
 	Actor->SetColor(PieceColor);
+	Actor->AttachToActor(ChessBoardOrigin,FAttachmentTransformRules(EAttachmentRule::KeepWorld,false),FName());
 #if WITH_EDITOR
 	Actor->SetActorLabel(FString(UEnum::GetValueAsString(PieceColor) + " " + UEnum::GetValueAsString(PieceFigure)));
 #endif

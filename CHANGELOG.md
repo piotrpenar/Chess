@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial foliage and scene optimization 
 - Improved Player Camera behavior
+- Improved highlights for the chess pieces
   
 ## [0.0.1] - 10.01.2023
 

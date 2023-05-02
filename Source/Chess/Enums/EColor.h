@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-UENUM()
+UENUM(BlueprintType)
 enum class EColor : uint8
 {
 	White = 0 UMETA(DisplayName = "White"),

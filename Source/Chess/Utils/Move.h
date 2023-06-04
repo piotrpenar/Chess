@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "Chess/Enums/EMoveType.h"
-#include "FMove.generated.h"
+#include "Chess/Enums/MoveType.h"
+#include "Move.generated.h"
 
 USTRUCT(BlueprintType)
 struct FMove

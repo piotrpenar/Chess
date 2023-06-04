@@ -1,5 +1,5 @@
 ﻿#include "ChessSceneUtilities.h"
-#include "Chess/Enums/EColor.h"
+#include "Chess/Enums/Color.h"
 
 void UChessSceneUtilities::Initialize(UChessData* ChessDataReference, AActor* ChessBoardOriginReference)
 {

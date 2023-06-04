@@ -1,11 +1,11 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
 #include "Chess/Data/ChessData.h"
-#include "Chess/Enums/EColor.h"
-#include "Chess/Enums/EFigure.h"
+#include "Chess/Enums/Color.h"
+#include "Chess/Enums/Figure.h"
 #include "Chess/Interfaces/ChessPieceMovement.h"
 #include "Chess/Interfaces/MovementRulesProvider.h"
-#include "Chess/Utils/FMove.h"
+#include "Chess/Utils/Move.h"
 #include "ChessPiece.generated.h"
 
 UCLASS()

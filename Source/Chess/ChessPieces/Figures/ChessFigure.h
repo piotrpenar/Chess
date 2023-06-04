@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Chess/Enums/EColor.h"
+#include "Chess/Enums/Color.h"
 #include "Chess/Interfaces/ChessPieceMovement.h"
 #include "AChessFigure.generated.h"
 

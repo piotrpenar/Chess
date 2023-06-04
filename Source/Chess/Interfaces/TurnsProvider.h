@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
-#include "Chess/Enums/EColor.h"
+#include "Chess/Enums/Color.h"
 #include "TurnsProvider.generated.h"
 
 UINTERFACE()

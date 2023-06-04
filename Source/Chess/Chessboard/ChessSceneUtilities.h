@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Chess/Data/ChessData.h"
-#include "Chess/Enums/EColor.h"
+#include "Chess/Enums/Color.h"
 #include "UObject/Object.h"
 #include "ChessSceneUtilities.generated.h"
 

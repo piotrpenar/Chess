@@ -4,7 +4,7 @@
 #include "Chess/Chessboard/Chessboard.h"
 #include "Chess/Chessboard/ChessboardController.h"
 #include "Chess/ChessPieces/ChessPiece.h"
-#include "Chess/Enums/ECheckmateStatus.h"
+#include "Chess/Enums/CheckmateStatus.h"
 #include "Chess/Interfaces/MovementRulesProvider.h"
 #include "ChessRulesController.generated.h"
 

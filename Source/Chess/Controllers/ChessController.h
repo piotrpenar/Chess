@@ -5,7 +5,7 @@
 #include "Chess/Chessboard/ChessboardController.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 #include "Chess/Data/ChessData.h"
-#include "Chess/Enums/EFigure.h"
+#include "Chess/Enums/Figure.h"
 #include "Chess/Global/ChessGameMode.h"
 #include "Chess/Interfaces/ChessMovesHighlighter.h"
 #include "ChessController.generated.h"

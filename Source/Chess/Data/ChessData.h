@@ -10,12 +10,13 @@ USTRUCT()
 struct FMeshMaterialData
 {
 	GENERATED_BODY()
-	UPROPERTY(EditAnywhere)
-	UStaticMesh* Mesh;
-	UPROPERTY(EditAnywhere)
-	UMaterialInstance* WhiteMaterial;
-	UPROPERTY(EditAnywhere)
-	UMaterialInstance* BlackMaterial;
+	
+	UPROPERTY(EditAnywhere,meta = (IgnoreForMemberInitializationTest))
+	UStaticMesh* Mesh = nullptr;
+	UPROPERTY(EditAnywhere,meta = (IgnoreForMemberInitializationTest))
+	UMaterialInstance* WhiteMaterial = nullptr;
+	UPROPERTY(EditAnywhere,meta = (IgnoreForMemberInitializationTest))
+	UMaterialInstance* BlackMaterial = nullptr;
 };
 
 UCLASS()

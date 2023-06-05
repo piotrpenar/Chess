@@ -1,5 +1,5 @@
 ﻿#include "ChessPiece.h"
-#include "Figures/AChessFigure.h"
+#include "Figures/ChessFigure.h"
 
 
 UChessPiece::~UChessPiece()

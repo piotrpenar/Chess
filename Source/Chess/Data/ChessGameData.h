@@ -1,18 +1,24 @@
 ﻿#pragma once
-#include "Chess/Enums/Player.h"
+#include "..\Enums\PlayerType.h"
 #include "ChessGameData.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class UChessGameData : public UObject
 {
-	GENERATED_BODY();
-	
-	UPROPERTY(BlueprintReadWrite)
+	GENERATED_BODY()
+
+	UPROPERTY(BlueprintGetter=GetFirstPlayerName, BlueprintSetter=SetFirstPlayerName)
 	FString PlayerOneName;
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintGetter=GetSecondPlayerName, BlueprintSetter=SetSecondPlayerName)
 	FString PlayerTwoName;
 public:
-	UFUNCTION(BlueprintGetter)
-	const FString& GetPlayerName(EPlayer Player);
+	UFUNCTION(BlueprintPure, BlueprintCallable)
+	FString GetFirstPlayerName() { return PlayerOneName; };
+	UFUNCTION(BlueprintCallable)
+	void SetFirstPlayerName(const FString& Name) { PlayerOneName = Name; }
+	UFUNCTION(BlueprintPure, BlueprintCallable)
+	FString GetSecondPlayerName(){ return PlayerTwoName; };
+	UFUNCTION(BlueprintCallable)
+	void SetSecondPlayerName(const FString& Name) { PlayerTwoName = Name; }
 	
 };

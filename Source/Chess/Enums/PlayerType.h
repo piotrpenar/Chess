@@ -1,9 +1,9 @@
 ﻿#pragma once
 
 UENUM(BlueprintType)
-enum class EPlayer
+enum class EPlayerType : uint8
 {
-	None = -1 UMETA(DisplayName = "None"),
 	First = 0 UMETA(DisplayName = "First"),
 	Second = 1 UMETA(DisplayName = "Second"),
+	None = 255 UMETA(DisplayName = "None"),
 };

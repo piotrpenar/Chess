@@ -11,12 +11,12 @@
 USTRUCT()
 struct FEnemyMove
 {
-	GENERATED_BODY()
+	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY()
 	FMove Move;
-	UPROPERTY()
-	UChessPiece* Enemy;
+	UPROPERTY(meta = (IgnoreForMemberInitializationTest))
+	UChessPiece* Enemy = nullptr;
 };
 
 UCLASS()

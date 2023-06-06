@@ -22,6 +22,8 @@ private:
 public:
 	void CreateChessboard();
 	UChessboard* GetChessboard() const;
+	UFUNCTION(BlueprintCallable)
 	EColor GetCurrentPlayer() const;
+	UFUNCTION(BlueprintCallable)
 	void SetCurrentPlayer(EColor Color);
 };

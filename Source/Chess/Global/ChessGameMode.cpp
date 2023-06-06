@@ -16,6 +16,7 @@ void AChessGameMode::BeginPlay()
 void AChessGameMode::BroadcastTurnEnded(const EColor Color) const
 {
 	TurnEndedEvent.Broadcast(Color);
+	OnTurnEndedEvent.Broadcast();
 }
 
 void AChessGameMode::SetMovementProvider(const TScriptInterface<IMovementRulesProvider> MovementRulesProviderReference)

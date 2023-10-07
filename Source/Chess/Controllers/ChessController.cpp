@@ -74,7 +74,7 @@ void AChessController::ExecutePlayerMove(const FMove Move) const
 	}
 	if(TargetPiece)
 	{
-		OnPieceCaptured.Broadcast(GameState->GetCurrentPlayer(),TargetPiece->GetFigureType());
+		OnPieceCaptured.Broadcast(TargetPiece->GetColor(),TargetPiece->GetFigureType());
 	}
 	GameMode->EndTurn();
 }

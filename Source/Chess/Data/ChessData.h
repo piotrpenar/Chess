@@ -38,7 +38,9 @@ class CHESS_API UChessData final : public UDataAsset
 	UPROPERTY(EditAnywhere)
 	float BoardOffset = 1;
 	UPROPERTY(EditAnywhere)
-	TArray<FCPUDifficulty> CPUDifficulties;
+	TMap<FString,int> CPUDifficulties;
+	UPROPERTY(EditAnywhere)
+	TMap<FString,int> AvailableGameLengths;
 
 	const TArray<EFigure> Pawns = {
 		EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn,
@@ -59,8 +61,10 @@ public:
 	float GetBoardOffset() const;
 	TArray<EFigure> GetMen() const;
 	TArray<EFigure> GetPawns() const;
-	UFUNCTION(BlueprintGetter)
-	TArray<FCPUDifficulty> GetCPUDifficulties() const;
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	TMap<FString,int> GetCPUDifficulties() const;
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	TMap<FString,int> GetAvailableGameLengths() const;
 
 	bool IsValidBoardPosition(const FIntPoint& Position) const;
 };

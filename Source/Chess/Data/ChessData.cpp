@@ -25,9 +25,14 @@ TArray<EFigure> UChessData::GetPawns() const
 	return Pawns;
 }
 
-TArray<FCPUDifficulty> UChessData::GetCPUDifficulties() const
+TMap<FString, int> UChessData::GetCPUDifficulties() const
 {
 	return CPUDifficulties;
+}
+
+TMap<FString, int> UChessData::GetAvailableGameLengths() const
+{
+	return AvailableGameLengths;
 }
 
 UStaticMesh* UChessData::GetMeshForType(const EFigure Figure) const

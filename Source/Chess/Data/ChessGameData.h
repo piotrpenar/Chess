@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "..\Enums\PlayerType.h"
+#include "..\Enums\ChessPlayer.h"
 #include "ChessGameData.generated.h"
 
 UCLASS(Blueprintable)

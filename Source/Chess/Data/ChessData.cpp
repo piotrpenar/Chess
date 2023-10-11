@@ -25,6 +25,11 @@ TArray<EFigure> UChessData::GetPawns() const
 	return Pawns;
 }
 
+TArray<FCPUDifficulty> UChessData::GetCPUDifficulties() const
+{
+	return CPUDifficulties;
+}
+
 UStaticMesh* UChessData::GetMeshForType(const EFigure Figure) const
 {
 	if (!FigureToMesh.Contains(Figure))

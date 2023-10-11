@@ -4,6 +4,7 @@
 #include "Chess/Enums/Color.h"
 #include "Chess/Enums/Figure.h"
 #include "Chess/Highlight/BoardHighlight.h"
+#include "Chess/Utils/CPUDifficulty.h"
 #include "ChessData.generated.h"
 
 USTRUCT()
@@ -19,7 +20,7 @@ struct FMeshMaterialData
 	UMaterialInstance* BlackMaterial = nullptr;
 };
 
-UCLASS()
+UCLASS(BlueprintType)
 class CHESS_API UChessData final : public UDataAsset
 {
 	GENERATED_BODY()
@@ -36,6 +37,8 @@ class CHESS_API UChessData final : public UDataAsset
 	int BoardSize = 8;
 	UPROPERTY(EditAnywhere)
 	float BoardOffset = 1;
+	UPROPERTY(EditAnywhere)
+	TArray<FCPUDifficulty> CPUDifficulties;
 
 	const TArray<EFigure> Pawns = {
 		EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn, EFigure::Pawn,
@@ -56,6 +59,7 @@ public:
 	float GetBoardOffset() const;
 	TArray<EFigure> GetMen() const;
 	TArray<EFigure> GetPawns() const;
+	TArray<FCPUDifficulty> GetCPUDifficulties() const;
 
 	bool IsValidBoardPosition(const FIntPoint& Position) const;
 };

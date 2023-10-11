@@ -11,7 +11,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType)
 class CHESS_API URoundSettings : public UObject
 {
 	GENERATED_BODY()

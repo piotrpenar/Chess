@@ -59,6 +59,7 @@ public:
 	float GetBoardOffset() const;
 	TArray<EFigure> GetMen() const;
 	TArray<EFigure> GetPawns() const;
+	UFUNCTION(BlueprintGetter)
 	TArray<FCPUDifficulty> GetCPUDifficulties() const;
 
 	bool IsValidBoardPosition(const FIntPoint& Position) const;

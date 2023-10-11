@@ -1,6 +1,6 @@
-# ChillChess - Relaxing Chess Game done in UE 5.1
+# ChillChess - Relaxing Chess Game done in UE 5.3.1
 
-ChillChess is a side project that I have been working on in the free time, in order to polish my Unreal Engine skills, as well as try out some new features that Unreal Engine 5.1 has.
+ChillChess is a side project that I have been working on in the free time, in order to polish my Unreal Engine skills, as well as try out some new features that Unreal Engine 5.X has.
 
 This game allows the player to play chess in a calm relaxing environment.
 
@@ -18,7 +18,7 @@ Current version of the game allows for basic playthrough and serves as MVP. Ther
 
 * Heavy usage of Lumen and Nanite
 * Usage of experimental 5.1 Unreal water system
-* Wind-affected 
+* Wind-affected foliage
 * Chess code written from the ground up in C++, without usage of external libraries
 * Game features a simulation system that helps in detecting checks and checkmates. 
 * Procedural landscape material
@@ -39,6 +39,7 @@ Current version of the game allows for basic playthrough and serves as MVP. Ther
 - [ ] SFX creation and implementation
 - [ ] Music creation and implementation
 - [x] Optimization of the environment
+- [ ] Addition of AI to the project
 - [ ] Design and implementation of the Game UI
 - [ ] Polishing the graphics and details of the project
 - [ ] Project and repository cleanup

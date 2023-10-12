@@ -14,7 +14,7 @@ void AChessController::BeginPlay()
 	GameMode->SetMovementProvider(ChessboardController->GetChessboardMovementRuleProvider());
 
 	UUCIController* UCIController = NewObject<UUCIController>();
-	UCIController->Initialize(ChessboardController->);
+	UCIController->Initialize(ChessboardController,ChessData->GetStockfishPath());
 	
 	GameRoundController = NewObject<UGameRoundController>();
 	GameRoundController->SetUCIController(UCIController);

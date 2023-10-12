@@ -37,6 +37,8 @@ class CHESS_API UChessData final : public UDataAsset
 	UPROPERTY(EditAnywhere)
 	float BoardOffset = 1;
 	UPROPERTY(EditAnywhere)
+	FString StockfishPath;
+	UPROPERTY(EditAnywhere)
 	TMap<FString,int> CPUDifficulties;
 	UPROPERTY(EditAnywhere)
 	TMap<FString,int> AvailableGameLengths;
@@ -66,4 +68,5 @@ public:
 	TMap<FString,int> GetAvailableGameLengths() const;
 
 	bool IsValidBoardPosition(const FIntPoint& Position) const;
+	FString GetStockfishPath();
 };

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Chess/Chessboard/Chessboard.h"
+#include "Chess/Chessboard/ChessboardController.h"
 #include "Chess/Enums/Color.h"
 #include "UObject/Object.h"
 #include "UCIController.generated.h"
@@ -22,10 +23,10 @@ private:
 	FString StockfishFilePath;
 
 	UPROPERTY()
-	UChessboard* Chessboard;
+	UChessboardController* Chessboard;
 
 public:
 	void GenerateBoardState();
 	void SearchForBestMove(EColor Color);
-	void Initialize(UChessboard* Chessboard, FString StockfishFilePath);
+	void Initialize(UChessboardController* Chessboard, FString StockfishFilePath);
 };

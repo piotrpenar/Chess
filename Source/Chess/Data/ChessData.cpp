@@ -35,6 +35,11 @@ TMap<FString, int> UChessData::GetAvailableGameLengths() const
 	return AvailableGameLengths;
 }
 
+FString UChessData::GetStockfishPath()
+{
+	return StockfishPath;
+}
+
 UStaticMesh* UChessData::GetMeshForType(const EFigure Figure) const
 {
 	if (!FigureToMesh.Contains(Figure))

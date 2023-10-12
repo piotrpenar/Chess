@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Chess/Chessboard/Chessboard.h"
 #include "Chess/Chessboard/ChessboardController.h"
 #include "Chess/Enums/Color.h"
 #include "UObject/Object.h"
@@ -23,10 +22,10 @@ private:
 	FString StockfishFilePath;
 
 	UPROPERTY()
-	UChessboardController* Chessboard;
+	UChessboardController* ChessboardController;
 
 public:
 	void GenerateBoardState();
 	void SearchForBestMove(EColor Color);
-	void Initialize(UChessboardController* Chessboard, FString StockfishFilePath);
+	void Initialize(UChessboardController* NewChessboardController, FString NewStockfishFilePath);
 };

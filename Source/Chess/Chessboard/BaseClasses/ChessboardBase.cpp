@@ -3,9 +3,9 @@
 
 #include "ChessboardBase.h"
 
-void UChessboardBase::Initialize(int BoardSize)
+void UChessboardBase::Initialize(int NewChessboardSize)
 {
-	this->BoardSize = BoardSize;
+	this->BoardSize = NewChessboardSize;
 }
 
 bool UChessboardBase::IsValidBoardPosition(const FIntPoint& Position) const
@@ -50,7 +50,7 @@ void UChessboardBase::GenerateEmptyBoard()
 	}
 }
 
-FString& UChessboardBase::GetBoardFENNotation() 
+FString UChessboardBase::GetBoardFENNotation() 
 {
 	FString String(TEXT("Test"));
 	return String;

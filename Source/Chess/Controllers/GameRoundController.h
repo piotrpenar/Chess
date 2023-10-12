@@ -21,7 +21,8 @@ class CHESS_API UGameRoundController : public UObject
 
 	FPlayerChessState WhitePlayerState;
 	FPlayerChessState BlackPlayerState;
-	FPlayerChessState& CurrentPlayerState;
+	
+	FPlayerChessState* CurrentPlayerState;
 	
 	float WhitePlayerTimeRemaining;
 	float BlackPlayerTimeRemaining;
@@ -40,6 +41,6 @@ public:
 	FPlayerChessState& GetPlayerState(EColor PlayerColor);
 	FPlayerChessState& GetFirstPlayerState();
 	FPlayerChessState& GetSecondPlayerState();
-	void InitializeRound(FRoundSettings RoundSettings);
+	void InitializeRound(FRoundSettings NewRoundSettings);
 	void SetUCIController(UUCIController* UciController);
 };

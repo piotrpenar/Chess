@@ -24,7 +24,7 @@ protected:
 	void GenerateEmptyBoard();
 
 public:
-	void Initialize(int BoardSize);
+	void Initialize(int NewChessboardSize);
 	bool IsValidBoardPosition(const FIntPoint& Position) const;
 	void DestroyChessPieceActors();
 	void ResetChessboard();
@@ -33,6 +33,6 @@ public:
 	UChessPiece* GetPieceAtPosition(FIntPoint BoardPosition);
 	TArray<UChessPiece*> GetAllPiecesOfColor(const EColor Color) const;
 	TArray<UChessPiece*> GetChessPieces(const EColor Color, const EFigure FigureType) const;
-	FString& GetBoardFENNotation();
+	FString GetBoardFENNotation();
 	int GetBoardSize() const;
 };

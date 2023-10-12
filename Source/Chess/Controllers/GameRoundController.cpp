@@ -9,10 +9,10 @@ void UGameRoundController::Update(float deltaTime)
 	{
 		return;
 	}
-	if(this->CurrentPlayerState.bHasTimeLimit)
+	if(this->CurrentPlayerState->bHasTimeLimit)
 	{
-		this->CurrentPlayerState.TimeRemaining -= deltaTime;
-		if(this->CurrentPlayerState.TimeRemaining <= 0)
+		this->CurrentPlayerState->TimeRemaining -= deltaTime;
+		if(this->CurrentPlayerState->TimeRemaining <= 0)
 		{
 			//TODO: Gameover
 		}
@@ -37,7 +37,7 @@ void UGameRoundController::OnTurnEnded(EColor NextPlayerColor)
 	{
 		//TODO: Unblock user input
 	}
-	this->CurrentPlayerState = GetPlayerState(NextPlayerColor);
+	this->CurrentPlayerState = &GetPlayerState(NextPlayerColor);
 }
 
 FPlayerChessState& UGameRoundController::GetPlayerState(const EColor PlayerColor){
@@ -54,9 +54,9 @@ FPlayerChessState& UGameRoundController::GetSecondPlayerState()
 	return this->RoundSettings.FirstPlayerColor == EColor::Black ? WhitePlayerState : BlackPlayerState;
 }
 
-void UGameRoundController::InitializeRound(FRoundSettings RoundSettings)
+void UGameRoundController::InitializeRound(FRoundSettings NewRoundSettings)
 {
-	this->RoundSettings = RoundSettings;
+	this->RoundSettings = NewRoundSettings;
 
 	if(this->RoundSettings.FirstPlayerColor == EColor::Unspecified)
 	{
@@ -73,7 +73,7 @@ void UGameRoundController::InitializeRound(FRoundSettings RoundSettings)
 	FirstPlayerState.PlayerType = EPlayerType::Human;
 	SecondPlayerState.PlayerType = this->RoundSettings.SecondPlayerType;
 
-	const bool bHumansHaveTimeLimit = RoundSettings.RoundTime >= 0;
+	const bool bHumansHaveTimeLimit = NewRoundSettings.RoundTime >= 0;
 	
 	FirstPlayerState.bHasTimeLimit = bHumansHaveTimeLimit;
 	SecondPlayerState.bHasTimeLimit = bHumansHaveTimeLimit && this->RoundSettings.SecondPlayerType == EPlayerType::Human;

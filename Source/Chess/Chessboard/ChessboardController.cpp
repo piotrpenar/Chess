@@ -12,7 +12,6 @@ void UChessboardController::Initialize(UChessSceneUtilities* ChessSceneUtilities
 	InitializeChessboard(FigureClickedCallback);
 	CreateSimulatedChessboard();
 	FinishChessboardsInitialization();
-	CreateFENHelper();
 }
 
 void UChessboardController::ResetChessboard() const

@@ -2,10 +2,10 @@
 
 #include "CoreMinimal.h"
 #include "Chess/Chessboard/ChessSceneUtilities.h"
-#include "Chess/ChessPieces/Figures/AChessFigure.h"
+#include "Chess/ChessPieces/Figures/ChessFigure.h"
 #include "Chess/Highlight/BoardHighlight.h"
 #include "Chess/Interfaces/ChessMovesHighlighter.h"
-#include "Chess/Utils/FMove.h"
+#include "Chess/Utils/Move.h"
 #include "ChessHighlighter.generated.h"
 
 UCLASS()

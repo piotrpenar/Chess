@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
-#include "Chess/ChessPieces/Figures/AChessFigure.h"
+#include "Chess/ChessPieces/Figures/ChessFigure.h"
 #include "BoardHighlight.generated.h"
 
 UCLASS()

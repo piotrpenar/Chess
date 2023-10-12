@@ -1,5 +1,5 @@
 #include "ChessHighlighter.h"
-#include "Chess/ChessPieces/Figures/AChessFigure.h"
+#include "Chess/ChessPieces/Figures/ChessFigure.h"
 #include "Chess/Highlight/BoardHighlight.h"
 
 void UChessHighlighter::Initialize(const TSubclassOf<ABoardHighlight> BoardHighlightSourceActor, UChessSceneUtilities* ChessSceneUtilitiesReference,

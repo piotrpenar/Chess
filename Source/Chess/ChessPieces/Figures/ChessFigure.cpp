@@ -1,4 +1,4 @@
-﻿#include "AChessFigure.h"
+﻿#include "ChessFigure.h"
 
 void AChessFigure::HandleFigureClick()
 {

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "F2DBoardArray.generated.h"
+#include "2DBoardArray.generated.h"
 
 USTRUCT(BlueprintType)
 struct F2DBoardArray

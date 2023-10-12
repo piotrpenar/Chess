@@ -36,4 +36,9 @@ public:
 	DECLARE_DERIVED_EVENT(AChessGameState, ITurnsProvider::FTurnEnded, FTurnEndedEvent);
 
 	virtual FTurnEnded& OnTurnEnded() override;
+
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTurnEndedEvent);
+	UPROPERTY(BlueprintAssignable, EditDefaultsOnly, Category="Default")
+	FOnTurnEndedEvent OnTurnEndedEvent;
+
 };

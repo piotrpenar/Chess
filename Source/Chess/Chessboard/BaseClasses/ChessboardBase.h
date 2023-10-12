@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 #include "Chess/Interfaces/MovementRulesProvider.h"
-#include "Chess/Utils/F2DBoardArray.h"
+#include "Chess/Utils/2DBoardArray.h"
 #include "UObject/Object.h"
 #include "ChessboardBase.generated.h"
 

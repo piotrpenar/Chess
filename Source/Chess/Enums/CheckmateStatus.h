@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-UENUM()
+UENUM(BlueprintType)
 enum class ECheckmateStatus : uint8
 {
 	None = 0 UMETA(DisplayName = "None"),

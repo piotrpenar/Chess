@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFigure : uint8
 {
 	Pawn = 0 UMETA(DisplayName = "Pawn"),

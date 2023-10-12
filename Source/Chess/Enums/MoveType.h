@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-UENUM()
+UENUM(BlueprintType)
 enum class EMoveType : uint8
 {
 	Standard = 0 UMETA(DisplayName = "Standard"),

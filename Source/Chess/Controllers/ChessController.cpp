@@ -65,11 +65,16 @@ void AChessController::MoveSelected(const FMove Move) const
 void AChessController::ExecutePlayerMove(const FMove Move) const
 {
 	UChessPiece* SourcePiece = Cast<UChessPiece>(Move.SourcePiece);
+	UChessPiece* TargetPiece = Cast<UChessPiece>(Move.TargetObject);
 	const FIntPoint TargetPosition = Move.TargetPosition;
 	ChessboardController->MoveChessPieceToPosition(SourcePiece, TargetPosition);
 	if (Move.MoveType != EMoveType::Standard)
 	{
 		ChessboardController->HandleSpecialMoveType(Move);
+	}
+	if(TargetPiece)
+	{
+		OnPieceCaptured.Broadcast(TargetPiece->GetColor(),TargetPiece->GetFigureType());
 	}
 	GameMode->EndTurn();
 }

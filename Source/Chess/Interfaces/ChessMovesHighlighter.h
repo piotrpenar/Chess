@@ -2,7 +2,7 @@
 #include "CoreMinimal.h"
 #include "Chess/Chessboard/ChessSceneUtilities.h"
 #include "Chess/Highlight/BoardHighlight.h"
-#include "Chess/Utils/FMove.h"
+#include "Chess/Utils/Move.h"
 #include "ChessMovesHighlighter.generated.h"
 
 UINTERFACE()

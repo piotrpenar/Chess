@@ -1,5 +1,5 @@
 ﻿#include "MovementRulesProvider.h"
-#include "Chess/Utils/FMove.h"
+#include "Chess/Utils/Move.h"
 
 bool IMovementRulesProvider::IsValidMove(const FIntPoint Position, UObject* ChessPiece)
 {

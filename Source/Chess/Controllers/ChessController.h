@@ -5,7 +5,7 @@
 #include "Chess/Chessboard/ChessboardController.h"
 #include "Chess/ChessPieces/ChessPiece.h"
 #include "Chess/Data/ChessData.h"
-#include "Chess/Enums/EFigure.h"
+#include "Chess/Enums/Figure.h"
 #include "Chess/Global/ChessGameMode.h"
 #include "Chess/Interfaces/ChessMovesHighlighter.h"
 #include "ChessController.generated.h"
@@ -51,4 +51,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ResetChessGame() const;
 	
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams( FPieceCaptured, enum EColor, Color, EFigure, Figure );
+	
+	UPROPERTY(BlueprintAssignable, Category = "Chess")
+	FPieceCaptured OnPieceCaptured;
+
 };

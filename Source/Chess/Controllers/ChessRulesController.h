@@ -4,19 +4,19 @@
 #include "Chess/Chessboard/Chessboard.h"
 #include "Chess/Chessboard/ChessboardController.h"
 #include "Chess/ChessPieces/ChessPiece.h"
-#include "Chess/Enums/ECheckmateStatus.h"
+#include "Chess/Enums/CheckmateStatus.h"
 #include "Chess/Interfaces/MovementRulesProvider.h"
 #include "ChessRulesController.generated.h"
 
 USTRUCT()
 struct FEnemyMove
 {
-	GENERATED_BODY()
+	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY()
 	FMove Move;
-	UPROPERTY()
-	UChessPiece* Enemy;
+	UPROPERTY(meta = (IgnoreForMemberInitializationTest))
+	UChessPiece* Enemy = nullptr;
 };
 
 UCLASS()

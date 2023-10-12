@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameRoundController.h"
 #include "Chess/Chessboard/Chessboard.h"
 #include "Chess/Chessboard/ChessboardController.h"
 #include "Chess/ChessPieces/ChessPiece.h"
@@ -34,6 +35,8 @@ private:
 	APawn* FirstPlayerPawn;
 	UPROPERTY(EditAnywhere)
 	APawn* SecondPlayerPawn;
+	UPROPERTY()
+	UGameRoundController* GameRoundController;
 	
 	void CreateChessboardSceneUtilities();
 	void CreateChessHighlighter();
@@ -50,6 +53,7 @@ public:
 	APawn* GetPlayerPawn(int Index) const;
 	UFUNCTION(BlueprintCallable)
 	void ResetChessGame() const;
+	FString GetChessboardFEN() const;
 	
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams( FPieceCaptured, enum EColor, Color, EFigure, Figure );
 	

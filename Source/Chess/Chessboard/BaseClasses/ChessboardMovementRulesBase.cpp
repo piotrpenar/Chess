@@ -5,15 +5,14 @@
 #include "Chess/ChessPieces/Logic/ChessPawn.h"
 
 
-void UChessboardMovementRulesBase::InitializeMovementRules(UChessData* ChessDataReference, UChessboardBase* ChessboardReference)
+void UChessboardMovementRulesBase::InitializeMovementRules(UChessboardBase* ChessboardReference)
 {
-	ChessData = ChessDataReference;
 	Chessboard = ChessboardReference;
 }
 
 bool UChessboardMovementRulesBase::IsValidMove(const FIntPoint Position, UObject* ChessPieceObject)
 {
-	return ChessData->IsValidBoardPosition(Position);
+	return Chessboard->IsValidBoardPosition(Position);
 }
 
 TArray<FMove> UChessboardMovementRulesBase::GetValidMovesFromPositions(const TArray<FIntPoint>& InputDirections, UObject* ChessPieceObject)
@@ -75,7 +74,7 @@ TArray<FMove> UChessboardMovementRulesBase::GetValidMovesFromDirections(const TA
 void UChessboardMovementRulesBase::AdjustMoveType(FMove& Move) const
 {
 	UChessPiece* SourcePiece = Cast<UChessPiece>(Move.SourcePiece);
-	const bool bIsOnBoardEdge = Move.TargetPosition.Y == 0 || Move.TargetPosition.Y == ChessData->GetBoardSize() - 1;
+	const bool bIsOnBoardEdge = Move.TargetPosition.Y == 0 || Move.TargetPosition.Y == Chessboard->GetBoardSize() - 1;
 	const bool bIsValidPawn = SourcePiece && SourcePiece->GetFigureType() == EFigure::Pawn;
 	if (bIsValidPawn && bIsOnBoardEdge)
 	{
@@ -157,7 +156,7 @@ bool UChessboardMovementRulesBase::CanPawnDoubleMove(UChessPiece* ChessPiece, co
 	for (int i = 0; i < 2; i++)
 	{
 		TargetPosition += FIntPoint(0, Direction);
-		if (!ChessData->IsValidBoardPosition(TargetPosition))
+		if (!Chessboard->IsValidBoardPosition(TargetPosition))
 		{
 			bCanDoubleMove = false;
 			break;
@@ -187,7 +186,7 @@ TArray<FMove> UChessboardMovementRulesBase::GetEnPassantMoves(UChessPiece* Chess
 	};
 	for (FIntPoint Position : EnPassantPositions)
 	{
-		if (!ChessData->IsValidBoardPosition(Position))
+		if (!Chessboard->IsValidBoardPosition(Position))
 		{
 			continue;
 		}

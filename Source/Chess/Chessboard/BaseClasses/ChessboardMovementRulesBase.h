@@ -25,12 +25,10 @@ private:
 	
 protected:
 	UPROPERTY()
-	UChessData* ChessData;
-	UPROPERTY()
 	UChessboardBase* Chessboard;
 
 public:
-	virtual void InitializeMovementRules(UChessData* ChessDataReference, UChessboardBase* ChessboardReference);
+	virtual void InitializeMovementRules(UChessboardBase* ChessboardReference);
 	virtual bool IsValidMove(const FIntPoint Position, UObject* ChessPieceObject) override;
 	virtual TArray<FMove> GetValidMovesFromPositions(const TArray<FIntPoint>& InputDirections, UObject* ChessPieceObject) override;
 	virtual TArray<FMove> GetValidMovesFromDirections(const TArray<FIntPoint>& InputDirections, UObject* ChessPieceObject) override;

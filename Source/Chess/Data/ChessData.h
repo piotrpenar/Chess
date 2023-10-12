@@ -4,7 +4,6 @@
 #include "Chess/Enums/Color.h"
 #include "Chess/Enums/Figure.h"
 #include "Chess/Highlight/BoardHighlight.h"
-#include "Chess/Utils/CPUDifficulty.h"
 #include "ChessData.generated.h"
 
 USTRUCT()

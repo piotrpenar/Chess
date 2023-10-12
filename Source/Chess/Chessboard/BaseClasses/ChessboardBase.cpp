@@ -3,16 +3,22 @@
 
 #include "ChessboardBase.h"
 
-void UChessboardBase::Initialize(UChessData* ChessDataReference)
+void UChessboardBase::Initialize(int BoardSize)
 {
-	ChessData = ChessDataReference;
+	this->BoardSize = BoardSize;
 }
+
+bool UChessboardBase::IsValidBoardPosition(const FIntPoint& Position) const
+{
+	return Position.X >= 0 && Position.X < BoardSize && Position.Y >= 0 && Position.Y < BoardSize;
+}
+
 
 void UChessboardBase::DestroyChessPieceActors()
 {
-	for (int i = 0; i < ChessData->GetBoardSize(); i++)
+	for (int i = 0; i < BoardSize; i++)
 	{
-		for (int j = 0; j < ChessData->GetBoardSize(); j++)
+		for (int j = 0; j < BoardSize; j++)
 		{
 			UObject* ChessPieceObject = Board[i][j];
 			if(!ChessPieceObject)
@@ -33,10 +39,10 @@ void UChessboardBase::ResetChessboard()
 
 void UChessboardBase::GenerateEmptyBoard()
 {
-	for (int i = 0; i < ChessData->GetBoardSize(); i++)
+	for (int i = 0; i < BoardSize; i++)
 	{
 		F2DBoardArray Row = F2DBoardArray();
-		for (int j = 0; j < ChessData->GetBoardSize(); j++)
+		for (int j = 0; j < BoardSize; j++)
 		{
 			Row.Add(nullptr);
 		}
@@ -44,9 +50,20 @@ void UChessboardBase::GenerateEmptyBoard()
 	}
 }
 
+FString& UChessboardBase::GetBoardFENNotation() 
+{
+	FString String(TEXT("Test"));
+	return String;
+}
+
+int UChessboardBase::GetBoardSize() const
+{
+	return BoardSize;
+}
+
 UChessPiece* UChessboardBase::GetPieceAtPosition(const FIntPoint BoardPosition)
 {
-	if (!ChessData->IsValidBoardPosition(BoardPosition))
+	if (!IsValidBoardPosition(BoardPosition))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Cannot get object from %s"), *FString(BoardPosition.ToString()))
 		return nullptr;
@@ -57,7 +74,7 @@ UChessPiece* UChessboardBase::GetPieceAtPosition(const FIntPoint BoardPosition)
 
 void UChessboardBase::SetPieceAtPosition(const FIntPoint Position, UChessPiece* ChessPiece)
 {
-	if (!ChessData->IsValidBoardPosition(Position))
+	if (!IsValidBoardPosition(Position))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Cannot set any object at %s"), *FString(Position.ToString()))
 		return;

@@ -35,6 +35,11 @@ void AChessGameMode::EndTurn()
 	BroadcastTurnEnded(CurrentPlayerColor);
 }
 
+FRoundSettings AChessGameMode::GetRoundSettings() const
+{
+	return this->RoundSettings;
+}
+
 AChessGameMode::FTurnEnded& AChessGameMode::OnTurnEnded()
 {
 	return TurnEndedEvent;

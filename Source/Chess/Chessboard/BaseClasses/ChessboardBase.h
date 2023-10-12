@@ -16,16 +16,16 @@ class CHESS_API UChessboardBase : public UObject
 
 protected:
 	UPROPERTY()
-	UChessData* ChessData;
-	UPROPERTY()
 	TArray<F2DBoardArray> Board;
 	UPROPERTY()
 	TScriptInterface<IMovementRulesProvider> ChessboardMovementRules;
+	int BoardSize = 8; 
 	
 	void GenerateEmptyBoard();
 
 public:
-	void Initialize(UChessData* ChessDataReference);
+	void Initialize(int BoardSize);
+	bool IsValidBoardPosition(const FIntPoint& Position) const;
 	void DestroyChessPieceActors();
 	void ResetChessboard();
 	virtual void SetPieceAtPosition(const FIntPoint Position, UChessPiece* ChessPiece);
@@ -33,4 +33,6 @@ public:
 	UChessPiece* GetPieceAtPosition(FIntPoint BoardPosition);
 	TArray<UChessPiece*> GetAllPiecesOfColor(const EColor Color) const;
 	TArray<UChessPiece*> GetChessPieces(const EColor Color, const EFigure FigureType) const;
+	FString& GetBoardFENNotation();
+	int GetBoardSize() const;
 };

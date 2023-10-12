@@ -36,7 +36,7 @@ void UChessboardController::CreateSimulatedChessboard()
 void UChessboardController::FinishChessboardsInitialization() const
 {
 	Chessboard->InitializeMovementRules(SimulatedBoard);
-	SimulatedBoard->InitializeSimulatedBoard(ChessData, Chessboard);
+	SimulatedBoard->InitializeSimulatedBoard(Chessboard);
 }
 
 void UChessboardController::AddChessPieceAtPosition(UChessPiece* ChessPiece, const FIntPoint Position) const
@@ -49,6 +49,11 @@ void UChessboardController::AddChessPieceAtPosition(UChessPiece* ChessPiece, con
 TScriptInterface<IMovementRulesProvider> UChessboardController::GetChessboardMovementRuleProvider() const
 {
 	return Chessboard->GetMovementRuleProvider();
+}
+
+FString UChessboardController::GetChessboardFEN() const
+{
+	return Chessboard->GetBoardFENNotation();
 }
 
 void UChessboardController::SetupPiecesCallbacks(ITurnsProvider* TurnsProvider) const

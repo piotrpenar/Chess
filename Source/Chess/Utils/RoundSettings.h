@@ -5,18 +5,16 @@
 #include "CoreMinimal.h"
 #include "Chess/Enums/Color.h"
 #include "Chess/Enums/PlayerType.h"
-#include "UObject/Object.h"
 #include "RoundSettings.generated.h"
 
 /**
  * 
  */
-UCLASS(BlueprintType)
-class CHESS_API URoundSettings : public UObject
+USTRUCT(BlueprintType)
+struct CHESS_API FRoundSettings
 {
 	GENERATED_BODY()
 
-public:
 	UPROPERTY(BlueprintReadWrite)
 	EColor FirstPlayerColor;
 	UPROPERTY(BlueprintReadWrite)
@@ -25,5 +23,4 @@ public:
 	int RoundTime;
 	UPROPERTY(BlueprintReadWrite)
 	int CPUDifficulty;
-	
 };

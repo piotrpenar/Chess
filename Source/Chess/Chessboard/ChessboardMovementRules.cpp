@@ -9,7 +9,7 @@ void UChessboardMovementRules::SetSimulatedChessboard(USimulatedChessboard* Simu
 
 bool UChessboardMovementRules::IsValidMove(const FIntPoint Position, UObject* ChessPieceObject)
 {
-	if (!ChessData->IsValidBoardPosition(Position))
+	if (!SimulatedChessboard->IsValidBoardPosition(Position))
 	{
 		return false;
 	}

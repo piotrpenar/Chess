@@ -3,7 +3,7 @@
 #include "Move.generated.h"
 
 USTRUCT(BlueprintType)
-struct FMove
+struct CHESS_API FMove
 {
 	GENERATED_BODY()
 

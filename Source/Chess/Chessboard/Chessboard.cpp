@@ -4,9 +4,10 @@
 #include "Chess/Helpers/ChessPiecesFactory.h"
 #include "Chess/Interfaces/MovementRulesProvider.h"
 
-void UChessboard::Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference, UChessData* Data, const TFunction<void(AChessFigure*)> ExternalFigureClickedCallback)
+void UChessboard::Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference, UChessData* Data, const TFunction<void(AChessFigure*)>& ExternalFigureClickedCallback)
 {
-	Super::Initialize(Data);
+	Super::Initialize(Data->GetBoardSize());
+	ChessData = Data;
 	ChessboardTransformUtilities = ChessSceneUtilitiesReference;
 	World = ChessboardTransformUtilities->GetBoardWorld();
 	FigureClickedCallback = ExternalFigureClickedCallback;
@@ -21,7 +22,7 @@ void UChessboard::InitializeBoardPieces()
 void UChessboard::InitializeMovementRules(USimulatedChessboard* SimulatedBoard)
 {
 	UChessboardMovementRules* MovementRules = NewObject<UChessboardMovementRules>();
-	MovementRules->InitializeMovementRules(ChessData, this);
+	MovementRules->InitializeMovementRules(this);
 	MovementRules->SetSimulatedChessboard(SimulatedBoard);
 	ChessboardMovementRules.SetObject(MovementRules);
 	ChessboardMovementRules.SetInterface(Cast<IMovementRulesProvider>(MovementRules));
@@ -79,13 +80,12 @@ TScriptInterface<IMovementRulesProvider> UChessboard::GetMovementRuleProvider() 
 
 void UChessboard::SetPieceAtPosition(const FIntPoint Position, UChessPiece* ChessPiece)
 {
-	if (!ChessData->IsValidBoardPosition(Position))
+	if (!IsValidBoardPosition(Position))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Cannot set any object at %s"), *FString(Position.ToString()))
 		return;
 	}
-	const UChessPiece* CurrentObject = GetPieceAtPosition(Position);
-	if (CurrentObject)
+	if (const UChessPiece* CurrentObject = GetPieceAtPosition(Position))
 	{
 		CurrentObject->DestroyActor();
 	}

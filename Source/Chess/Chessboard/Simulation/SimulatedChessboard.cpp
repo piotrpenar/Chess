@@ -13,17 +13,17 @@ UChessPiece* USimulatedChessboard::CreateSimulatedChessPiece(UChessPiece* ChessP
 	return Clone;
 }
 
-void USimulatedChessboard::InitializeSimulatedBoard(UChessData* ChessDataReference, UChessboardBase* OriginalBoard)
+void USimulatedChessboard::InitializeSimulatedBoard(UChessboardBase* OriginalBoard)
 {
-	Initialize(ChessDataReference);
+	Initialize(OriginalBoard->GetBoardSize());
 	GenerateEmptyBoard();
 	UChessboardMovementRulesBase* MovementRules = NewObject<UChessboardMovementRulesBase>();
-	MovementRules->InitializeMovementRules(ChessData, this);
+	MovementRules->InitializeMovementRules(this);
 	ChessboardMovementRules = MovementRules;
 
-	for (int i = 0; i < ChessData->GetBoardSize(); i++)
+	for (int i = 0; i < BoardSize; i++)
 	{
-		for (int j = 0; j < ChessData->GetBoardSize(); j++)
+		for (int j = 0; j < BoardSize; j++)
 		{
 			UChessPiece* ChessPiece = OriginalBoard->GetPieceAtPosition(FIntPoint(i, j));
 			if (!ChessPiece)

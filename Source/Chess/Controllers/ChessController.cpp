@@ -12,6 +12,14 @@ void AChessController::BeginPlay()
 	CreateChessHighlighter();
 	CreateChessboardController();
 	GameMode->SetMovementProvider(ChessboardController->GetChessboardMovementRuleProvider());
+
+	UUCIController* UCIController = NewObject<UUCIController>();
+	UCIController->Initialize(ChessboardController->);
+	
+	GameRoundController = NewObject<UGameRoundController>();
+	GameRoundController->SetUCIController(UCIController);
+	GameRoundController->InitializeRound(GameMode->GetRoundSettings());
+	
 }
 
 void AChessController::CreateChessboardSceneUtilities()
@@ -85,6 +93,7 @@ void AChessController::ResetChessGame() const
 	Highlighter->ClearHighlights();
 	GameState->SetCurrentPlayer(EColor::White);
 }
+
 
 APawn* AChessController::GetPlayerPawn(const int Index) const
 {

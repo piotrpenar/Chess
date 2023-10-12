@@ -43,4 +43,5 @@ public:
 	void HandleSpecialMoveType(const FMove& Move) const;
 	void SetupPiecesCallbacks(ITurnsProvider* TurnsProvider) const;
 	TScriptInterface<IMovementRulesProvider> GetChessboardMovementRuleProvider() const;
+	FString GetChessboardFEN() const;
 };

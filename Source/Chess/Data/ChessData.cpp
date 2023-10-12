@@ -69,8 +69,3 @@ TSubclassOf<ABoardHighlight> UChessData::GetBoardHighlightActor() const
 {
 	return ChessHighlightActor;
 }
-
-bool UChessData::IsValidBoardPosition(const FIntPoint& Position) const
-{
-	return Position.X >= 0 && Position.X < BoardSize && Position.Y >= 0 && Position.Y < BoardSize;
-}

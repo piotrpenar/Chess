@@ -20,6 +20,9 @@ class CHESS_API UChessboard final : public UChessboardBase
 	UPROPERTY()
 	UChessSceneUtilities* ChessboardTransformUtilities;
 
+	UPROPERTY()
+	UChessData* ChessData;
+
 	TFunction<void(AChessFigure*)> FigureClickedCallback;
 
 private:
@@ -30,7 +33,8 @@ private:
 	void SetupChessPiece(UChessPiece* ChessPiece, const EColor Color, FIntPoint Position) const;
 
 public:
-	void Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference, UChessData* Data, const TFunction<void(AChessFigure*)> ExternalFigureClickedCallback);
+	void Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference, UChessData* Data, const TFunction<void(AChessFigure*)>&
+	                ExternalFigureClickedCallback);
 	void InitializeMovementRules(USimulatedChessboard* SimulatedBoard);
 	void InitializeBoardPieces();
 	UChessPiece* GenerateChessPieceAtPosition(EFigure Figure, EColor Color, FIntPoint Position);

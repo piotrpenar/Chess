@@ -2,7 +2,7 @@
 #include "2DBoardArray.generated.h"
 
 USTRUCT(BlueprintType)
-struct F2DBoardArray
+struct CHESS_API F2DBoardArray
 {
 	GENERATED_BODY()
 
@@ -14,7 +14,7 @@ struct F2DBoardArray
 		return Array[Index];
 	}
 
-	void operator=(const TArray<UObject*> NewArray)
+	void operator=(const TArray<UObject*>& NewArray)
 	{
 		Array = NewArray;
 	}

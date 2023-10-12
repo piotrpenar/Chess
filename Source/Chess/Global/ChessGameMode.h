@@ -3,6 +3,7 @@
 #include "ChessGameState.h"
 #include "Chess/Controllers/ChessRulesController.h"
 #include "Chess/Interfaces/TurnsProvider.h"
+#include "Chess/Utils/RoundSettings.h"
 #include "GameFramework/GameMode.h"
 #include "ChessGameMode.generated.h"
 
@@ -14,6 +15,9 @@ class CHESS_API AChessGameMode final : public AGameMode, public ITurnsProvider
 private:
 	UPROPERTY()
 	UChessRulesController* RulesController;
+
+	UPROPERTY()
+	FRoundSettings RoundSettings;
 
 	UPROPERTY()
 	AChessGameState* ChessGameState;
@@ -31,6 +35,7 @@ protected:
 	
 public:
 	virtual void EndTurn() override;
+	FRoundSettings GetRoundSettings() const;
 	void SetMovementProvider(TScriptInterface<IMovementRulesProvider> MovementRulesProviderReference);
 
 	DECLARE_DERIVED_EVENT(AChessGameState, ITurnsProvider::FTurnEnded, FTurnEndedEvent);

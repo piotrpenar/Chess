@@ -9,7 +9,6 @@
 .idea/**/*.xml
 
 #Rider Plugin
-Plugins/**/*
 Plugins/**/RiderLink/**/*.*
 
 # Compiled Object files
@@ -37,7 +36,6 @@ Plugins/**/RiderLink/**/*.*
 *.lib
 
 # Executables
-*.exe
 *.out
 *.app
 *.ipa
@@ -67,6 +65,7 @@ Build/*
 !Build/*/
 Build/*/**
 !Build/*/PakBlacklist*.txt
+!Plugins/Stockfish/Binaries/*
 
 # Don't ignore icon files in Build
 !Build/**/*.ico

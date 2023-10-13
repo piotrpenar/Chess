@@ -18,14 +18,20 @@ class CHESS_API UUCIController : public UObject
 	GENERATED_BODY()
 
 private: 
-	int StockfishPID;
+	FProcHandle StockfishProcess;
 	FString StockfishFilePath;
+	
+	void* StockfishPipeRead;
+	void* StockfishPipeWrite;
 
 	UPROPERTY()
 	UChessboardController* ChessboardController;
+	
+	~UUCIController();
 
 public:
-	void GenerateBoardState();
+	FString GenerateFenGameState();
 	void SearchForBestMove(EColor Color);
 	void Initialize(UChessboardController* NewChessboardController, FString NewStockfishFilePath);
+
 };

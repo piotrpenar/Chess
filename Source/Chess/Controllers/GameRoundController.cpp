@@ -30,7 +30,7 @@ void UGameRoundController::OnTurnEnded(EColor NextPlayerColor)
 	if(NextPlayerState.PlayerType == EPlayerType::CPU)
 	{
 		//TODO: Block user input
-		UCIController->GenerateBoardState();
+		FString FenGameState = UCIController->GenerateFenGameState();
 		UCIController->SearchForBestMove(NextPlayerColor);
 	}
 	else

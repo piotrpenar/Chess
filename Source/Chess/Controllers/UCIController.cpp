@@ -5,10 +5,10 @@
 
 UUCIController::~UUCIController()
 {
-	if(this->StockfishProcess.IsValid())
+	if(StockfishProcess)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Closing Stockfish process"));
-		FPlatformProcess::CloseProc(this->StockfishProcess);
+		StockfishProcess->Stop();
+		StockfishProcess.Reset();
 	}
 }
 
@@ -22,6 +22,15 @@ void UUCIController::SearchForBestMove(EColor Color)
 	//TODO: Implement
 }
 
+void UUCIController::ResetStockfishPointer()
+{
+	if (StockfishProcess)
+	{
+		StockfishProcess->Stop();
+		StockfishProcess.Reset();
+	}
+}
+
 void UUCIController::Initialize(UChessboardController* NewChessboardController, FString NewStockfishFilePath)
 {
 	ChessboardController = NewChessboardController;
@@ -29,18 +38,51 @@ void UUCIController::Initialize(UChessboardController* NewChessboardController, 
 	{
 		UE_LOG(LogTemp, Display, TEXT("Created pipe"));
 	}
-	StockfishProcess = FGenericPlatformProcess::CreateProc(NewStockfishFilePath.GetCharArray().GetData(), nullptr, true, false, false, nullptr, 0, nullptr, StockfishPipeWrite, StockfishPipeRead, nullptr);
-
-	FGenericPlatformProcess::WritePipe(StockfishPipeWrite, "uci\n");
-	FString response = FGenericPlatformProcess::ReadPipe(StockfishPipeRead);
-	if(response.Len()>0)
-	{
-		UE_LOG(LogTemp, Display, TEXT("Stockfish response: %s"), *response);
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Stockfish response is empty"));
-	}
+	FString CombinedPath = FPaths::ConvertRelativePathToFull(FPaths::Combine(FPaths::ProjectPluginsDir(),NewStockfishFilePath));
+	UE_LOG(LogTemp, Display, TEXT("Stockfish path: %s"), *CombinedPath);
+	ChessboardController = NewChessboardController;
 	
+	ResetStockfishPointer();
+	StockfishProcess = MakeUnique<FInteractiveProcess>(CombinedPath, TEXT(""), false);
+	StockfishProcess->OnOutput().BindUFunction(this, TEXT("OnOutput"));
+	StockfishProcess->OnCanceled().BindUFunction(this, TEXT("OnCanceled"));
+	StockfishProcess->OnCompleted().BindUFunction(this, TEXT("OnCompleted"));
+	StockfishProcess->SendWhenReady(TEXT("uci\n"));
+	StockfishProcess->Launch();
+
+	bool bIsRunning = StockfishProcess->IsRunning();
+	UE_LOG(LogTemp, Display, TEXT("Stockfish running: %d"),bIsRunning);
 	//TODO: Implement
+	//TODO: Implement
+
+		 
+	IConsoleCommand* Command = IConsoleManager::Get().RegisterConsoleCommand(
+		TEXT("UCI.TestCommand"),
+		TEXT("Test command for UCI Connection"),
+		FConsoleCommandDelegate::CreateUObject(this, &UUCIController::TestCommand),
+		ECVF_Cheat
+	);
+}
+
+void UUCIController::OnOutput(const FString& Output)
+{
+	//StockfishProcess->
+	UE_LOG(LogTemp, Display, TEXT("Stockfish output: %s"),*Output);
+}
+void UUCIController::OnCanceled()
+{
+	UE_LOG(LogTemp, Display, TEXT("Stockfish canceled"));
+	//TODO: Implement
+}
+
+void UUCIController::OnCompleted()
+{
+	UE_LOG(LogTemp, Display, TEXT("Stockfish completed"));
+	//TODO: Implement
+}
+
+void UUCIController::TestCommand()
+{
+	UE_LOG(LogTemp, Display, TEXT("Starting test command"));
+	StockfishProcess->SendWhenReady(TEXT("isready\n"));
 }

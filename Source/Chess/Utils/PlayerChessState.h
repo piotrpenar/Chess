@@ -13,11 +13,11 @@ struct CHESS_API FPlayerChessState
 	GENERATED_BODY()
 
 	UPROPERTY()
-	EColor PlayerColor;
+	EColor PlayerColor = EColor::Unspecified;
 	UPROPERTY()
-	EPlayerType PlayerType;
+	EPlayerType PlayerType = EPlayerType::Unknown;
 	UPROPERTY()
-	bool bHasTimeLimit;
+	bool bHasTimeLimit = false;
 	UPROPERTY()
-	float TimeRemaining;
+	float TimeRemaining = 0;
 };

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Chess/Utils/Move.h"
 #include "UObject/Interface.h"
 #include "MoveExecutor.generated.h"
 
@@ -21,5 +22,5 @@ class CHESS_API IMoveExecutor
 	GENERATED_BODY()
 
 public:
-	virtual void IMoveExecutor::ExecutePlayerMove(const FMove Move) const = 0;
+	virtual void ExecutePlayerMove(const FMove Move);
 };

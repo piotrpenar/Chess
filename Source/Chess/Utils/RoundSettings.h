@@ -16,11 +16,11 @@ struct CHESS_API FRoundSettings
 	GENERATED_BODY()
 
 	UPROPERTY(BlueprintReadWrite)
-	EColor FirstPlayerColor;
+	EColor FirstPlayerColor = EColor::Unspecified;
 	UPROPERTY(BlueprintReadWrite)
-	EPlayerType SecondPlayerType;
+	EPlayerType SecondPlayerType = EPlayerType::Unknown;
 	UPROPERTY(BlueprintReadWrite)
-	int RoundTime;
+	int RoundTime = -1;
 	UPROPERTY(BlueprintReadWrite)
-	int CPUDifficulty;
+	int CPUDifficulty = 0;
 };

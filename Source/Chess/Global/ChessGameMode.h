@@ -2,18 +2,16 @@
 #include "CoreMinimal.h"
 #include "ChessGameState.h"
 #include "Chess/Controllers/ChessRulesController.h"
+#include "Chess/Interfaces/GameLoopProvider.h"
 #include "Chess/Interfaces/TurnsProvider.h"
 #include "Chess/Utils/RoundSettings.h"
 #include "GameFramework/GameMode.h"
 #include "ChessGameMode.generated.h"
 
 UCLASS(Blueprintable)
-class CHESS_API AChessGameMode final : public AGameMode, public ITurnsProvider
+class CHESS_API AChessGameMode final : public AGameMode, public ITurnsProvider, public IGameLoopProvider
 {
 	GENERATED_BODY()
-	
-	DECLARE_DERIVED_EVENT(AChessGameMode, ITurnsProvider::FTurnEnded, FTurnEndedForPlayerEvent);
-	DECLARE_MULTICAST_DELEGATE(FTurnEndedEvent);
 
 private:
 	UPROPERTY()
@@ -27,6 +25,7 @@ private:
 
 	UPROPERTY()
 	TScriptInterface<IMovementRulesProvider> MovementRulesProvider;
+
 	
 	void Initialize();
 	void BroadcastTurnEnded(EColor Color) const;
@@ -36,18 +35,30 @@ protected:
 	
 public:
 	
-	UPROPERTY(BlueprintAssignable, EditDefaultsOnly, Category="Default")
-	FTurnEndedForPlayerEvent TurnEndedForPlayerEvent;
-
-	UPROPERTY(BlueprintAssignable, EditDefaultsOnly, Category="Default")
-	FTurnEndedEvent TurnEndedEvent;
-	
 	virtual void EndTurn() override;
+	UFUNCTION(BlueprintCallable)
+	virtual void StartGame() override;
+	UFUNCTION(BlueprintCallable)
+	virtual void EndGame(ECheckmateStatus Result,EColor Winner) override;
+	
 	void SetMovementProvider(TScriptInterface<IMovementRulesProvider> MovementRulesProviderReference);
 	
-	UFUNCTION(BlueprintGetter)
+	UFUNCTION(BlueprintCallable)
 	FRoundSettings GetRoundSettings() const;
-	UFUNCTION(BlueprintSetter)
+	UFUNCTION(BlueprintCallable)
 	void SetRoundSettings(const FRoundSettings& NewRoundSettings);
-
+	
+	UPROPERTY(BlueprintAssignable)
+	FTurnEndedForPlayerEvent TurnEndedForPlayerEvent;
+	UPROPERTY(BlueprintAssignable)
+	FTurnEndedEvent TurnEndedEvent;
+	UPROPERTY(BlueprintAssignable)
+	FGameStartedEvent GameStartedEvent;
+	UPROPERTY(BlueprintAssignable)
+	FGameEndedEvent GameEndedEvent;
+	
+	virtual FTurnEndedForPlayerEvent& OnTurnEndedForPlayerEvent() override;
+	virtual FTurnEndedEvent& OnTurnEndedEvent() override;
+	virtual FGameStartedEvent& OnGameStartedEvent() override;
+	virtual FGameEndedEvent& OnGameEndedEvent() override;
 };

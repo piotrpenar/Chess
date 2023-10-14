@@ -14,7 +14,7 @@ UUCIController::~UUCIController()
 	}
 }
 
-FString UUCIController::GenerateFenGameState(EColor Color) const
+FString UUCIController::GenerateFenGameState(const EColor Color) const
 {
 	FString BoardFenString = FenNotationHelper->GenerateFENNotation();
 	BoardFenString.Append(Color == EColor::White ? " w" : " b");
@@ -24,7 +24,7 @@ FString UUCIController::GenerateFenGameState(EColor Color) const
 void UUCIController::OnMoveSelected(FString MoveString)
 {
 	FString ExtractedMove;
-	Move.Split(" ", nullptr, &ExtractedMove);
+	MoveString.Split(" ", nullptr, &ExtractedMove);
 	if (ExtractedMove.IsEmpty())
 	{
 		return;
@@ -46,10 +46,10 @@ void UUCIController::OnMoveSelected(FString MoveString)
 	MoveExecutor->ExecutePlayerMove(FMove(OriginalPiece, TargetPos, TargetPiece, SpecialMove == nullptr ? EMoveType::Standard : SpecialMove->MoveType));
 }
 
-void UUCIController::SearchForBestMove(EColor Color) const
+void UUCIController::SearchForBestMove(EColor Color)
 {
-	SendStockfishCommand(TEXT("setpos fen ") + GenerateFenGameState(Color));
-	SendStockfishCommand(TEXT("go") + AdditionalGoSettings);
+	EnqueueStockfishCommand(TEXT("setpos fen ") + GenerateFenGameState(Color));
+	EnqueueStockfishCommand(TEXT("go") + AdditionalGoSettings);
 }
 
 void UUCIController::ResetStockfishPointer()
@@ -71,15 +71,36 @@ void UUCIController::InitializeStockfishProcess(FString CombinedPath)
 	StockfishProcess->Launch();
 }
 
-void UUCIController::SendStockfishCommand(const FString& Message) const
+void UUCIController::SendCommand(const FString& Message, const bool bWaitForResult)
 {
+	UE_LOG(LogTemp, Display, TEXT("Sending message to stockfish: %s"), *Message);
 	StockfishProcess->SendWhenReady(Message + "\n");
+	if(bWaitForResult)
+	{
+		bStockfishIsBusy = true;
+	}
+}
+
+void UUCIController::EnqueueStockfishCommand(const FString& Message,const bool bWaitForResult)
+{
+	UE_LOG(LogTemp, Display, TEXT("Enqueuing message: %s"), *Message);
+	StockfishInputQueue.Enqueue(TPair<FString,bool>(Message,bWaitForResult));
 }
 
 void UUCIController::InitializeStockfishSettings(const int SkillLevel, const int Depth, const int Time)
 {
-	SendStockfishCommand(TEXT("setoption name Skill Level value ") + FString::FromInt(SkillLevel));
+	EnqueueStockfishCommand(TEXT("setoption name Skill Level value ") + FString::FromInt(SkillLevel));
 	AdditionalGoSettings = TEXT(" depth ") + FString::FromInt(Depth) + TEXT(" movetime ") + FString::FromInt(Time);
+}
+
+void UUCIController::Tick(float DeltaTime)
+{
+	if(!bStockfishIsBusy && !StockfishInputQueue.IsEmpty())
+	{
+		TPair<FString,bool> Message;
+		StockfishInputQueue.Dequeue(Message);
+		SendCommand(Message.Key,Message.Value);
+	}
 }
 
 FString UUCIController::GenerateStockfishPath(FString NewStockfishFilePath)
@@ -87,11 +108,11 @@ FString UUCIController::GenerateStockfishPath(FString NewStockfishFilePath)
 	return FPaths::ConvertRelativePathToFull(FPaths::Combine(FPaths::ProjectPluginsDir(), NewStockfishFilePath));
 }
 
-void UUCIController::SetInitialConfig() const
+void UUCIController::SetInitialConfig()
 {
-	SendStockfishCommand(TEXT("uci"));
-	SendStockfishCommand(TEXT("setoption name Ponder value false"));
-	SendStockfishCommand(TEXT("position startpos"));
+	EnqueueStockfishCommand(TEXT("uci"),true);
+	EnqueueStockfishCommand(TEXT("setoption name Ponder value false"));
+	EnqueueStockfishCommand(TEXT("position startpos"));
 }
 
 void UUCIController::Initialize(UChessboard* NewChessboard, TScriptInterface<IMoveExecutor> NewMoveExecutor, UChessData* NewChessData)
@@ -106,7 +127,7 @@ void UUCIController::Initialize(UChessboard* NewChessboard, TScriptInterface<IMo
 
 	InitializeStockfishProcess(ExecutablePath);
 	SetInitialConfig();
-	MoveSelected.CreateUObject(this, &UUCIController::OnMoveSelected);
+	MoveSelected.AddDynamic(this, &UUCIController::OnMoveSelected);
 }
 
 void UUCIController::SetCPUDifficulty(int Difficulty)
@@ -115,15 +136,22 @@ void UUCIController::SetCPUDifficulty(int Difficulty)
 	InitializeStockfishSettings(SkillLevel.StockfishLevel, SkillLevel.StockfishDepth, SkillLevel.StockfishTime);
 }
 
-void UUCIController::OnOutput(const FString& Output) const
+void UUCIController::OnOutput(FString& Output)
 {
+	if(Output.Contains(TEXT("uciok")))
+	{
+		bStockfishIsBusy = false;
+	}
 	if (Output.Contains(TEXT("bestmove")))
 	{
 		UE_LOG(LogTemp, Display, TEXT("Stockfish output: %s"), *Output);
-		if (!MoveSelected.ExecuteIfBound(Output))
+		if (!MoveSelected.IsBound())
 		{
 			UE_LOG(LogTemp, Error, TEXT("Failed to execute move: %s"), *Output);
+			return;
 		}
+		MoveSelected.Broadcast(Output);
+		bStockfishIsBusy = false;
 	}
 }
 

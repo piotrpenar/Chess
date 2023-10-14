@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UCIController.h"
+#include "Chess/Interfaces/GameLoopProvider.h"
 #include "Chess/Utils/PlayerChessState.h"
 #include "Chess/Utils/RoundSettings.h"
 #include "UObject/Object.h"
@@ -34,13 +35,19 @@ class CHESS_API UGameRoundController : public UObject
 	
 
 public:
-	void Update(float deltaTime);
+	void Tick(float deltaTime);
 
 	void InitializeCPUPlayer();
+	void CPUMove(EColor NextPlayerColor);
+	UFUNCTION()
+	void RoundStarted();
+	UFUNCTION()
 	void OnTurnEnded(EColor NextPlayerColor);
 	FPlayerChessState& GetPlayerState(EColor PlayerColor);
 	FPlayerChessState& GetFirstPlayerState();
 	FPlayerChessState& GetSecondPlayerState();
 	void InitializeRound(FRoundSettings NewRoundSettings);
 	void SetUCIController(UUCIController* UciController);
+	void ConnectToTurnEndedEvent(ITurnsProvider& TurnsProvider);
+	void ConnectToGameStartEvent(IGameLoopProvider& GameLoopProvider);
 };

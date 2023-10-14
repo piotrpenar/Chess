@@ -51,7 +51,7 @@ bool UChessPawn::IsValidPassantTarget() const
 
 void UChessPawn::BindToTurnEndedEvent(ITurnsProvider* TurnsProvider)
 {
-	TurnsProvider->OnTurnEnded().AddUObject(this, &UChessPawn::HandleTurnEnded);
+	TurnsProvider->OnTurnEndedForPlayerEvent().AddDynamic(this, &UChessPawn::HandleTurnEnded);
 }
 
 TArray<FMove> UChessPawn::GetAvailableMoves()

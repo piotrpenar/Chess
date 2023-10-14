@@ -13,14 +13,14 @@ struct CHESS_API FCPUDifficultyDefinition
 {
 	GENERATED_BODY()
 
-	UPROPERTY(BlueprintReadWrite)
-	FString SettingName;
-	UPROPERTY(BlueprintReadWrite)
-	int EloRating;
-	UPROPERTY(BlueprintReadWrite)
-	int StockfishLevel;
-	UPROPERTY(BlueprintReadWrite)
-	int StockfishDepth;
-	UPROPERTY(BlueprintReadWrite)
-	int StockfishTime;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	FString SettingName = "Default";
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	int EloRating = 0;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	int StockfishLevel = 0 ;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	int StockfishDepth = 16;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	int StockfishTime = 1000;
 };

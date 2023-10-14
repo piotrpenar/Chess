@@ -12,6 +12,7 @@ class UChessPawn final : public UChessPiece
 	bool bHasDoubleMoved;
 
 	TArray<FIntPoint> GetPossiblePositions() const;
+	UFUNCTION()
 	void HandleTurnEnded(EColor CurrentColor);
 	bool HasDoubleMoved(FIntPoint Position) const;
 

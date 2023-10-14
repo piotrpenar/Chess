@@ -15,8 +15,8 @@ void AChessGameMode::BeginPlay()
 
 void AChessGameMode::BroadcastTurnEnded(const EColor Color) const
 {
-	TurnEndedForPlayerEvent.Broadcast(Color);
-	TurnEndedEvent.Broadcast();
+//	TurnEndedForPlayerEvent.Broadcast(Color);
+//	TurnEndedEvent.Broadcast();
 }
 
 void AChessGameMode::SetMovementProvider(const TScriptInterface<IMovementRulesProvider> MovementRulesProviderReference)
@@ -31,7 +31,26 @@ void AChessGameMode::EndTurn()
 	ChessGameState->SetCurrentPlayer(EnemyPlayer);
 	const ECheckmateStatus Status = RulesController->GetCheckmateStatusForPlayer(ChessGameState->GetChessboard(), EnemyPlayer, MovementRulesProvider.GetInterface());
 	const FString Value = UEnum::GetValueAsString(Status);
+	if (Status == ECheckmateStatus::Checkmate || Status == ECheckmateStatus::Stalemate)
+	{
+		EndGame(Status, Status == ECheckmateStatus::Stalemate ? EColor::Unspecified : CurrentPlayerColor);
+		return;
+	}
+	
 	BroadcastTurnEnded(CurrentPlayerColor);
+}
+
+void AChessGameMode::StartGame()
+{
+	UE_LOG(LogTemp,Warning,TEXT("Game started!"));
+	GameStartedEvent.Broadcast();
+	//TODO: Unblock input
+}
+
+void AChessGameMode::EndGame(ECheckmateStatus Result, EColor Winner)
+{
+	//TODO: DO SOMETHING WITH THE RESULT
+	GameEndedEvent.Broadcast(Winner);
 }
 
 FRoundSettings AChessGameMode::GetRoundSettings() const
@@ -43,3 +62,24 @@ void AChessGameMode::SetRoundSettings(const FRoundSettings& NewRoundSettings)
 {
 	RoundSettings = NewRoundSettings;
 }
+
+FTurnEndedForPlayerEvent& AChessGameMode::OnTurnEndedForPlayerEvent()
+{
+	return TurnEndedForPlayerEvent;
+}
+
+FTurnEndedEvent& AChessGameMode::OnTurnEndedEvent()
+{
+	return TurnEndedEvent;
+}
+
+FGameStartedEvent& AChessGameMode::OnGameStartedEvent()
+{
+	return GameStartedEvent;
+}
+
+FGameEndedEvent& AChessGameMode::OnGameEndedEvent()
+{
+	return GameEndedEvent;
+}
+

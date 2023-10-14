@@ -3,15 +3,20 @@
 
 #include "GameRoundController.h"
 
-void UGameRoundController::Update(float deltaTime)
+void UGameRoundController::Tick(float DeltaTime)
 {
+	if(UCIController != nullptr)
+	{
+		UCIController->Tick(DeltaTime);
+	}
+	
 	if(!bIsTimerEnabled)
 	{
 		return;
 	}
 	if(this->CurrentPlayerState->bHasTimeLimit)
 	{
-		this->CurrentPlayerState->TimeRemaining -= deltaTime;
+		this->CurrentPlayerState->TimeRemaining -= DeltaTime;
 		if(this->CurrentPlayerState->TimeRemaining <= 0)
 		{
 			//TODO: Gameover
@@ -24,13 +29,26 @@ void UGameRoundController::InitializeCPUPlayer()
 	
 }
 
+void UGameRoundController::CPUMove(EColor NextPlayerColor)
+{
+	//TODO: Block user input
+	UCIController->SearchForBestMove(NextPlayerColor);
+}
+
+void UGameRoundController::RoundStarted()
+{
+	if(WhitePlayerState.PlayerType == EPlayerType::CPU)
+	{
+		CPUMove(EColor::White);
+	}
+}
+
 void UGameRoundController::OnTurnEnded(EColor NextPlayerColor)
 {
 	FPlayerChessState& NextPlayerState = GetPlayerState(NextPlayerColor);
 	if(NextPlayerState.PlayerType == EPlayerType::CPU)
 	{
-		//TODO: Block user input
-		UCIController->SearchForBestMove(NextPlayerColor);
+		CPUMove(NextPlayerColor);
 	}
 	else
 	{
@@ -81,9 +99,17 @@ void UGameRoundController::InitializeRound(FRoundSettings NewRoundSettings)
 	{
 		InitializeCPUPlayer();
 	}
+
+	CurrentPlayerState = &WhitePlayerState;
 }
 
 void UGameRoundController::SetUCIController(UUCIController* UciController)
 {
 	this->UCIController = UciController;
+}
+
+void UGameRoundController::ConnectToTurnEndedEvent(ITurnsProvider& TurnsProvider)
+{
+	
+	TurnsProvider.OnTurnEndedForPlayerEvent().AddDynamic(this, &UGameRoundController::OnTurnEnded);
 }

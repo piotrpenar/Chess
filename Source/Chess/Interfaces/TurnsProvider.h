@@ -4,6 +4,9 @@
 #include "TurnsProvider.generated.h"
 
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTurnEndedForPlayerEvent, EColor,Color);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTurnEndedEvent);
+
 UINTERFACE()
 class UTurnsProvider : public UInterface
 {
@@ -16,8 +19,8 @@ class CHESS_API ITurnsProvider
 	
 
 public:
-	DECLARE_EVENT_OneParam(ITurnsProvider, FTurnEnded, EColor);
 	
 	virtual void EndTurn();
-	virtual FTurnEnded& OnTurnEnded(EColor Color) = 0;
+	virtual FTurnEndedForPlayerEvent& OnTurnEndedForPlayerEvent() = 0;
+	virtual FTurnEndedEvent& OnTurnEndedEvent() = 0;
 };

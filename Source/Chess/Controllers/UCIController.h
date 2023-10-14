@@ -12,9 +12,9 @@
 #include "Misc/InteractiveProcess.h"
 #include "UCIController.generated.h"
 
-/**
- * 
- */
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMoveSelected, FString, MoveString);
+
 UCLASS()
 // ReSharper disable once CppUE4CodingStandardNamingViolationWarning
 class CHESS_API UUCIController : public UObject
@@ -36,23 +36,28 @@ private:
 	UPROPERTY()
 	UFENNotationHelper* FenNotationHelper;
 
+	TQueue<TPair<FString,bool>> StockfishInputQueue;
+	bool bStockfishIsBusy = false;
+
 	~UUCIController();
 
 public:
 	FString GenerateFenGameState(EColor Color) const;
 	FMove ExtractMoveFromString(const FString& String);
 	void OnMoveSelected(FString MoveString);
-	void SearchForBestMove(EColor Color) const;
+	void SearchForBestMove(EColor Color);
 	void ResetStockfishPointer();
 	void InitializeStockfishProcess(FString CombinedPath);
-	void SendStockfishCommand(const FString& Message) const;
+	void SendCommand(const FString& Message, bool bWaitForResult);
+	void EnqueueStockfishCommand(const FString& Message, const bool bWaitForResult = false);
 	void InitializeStockfishSettings(int SkillLevel, int Depth, int Time);
+	void Tick(float DeltaTime);
 	static FString GenerateStockfishPath(FString NewStockfishFilePath);
-	void SetInitialConfig() const;
+	void SetInitialConfig();
 	void Initialize(UChessboard* NewChessboard, TScriptInterface<IMoveExecutor> NewMoveExecutor, UChessData* NewChessData);
 	void SetCPUDifficulty(int Difficulty);
 	UFUNCTION()
-	void OnOutput(const FString& Output) const;
+	void OnOutput(FString& Output);
 	UFUNCTION()
 	static void OnCanceled();
 	UFUNCTION()
@@ -60,7 +65,6 @@ public:
 	UFUNCTION(Exec, Category = "ExecFunctions")
 	void TestCommand() const;
 
-	DECLARE_DELEGATE_OneParam(FMoveSelected, FString);
 	FMoveSelected MoveSelected;
 	
 

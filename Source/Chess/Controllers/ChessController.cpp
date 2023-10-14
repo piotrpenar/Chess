@@ -3,17 +3,27 @@
 #include "Chess/Chessboard/ChessboardController.h"
 #include "Chess/Highlight/ChessHighlighter.h"
 
+
+AChessController::AChessController()
+{
+	PrimaryActorTick.bCanEverTick=true;
+}
+
 void AChessController::SetupGameRoundController()
 {
+	UE_LOG(LogTemp,Warning,TEXT("Configuring Round Controller!"));
 	GameRoundController = NewObject<UGameRoundController>();
 	if(GameMode->GetRoundSettings().SecondPlayerType == EPlayerType::CPU)
 	{
+		UE_LOG(LogTemp,Warning,TEXT("CPU Player detected!"));
 		UUCIController* UCIController = NewObject<UUCIController>();
 		UCIController->Initialize(ChessboardController->GetChessboard(),this,ChessData);
 		UCIController->SetCPUDifficulty(GameMode->GetRoundSettings().CPUDifficulty);
 		GameRoundController->SetUCIController(UCIController);
 	}
+	GameRoundController->ConnectToTurnEndedEvent(*GameMode);
 	GameRoundController->InitializeRound(GameMode->GetRoundSettings());
+	GameRoundController->RoundStarted();
 }
 
 void AChessController::BeginPlay()
@@ -25,8 +35,17 @@ void AChessController::BeginPlay()
 	CreateChessHighlighter();
 	CreateChessboardController();
 	GameMode->SetMovementProvider(ChessboardController->GetChessboardMovementRuleProvider());
-	SetupGameRoundController();
-	
+	GameMode->GameStartedEvent.AddDynamic(this,&AChessController::SetupGameRoundController);
+	UE_LOG(LogTemp,Warning,TEXT("Waiting for game start!"));
+}
+
+void AChessController::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	if(GameRoundController)
+	{
+		GameRoundController->Tick(DeltaSeconds);
+	}
 }
 
 void AChessController::CreateChessboardSceneUtilities()
@@ -72,12 +91,12 @@ void AChessController::ChessFigureSelected(const AChessFigure* ChessFigure) cons
 	Highlighter->CreateHighlights(Moves);
 }
 
-void AChessController::MoveSelected(const FMove Move) const
+void AChessController::MoveSelected(const FMove Move)
 {
 	ExecutePlayerMove(Move);
 }
 
-void AChessController::ExecutePlayerMove(const FMove Move) const
+void AChessController::ExecutePlayerMove(const FMove Move)
 {
 	UChessPiece* SourcePiece = Cast<UChessPiece>(Move.SourcePiece);
 	UChessPiece* TargetPiece = Cast<UChessPiece>(Move.TargetObject);

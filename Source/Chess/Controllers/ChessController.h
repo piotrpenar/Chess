@@ -43,14 +43,18 @@ private:
 	void CreateChessHighlighter();
 	void CreateChessboardController();
 	void ChessFigureSelected(const AChessFigure* ChessFigure) const;
-	void MoveSelected(const FMove Move) const;
+	void MoveSelected(const FMove Move);
+
+	AChessController();
 	
 protected:
+	UFUNCTION()
 	void SetupGameRoundController();
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
 
 public:
-	virtual void ExecutePlayerMove(FMove Move) const override;
+	virtual void ExecutePlayerMove(FMove Move) override;
 	UFUNCTION(BlueprintCallable)
 	APawn* GetPlayerPawn(int Index) const;
 	UFUNCTION(BlueprintCallable)

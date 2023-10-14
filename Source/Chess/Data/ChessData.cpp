@@ -25,7 +25,7 @@ TArray<EFigure> UChessData::GetPawns() const
 	return Pawns;
 }
 
-TMap<FString, int> UChessData::GetCPUDifficulties() const
+TArray<FCPUDifficultyDefinition> UChessData::GetCPUDifficulties() const
 {
 	return CPUDifficulties;
 }

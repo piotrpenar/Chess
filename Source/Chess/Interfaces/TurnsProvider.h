@@ -3,6 +3,7 @@
 #include "Chess/Enums/Color.h"
 #include "TurnsProvider.generated.h"
 
+
 UINTERFACE()
 class UTurnsProvider : public UInterface
 {
@@ -12,10 +13,11 @@ class UTurnsProvider : public UInterface
 class CHESS_API ITurnsProvider
 {
 	GENERATED_BODY()
+	
 
 public:
+	DECLARE_EVENT_OneParam(ITurnsProvider, FTurnEnded, EColor);
+	
 	virtual void EndTurn();
-	DECLARE_EVENT_OneParam(IChessGameState, FTurnEnded, EColor);
-
-	virtual FTurnEnded& OnTurnEnded() = 0;
+	virtual FTurnEnded& OnTurnEnded(EColor Color) = 0;
 };

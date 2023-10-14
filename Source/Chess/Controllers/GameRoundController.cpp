@@ -30,12 +30,11 @@ void UGameRoundController::OnTurnEnded(EColor NextPlayerColor)
 	if(NextPlayerState.PlayerType == EPlayerType::CPU)
 	{
 		//TODO: Block user input
-		FString FenGameState = UCIController->GenerateFenGameState();
 		UCIController->SearchForBestMove(NextPlayerColor);
 	}
 	else
 	{
-		//TODO: Unblock user input
+		//TODO: Swtitch cameras and config
 	}
 	this->CurrentPlayerState = &GetPlayerState(NextPlayerColor);
 }

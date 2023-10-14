@@ -5,6 +5,9 @@
 #include "CoreMinimal.h"
 #include "Chess/Chessboard/ChessboardController.h"
 #include "Chess/Enums/Color.h"
+#include "Chess/Global/ChessGameState.h"
+#include "Chess/Helpers/FENNotationHelper.h"
+#include "Chess/Interfaces/MoveExecutor.h"
 #include "UObject/Object.h"
 #include "Misc/InteractiveProcess.h"
 #include "UCIController.generated.h"
@@ -19,29 +22,46 @@ class CHESS_API UUCIController : public UObject
 	GENERATED_BODY()
 
 private: 
-	FString StockfishFilePath;
 	TUniquePtr<FInteractiveProcess> StockfishProcess;
-	
-	void* StockfishPipeRead;
-	void* StockfishPipeWrite;
+	FString AdditionalGoSettings;
 
 	UPROPERTY()
-	UChessboardController* ChessboardController;
-	
-	
+	UChessboard* Chessboard;
+	UPROPERTY()
+	AChessGameState* GameState;
+	UPROPERTY()
+	TScriptInterface<IMoveExecutor> MoveExecutor;
+	UPROPERTY()
+	UChessData* ChessData;
+	UPROPERTY()
+	UFENNotationHelper* FenNotationHelper;
+
 	~UUCIController();
 
 public:
-	FString GenerateFenGameState();
-	void SearchForBestMove(EColor Color);
+	FString GenerateFenGameState(EColor Color) const;
+	FMove ExtractMoveFromString(const FString& String);
+	void OnMoveSelected(FString MoveString);
+	void SearchForBestMove(EColor Color) const;
 	void ResetStockfishPointer();
-	void Initialize(UChessboardController* NewChessboardController, FString NewStockfishFilePath);
+	void InitializeStockfishProcess(FString CombinedPath);
+	void SendStockfishCommand(const FString& Message) const;
+	void InitializeStockfishSettings(int SkillLevel, int Depth, int Time);
+	static FString GenerateStockfishPath(FString NewStockfishFilePath);
+	void SetInitialConfig() const;
+	void Initialize(UChessboard* NewChessboard, TScriptInterface<IMoveExecutor> NewMoveExecutor, UChessData* NewChessData);
+	void SetCPUDifficulty(int Difficulty);
 	UFUNCTION()
-	void OnOutput(const FString& Output);
+	void OnOutput(const FString& Output) const;
 	UFUNCTION()
-	void OnCanceled();
+	static void OnCanceled();
 	UFUNCTION()
-	void OnCompleted();
-	//UFUNCTION(Exec, Category = "ExecFunctions")
-	void TestCommand();
+	static void OnCompleted();
+	UFUNCTION(Exec, Category = "ExecFunctions")
+	void TestCommand() const;
+
+	DECLARE_DELEGATE_OneParam(FMoveSelected, FString);
+	FMoveSelected MoveSelected;
+	
+
 };

@@ -227,5 +227,11 @@ TArray<FMove> UChessboardMovementRulesBase::GetPawnSpecialMoves(UChessPiece* Che
 		SpecialMoves.Add(FMove(ChessPiece, PawnPosition + FIntPoint(0, Direction * 2), nullptr, EMoveType::DoubleMove));
 	}
 
+	const bool bWillBeOnBoardEdge = PawnPosition.Y + Direction == 0 || PawnPosition.Y + Direction == Chessboard->GetBoardSize() - 1;
+	if(bWillBeOnBoardEdge)
+	{
+		SpecialMoves.Add(FMove(ChessPiece, PawnPosition + FIntPoint(0, Direction), nullptr, EMoveType::PawnPromotion));
+	}
+
 	return SpecialMoves;
 }

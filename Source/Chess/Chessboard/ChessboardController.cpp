@@ -51,9 +51,9 @@ TScriptInterface<IMovementRulesProvider> UChessboardController::GetChessboardMov
 	return Chessboard->GetMovementRuleProvider();
 }
 
-FString UChessboardController::GetChessboardFEN() const
+UChessboard* UChessboardController::GetChessboard()
 {
-	return Chessboard->GetBoardFENNotation();
+	return Chessboard;
 }
 
 void UChessboardController::SetupPiecesCallbacks(ITurnsProvider* TurnsProvider) const

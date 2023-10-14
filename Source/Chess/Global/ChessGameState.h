@@ -26,4 +26,5 @@ public:
 	EColor GetCurrentPlayer() const;
 	UFUNCTION(BlueprintCallable)
 	void SetCurrentPlayer(EColor Color);
+	
 };

@@ -20,66 +20,23 @@ class CHESS_API UFENNotationHelper : public UObject
 
 	int BoardSize = 8;
 
+	inline static TMap<FString, EFigure> FENCharToFigureMap = {
+		{TEXT("P"), EFigure::Pawn},
+		{TEXT("R"), EFigure::Rook},
+		{TEXT("N"), EFigure::Knight},
+		{TEXT("B"), EFigure::Bishop},
+		{TEXT("Q"), EFigure::Queen},
+		{TEXT("K"), EFigure::King},
+	};
+
 	UPROPERTY()
 	UChessboardBase* Chessboard;
 	
-	void Initialize(UChessboardBase* ChessboardBase)
-	{
-		this->BoardSize = ChessboardBase->GetBoardSize();
-		this->Chessboard = ChessboardBase;
-	}
-
-	static FString GetPieceFENNotation(UChessPiece* Piece)
-	{
-		FString Symbol(TEXT(""));
-		switch (Piece->GetFigureType())
-		{
-		case EFigure::Pawn:
-			Symbol = TEXT("P");
-		case EFigure::Rook:
-			Symbol = TEXT("R");
-		case EFigure::Knight:
-			Symbol = TEXT("N");
-		case EFigure::Bishop:
-			Symbol = TEXT("B");
-		case EFigure::Queen:
-			Symbol = TEXT("Q");
-		case EFigure::King:
-			Symbol = TEXT("K");
-		case EFigure::Invalid:
-			break;
-		default: ;
-		}
-		return Piece->GetColor() == EColor::White ? Symbol.ToUpper() : Symbol.ToLower();
-	}
-
-	void GenerateFENNotation()
-	{
-		FString string(TEXT(""));
-		for (int i = 0; i < BoardSize; i++)
-		{
-			int empty = 0;
-			for (int j = 0; j < BoardSize; j++)
-			{
-				UChessPiece* piece = Chessboard->GetPieceAtPosition(FIntPoint(i, j));
-				if(piece == nullptr)
-				{
-					empty++;
-				}
-				else
-				{
-					if(empty > 0 )
-					{
-						string.Append(FString::FromInt(empty));
-					}
-					string.Append(GetPieceFENNotation(piece));
-				}
-			}
-			if(empty > 0 )
-			{
-				string.Append(FString::FromInt(empty));
-			}
-			string.Append("/");
-		}
-	}
+public:
+	void Initialize(UChessboardBase* ChessboardBase);
+	FString GenerateFENNotation() const;
+	static FString GetCharFromFigure(const EFigure Figure);
+	static EFigure GetFigureFromChar(const TCHAR& Char);
+	static EFigure GetFigureFromString(const FString& Char);
+	static FString GetPieceFENNotation(UChessPiece* Piece);
 };

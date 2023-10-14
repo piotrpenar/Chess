@@ -4,6 +4,7 @@
 #include "Chess/Enums/Color.h"
 #include "Chess/Enums/Figure.h"
 #include "Chess/Highlight/BoardHighlight.h"
+#include "Chess/Utils/CPUDifficultyDefinition.h"
 #include "ChessData.generated.h"
 
 USTRUCT()
@@ -39,7 +40,7 @@ class CHESS_API UChessData final : public UDataAsset
 	UPROPERTY(EditAnywhere)
 	FString StockfishPath;
 	UPROPERTY(EditAnywhere)
-	TMap<FString,int> CPUDifficulties;
+	TArray<FCPUDifficultyDefinition> CPUDifficulties;
 	UPROPERTY(EditAnywhere)
 	TMap<FString,int> AvailableGameLengths;
 
@@ -63,10 +64,9 @@ public:
 	TArray<EFigure> GetMen() const;
 	TArray<EFigure> GetPawns() const;
 	UFUNCTION(BlueprintCallable,BlueprintPure)
-	TMap<FString,int> GetCPUDifficulties() const;
+	TArray<FCPUDifficultyDefinition> GetCPUDifficulties() const;
 	UFUNCTION(BlueprintCallable,BlueprintPure)
 	TMap<FString,int> GetAvailableGameLengths() const;
 
-	bool IsValidBoardPosition(const FIntPoint& Position) const;
 	FString GetStockfishPath();
 };

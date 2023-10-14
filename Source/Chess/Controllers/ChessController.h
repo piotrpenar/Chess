@@ -9,10 +9,11 @@
 #include "Chess/Enums/Figure.h"
 #include "Chess/Global/ChessGameMode.h"
 #include "Chess/Interfaces/ChessMovesHighlighter.h"
+#include "Chess/Interfaces/MoveExecutor.h"
 #include "ChessController.generated.h"
 
 UCLASS(Blueprintable)
-class CHESS_API AChessController final : public AActor
+class CHESS_API AChessController final : public AActor, public IMoveExecutor
 {
 	GENERATED_BODY()
 
@@ -43,17 +44,17 @@ private:
 	void CreateChessboardController();
 	void ChessFigureSelected(const AChessFigure* ChessFigure) const;
 	void MoveSelected(const FMove Move) const;
-	void ExecutePlayerMove(FMove Move) const;
 	
 protected:
+	void SetupGameRoundController();
 	virtual void BeginPlay() override;
 
 public:
+	virtual void ExecutePlayerMove(FMove Move) const override;
 	UFUNCTION(BlueprintCallable)
 	APawn* GetPlayerPawn(int Index) const;
 	UFUNCTION(BlueprintCallable)
 	void ResetChessGame() const;
-	FString GetChessboardFEN() const;
 	
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams( FPieceCaptured, enum EColor, Color, EFigure, Figure );
 	

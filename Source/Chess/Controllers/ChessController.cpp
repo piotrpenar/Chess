@@ -3,6 +3,19 @@
 #include "Chess/Chessboard/ChessboardController.h"
 #include "Chess/Highlight/ChessHighlighter.h"
 
+void AChessController::SetupGameRoundController()
+{
+	GameRoundController = NewObject<UGameRoundController>();
+	if(GameMode->GetRoundSettings().SecondPlayerType == EPlayerType::CPU)
+	{
+		UUCIController* UCIController = NewObject<UUCIController>();
+		UCIController->Initialize(ChessboardController->GetChessboard(),this,ChessData);
+		UCIController->SetCPUDifficulty(GameMode->GetRoundSettings().CPUDifficulty);
+		GameRoundController->SetUCIController(UCIController);
+	}
+	GameRoundController->InitializeRound(GameMode->GetRoundSettings());
+}
+
 void AChessController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -12,13 +25,7 @@ void AChessController::BeginPlay()
 	CreateChessHighlighter();
 	CreateChessboardController();
 	GameMode->SetMovementProvider(ChessboardController->GetChessboardMovementRuleProvider());
-
-	UUCIController* UCIController = NewObject<UUCIController>();
-	UCIController->Initialize(ChessboardController,ChessData->GetStockfishPath());
-	
-	GameRoundController = NewObject<UGameRoundController>();
-	GameRoundController->SetUCIController(UCIController);
-	GameRoundController->InitializeRound(GameMode->GetRoundSettings());
+	SetupGameRoundController();
 	
 }
 
@@ -41,16 +48,16 @@ void AChessController::CreateChessHighlighter()
 void AChessController::CreateChessboardController()
 {
 	ChessboardController = NewObject<UChessboardController>();
-	auto FigureClickedCallback = [this](const AChessFigure* Figure)
-	{
-		this->ChessFigureSelected(Figure);
-	};
-
 	AChessGameState* ChessGameState = ChessboardSceneUtilities->GetBoardWorld()->GetGameState<AChessGameState>();
 	if (!ChessGameState->GetChessboard())
 	{
 		ChessGameState->CreateChessboard();
 	}
+	auto FigureClickedCallback = [this](const AChessFigure* Figure)
+	{
+		this->ChessFigureSelected(Figure);
+	};
+
 	ChessboardController->Initialize(ChessboardSceneUtilities, ChessData, FigureClickedCallback);
 	ChessboardController->SetupPiecesCallbacks(GameMode);
 }
@@ -93,6 +100,7 @@ void AChessController::ResetChessGame() const
 	Highlighter->ClearHighlights();
 	GameState->SetCurrentPlayer(EColor::White);
 }
+
 
 
 APawn* AChessController::GetPlayerPawn(const int Index) const

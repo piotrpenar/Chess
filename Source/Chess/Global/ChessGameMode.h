@@ -11,6 +11,9 @@ UCLASS(Blueprintable)
 class CHESS_API AChessGameMode final : public AGameMode, public ITurnsProvider
 {
 	GENERATED_BODY()
+	
+	DECLARE_DERIVED_EVENT(AChessGameMode, ITurnsProvider::FTurnEnded, FTurnEndedForPlayerEvent);
+	DECLARE_MULTICAST_DELEGATE(FTurnEndedEvent);
 
 private:
 	UPROPERTY()
@@ -24,8 +27,6 @@ private:
 
 	UPROPERTY()
 	TScriptInterface<IMovementRulesProvider> MovementRulesProvider;
-
-	FTurnEnded TurnEndedEvent;
 	
 	void Initialize();
 	void BroadcastTurnEnded(EColor Color) const;
@@ -34,16 +35,19 @@ protected:
 	virtual void BeginPlay() override;
 	
 public:
-	virtual void EndTurn() override;
-	FRoundSettings GetRoundSettings() const;
-	void SetMovementProvider(TScriptInterface<IMovementRulesProvider> MovementRulesProviderReference);
-
-	DECLARE_DERIVED_EVENT(AChessGameState, ITurnsProvider::FTurnEnded, FTurnEndedEvent);
-
-	virtual FTurnEnded& OnTurnEnded() override;
-
-	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTurnEndedEvent);
+	
 	UPROPERTY(BlueprintAssignable, EditDefaultsOnly, Category="Default")
-	FOnTurnEndedEvent OnTurnEndedEvent;
+	FTurnEndedForPlayerEvent TurnEndedForPlayerEvent;
+
+	UPROPERTY(BlueprintAssignable, EditDefaultsOnly, Category="Default")
+	FTurnEndedEvent TurnEndedEvent;
+	
+	virtual void EndTurn() override;
+	void SetMovementProvider(TScriptInterface<IMovementRulesProvider> MovementRulesProviderReference);
+	
+	UFUNCTION(BlueprintGetter)
+	FRoundSettings GetRoundSettings() const;
+	UFUNCTION(BlueprintSetter)
+	void SetRoundSettings(const FRoundSettings& NewRoundSettings);
 
 };

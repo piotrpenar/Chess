@@ -77,7 +77,6 @@ TScriptInterface<IMovementRulesProvider> UChessboard::GetMovementRuleProvider() 
 	return ChessboardMovementRules;
 }
 
-
 void UChessboard::SetPieceAtPosition(const FIntPoint Position, UChessPiece* ChessPiece)
 {
 	if (!IsValidBoardPosition(Position))

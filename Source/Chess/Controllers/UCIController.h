@@ -23,6 +23,7 @@ class CHESS_API UUCIController : public UObject
 
 private: 
 	TUniquePtr<FInteractiveProcess> StockfishProcess;
+	UPROPERTY()
 	FString AdditionalGoSettings;
 
 	UPROPERTY()
@@ -37,13 +38,18 @@ private:
 	UFENNotationHelper* FenNotationHelper;
 
 	TQueue<TPair<FString,bool>> StockfishInputQueue;
+	UPROPERTY()
 	bool bStockfishIsBusy = false;
+	UPROPERTY(BlueprintAssignable)
+	FMoveSelected MoveSelected;
+	UPROPERTY()
+	FString StockfishMoveToExecute;
 
 	~UUCIController();
 
 public:
 	FString GenerateFenGameState(EColor Color) const;
-	FMove ExtractMoveFromString(const FString& String);
+	UFUNCTION()
 	void OnMoveSelected(FString MoveString);
 	void SearchForBestMove(EColor Color);
 	void ResetStockfishPointer();
@@ -64,8 +70,6 @@ public:
 	static void OnCompleted();
 	UFUNCTION(Exec, Category = "ExecFunctions")
 	void TestCommand() const;
-
-	FMoveSelected MoveSelected;
 	
 
 };

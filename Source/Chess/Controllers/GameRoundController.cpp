@@ -43,18 +43,20 @@ void UGameRoundController::RoundStarted()
 	}
 }
 
-void UGameRoundController::OnTurnEnded(EColor NextPlayerColor)
+void UGameRoundController::OnTurnEnded(EColor PlayerColor)
 {
-	FPlayerChessState& NextPlayerState = GetPlayerState(NextPlayerColor);
+	UE_LOG(LogTemp, Display, TEXT("Turn ended for player %s"), *UEnum::GetValueAsString(PlayerColor));
+	CurrentPlayerColor = PlayerColor == EColor::White ? EColor::Black : EColor::White;
+	FPlayerChessState& NextPlayerState = GetPlayerState(CurrentPlayerColor);
 	if(NextPlayerState.PlayerType == EPlayerType::CPU)
 	{
-		CPUMove(NextPlayerColor);
+		CPUMove(CurrentPlayerColor);
 	}
 	else
 	{
 		//TODO: Swtitch cameras and config
 	}
-	this->CurrentPlayerState = &GetPlayerState(NextPlayerColor);
+	this->CurrentPlayerState = &GetPlayerState(CurrentPlayerColor);
 }
 
 FPlayerChessState& UGameRoundController::GetPlayerState(const EColor PlayerColor){
@@ -110,6 +112,5 @@ void UGameRoundController::SetUCIController(UUCIController* UciController)
 
 void UGameRoundController::ConnectToTurnEndedEvent(ITurnsProvider& TurnsProvider)
 {
-	
 	TurnsProvider.OnTurnEndedForPlayerEvent().AddDynamic(this, &UGameRoundController::OnTurnEnded);
 }

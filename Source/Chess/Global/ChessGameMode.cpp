@@ -15,8 +15,8 @@ void AChessGameMode::BeginPlay()
 
 void AChessGameMode::BroadcastTurnEnded(const EColor Color) const
 {
-//	TurnEndedForPlayerEvent.Broadcast(Color);
-//	TurnEndedEvent.Broadcast();
+	TurnEndedForPlayerEvent.Broadcast(Color);
+	TurnEndedEvent.Broadcast();
 }
 
 void AChessGameMode::SetMovementProvider(const TScriptInterface<IMovementRulesProvider> MovementRulesProviderReference)
@@ -28,7 +28,6 @@ void AChessGameMode::EndTurn()
 {
 	const EColor CurrentPlayerColor = ChessGameState->GetCurrentPlayer();
 	const EColor EnemyPlayer = CurrentPlayerColor == EColor::Black ? EColor::White : EColor::Black;
-	ChessGameState->SetCurrentPlayer(EnemyPlayer);
 	const ECheckmateStatus Status = RulesController->GetCheckmateStatusForPlayer(ChessGameState->GetChessboard(), EnemyPlayer, MovementRulesProvider.GetInterface());
 	const FString Value = UEnum::GetValueAsString(Status);
 	if (Status == ECheckmateStatus::Checkmate || Status == ECheckmateStatus::Stalemate)
@@ -36,8 +35,8 @@ void AChessGameMode::EndTurn()
 		EndGame(Status, Status == ECheckmateStatus::Stalemate ? EColor::Unspecified : CurrentPlayerColor);
 		return;
 	}
-	
 	BroadcastTurnEnded(CurrentPlayerColor);
+	ChessGameState->SetCurrentPlayer(EnemyPlayer);
 }
 
 void AChessGameMode::StartGame()

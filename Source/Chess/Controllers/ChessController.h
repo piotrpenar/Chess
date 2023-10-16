@@ -59,8 +59,10 @@ public:
 	APawn* GetPlayerPawn(int Index) const;
 	UFUNCTION(BlueprintCallable)
 	void ResetChessGame() const;
-	
-	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams( FPieceCaptured, enum EColor, Color, EFigure, Figure );
+	UFUNCTION(BlueprintCallable)
+	APawn* GetPlayerPawnByColor(EColor PlayerColor) const;
+
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPieceCaptured, enum EColor, Color, EFigure, Figure);
 	
 	UPROPERTY(BlueprintAssignable, Category = "Chess")
 	FPieceCaptured OnPieceCaptured;

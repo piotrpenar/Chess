@@ -121,6 +121,19 @@ void AChessController::ResetChessGame() const
 }
 
 
+APawn* AChessController::GetPlayerPawnByColor(const EColor PlayerColor) const
+{
+	if(PlayerColor==EColor::White)
+	{
+		return FirstPlayerPawn;
+	}
+	if(PlayerColor==EColor::Black)
+	{
+		return SecondPlayerPawn;
+	}
+	throw "Invalid Player Color provided! Returning null.";
+}
+
 
 APawn* AChessController::GetPlayerPawn(const int Index) const
 {

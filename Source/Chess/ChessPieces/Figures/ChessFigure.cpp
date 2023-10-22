@@ -7,6 +7,13 @@ void AChessFigure::HandleFigureClick()
 
 void AChessFigure::BroadcastChessFigureOnClick()
 {
+	if(CallbackFunctionOverride)
+	{
+		UE_LOG(LogTemp,Warning,TEXT("Overriding callback function!"));
+		CallbackFunctionOverride(this);
+		return;
+	}
+	UE_LOG(LogTemp,Warning,TEXT("Calling standard callback function!"));
 	CallbackFunction(this);
 }
 
@@ -37,6 +44,11 @@ TScriptInterface<IChessPieceMovement> AChessFigure::GetSourcePiece() const
 void AChessFigure::SetClickCallback(const TFunction<void(AChessFigure*)> FigureClickedCallback)
 {
 	CallbackFunction = FigureClickedCallback;
+}
+
+void AChessFigure::SetClickCallbackOverride(const TFunction<void(AChessFigure*)> FigureClickedCallback)
+{
+	CallbackFunctionOverride = FigureClickedCallback;
 }
 
 EColor AChessFigure::GetColor() const

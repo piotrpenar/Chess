@@ -22,4 +22,5 @@ public:
 	virtual void SetSelectedFigure(AActor* SourceFigure);
 	virtual void HighlightSelected(ABoardHighlight* CheckerHighlight);
 	virtual void ClearHighlights();
+	virtual void CreatePiecesHighlights(TArray<FMove>& Moves);
 };

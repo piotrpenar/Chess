@@ -79,6 +79,11 @@ void UChessPiece::SetActorRotation(const FRotator Rotation) const
 	}
 }
 
+AChessFigure* UChessPiece::GetActor() const
+{
+	return ChessPieceActor;
+}
+
 void UChessPiece::SetActorPosition(const FVector Position) const
 {
 	if (ChessPieceActor)

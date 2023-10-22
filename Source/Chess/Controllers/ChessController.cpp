@@ -75,6 +75,7 @@ void AChessController::CreateChessboardController()
 	auto FigureClickedCallback = [this](const AChessFigure* Figure)
 	{
 		this->ChessFigureSelected(Figure);
+		UE_LOG(LogTemp,Warning,TEXT("Chess Figure clicked!"));
 	};
 
 	ChessboardController->Initialize(ChessboardSceneUtilities, ChessData, FigureClickedCallback);
@@ -85,10 +86,13 @@ void AChessController::ChessFigureSelected(const AChessFigure* ChessFigure) cons
 {
 	if(ChessFigure->GetColor() != GameState->GetCurrentPlayer())
 	{
+		UE_LOG(LogTemp,Warning,TEXT("Invalid player selected! Current player is %s"),*UEnum::GetValueAsString(GameState->GetCurrentPlayer()));
 		return;
 	}
 	TArray<FMove> Moves = ChessFigure->GetSourcePiece()->GetAvailableMoves();
+	UE_LOG(LogTemp,Warning,TEXT("Creating highlights!"));
 	Highlighter->CreateHighlights(Moves);
+	Highlighter->CreatePiecesHighlights(Moves);
 }
 
 void AChessController::MoveSelected(const FMove Move)

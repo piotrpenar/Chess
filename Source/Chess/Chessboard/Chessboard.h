@@ -33,7 +33,7 @@ private:
 	void SetupChessPiece(UChessPiece* ChessPiece, const EColor Color, FIntPoint Position) const;
 
 public:
-	void Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference, UChessData* Data, const TFunction<void(AChessFigure*)>&
+	void Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference, UChessData* Data, const TFunction<void(AChessFigure*)>
 	                ExternalFigureClickedCallback);
 	void InitializeMovementRules(USimulatedChessboard* SimulatedBoard);
 	void InitializeBoardPieces();

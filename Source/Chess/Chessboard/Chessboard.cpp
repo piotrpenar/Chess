@@ -4,7 +4,7 @@
 #include "Chess/Helpers/ChessPiecesFactory.h"
 #include "Chess/Interfaces/MovementRulesProvider.h"
 
-void UChessboard::Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference, UChessData* Data, const TFunction<void(AChessFigure*)>& ExternalFigureClickedCallback)
+void UChessboard::Initialize(UChessSceneUtilities* ChessSceneUtilitiesReference, UChessData* Data, const TFunction<void(AChessFigure*)> ExternalFigureClickedCallback)
 {
 	Super::Initialize(Data->GetBoardSize());
 	ChessData = Data;

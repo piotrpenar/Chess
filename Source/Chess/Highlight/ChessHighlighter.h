@@ -15,7 +15,9 @@ class CHESS_API UChessHighlighter final : public UObject, public IChessMovesHigh
 
 private:
 	UPROPERTY()
-	TArray<AActor*> CurrentHighlights;
+	TArray<ABoardHighlight*> CurrentHighlights;
+	UPROPERTY()
+	TArray<AChessFigure*> HighlightedFigures;
 	UPROPERTY()
 	AChessFigure* CurrentSelectedFigure;
 	UPROPERTY()
@@ -33,4 +35,7 @@ public:
 	virtual void CreateHighlights(TArray<FMove>& Moves) override;
 	virtual void SetSelectedFigure(AActor* SelectedFigureActor) override;
 	virtual void HighlightSelected(ABoardHighlight* CheckerHighlight) override;
+	ABoardHighlight* GetHighlightFromMove(const FMove& Move);
+	void ClearPiecesHighlights();
+	virtual void CreatePiecesHighlights(TArray<FMove>& Moves) override;
 };

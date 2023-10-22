@@ -55,6 +55,7 @@ void UGameRoundController::OnTurnEnded(EColor PlayerColor)
 	else
 	{
 		//TODO: Swtitch cameras and config
+		
 	}
 	this->CurrentPlayerState = &GetPlayerState(CurrentPlayerColor);
 }

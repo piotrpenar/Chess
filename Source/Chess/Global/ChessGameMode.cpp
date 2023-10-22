@@ -15,6 +15,7 @@ void AChessGameMode::BeginPlay()
 
 void AChessGameMode::BroadcastTurnEnded(const EColor Color) const
 {
+	UE_LOG(LogTemp,Warning,TEXT("Turn ended for player %s"),*UEnum::GetValueAsString(Color));
 	TurnEndedForPlayerEvent.Broadcast(Color);
 	TurnEndedEvent.Broadcast();
 }

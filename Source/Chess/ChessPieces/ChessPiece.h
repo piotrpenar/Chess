@@ -42,6 +42,7 @@ public:
 	void SetActorTransform(FTransform Transform) const;
 	void SetActorPosition(FVector Position) const;
 	void SetActorRotation(FRotator Rotation) const;
+	AChessFigure* GetActor() const;
 	EColor GetColor() const;
 	FIntPoint GetBoardPosition();
 	void DestroyActor() const;

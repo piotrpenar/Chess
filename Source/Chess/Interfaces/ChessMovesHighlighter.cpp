@@ -22,3 +22,8 @@ void IChessMovesHighlighter::HighlightSelected(ABoardHighlight* CheckerHighlight
 void IChessMovesHighlighter::ClearHighlights()
 {
 }
+
+void IChessMovesHighlighter::CreatePiecesHighlights(TArray<FMove>& Moves)
+{
+}
+

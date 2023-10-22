@@ -18,6 +18,7 @@ class AChessFigure final : public AActor
 	TScriptInterface<IChessPieceMovement> SourcePiece;
 
 	TFunction<void(AChessFigure*)> CallbackFunction;
+	TFunction<void(AChessFigure*)> CallbackFunctionOverride;
 
 	UFUNCTION(BlueprintCallable)
 	void HandleFigureClick();
@@ -30,6 +31,7 @@ public:
 	void SetSourcePiece(TScriptInterface<IChessPieceMovement> ChessPiece);
 	TScriptInterface<IChessPieceMovement> GetSourcePiece() const;
 	void SetClickCallback(TFunction<void(AChessFigure*)> FigureClickedCallback);
+	void SetClickCallbackOverride(TFunction<void(AChessFigure*)> FigureClickedCallback);
 	EColor GetColor() const;
 	void SetColor(EColor Color);
 };

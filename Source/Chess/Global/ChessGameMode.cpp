@@ -44,7 +44,6 @@ void AChessGameMode::StartGame()
 {
 	UE_LOG(LogTemp,Warning,TEXT("Game started!"));
 	GameStartedEvent.Broadcast();
-	//TODO: Unblock input
 }
 
 void AChessGameMode::EndGame(ECheckmateStatus Result, EColor Winner)

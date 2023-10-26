@@ -18,11 +18,14 @@ class CHESS_API UGameRoundController : public UObject
 {
 	GENERATED_BODY()
 
+	UPROPERTY()
 	FRoundSettings RoundSettings;
 
+	UPROPERTY()
 	FPlayerChessState WhitePlayerState;
+	UPROPERTY()
 	FPlayerChessState BlackPlayerState;
-	
+
 	FPlayerChessState* CurrentPlayerState;
 	
 	float WhitePlayerTimeRemaining;
@@ -46,8 +49,8 @@ public:
 	FPlayerChessState& GetPlayerState(EColor PlayerColor);
 	FPlayerChessState& GetFirstPlayerState();
 	FPlayerChessState& GetSecondPlayerState();
+	FPlayerChessState& GetCurrentPlayerState() const;
 	void InitializeRound(FRoundSettings NewRoundSettings);
 	void SetUCIController(UUCIController* UciController);
 	void ConnectToTurnEndedEvent(ITurnsProvider& TurnsProvider);
-	void ConnectToGameStartEvent(IGameLoopProvider& GameLoopProvider);
 };

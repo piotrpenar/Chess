@@ -56,6 +56,7 @@ void UGameRoundController::OnTurnEnded(EColor PlayerColor)
 	{
 		//TODO: Swtitch cameras and config
 		
+		
 	}
 	this->CurrentPlayerState = &GetPlayerState(CurrentPlayerColor);
 }
@@ -72,6 +73,11 @@ FPlayerChessState& UGameRoundController::GetFirstPlayerState()
 FPlayerChessState& UGameRoundController::GetSecondPlayerState()
 {
 	return this->RoundSettings.FirstPlayerColor == EColor::Black ? WhitePlayerState : BlackPlayerState;
+}
+
+FPlayerChessState& UGameRoundController::GetCurrentPlayerState() const
+{
+	return *CurrentPlayerState;
 }
 
 void UGameRoundController::InitializeRound(FRoundSettings NewRoundSettings)

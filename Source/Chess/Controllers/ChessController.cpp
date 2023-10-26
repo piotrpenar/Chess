@@ -26,6 +26,20 @@ void AChessController::SetupGameRoundController()
 	GameRoundController->RoundStarted();
 }
 
+void AChessController::AdjustCameraAfterTurnEnded()
+{
+	if(GameRoundController->GetCurrentPlayerState().PlayerType == EPlayerType::CPU)
+	{
+		return;
+	}
+	EColor CurrentPlayerColor = GameRoundController->GetCurrentPlayerState().PlayerColor;
+	APawn* CurrentPlayerPawn = GetPlayerPawnByColor(CurrentPlayerColor);
+	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+	PlayerController->GetPawn()->DisableInput(PlayerController);
+	PlayerController->Possess(CurrentPlayerPawn);
+	CurrentPlayerPawn->EnableInput(PlayerController);
+}
+
 void AChessController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -36,6 +50,7 @@ void AChessController::BeginPlay()
 	CreateChessboardController();
 	GameMode->SetMovementProvider(ChessboardController->GetChessboardMovementRuleProvider());
 	GameMode->GameStartedEvent.AddDynamic(this,&AChessController::SetupGameRoundController);
+	GameMode->TurnEndedEvent.AddDynamic(this,&AChessController::AdjustCameraAfterTurnEnded);
 	UE_LOG(LogTemp,Warning,TEXT("Waiting for game start!"));
 }
 

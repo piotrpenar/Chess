@@ -50,6 +50,8 @@ private:
 protected:
 	UFUNCTION()
 	void SetupGameRoundController();
+	UFUNCTION()
+	void AdjustCameraAfterTurnEnded();
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 

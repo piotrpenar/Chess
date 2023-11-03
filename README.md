@@ -39,9 +39,9 @@ Current version of the game allows for basic playthrough and serves as MVP. Ther
 - [ ] SFX creation and implementation
 - [ ] Music creation and implementation
 - [x] Optimization of the environment
-- [ ] Addition of AI to the project
-- [ ] Design and implementation of the Game UI
-- [ ] Polishing the graphics and details of the project
+- [x] Addition of AI to the project
+- [x] Design and implementation of the Game UI
+- [x] Polishing the graphics and details of the project
 - [ ] Project and repository cleanup
 - [ ] (Optional) Code optimization
 - [ ] (Stretch Goal) Adding Dev tools to the game

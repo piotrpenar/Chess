@@ -52,9 +52,9 @@ public:
 	FTurnEndedForPlayerEvent TurnEndedForPlayerEvent;
 	UPROPERTY(BlueprintAssignable)
 	FTurnEndedEvent TurnEndedEvent;
-	UPROPERTY(BlueprintAssignable)
+	UPROPERTY(BlueprintReadWrite,BlueprintAssignable)
 	FGameStartedEvent GameStartedEvent;
-	UPROPERTY(BlueprintAssignable)
+	UPROPERTY(BlueprintReadWrite,BlueprintAssignable)
 	FGameEndedEvent GameEndedEvent;
 	
 	virtual FTurnEndedForPlayerEvent& OnTurnEndedForPlayerEvent() override;

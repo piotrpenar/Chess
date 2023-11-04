@@ -48,8 +48,7 @@ void AChessGameMode::StartGame()
 
 void AChessGameMode::EndGame(ECheckmateStatus Result, EColor Winner)
 {
-	//TODO: DO SOMETHING WITH THE RESULT
-	GameEndedEvent.Broadcast(Winner);
+	GameEndedEvent.Broadcast(Winner,Result);
 }
 
 FRoundSettings AChessGameMode::GetRoundSettings() const

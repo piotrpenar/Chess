@@ -9,7 +9,7 @@
 #include "GameLoopProvider.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FGameStartedEvent);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FGameEndedEvent, EColor,Winner);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FGameEndedEvent, EColor,Winner, ECheckmateStatus, Result);
 
 UINTERFACE()
 class UGameLoopProvider : public UInterface

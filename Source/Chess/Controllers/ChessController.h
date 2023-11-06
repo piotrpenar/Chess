@@ -36,7 +36,7 @@ private:
 	APawn* FirstPlayerPawn;
 	UPROPERTY(EditAnywhere)
 	APawn* SecondPlayerPawn;
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	UGameRoundController* GameRoundController;
 	
 	void CreateChessboardSceneUtilities();

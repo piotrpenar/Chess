@@ -46,6 +46,7 @@ public:
 	void RoundStarted();
 	UFUNCTION()
 	void OnTurnEnded(EColor NextPlayerColor);
+	UFUNCTION()
 	FPlayerChessState& GetPlayerState(EColor PlayerColor);
 	FPlayerChessState& GetFirstPlayerState();
 	FPlayerChessState& GetSecondPlayerState();

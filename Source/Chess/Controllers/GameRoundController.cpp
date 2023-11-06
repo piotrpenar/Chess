@@ -52,12 +52,6 @@ void UGameRoundController::OnTurnEnded(EColor PlayerColor)
 	{
 		CPUMove(CurrentPlayerColor);
 	}
-	else
-	{
-		//TODO: Swtitch cameras and config
-		
-		
-	}
 	this->CurrentPlayerState = &GetPlayerState(CurrentPlayerColor);
 }
 
